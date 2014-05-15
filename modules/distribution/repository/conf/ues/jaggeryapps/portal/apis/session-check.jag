@@ -1,0 +1,5 @@
+<%
+response.contentType = 'application/json';
+var sessionCheck = {'check': 'YW0gYSBsaXZl'};
+print(sessionCheck);
+%>

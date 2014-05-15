@@ -1,0 +1,41 @@
+<cep:bucket xmlns:cep="http://wso2.org/carbon/cep" name="XMLStockQuoteAnalyzer">
+    <cep:description>
+This bucket analyzes stock quotes and trigger an event if the last
+traded amount vary by 2 percent with regards to the average traded
+price within past 2 minutes.
+    </cep:description>
+    <cep:engineProviderConfiguration engineProvider="SiddhiCEPRuntime">
+        <cep:property name="siddhi.persistence.snapshot.time.interval.minutes">0</cep:property>
+        <cep:property name="siddhi.enable.distributed.processing">false</cep:property>
+    </cep:engineProviderConfiguration>
+    <cep:input topic="AllStockQuotes" brokerName="localBroker">
+        <cep:xmlMapping queryEventType="Tuple" stream="allStockQuotesStream">
+            <cep:xpathDefinition prefix="quotedata" namespace="http://ws.cdyne.com/"/>
+            <cep:property name="price" xpath="//quotedata:StockQuoteEvent/quotedata:LastTradeAmount"
+                          type="java.lang.Double"/>
+            <cep:property name="symbol" xpath="//quotedata:StockQuoteEvent/quotedata:StockSymbol"
+                          type="java.lang.String"/>
+        </cep:xmlMapping>
+    </cep:input>
+    <cep:query name="StockDetector">
+        <cep:expression>
+            <![CDATA[
+from allStockQuotesStream#window.time(120000)
+insert into fastMovingStockQuotesStream
+symbol,avg(price) as avgPrice, price
+group by symbol
+having ((price > (avgPrice*1.02)) or ((avgPrice*0.98)>price ));
+            ]]></cep:expression>
+        <cep:output topic="FastMovingStockQuotes" brokerName="localBroker">
+            <cep:xmlMapping>
+                <quotedata:StockQuoteDataEvent xmlns:quotedata="http://ws.cdyne.com/"
+                                               xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                                               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                    <quotedata:StockSymbol>{symbol}</quotedata:StockSymbol>
+                    <quotedata:AvgLastTradeAmount>{avgPrice}</quotedata:AvgLastTradeAmount>
+                    <quotedata:LastTradeAmount>{price}</quotedata:LastTradeAmount>
+                </quotedata:StockQuoteDataEvent>
+            </cep:xmlMapping>
+        </cep:output>
+    </cep:query>
+</cep:bucket>

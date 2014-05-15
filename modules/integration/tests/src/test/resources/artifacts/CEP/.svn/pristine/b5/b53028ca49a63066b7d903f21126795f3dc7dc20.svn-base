@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventBuilder name="AccessLogs" statistics="disable" trace="enable" xmlns="http://wso2.org/carbon/eventbuilder">
+    <from eventAdaptorName="jmsEventReceiver" eventAdaptorType="jms">
+        <property name="transport.jms.Destination">AccessLogs</property>
+    </from>
+    <mapping type="text" customMapping="enable">
+        <property>
+            <from regex="^([\d.]+) \S+ \S+ \[([\w:/]+\s[+\-]\d{4})\] \&quot;(.+?)\&quot; (\d{3}) ([\d.]+|-) .*"/>
+            <to name="correlation_IP_CLIENT" type="string"/>
+            <to name="timestamp" type="string"/>
+            <to name="url" type="string"/>
+            <to name="http_code" type="string"/>
+            <to name="response_time" type="int"/>
+        </property>
+        <property>
+            <from regex="fileName:\s+(\S+)"/>
+            <to name="meta_filename" type="string"/>
+        </property>
+    </mapping>
+    <to streamName="org.wso2.test.inflow" version="1.0.0"/>
+</eventBuilder>

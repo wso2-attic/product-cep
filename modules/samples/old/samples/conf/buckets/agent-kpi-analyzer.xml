@@ -1,0 +1,42 @@
+<bucket name="KPIAnalyzer" xmlns="http://wso2.org/carbon/cep">
+    <description>
+Notifies when a user purchases more then 3 phones for the total price higher than $2500.
+    </description>
+    <engineProviderConfiguration engineProvider="SiddhiCEPRuntime">
+        <property name="siddhi.persistence.snapshot.time.interval.minutes">0</property>
+        <property name="siddhi.enable.distributed.processing">false</property>
+    </engineProviderConfiguration>
+    <input topic="org.wso2.phone.retail.store/1.2.0" brokerName="localAgentBroker">
+        <tupleMapping stream="phoneRetailStream" queryEventType="Tuple">
+            <property name="brand" inputName="brand" inputDataType="payloadData"
+                      type="java.lang.String"/>
+            <property name="quantity" inputName="quantity" inputDataType="payloadData"
+                      type="java.lang.Integer"/>
+            <property name="totalPrice" inputName="total" inputDataType="payloadData"
+                      type="java.lang.Integer"/>
+            <property name="buyer" inputName="buyer" inputDataType="payloadData"
+                      type="java.lang.String"/>
+        </tupleMapping>
+    </input>
+    <query name="KPIQuery">
+        <expression>
+from phoneRetailStream[totalPrice>2500 and quantity>3]
+insert into highPurchaseStream
+buyer, brand, quantity, totalPrice;
+        </expression>
+        <output topic="org.wso2.high.purchase.buyers/1.5.0" brokerName="externalAgentBroker">
+            <tupleMapping>
+                <metaData>
+                    <property name="buyer" valueOf="buyer"
+                              type="java.lang.String"/>
+                </metaData>
+                <correlationData/>
+                <payloadData>
+                    <property name="brand" valueOf="brand" type="java.lang.String"/>
+                    <property name="quantity" valueOf="quantity" type="java.lang.Integer"/>
+                    <property name="purchasePrice" valueOf="totalPrice" type="java.lang.Integer"/>
+                </payloadData>
+            </tupleMapping>
+        </output>
+    </query>
+</bucket>

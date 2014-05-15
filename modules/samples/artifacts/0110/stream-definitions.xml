@@ -1,0 +1,28 @@
+<streamDefinitions xmlns="http://wso2.org/carbon/databridge">
+    <streamDefinition>
+
+       {
+        "name":"sensorInputEventStream",
+        "version":"1.0.0",
+        "payloadData":[
+        {"name":"sensorId","type":"STRING"},
+        {"name":"sensorVersion","type":"STRING"},
+        {"name":"sensorValue","type":"INT"}
+        ]
+        }
+    </streamDefinition>
+
+    <streamDefinition>
+
+    {
+        "name":"filteredSensorStream",
+        "version":"1.0.0",
+        "payloadData":[
+        {"name":"sensorId","type":"STRING"},
+        {"name":"sensorVersion","type":"STRING"},
+        {"name":"sensorValue","type":"INT"}
+        ]
+        }
+    </streamDefinition>
+
+</streamDefinitions>

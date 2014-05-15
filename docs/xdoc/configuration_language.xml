@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+~ Copyright (c) 2009, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+~
+~ WSO2 Inc. licenses this file to you under the Apache License,
+~ Version 2.0 (the "License"); you may not use this file except
+~ in compliance with the License.
+~ You may obtain a copy of the License at
+~
+~ http://www.apache.org/licenses/LICENSE-2.0
+~
+~ Unless required by applicable law or agreed to in writing,
+~ software distributed under the License is distributed on an
+~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+~ KIND, either express or implied. See the License for the
+~ specific language governing permissions and limitations
+~ under the License.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+  <title>WSO2 CEP - Configuration Language</title>
+  <link href="css/cep-docs.css" rel="stylesheet" />
+  <link href="styles/dist-docs.css" rel="stylesheet" type="text/css"
+  media="all" />
+</head>
+
+<body>
+<p>[<a href="docs_index.html">Documentation Index</a>] 
+<h1>WSO2 Complex Event Processor (CEP) Configuration Language</h1>
+
+<p>The goal of this guide is to provide a detailed description about the
+configurations specific to the CEP. There are two types of configurations:
+rule-component.conf and services.xml and next sections discuss those in detail.
+</p>
+
+<h2>Contents</h2>
+
+<div class="toc">
+<ul>
+  <li><a href="#rule-component.conf">Rule Component Configuration</a> </li>
+  <li><a href="#rule-service.conf">Rule Service Configuration</a> </li>
+</ul>
+</div>
+
+<h2 id="rule-component.conf">Rule Component Configuration</h2>
+
+<p>Rule component configuration is to provide the capability to define the
+configuration information related to the rule component . The configuration for
+the rule-component.conf is shown bellow. </p>
+
+<p><img src="images/rule-component-conf.png" alt="Rule Component Configuration"
+/> </p>
+
+<p>RuleEngineProvider : The <i>class</i> is to specify the rule service
+provider implementation. The default one is
+<i>org.wso2.carbon.rule.engine.jsr94.JSR94BackendRuntimeFactory</i>. The
+default JSR94 API provider is the open source Drools rule engine.
+<strong>Properties</strong> are to be used to specify configuration information
+for the rule service provider. For example, for the
+<em>JSR94BackendRuntimeFactory</em> , there are two important properties :
+<i>class</i> and <i>uri</i>. The <i>class</i> is to provide the JSR 94 rule
+service provider and the default value for it is
+<i>org.drools.jsr94.rules.RuleServiceProviderImpl</i>. The <i>uri</i> is to
+provide the JSR 94 rule service provider URI and the default value of it is
+<i>http://drools.org/</i>.Another import property is
+<i>default.properties.provider</i>, which can be used to provide default
+properties to be used when creating rule execution sets and loading rule
+service provider. </p>
+
+<p>FactAdapters : To register adapters for creating facts to be injected in to
+the rule engine from the data in the message. The registered fact adapters can
+be used within fact definitions by specifying the name of a fact adapter. </p>
+
+<p>ResultAdapters : To register adapters for handling results from the rule
+engine execution.The registered result adapters can be used within result
+definitions by specifying the name of a result adapter. </p>
+
+<p>A example rule-component.conf is shown bellow.</p>
+<pre xml:space="preserve"> &lt;RuleServer&gt;
+    &lt;RuleEngineProvider class="org.wso2.carbon.rule.engine.jsr94.JSR94BackendRuntimeFactory"&gt;
+        &lt;Property name="default.properties.provider"
+                  value="org.wso2.carbon.rule.engine.drools.DroolsJSR94DefaultPropertiesProvider"/&gt;
+    &lt;/RuleEngineProvider&gt;
+&lt;/RuleServer&gt;</pre>
+
+<p>The configuration to be used to provide information required to expose a
+rule script as a web service. There are two important parts in the services.xml
+of a rule service: rule set definition and facts/results definitions. </p>
+</p>
+
+<h3>Rule Service Configuration ({service name}.rsl) </h3>
+<pre>&lt;ruleService name="xs:string" tns="xs:string"&gt;
+    &lt;description&gt;xs:string&lt;/description&gt;
+    &lt;ruleset [ path="xs:string" ] [ key="xs:string" ]&gt;
+      In-Lined
+    &lt;/ruleset&gt;
+    &lt;operation name="xs:string"&gt; *
+        &lt;with-param type="xs:string"/&gt;*
+        &lt;result [ name="xs:string" ]&gt;
+            &lt;element type="xs:string"/&gt;*
+        &lt;/result&gt;
+    &lt;/operation&gt;
+&lt;/ruleService&gt;</pre>
+
+<p><p>RuleSet definition </p>
+
+<p>ruleset configuration is to specify the rule script which can be in the
+classpath, registry, or in-lined. </p>
+
+<p>Facts/Results definitions </p>
+
+<p>Facts/results configuration is should be specified per operation. Facts are
+used for formulating the facts to be inserted into the rule engine from the
+incoming message. These also are used in constructing in-message of the WSDL
+for a rule service. Results are used to extract the results of a rule engine
+execution and used in constructing out-message of the WSDL for a rule service.
+</p>
+
+<p>An example for a .drl for a rule service is shown bellow.</p>
+</p>
+
+<p>OrderApprovalService Rule Service Configuration -
+<strong>OrderApprovalService.drl</strong></p>
+<pre>&lt;ruleService name="OrderApprovalService"&gt;
+    &lt;description&gt;OrderApproval Service Description&lt;/description&gt;
+    &lt;ruleset path="conf/rules.drl"/&gt;
+    &lt;operation name="placeOrder"&gt;
+        &lt;with-param type="samples.userguide.PlaceOrder"/&gt;
+        &lt;result&gt;
+            &lt;element type="samples.userguide.OrderReject"/&gt;
+            &lt;element type="samples.userguide.OrderAccept"/&gt;
+        &lt;/result&gt;       
+    &lt;/operation&gt;
+&lt;/ruleService&gt;</pre>
+
+<p><h2 id="References">References</h2>
+
+</p>
+</body>
+</html>

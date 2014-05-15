@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<executionPlan name="sensorStreamProcessingPlan" statistics="disable"
+  trace="disable" xmlns="http://wso2.org/carbon/eventprocessor">
+  <description>It processes sensor stream</description>
+  <siddhiConfiguration>
+    <property name="siddhi.enable.distributed.processing">false</property>
+    <property name="siddhi.persistence.snapshot.time.interval.minutes">0</property>
+  </siddhiConfiguration>
+  <importedStreams>
+    <stream as="sensorInput" name="sensorInputEventStream" version="1.0.0"/>
+  </importedStreams>
+  <queryExpressions><![CDATA[from sensorInput[sensorId == "ID1"]
+select sensorId, sensorVersion, sensorValue
+insert into filteredSensorStream]]></queryExpressions>
+  <exportedStreams>
+    <stream name="filteredSensorStream" valueOf="filteredSensorStream" version="1.0.0"/>
+  </exportedStreams>
+</executionPlan>

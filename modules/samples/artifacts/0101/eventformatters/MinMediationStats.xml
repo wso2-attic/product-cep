@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventFormatter name="MinMediationStats" statistics="enable"
+  trace="disable" xmlns="http://wso2.org/carbon/eventformatter">
+  <from streamName="org.wso2.sample.out.mediation.stats" version="1.0.0"/>
+  <mapping type="wso2event" customMapping="disable"/>
+  <to eventAdaptorName="WSO2EventAdaptor" eventAdaptorType="wso2event">
+    <property name="stream">org.wso2.sample.out.mediation.stats</property>
+    <property name="version">1.0.0</property>
+  </to>
+</eventFormatter>

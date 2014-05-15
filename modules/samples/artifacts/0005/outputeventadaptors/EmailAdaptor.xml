@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outputEventAdaptor name="EmailAdaptor" statistics="disable"
+  trace="enable" type="email" xmlns="http://wso2.org/carbon/eventadaptormanager">
+  <property name="email.subject.default">Alert!</property>
+</outputEventAdaptor>

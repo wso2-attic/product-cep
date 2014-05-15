@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventBuilder name="PizzaDelivery" statistics="disable" trace="enable" xmlns="http://wso2.org/carbon/eventbuilder">
+    <from eventAdaptorName="WSEventLocalAdaptor" eventAdaptorType="ws-event-local">
+        <property name="topic">PizzaDelivery</property>
+    </from>
+    <mapping type="xml" customMapping="enable">
+        <xpathDefinition namespace="http://samples.wso2.org/" prefix="mypizza"/>
+        <property>
+            <from xpath="//mypizza:PizzaDelivery/mypizza:OrderNo"/>
+            <to name="correlation_OrderNo" type="int"/>
+        </property>
+        <property>
+            <from xpath="//mypizza:PizzaDelivery/mypizza:PaymentType"/>
+            <to default="cash" name="PaymentType" type="string"/>
+        </property>
+        <property>
+            <from xpath="//mypizza:PizzaDelivery/mypizza:Address"/>
+            <to name="Address" type="string"/>
+        </property>
+    </mapping>
+    <to streamName="org.wso2.sample.pizza.delivery" version="1.0.0"/>
+</eventBuilder>

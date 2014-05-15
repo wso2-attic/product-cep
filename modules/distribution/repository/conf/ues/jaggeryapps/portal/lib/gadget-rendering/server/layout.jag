@@ -1,0 +1,9 @@
+<%
+if (request.getMethod() == 'GET') {
+    response.contentType = 'application/json';
+    print(application.get('gadgetLayout'));
+} else if (request.getMethod() == 'POST') {
+    var layout = parse(request.getParameter('gadgetLayout'));
+    application.put('gadgetLayout', layout);
+}
+%>

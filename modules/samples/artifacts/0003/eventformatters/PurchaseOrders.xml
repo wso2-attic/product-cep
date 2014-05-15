@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventFormatter name="PurchaseOrders" statistics="disable" trace="enable" xmlns="http://wso2.org/carbon/eventformatter">
+  <from streamName="org.wso2.sample.purchase.orders" version="1.0.0"/>
+  <mapping type="xml" customMapping="enable">
+    <inline>
+      <purchaseOrder xmlns="http://wso2.org/carbon/purchaseOrder">
+        <cardId countryCode="{{countryCode}}">{{cardId}}</cardId>
+        <amount>{{amount}}</amount>
+      </purchaseOrder>
+    </inline>
+  </mapping>
+  <to eventAdaptorName="HttpEventAdaptor" eventAdaptorType="http">
+        <property name="http.username"/>
+        <property name="http.password"/>
+        <property name="http.headers"/>
+        <property name="http.url">http://localhost:9763/GenericLogService/log</property>
+  </to>
+</eventFormatter>

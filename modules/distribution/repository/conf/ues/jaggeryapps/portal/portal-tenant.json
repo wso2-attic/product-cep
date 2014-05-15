@@ -1,0 +1,14 @@
+{
+    "userSpace": "/_system/governance/users",
+    "roles": {
+        "Internal/portal": {
+            "/permission/admin/login": ["ui.execute"]
+        }
+    },
+    "userRoles": ["Internal/portal"],
+    "permissions": {
+        "login": {
+            "/permission/admin/login": ["ui.execute"]
+        }
+    }
+}

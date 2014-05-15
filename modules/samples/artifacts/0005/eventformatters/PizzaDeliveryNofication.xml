@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventFormatter name="PizzaDeliveryNofication" statistics="disable"
+  trace="enable" xmlns="http://wso2.org/carbon/eventformatter">
+  <from streamName="org.wso2.sample.pizza.order" version="1.0.0"/>
+  <mapping type="text" customMapping="enable">
+    <inline>Hi {{Contact}}, 
+
+Thanks you for purchasing {{Quantity}} {{Size}} {{Type}} pizza(s) from My Pizza.
+Your pizza will be delivered in 30 min to
+{{Address}}
+
+Thanks
+My Pizza
+
+</inline>
+  </mapping>
+  <to eventAdaptorName="EmailAdaptor" eventAdaptorType="email">
+    <property name="email.address">wso2cep.demo@gmail.com</property>
+    <property name="email.subject">My Pizza order received</property>
+  </to>
+</eventFormatter>

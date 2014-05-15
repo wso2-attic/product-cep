@@ -1,0 +1,10 @@
+org.wso2.carbon.event.builder.core_
+org.wso2.carbon.event.formatter.core_
+org.wso2.carbon.event.processor.core_
+org.wso2.carbon.event.statistics_
+org.wso2.carbon.event.tracer_
+org.wso2.carbon.input.transport.adaptor.core_
+org.wso2.carbon.output.transport.adaptor.manager.core_
+org.wso2.carbon.output.transport.adaptor.core_
+org.wso2.carbon.input.transport.adaptor.manager.core_
+org.wso2.carbon.event.processor.api_

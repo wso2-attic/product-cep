@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  ~  Copyright (c) 2009, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~  WSO2 Inc. licenses this file to you under the Apache License,
+  ~  Version 2.0 (the "License"); you may not use this file except
+  ~  in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing,
+  ~  software distributed under the License is distributed on an
+  ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~  KIND, either express or implied.  See the License for the
+  ~  specific language governing permissions and limitations
+  ~  under the License.
+  -->
+
+<project name="WSO2 Complex Event Processor">
+
+    <skin>
+        <groupId>org.apache.maven.skins</groupId>
+        <artifactId>maven-default-skin</artifactId>
+        <version>1.0</version>
+    </skin>
+
+    <body>
+        <links>
+            <item name="ESB" href="http://www.wso2.org/projects/esb/java"/>
+            <item name="WSAS" href="http://www.wso2.org/projects/wsas/java"/>
+            <item name="Registry" href="http://www.wso2.org/projects/registry"/>
+            <item name="Mashup Server" href="http://www.wso2.org/projects/mashup"/>
+            <item name="WSF" href="http://www.wso2.org/projects/wsf"/>
+            <item name="Axis2/Java" href="http://ws.apache.org/axis2"/>
+            <item name="WSO2.org" href="http://www.wso2.org/"/>
+        </links>
+
+        <menu name="Overview">
+            <item name="Home" href="index.html"/>
+            <item name="Release Note" href="release-notes.html"/>
+            <item name="License"
+                  href="http://www.apache.org/licenses/LICENSE-2.0.html"/>
+            <!--item name="Contents" href="docs_index.html"/-->
+        </menu>
+        <menu name="Downloads">
+            <item name="Releases"
+                  href="http://www.wso2.org/downloads/cep/"/>
+        </menu>
+        <menu name="Documentation">
+            <item name="Installation Guide" href="installation_guide.html"/>
+            <item name="User Guide" href="user_guide.html"/>
+            <item name="Administrator Guide" href="admin_guide.html"/>
+            <!--item name="Configuration Guide" href="configuration_language.html"/>
+            <item name="Developer Guide" href="developer_guide.html"/>
+            <item name="Extending cep" href="extensions_guide.html"/-->
+        </menu>
+        <menu name="Samples">
+            <!--item name="Samples Setup" href="samples_setup_guide.html"/-->
+            <item name="Samples Index" href="samples_index.html"/>
+        </menu>
+
+        <menu name="Resources">
+            <item name="FAQ's" href="faq.html"/>
+            <item name="Library" href="http://www.wso2.org/library/cep"/>
+            <item name="Features" href="http://www.wso2.org/projects/cep/java/features"/>
+            <item name="Source Code" href="http://www.wso2.org/svn"/>
+            <item name="Wiki" href="http://www.wso2.org/wiki/display/cepjava"/>
+        </menu>
+        <menu name="Community">
+            <item name="Forum" href="http://www.wso2.org/forum/975"/>
+            <item name="Mailing Lists" href="http://www.wso2.org/mail"/>
+        </menu>
+        <menu name="Project Info">
+            <item name="Issue Tracking" href="https://www.wso2.org/jira/browse/cep"/>
+        </menu>
+
+    </body>
+</project>

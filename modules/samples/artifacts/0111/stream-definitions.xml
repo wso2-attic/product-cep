@@ -1,0 +1,37 @@
+<streamDefinitions xmlns="http://wso2.org/carbon/databridge">
+    <streamDefinition>
+
+       {
+        "name":"apiRequestStream",
+        "version":"1.0.0",
+        "metaData":[
+        {"name":"api","type":"STRING"},
+        {"name":"api_version","type":"STRING"}
+        ],
+        "payloadData":[
+        {"name":"requestTime","type":"LONG"},
+        {"name":"apiPublisher","type":"STRING"},
+        {"name":"hostName","type":"STRING"}
+        ]
+        }
+    </streamDefinition>
+    <streamDefinition>
+
+    {
+        "name":"filteredAPIRequestStream",
+        "version":"1.0.0",
+        "metaData":[
+        {"name":"api","type":"STRING"},
+        {"name":"api_version","type":"STRING"}
+        ],
+        "payloadData":[
+        {"name":"requestTime","type":"LONG"},
+        {"name":"apiPublisher","type":"STRING"},
+        {"name":"hostName","type":"STRING"}
+        ]
+        }
+        
+        
+    </streamDefinition>
+
+</streamDefinitions>

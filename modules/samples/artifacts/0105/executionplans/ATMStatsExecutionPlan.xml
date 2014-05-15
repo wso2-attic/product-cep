@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<executionPlan name="ATMStatsExecutionPlan" statistics="disable"
+  trace="disable" xmlns="http://wso2.org/carbon/eventprocessor">
+  <description>This execution plan is used to identify the possible fraud trasaction</description>
+  <siddhiConfiguration>
+    <property name="siddhi.enable.distributed.processing">disabled</property>
+    <property name="siddhi.persistence.snapshot.time.interval.minutes">0</property>
+  </siddhiConfiguration>
+  <importedStreams>
+    <stream as="atmStatsStream" name="atmStatsStream" version="1.0.0"/>
+  </importedStreams>
+  <queryExpressions><![CDATA[from every a1 = atmStatsStream[amountWithdrawed < 100]
+-> b1 = atmStatsStream[amountWithdrawed > 10000 and a1.cardNo == b1.cardNo]
+within 1 day
+select a1.cardNo as cardNo, a1.cardHolderName as cardHolderName, b1.amountWithdrawed as amountWithdrawed, b1.location as location, b1.cardHolderMobile as cardHolderMobile
+insert into possibleFraudStream]]></queryExpressions>
+  <exportedStreams>
+    <stream name="possibleFraudStream" valueOf="possibleFraudStream" version="1.0.0"/>
+  </exportedStreams>
+</executionPlan>

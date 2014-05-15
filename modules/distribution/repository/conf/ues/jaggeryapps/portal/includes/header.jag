@@ -1,0 +1,112 @@
+<%
+var site_url = '/portal/';
+
+%>
+
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>User Engagement Center | WSO2</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<meta name="author" content="">
+
+		<!-- Le styles -->
+		<link href="<%=site_url%>css/bootstrap.css" rel="stylesheet">
+
+		<style type="text/css">
+			body {
+				padding-top: 80px;
+				padding-bottom: 40px;
+			}
+		</style>
+		<link href="<%=site_url%>css/bootstrap-responsive.css" rel="stylesheet">
+		<link href="<%=site_url%>css/font-awesome.css" rel="stylesheet">
+		<link href="<%=site_url%>css/font-awesome-ie7.css" rel="stylesheet">
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="<%=site_url%>css/jslider.css" type="text/css">
+		<link rel="stylesheet" href="<%=site_url%>css/jslider.round.plastic.css" type="text/css">
+		<link rel="stylesheet" href="<%=site_url%>css/jquery.gridster.min.css" type="text/css">
+		<link href="<%=site_url%>css/styles.css" rel="stylesheet">
+
+<%
+		if(styles){
+			
+			for(var i=0; i<styles.length; i++){
+				print('<link href="' + site_url + styles[i] + '" rel="stylesheet">');
+			}
+		}
+%>
+		
+		<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+		<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+
+		<!-- Fav and touch icons -->
+		<link rel="shortcut icon" href="ico/favicon.ico">
+		<link rel="apple-touch-icon-precomposed" sizes="144x144" href="<%=site_url%>ico/apple-touch-icon-144-precomposed.png">
+		<link rel="apple-touch-icon-precomposed" sizes="114x114" href="<%=site_url%>ico/apple-touch-icon-114-precomposed.png">
+		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="<%=site_url%>ico/apple-touch-icon-72-precomposed.png">
+		<link rel="apple-touch-icon-precomposed" href="<%=site_url%>ico/apple-touch-icon-57-precomposed.png">
+	</head>
+
+	<body>
+
+		<div class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a>
+					<a class="brand" href="<%=site_url%>"><img src="<%=site_url%>img/logo.png"></a>
+					<div class="nav-collapse collapse">
+						<ul class="nav pull-right nav-samples">
+							<li><a href="../store">Store</a></li>
+							<li><a data-toggle="modal" data-target="#modal-login" href="#">Login</a></li>
+							
+							<li><a href="register.jag">Register</a></li>
+						</ul>
+					</div><!--/.nav-collapse -->
+				</div>
+			</div>
+		</div>
+
+<!-- Modal -->
+<div id="modal-login" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="publishModalLabel" aria-hidden="true">
+	
+	<div class="modal-body">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+			<i class="icon-remove"></i>
+		</button>
+		
+		<div>
+			<form action="" method="post">
+								<fieldset>
+									<legend>
+										Login
+									</legend>
+									    <div id="login-alert" class="alert alert-error">
+									    
+									    </div>
+    
+									<input id="inp-username" type="text" name="username" class="span3" placeholder="Username">
+									<input id="inp-password" type="password" name="password" class="span3" placeholder="Password">
+                                    <input id="inp-path" type="hidden" name="path" value="<%=request.getParameter('path')%>">
+									<span class="help-block"><a href="#">Forgot your password?</a></span>
+									<label class="checkbox">
+										<input type="checkbox">
+										Remember me </label>
+									<hr>
+									
+									<a href="#" id="btn-login" class="btn btn-primary">
+										Login
+									</a>
+
+								</fieldset>
+							</form>
+		</div>
+	</div>
+</div>
+
+

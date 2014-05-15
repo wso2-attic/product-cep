@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inputEventAdaptor name="SoapInputAdaptor" statistics="disable"
+  trace="enable" type="soap" xmlns="http://wso2.org/carbon/eventadaptormanager"/>

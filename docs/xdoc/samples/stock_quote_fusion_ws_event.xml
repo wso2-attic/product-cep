@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+~ Copyright (c) 2009, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+~
+~ WSO2 Inc. licenses this file to you under the Apache License,
+~ Version 2.0 (the "License"); you may not use this file except
+~ in compliance with the License.
+~ You may obtain a copy of the License at
+~
+~ http://www.apache.org/licenses/LICENSE-2.0
+~
+~ Unless required by applicable law or agreed to in writing,
+~ software distributed under the License is distributed on an
+~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+~ KIND, either express or implied. See the License for the
+~ specific language governing permissions and limitations
+~ under the License.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+  <title>WSO2 CEP Samples - Stock Quote Analyzer with Fusion engine and ws-event broker</title>
+  <link href="../css/cep-docs.css" rel="stylesheet" />
+  <link href="../styles/dist-docs.css" rel="stylesheet" type="text/css"
+  media="all" />
+</head>
+
+<body>
+<p>[<a href="../docs_index.html">Documentation Index</a>]
+<h1>WSO2 CEP - Samples : Stock Quote Analyzer with Fusion engine and ws-event broker</h1>
+
+<p>This guide demonstrates a sample on analyzing stream of stock quotes with using Fusion engine and 
+ws-event broker</p>
+
+<p>Please follow the <a href="../user_guide.html">User Guide</a> before proceeding with this sample, if you have
+not already followed the <a href="../user_guide.html">User Guide</a>. </p>
+
+<h2>Contents</h2>
+
+<div class="toc">
+<ul>
+  <li><a href="#StockQuote_Fusion_WSEvent">Stock Quote Analyzer with Fusion engine and ws event broker</a> </li>
+  <li><a href="#References">References</a> </li>
+</ul>
+</div>
+
+<h2 id="StockQuote_Fusion_WSEvent">Stock Quote Analyzer with Fusion Back End Runtime and ws event broker</h2>
+
+<p>Stock Quote sample is based on Stock Quotes of any Stock Exchange. Before creating the bucket to filter stock quotes it is essential
+to have a Carbon broker. Since In this example we are going to use WS Event Broker, it is needed to create a broker with type WS-Event.
+</p>
+
+
+<p>***Note : You need to start a separate instance of messaging server with different port from 9443 to run the bucket with ws-event-broker.
+ Here in this sample we are providing you to start wso2 message broker on port 9444.</p>
+
+ <h4>Configuring WSO2 Message Broker on port 9444</h4>
+
+    <pre xml:space="preserve">
+
+        Step 1: Get a copy of WSO2 Message Broker and extract
+
+        Step 2: Open the file "carbon.xml" in the location repository/conf
+
+        Step 3: change the Offset in ports to "1" in the entry
+
+                &lt;Offset>0&lt;/Offset>
+
+                Correct entry should be as follows
+
+                 &lt;Offset>1&lt;/Offset>
+
+
+        Step 4: Save the file and close.
+
+        Step 5: Start the server
+    </pre>
+    
+
+<h4>Creating a ws-event-broker</h4>
+    <pre xml:space="preserve">
+Step 1 :
+    Start CEP Server and log in as admin
+Step 2 :
+    In the Configure menu you can find a Menu item called Broker and under that you can see sub menu 'Add' and click on that
+Step 3 :
+    You will get a page with header "Create a New Broker" and you need to enter following details in that form to create a ws-event broker
+
+    Broker Name : wsEventBroker
+    Broker Type : ws-event
+    URI         : https://localhost:9444/services/EventBrokerService (You need to start the above configure WSO2 MB server on port 9444 to have this URI)
+    UserName    : admin
+    Password    : admin
+
+    Finally click on Add Broker button and you will get the added broker to the list of available brokers
+</pre>
+<p><img src="../images/ws_event_broker.png"
+alt="CEP Create WS Event Broker" /> </p>
+
+
+<h3>Creating Bucket</h3>
+
+<p>In Manage Menu Section , you will find the menu "CEP Buckets" and you will find all the available buckets, if you click on List menu and You will
+be able to create a new bucket , when you click on add menu item.
+</p>
+
+<pre xml:space="preserve">
+When creating a bucket there are three stages :
+State 1 : Create bucket with bucket Name, Description and Engine provider
+State 2 : Create bucket with bucket Name, Description ,Engine provider and Inputs
+State 3 : Create bucket with bucket Name, Description ,Engine provider ,Inputs and Queries
+</pre>
+
+<p>
+In any of the above stages, if you click on save button , It will save to back end and user will be able to see the created bucket in the bucket list.
+Apart from that the created bucket will be saved to the Configuration registry under "CEPBuckets" tree.
+</p>
+
+<p>
+If the user save the bucket in state 1 or state 2, he/she is able to add Inputs , Queries to the bucket at later time.
+
+To create bucket with Fusion you need to enter following details :
+</p>
+
+<h4>State 1 - Basic Bucket Information</h4>
+<pre xml:space="preserve">
+Bucket Name (Name of the bucket) 		: StockQuoteAnalyzer
+Description (Description about the bucket) 	: This bucket analyzes stock quotes and trigger an event if the last
+						  traded amount vary by 2 percent with regards to the average traded
+						  price within past 2 minutes.
+Engine Provider(CEP Runtime engine to be used)  : DroolsFusionCEPRuntime  [Choose from the drop down]
+</pre>
+<p><img src="../images/cep-bucket-state1.png"
+alt="CEP Create Bucket -State 1" /> </p>
+<h4>State 2 - Defining Inputs </h4>
+<pre xml:space="preserve">
+ Click on Add Input link and it will provide a form to define inputs. You can define the sample input by entering following values
+
+
+Topic( topic to events be received) 			: AllStockQuotes
+Broker Name (Broker to be used)     			: wsEventBroker
+Mapping Stream (Name of the event stream)		: allStockQuotes
+
+-Defining xpaths (Defining the )
+  XpathDefinition (xpath prefixes and NS)-Prefix	: quotedata
+  XpathDefinition (xpath prefixes and NS)-Namespace	: http://ws.cdyne.com/
+
+**Note : Click on add button to add the defined xpath top input and it will be appeared in the xpath definitions table once it added
+
+
+-Defining input properties (these properties will be extracted from the received xml event and fed to the CEP engine)
+  Property  -	Name	: symbol
+		xpath 	: //quotedata:StockQuoteEvent/quotedata:StockSymbol
+		type	: java.lang.String [Choose from the dropdown ]
+
+**Note : Click on add button to add the defined property to the input and it will be appeared in the Properties table once it added
+
+  Property	Name	: price
+		xpath	: //quotedata:StockQuoteEvent/quotedata:LastTradeAmount
+		type    : java.lang.Double [Choose from the dropdown]
+
+**Note : Click on add button to add the defined property to the input and it will be appeared in the Properties table once it added
+
+
+*** Note : After filling all required fields click on the add button to add Input to the Bucket. Once you clicked it will disappear the
+input form and added input will be appeared in Inputs table. 
+</pre>
+<p><img src="../images/add_input_ws_event.png"
+alt="CEP Create Bucket -State 2" /> </p>
+<h4>Stage 3 - Defining Queries </h4>
+<p>
+Query Name (To identify the query)			: FastMovingStocksDetector
+</p>
+<p>
+**Note : We have provided two ways to provide a query expression.
+	1. Inlined  - User can type the query in the provided space
+	2. Registry - User can browse the registry by clicking on the provided registry browser and select the query expression from
+		      registry.(Before browsing the registry to get this from the registry , user needs to store the query in registry)
+</p>
+<pre xml:space="preserve">
+Expression (Can be type inline or can get from registry):
+							package org.wso2.carbon.cep.fusion;
+							import java.util.HashMap;
+							global org.wso2.carbon.cep.fusion.listener.FusionEventListener fusionListener;
+							declare HashMap
+							@role( event )
+							end
+							rule Invoke_Stock_Quotes
+							when
+							    $stockQuote : HashMap($symbol : this["symbol"], $stockPrice : this["price"], this["picked"] != "true") over
+								window:time(2m) from entry-point "allStockQuotes";
+							    $average : Double() from accumulate(HashMap(this["symbol"] == $symbol,$price : this["price"]) over window:time(2m) from entry-point 								"allStockQuotes" , average( $price));
+							    eval((Double)$stockPrice > $average * 1.01);
+							then
+							    $stockQuote.put("picked","true");
+							    update($stockQuote);
+							    HashMap $fastMovingStock = new HashMap();
+							    $fastMovingStock.put("price",$stockPrice);
+							    $fastMovingStock.put("symbol",$symbol);
+							    $fastMovingStock.put("average",$average);
+							    fusionListener.onEvent($fastMovingStock);
+							end
+
+
+Defining the Output :
+         Here we are defining the topic which filtered events are published and the structure of the output xml event
+
+    Topic(topic which filtered event published)		: FastMovingStockQuotes
+    BrokerName (Broker to be used)			: wsEventBroker
+
+**Note : There are two possible ways to define output event
+	1.XML Mapping - User can provide the full output xml element to be fired with this. When there are required fields to be filled with filtered values, names of those values
+			should be provided within curly brackets and CEP Server will identify them and replace with the filtered values.
+	2.Element Mapping - User can create the format of the output xml element by providing properties and their types.
+
+    xml Mapping (Output XML Element- Parameteres which are needed to be replaced with filtered vales are given in curly brackets)
+							:	&lt;quotedata:StockQuoteDataEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+								xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+								xmlns:quotedata="http://ws.cdyne.com/">
+									&lt;quotedata:StockSymbol>{symbol}&lt;/quotedata:StockSymbol>
+									&lt;quotedata:AvgLastTradeAmount>{average}&lt;/quotedata:AvgLastTradeAmount>
+									&lt;quotedata:LastTradeAmount>{price}&lt;/quotedata:LastTradeAmount>
+								&lt;/quotedata:StockQuoteDataEvent>
+
+
+*** Note : After filling all the required fields of the Query , click on add query button to add Query to the bucket. Once you clicked it will disappear the
+	query form and added query will be appeared in Queries table. 
+
+
+
+**** Note : As the last step of adding a bucket , click on save button. Once you clicked it will redirect to the deployed buckets page and deployed
+	bucket will be appeared in buckets table. Further to check whether you have entered the details correctly you can
+	click on the link with the defined bucket and it will show added details. You can come back to the previous adding bucket page by
+	clicking on the back button provided or if needed to edit the bucket you can click on the "Edit" link on the top of the View bucket Page.
+
+</pre>
+<p><img src="../images/add_query_wsEvent_fusion.png"
+alt="CEP Create Bucket -State 3" /> </p>
+
+    <h2>Invoking Deployed Bucket</h2>
+
+    <p> When the bucket is successfully deployed, a subscription to the input topic will be automatically created within the Message Broker server that
+        you started on port 9444.In this case name of that topic will be "AllStockQuotes".You can check it by
+        browsing the subscriptions page of that cep server. You can check it by browsing the subscriptions page of that Message Broker server.
+        The topic of this subscription can be used to send the input event stream to CEP engine.</p>
+
+    <h3>Defining output subscriber</h3>
+
+      <h4>Standalone Mode </h4>
+    <p>
+    When the user send events to CEP engine with this service, there should be a subscriber to the output topic given, when configuring the query of the bucket,
+    to receive filtered events from the complex event processing engine. So before send events to the engine we need to have an axis2 service deployed which
+    prints received string to the console. Then create a subscription to the output topic , with providing the URL of the axis2 service as the subscription
+    URL.
+    </p>
+    <p>You can find the source sample axis2 service "EventSinkService" in  the location : /samples/services/EventSinkService in the server
+    that you started on port 9444 </p>
+
+     <p>  go in to this folder and execute the following command : "ant"</p>
+
+    <p>When you done this , it will place  "EventSinkService.aar" file in the  location:</p>
+
+    <p>/repository/deployment/server/axis2services/</p>
+
+    <p> Now create a subscription to the output topic defined when configuring the bucket</p>
+
+    <h4>Stratos Mode </h4>
+
+    <p>In stratos mode , All the topic creations are same other than the "Event Sink URL"</p>
+
+    <p>Here the Event Sink URL should be to the message box you created above.</p>
+
+    <p>this url prepares as follows : sqs://loggedInUserName+/+MessageBoxName </p>
+
+    <p>If my username is "foo" and my message box name is "bar" then the event sink URL
+    should be as follows;</p>
+
+    <p>sqs://foo/bar</p>
+
+    <p>So provide the EventSinkURL appropriately.</p>
+
+    <p>Specifically , if you have logged in as shammi@brs.com and my messagebox name is "FastMovingStocks"
+    , then Event Sink URL would be;  </p>
+
+     <p>sqs://shammi/FastMovingStocks</p>
+
+    <p>You can test whether this is working fine by publishing a XML element to publish section and
+    check the message box.
+    </p>
+
+
+
+
+
+
+    <h3>Creating topic and subscribing </h3>
+            <p>In order to subscribe, you need to create a topic.</p>
+            <pre xml:space="preserve">
+                Step 1: Click on "Add" menu item under "Topics" Menu in Manage section of the left panel
+
+                <p><img src="../images/wsEvent_add_topic.png"
+        alt="Add Topic" /> </p>
+                Step 2: Specify the topic name in the provided text box , in this case topic name is : "FastMovingStockQuotes"
+                        and click on 'Add Topic' button. This will add the topic to the server and you will be directed to the
+                        Topic Browser page.
+                <p><img src="../images/wsEvent_topic_browser.png"
+        alt="Topic Browser" /> </p>
+                Step 2: Once you click on the topic in topic browser page you will be able see four links as in the above image.
+                        Click in the subscribe link and you will be directed to Subscribe page.
+
+                <p><img src="../images/wsEvent_subscribe.png"
+        alt="Subscribe" /> </p>
+
+                Step 3: Create subscription with following details, Once you click on the "Subscribe" button, you will be
+                        directed to the Topic Browser page.
+
+                 topic              : FastMovingStockQuotes  (Output topic)
+                 subscription mode  : Topic only
+                 subscription URL   : http://localhost:9764/services/EventSinkService/getOMElement
+                 expiration Time    : select a future date from calender
+
+                Step 4 : You can verify whether you have correctly subscribe to the topic by click on "Details" link of that topic
+                        in topic browser page. Once you click on that , you will be directed to the "topic details " page and there
+                        you will find all the subscriptions for that topic and its children (if exists) and permission on that topic.
+
+                        Apart from that with the publish section, you can publish a test xml message to that topic and check whether
+                        it is received to you subscription URL.
+
+                 <p><img src="../images/wsEvent_topic_details.png"
+        alt="Topic Details" /> </p>
+
+            </pre>
+
+  
+   
+
+    
+    <h3>Sending events to CEP Engine</h3>
+    <p>
+    There are two possible ways that can be used to send input events using this axis2 service.
+    </p>
+    <ul>
+      <li>Sending events directly to the axis2 service with the use of Java client.</li>
+       <li>Subscribe to a topic with the axis2 service URL and send events to that topic via a client or Publish feature in Topic details.</li>
+    </ul>
+
+
+    <h4>Sending events directly to the axis2 service</h4>
+    <p> The sample client that used in the previous sample can be used to test this also. The only thing you need to do is replace
+       " serviceClient.setTargetEPR(new EndpointReference("http://localhost:9763/services/localBrokerService/AllStockQuotes"));" line with 
+        "serviceClient.setTargetEPR(new EndpointReference("http://localhost:9763/services/wsEventBrokerService/AllStockQuotes"));"
+   </p>
+
+    <p>When you run the client, if you have subscribed correctly to the output topic of the query, you will be able to see the filtered events in the console
+     of the Message Broker started on port 9444. Output events will be same as previous test scenario.
+    </p>
+   
+    <h4>Subscribe to a topic with the axis2 service URL and send events to that topic via a client or Publish feature in Topic details</h4>
+
+
+    <p>Invoking the deployed bucket via Publish feature can be tested as bellow. You have to use the server on port 9444 for this </p>
+
+    <p>When you browse the topics, you can find two topics in the topics list of that server. </p>
+                    <p> 1. AllStockQuotes -  this topic can be used to publish events to CEP bucket that created recently</p>
+                    <p> 2. FastMovingStockQuotes -  this topic can be used to receive events from CEP bucket </p>
+
+    <p>     Click on the Topic "AllStockQuotes" and it will display for links and click in the 'Details' link. It will direct you to "Topic Details" page.
+            On that page you can find 'Publish' Section and you can place your XML message in the provided space
+            and click on 'Publish' button to publish message to the topic.</p>
+
+     <p>Sample Inputs : Publish following xml elements ONE by ONE ,
+   </p>
+   <pre xml:space="preserve">
+   &lt;quotedata:AllStockQuoteStream xmlns:quotedata="http://ws.cdyne.com/">
+                       &lt;quotedata:StockQuoteEvent>
+                 &lt;quotedata:StockSymbol>MSFT&lt;/quotedata:StockSymbol>
+                 &lt;quotedata:LastTradeAmount>99.55&lt;/quotedata:LastTradeAmount>
+                 &lt;quotedata:StockChange>0.05&lt;/quotedata:StockChange>
+                 &lt;quotedata:OpenAmount>25.05&lt;/quotedata:OpenAmount>
+                 &lt;quotedata:DayHigh>25.46&lt;/quotedata:DayHigh>
+                 &lt;quotedata:DayLow>25.01&lt;/quotedata:DayLow>
+                 &lt;quotedata:StockVolume>20452658&lt;/quotedata:StockVolume>
+                 &lt;quotedata:PrevCls>25.31&lt;/quotedata:PrevCls>
+                 &lt;quotedata:ChangePercent>0.20&lt;/quotedata:ChangePercent>
+                 &lt;quotedata:FiftyTwoWeekRange>22.73 - 31.58&lt;/quotedata:FiftyTwoWeekRange>
+                 &lt;quotedata:EarnPerShare>2.326&lt;/quotedata:EarnPerShare>
+                 &lt;quotedata:PE>10.88&lt;/quotedata:PE>
+                 &lt;quotedata:CompanyName>Microsoft Corpora&lt;/quotedata:CompanyName>
+                 &lt;quotedata:QuoteError>false&lt;/quotedata:QuoteError>
+                       &lt;/quotedata:StockQuoteEvent>
+                   &lt;/quotedata:AllStockQuoteStream>
+
+
+   &lt;quotedata:AllStockQuoteStream xmlns:quotedata="http://ws.cdyne.com/">
+                       &lt;quotedata:StockQuoteEvent>
+                 &lt;quotedata:StockSymbol>MSFT&lt;/quotedata:StockSymbol>
+                 &lt;quotedata:LastTradeAmount>101.36&lt;/quotedata:LastTradeAmount>
+                 &lt;quotedata:StockChange>0.05&lt;/quotedata:StockChange>
+                 &lt;quotedata:OpenAmount>25.05&lt;/quotedata:OpenAmount>
+                 &lt;quotedata:DayHigh>25.46&lt;/quotedata:DayHigh>
+                 &lt;quotedata:DayLow>25.01&lt;/quotedata:DayLow>
+                 &lt;quotedata:StockVolume>20452658&lt;/quotedata:StockVolume>
+                 &lt;quotedata:PrevCls>25.31&lt;/quotedata:PrevCls>
+                 &lt;quotedata:ChangePercent>0.20&lt;/quotedata:ChangePercent>
+                 &lt;quotedata:FiftyTwoWeekRange>22.73 - 31.58&lt;/quotedata:FiftyTwoWeekRange>
+                 &lt;quotedata:EarnPerShare>2.326&lt;/quotedata:EarnPerShare>
+                 &lt;quotedata:PE>10.88&lt;/quotedata:PE>
+                 &lt;quotedata:CompanyName>Microsoft Corpora&lt;/quotedata:CompanyName>
+                 &lt;quotedata:QuoteError>false&lt;/quotedata:QuoteError>
+                       &lt;/quotedata:StockQuoteEvent>
+                   &lt;/quotedata:AllStockQuoteStream>
+
+   &lt;quotedata:AllStockQuoteStream xmlns:quotedata="http://ws.cdyne.com/">
+                       &lt;quotedata:StockQuoteEvent>
+                 &lt;quotedata:StockSymbol>MSFT&lt;/quotedata:StockSymbol>
+                 &lt;quotedata:LastTradeAmount>99.98&lt;/quotedata:LastTradeAmount>
+                 &lt;quotedata:StockChange>0.05&lt;/quotedata:StockChange>
+                 &lt;quotedata:OpenAmount>25.05&lt;/quotedata:OpenAmount>
+                 &lt;quotedata:DayHigh>25.46&lt;/quotedata:DayHigh>
+                 &lt;quotedata:DayLow>25.01&lt;/quotedata:DayLow>
+                 &lt;quotedata:StockVolume>20452658&lt;/quotedata:StockVolume>
+                 &lt;quotedata:PrevCls>25.31&lt;/quotedata:PrevCls>
+                 &lt;quotedata:ChangePercent>0.20&lt;/quotedata:ChangePercent>
+                 &lt;quotedata:FiftyTwoWeekRange>22.73 - 31.58&lt;/quotedata:FiftyTwoWeekRange>
+                 &lt;quotedata:EarnPerShare>2.326&lt;/quotedata:EarnPerShare>
+                 &lt;quotedata:PE>10.88&lt;/quotedata:PE>
+                 &lt;quotedata:CompanyName>Microsoft Corpora&lt;/quotedata:CompanyName>
+                 &lt;quotedata:QuoteError>false&lt;/quotedata:QuoteError>
+                       &lt;/quotedata:StockQuoteEvent>
+                   &lt;/quotedata:AllStockQuoteStream>
+
+   </pre>
+    <p>When you publish the given sample xml elements one by one, you will get the output you got in previous sample in the server you started on port 9444. </p>
+
+<h2 id="References">References</h2>
+</p>
+</body>
+</html>

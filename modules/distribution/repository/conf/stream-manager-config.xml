@@ -1,0 +1,37 @@
+<streamManagerConfiguration xmlns="http://wso2.org/carbon/streammanager">
+
+    <!--<streamDefinition name="stream1" version="1.0.0">
+         <description>Test</description>
+         <nickName>nick name for stream</nickName>
+         <metaData>
+             <property name="meta1" type="String"/>
+             <property name="meta2" type="String"/>
+         </metaData>
+         <correlationData>
+             <property name="correlation1" type="String"/>
+             <property name="correlation2" type="String"/>
+         </correlationData>
+         <payloadData>
+             <property name="payload1" type="String"/>
+             <property name="payload2" type="String"/>
+         </payloadData>
+     </streamDefinition> -->
+
+    <!--<streamDefinition name="stream2" version="1.0.0">
+         <description>Test</description>
+         <nickName>nick name for stream</nickName>
+         <metaData>
+             <property name="meta1" type="String"/>
+             <property name="meta2" type="String"/>
+         </metaData>
+         <correlationData>
+             <property name="correlation1" type="String"/>
+             <property name="correlation2" type="String"/>
+         </correlationData>
+         <payloadData>
+             <property name="payload1" type="String"/>
+             <property name="payload2" type="String"/>
+         </payloadData>
+     </streamDefinition> -->
+
+</streamManagerConfiguration>

@@ -1,0 +1,53 @@
+<brokerManagerConfiguration xmlns="http://wso2.org/carbon/brokermanager">
+
+    <brokerConfiguraton name="localBroker" type="local"/>
+
+    <brokerConfiguraton name="activemqJmsBroker" type="jms">
+        <property name="jndiName">org.apache.activemq.jndi.ActiveMQInitialContextFactory</property>
+        <property name="username">admin</property>
+        <property name="password">admin</property>
+        <property name="providerUrl">tcp://localhost:61616</property>
+    </brokerConfiguraton>
+
+    <!--<brokerConfiguraton name="wsEventBroker" type="ws-event">
+         <property name="uri">https://localhost:9444/services/EventBrokerService</property>
+         <property name="username">admin</property>
+         <property name="password">admin</property>
+    </brokerConfiguraton>-->
+
+    <brokerConfiguraton name="localAgentBroker" type="agent">
+        <property name="receiverURL">tcp://localhost:7611</property>
+        <property name="authenticatorURL">ssl://localhost:7711</property>
+        <property name="username">admin</property>
+        <property name="password">admin</property>
+    </brokerConfiguraton>
+
+    <brokerConfiguraton name="externalAgentBroker" type="agent">
+        <property name="receiverURL">tcp://localhost:7661</property>
+        <property name="authenticatorURL">ssl://localhost:7761</property>
+        <property name="username">admin</property>
+        <property name="password">admin</property>
+    </brokerConfiguraton>
+
+    <!--Broker configuration for email broker-->
+    <brokerConfiguraton name="emailBroker" type="e-mail">
+        <property name="defaultSubject">Message from WSO2CEP</property>
+    </brokerConfiguraton>
+
+
+    <brokerConfiguraton name="???" type="cassandra">
+        <property name="ClusterName">???</property>
+        <property name="Hostname">localhost</property>
+        <property name="Port">???</property>
+        <property name="UserName">admin</property>
+        <property name="Password">admin</property>
+        <property name="IndexAllColumns">true</property>
+    </brokerConfiguraton>
+
+
+</brokerManagerConfiguration>
+
+
+
+
+

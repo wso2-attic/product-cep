@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+  ~  Copyright (c) 2009, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~  WSO2 Inc. licenses this file to you under the Apache License,
+  ~  Version 2.0 (the "License"); you may not use this file except
+  ~  in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing,
+  ~  software distributed under the License is distributed on an
+  ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~  KIND, either express or implied.  See the License for the
+  ~  specific language governing permissions and limitations
+  ~  under the License.
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta content="text/html; charset=iso-8859-1" http-equiv="content-type" />
+  <title>WSO2 CEP - Extending</title>
+  <link href="css/cep-docs.css" rel="stylesheet" />
+  <link href="styles/dist-docs.css" rel="stylesheet" type="text/css"
+  media="all" />
+</head>
+
+<body>
+<p>[ <a href="docs_index.html">Documentation Index</a> ] 
+<h1>Extending WSO2 Complex Event Processor (CEP)</h1>
+
+<p>This document explains extensibility points CEP provides.</p>
+
+<h2>Contents</h2>
+
+<div class="toc">
+<ul>
+  <li><a href="#Writing">Writing Adapters</a> </li>
+  <li><a href="#Adding">Adding New Rule Engines</a> </li>
+  <li><a href="#Integration">Integrating with Other Systems</a> </li>
+</ul>
+</div>
+
+<h2 id="Writing">Writing Adapters</h2>
+
+<p>There are two categories of adapters: fact adapters and result adapters.</p>
+
+<h3>Use Cases</h3>
+
+<p>Fact adapter can be used to populate facts from the incoming message in
+custom ways. A few use cases are shown bellow. <ol>
+  <li>JMS object message - If the facts are come as JMS object message, then,
+    there is no way for standard POJO adapter to extract Java objects from the
+    Object Message. </li>
+  <li>JMS Map message - The use case is same as the JMS object message </li>
+  <li>Custom POJO adapters - May be your own one or some adapter based on
+    library such as XStream </li>
+  <li>Some rule engine may support DOM as facts and therefore a DOM fact
+    adapter may be useful. </li>
+</ol>
+
+<p>Use cases for the result adapters can be derived form the above same use
+cases. For example, the results may be required to send using JMS object
+messages</p>
+</p>
+
+<p><strong>Fact Adapter</strong> </p>
+
+<p>Fact adapter is to convert a given object to a specific type. E.g.: POJO
+adapter converts an XML into a POJO fact. Fact adapter should implement
+<strong>Input Adaptable</strong> Interface </p>
+</p>
+<pre>/**
+ * Adapts the given object based on the resource description. Note here that the given 'tobeAdapted' is
+ * data and only need to convert that into the correct target type.
+ */
+public interface InputAdaptable {
+
+    /**
+     * Converts the provided object into the object type defined in the resource description
+     *
+     * @param resourceDescription Input ResourceDescription
+     * @param tobeAdapted         The final calculated value ,
+     *                            only need to convert that into correct type
+     * @return Converted object representing expected type
+     */
+    Object adaptInput(ResourceDescription resourceDescription,
+                      Object tobeAdapted);
+}</pre>
+
+<p><p><strong>Result Adapter</strong> </p>
+
+<p>Result Adapter is to process results from the rule execution and enrich the
+message with results. E.g.: POJO adapter covert POJOs into XML and enrich the
+message with those XML. Result Adapter should implement <strong>Output
+Adaptable</strong> Interface </p>
+</p>
+<pre>/**
+ * Adapts a result based on output description. Before call for adapt ,
+ * it is recommended to explicitly checks for whether result can be adapted or not
+ */
+
+public interface OutputAdaptable {
+
+    /**
+     * Adapts the result according to the corresponding output description. The result of adaptation
+     * is put into the context based on the information in the output description.
+     *
+     * @param description        Output ResourceDescription
+     * @param result             Result from the engine
+     * @param context            the context to be used for looking up resources
+     * @param messageInterceptor a helper class to locate resources from given context
+     * @return True if Successfully adapt
+     */
+    boolean adaptOutput(ResourceDescription description,
+                        Object result,
+                        Object context,
+                        MessageInterceptor messageInterceptor);
+
+    /**
+     * Explicitly checks for whether result can be adapted or not
+     *
+     * @param description Output ResourceDescription
+     * @param output      Result from the engine
+     * @return True if it is possible to successfully adapt
+     */
+    boolean canAdaptOutput(ResourceDescription description,
+                           Object output);
+
+    /**
+     * Adapts the result according to the corresponding output description.
+     *
+     * @param description information about target object
+     * @param result      the object to be adapted
+     * @return Adapted Object
+     */
+    public Object adaptOutput(ResourceDescription description, Object result);
+}</pre>
+
+<p><p>Any Adapter to be an adapter it should implements
+<strong>ResourceAdapter</strong> interface </p>
+</p>
+<pre>/**
+ * Resources Adapter - This can be adapted input or output. It is needed to tell what can adapt
+ * using OutputAdaptable, InputAdaptable , etc.
+ */
+public interface ResourceAdapter {
+
+    /**
+     * Type of  the resource that this adapter responsible for adapt. For an input, the type is the target type
+     * for an output , it is a type of the source
+     *
+     * @return Resource type
+     */
+    String getType();
+}</pre>
+
+<p>Adapters can be registered through rule-component .conf. Please refer
+configuration guide for more information 
+<h2 id="Adding">Adding New Rule Engines</h2>
+
+<p>New Rule engine can be added and there are two ways for doing it.</p>
+
+<p><strong>JSR 94</strong> </p>
+
+<p>If the rule engine provides JSR 94 implementation, it can be registered as
+follows in the rule-component.conf </p>
+
+<p><strong>Our API</strong> </p>
+
+<p>We are providing a simple API consisting with two interfaces:
+<strong>RuleBackendRuntime</strong>
+and<strong>RuleBackendRuntimeFactory</strong>. This is somewhat analog to what
+JSR 94 is doing. However, this is simple API and provides functions required
+for WSO2 BRS. This also enables to use native rule engine API that in turn
+allows doing more optimization, offer functionalities, and takes advantage of
+new functions offered by the rule engine, which are provided only through the
+native API. We have not control with JSR 94 API implementations. However, we
+have control over our API. </p>
+
+<p><strong>RuleBackendRuntime</strong> </p>
+</p>
+<pre>/**
+ * Encapsulates the rule service provider or the engine implements a rule engine. This adapts an
+ * existing rule engine implementation.
+ * &lt;p/&gt;
+ * This class exposes functionality required to create a rule execution set, a session associated
+ * with a rule execution set and  remove a registered execution set. Furthermore, this provide a
+ * way to destroy underlying rule engine.
+ */
+public interface RuleBackendRuntime {
+
+    /**
+     * Registers a rule set. The rule set should be given in the RuleSetDescription as the rule source.
+     * Within this method , an executable rule set is created and registered with the rule engine
+     *
+     * @param description information about the rule set
+     * @return Registered URI of the rule set
+     */
+    public String addRuleSet(RuleSetDescription description);
+
+    /**
+     * Create a session based on the given SessionDescription. The session can be stateful or stateless
+     *
+     * @param sessionDescription information about the session to be created
+     * @return a valid &lt;code&gt;Session&lt;/code&gt; object, either stateful or stateless
+     */
+    public Session createSession(SessionDescription sessionDescription);
+
+    /**
+     * Removed a already registered rule set
+     *
+     * @param description information about the rule set to be removed
+     */
+    public void removeRuleSet(RuleSetDescription description);
+
+    /**
+     * Cleanup any resources used by the rule engine
+     */
+    public void destroy();
+}</pre>
+
+<p><p><strong>RuleBackendRuntimeFactory</strong> </p>
+</p>
+<pre>/**
+ * A factory for creating a RuleBackendRuntime. This should provide a properly initiated
+ * RuleBackendRuntime instance. It is recommended to use this class as the only means for creating
+ * RuleBackendRuntime instances
+ */
+public interface RuleBackendRuntimeFactory {
+    /**
+     * Returns a  properly initiated RuleBackendRuntime instance.
+     *
+     * @param properties  properties to be used when creating the underlying rule service provider
+     * @param classLoader class loader to be used by the underlying rule service provider to load
+     *                    facts and other required classes
+     * @return properly initiated &lt;code&gt;RuleBackendRuntime&lt;/code&gt;  instance if there are on exceptions.
+     *         Otherwise, &lt;code&gt;LoggedRuntimeException/code&gt; should be thrown.
+     */
+    public RuleBackendRuntime createRuleBackendRuntime(Map&lt;String, PropertyDescription&gt; properties,
+                                                       ClassLoader classLoader);
+}</pre>
+
+<p><h2 id="Integration">Integrating with Other Systems</h2>
+</p>
+
+<p>Please refer Developer Guide for knowing how to integrate the rules
+component with other systems.</p>
+</body>
+</html>

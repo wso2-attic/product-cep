@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventBuilder name="buildfail_Statistics_1.3.2_builder"
+    statistics="disable" trace="enable" xmlns="http://wso2.org/carbon/eventbuilder">
+    <from eventAdaptorName="DefaultWSO2EventInputAdaptor" eventAdaptorType="wso2event">
+        <property name="stream">buildfail_Statistics</property>
+        <property name="version">1.3.2</property>
+    </from>
+    <mapping customMapping="disable" type="wso2event"/>
+    <to streamName="buildfail_Statistics" version="1.3.2"/>
+</eventBuilder>

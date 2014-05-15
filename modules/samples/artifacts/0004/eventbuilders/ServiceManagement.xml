@@ -1,0 +1,22 @@
+<eventBuilder xmlns="http://wso2.org/carbon/eventbuilder" name="ServiceManagement" statistics="disable" trace="enable">
+    <from eventAdaptorName="EmailEventAdaptor" eventAdaptorType="email">
+        <property name="email.in.subject">ServiceManagement</property>
+    </from>
+    <mapping type="text" customMapping="enable">
+        <property>
+            <from regex="(\w+)\s(\w+)"/>
+            <to name="action" type="string"/>
+            <to name="service" type="string"/>
+        </property>
+        <property>
+            <from regex="to\s(\w+)"/>
+            <to name="person" type="string"/>
+        </property>
+        <property>
+            <from regex="(\d+)\sday"/>
+            <to name="days" type="int"/>
+        </property>
+    </mapping>
+    <to streamName="org.wso2.sample.service.management" version="1.4.0"/>
+</eventBuilder>
+                                        

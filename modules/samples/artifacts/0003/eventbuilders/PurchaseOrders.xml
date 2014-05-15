@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventBuilder name="PurchaseOrders" statistics="disable" trace="enable" xmlns="http://wso2.org/carbon/eventbuilder">
+    <from eventAdaptorName="ActiveMQJMSAdaptor" eventAdaptorType="jms">
+        <property name="transport.jms.Destination">PurchaseOrders</property>
+    </from>
+    <mapping type="map" customMapping="enable">
+        <property>
+            <from name="cardId"/>
+            <to name="cardId" type="string"/>
+        </property>
+        <property>
+            <from name="amount"/>
+            <to name="amount" type="double"/>
+        </property>
+        <property>
+            <from name="countryId"/>
+            <to name="countryCode" type="string"/>
+        </property>
+    </mapping>
+    <to streamName="org.wso2.sample.purchase.orders" version="1.0.0"/>
+</eventBuilder>

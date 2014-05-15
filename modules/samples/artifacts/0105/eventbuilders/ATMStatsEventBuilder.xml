@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventBuilder name="ATMStatsEventBuilder" statistics="disable"
+              trace="disable" xmlns="http://wso2.org/carbon/eventbuilder">
+    <from eventAdaptorName="SoapInputAdaptor" eventAdaptorType="soap">
+        <property name="operation">ATMTransactionStats</property>
+    </from>
+    <mapping customMapping="enable" type="xml">
+        <xpathDefinition namespace="http://samples.wso2.org/" prefix="atmdata"/>
+        <property>
+            <from xpath="//atmdata:ATMTransactionStat/atmdata:CardNo"/>
+            <to name="cardNo" type="string"/>
+        </property>
+        <property>
+            <from xpath="//atmdata:ATMTransactionStat/atmdata:CardHolderName"/>
+            <to name="cardHolderName" type="string"/>
+        </property>
+        <property>
+            <from xpath="//atmdata:ATMTransactionStat/atmdata:AmountWithdrawed"/>
+            <to name="amountWithdrawed" type="double"/>
+        </property>
+        <property>
+            <from xpath="//atmdata:ATMTransactionStat/atmdata:TransactionTime"/>
+            <to name="transactionTime" type="string"/>
+        </property>
+        <property>
+            <from xpath="//atmdata:ATMTransactionStat/atmdata:Location"/>
+            <to name="location" type="string"/>
+        </property>
+        <property>
+            <from xpath="//atmdata:ATMTransactionStat/atmdata:CardHolderMobile"/>
+            <to name="cardHolderMobile" type="string"/>
+        </property>
+    </mapping>
+    <to streamName="atmStatsStream" version="1.0.0"/>
+</eventBuilder>
+                                        

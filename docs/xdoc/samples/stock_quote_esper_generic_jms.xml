@@ -1,0 +1,651 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+~ Copyright (c) 2009, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+~
+~ WSO2 Inc. licenses this file to you under the Apache License,
+~ Version 2.0 (the "License"); you may not use this file except
+~ in compliance with the License.
+~ You may obtain a copy of the License at
+~
+~ http://www.apache.org/licenses/LICENSE-2.0
+~
+~ Unless required by applicable law or agreed to in writing,
+~ software distributed under the License is distributed on an
+~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+~ KIND, either express or implied. See the License for the
+~ specific language governing permissions and limitations
+~ under the License.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=iso-8859-1"/>
+        <title>WSO2 CEP Samples - Stock Quote Analyzer with Esper
+            <span class="super">TM</span>
+            engine and custom deployed JMS broker
+        </title>
+        <link href="../css/cep-docs.css" rel="stylesheet"/>
+        <link href="../styles/dist-docs.css" rel="stylesheet" type="text/css"
+              media="all"/>
+    </head>
+
+    <body>
+        <p>[<a href="../docs_index.html">Documentation Index</a>]
+            <h1>WSO2 CEP - Samples : Stock Quote Analyzer with Esper
+                <span class="super">TM</span>
+                engine and a custom deployed jms broker
+            </h1>
+
+            <p>This guide demonstrates a sample on analyzing stream of stock quotes with using Esper
+                <span class="super">TM</span>
+                engine and
+                any custom deployed jms broker
+            </p>
+
+            <p>Please follow the
+                <a href="../user_guide.html">User Guide</a>
+                before proceeding with this sample, if you have
+                not already followed the<a href="../user_guide.html">User Guide</a>.
+            </p>
+
+            <h2>Contents</h2>
+
+            <div class="toc">
+                <ul>
+                    <li>
+                        <a href="#StockQuote_Esper_JMS">Stock Quote Analyzer with Esper
+                            <span class="super">TM</span>
+                            engine and custom deployed jms broker
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#References">References</a>
+                    </li>
+                </ul>
+            </div>
+
+            <h2 id="StockQuote_Esper_JMS">Stock Quote Analyzer with Esper
+                <span class="super">TM</span>
+                Back End Runtime and custom deployed jms broker
+            </h2>
+
+            <p>Stock Quote sample is based on Stock Quotes of any Stock Exchange. Before creating
+                the bucket to filter stock quotes it is essential to have a JMS broker. Since In
+                this example we are going to use custom deployed JMS Broker, it is needed to setup a
+                separate jms broker and for this sample well use Apache ActiveMQ.
+            </p>
+
+            <p>***Note : You need to start a instance of the ActiveMQ server with different port
+                from 5673 to run the bucket with custom deployed JMS Broker.
+            </p>
+
+            <h4>Configuring ActiveMQ Message Broker</h4>
+
+            <pre xml:space="preserve">
+                Step 1: Download ActiveMQ JMS server from  <a href="http://activemq.apache.org/">Apache ActiveMQ site</a>
+
+                Step 2: <a href="http://activemq.apache.org/getting-started.html">Install and start</a>  Apache ActiveMQ
+            </pre>
+
+
+            <h4>Creating a jms-broker</h4>
+
+            <pre xml:space="preserve">
+                 Step 1 : Add activemq-core-5.5.1.jar and geronimo-j2ee-management_1.1_spec-1.0.1.jar to CARBON_HOME/repository/components/lib of your CEP Server
+
+                 Step 2 : Start CEP Server and log in as admin
+
+                 Step 3 : In the Configure menu you can find a Menu item called Broker and under that you can see sub menu 'Add' and click on that
+
+                 Step 4 : You will get a page with header "Create a New Broker" and you need to enter following details in that form to create a jms-broker
+
+                        Broker Name         : activemqJmsBroker
+                        Broker Type         : jms
+                        JNDI Name           : org.apache.activemq.jndi.ActiveMQInitialContextFactory
+                        UserName            : admin
+                        Password            : admin
+                        Provider URL        : tcp://localhost:61616 (The ActiveMQ provider url at which the JMS broker runs)
+
+                     Finally click on Add Broker button and you will get the added broker to the list of available brokers
+            </pre>
+            <p>
+                <img src="../images/generic_jms_broker.png" alt="CEP Create JMS Broker"/>
+            </p>
+
+            <h3>Creating Bucket</h3>
+
+            <p>In Manage Menu Section, you will find the menu "CEP Buckets" and you will find all the available buckets, if you click on List menu and You will be able to create a new bucket , when you click on add menu item.
+            </p>
+
+            <pre xml:space="preserve">
+                When creating a bucket there are three stages :
+                State 1 : Create bucket with bucket Name, Description and Engine provider
+                State 2 : Create bucket with bucket Name, Description, Engine provider and Inputs
+                State 3 : Create bucket with bucket Name, Description, Engine provider, Inputs and Queries
+            </pre>
+
+            <p>
+                In any of the above stages, if you click on save button, It will save to back end and user will be able to see the created bucket in the bucket list.
+                Apart from that the created bucket will be saved to the Configuration registry under "CEPBuckets" tree.
+            </p>
+
+            <p>**** Note : Before creating the bucket with Esper<span class="super">TM</span>, You
+                should have installed the Esper <span class="super">TM</span> feature to the CEP
+                Server.
+                In order to install Esper <span class="super">TM</span> back end runtime feature, You need to go through the Feature management
+                Console and Install the feature from the
+                GPL repository location :
+                <ul>
+                    <li>
+                        <a href="http://dist.wso2.org/wso2-gpl-p2/carbon/releases/3.2.0/">GPL
+                            Repository
+                        </a>
+                    </li>
+
+                </ul>
+            </p>
+            <p>
+                <img src="../images/add_esper_feature.png"
+                     alt="CEP Add Esper Feature"/>
+            </p>
+            <p>You can find more information on feature management :</p>
+            <ul>
+                <li>
+                    <a href=" https://localhost:9443/carbon/component-mgt/docs/userguide.html">
+                        Feature management
+                        Documentation
+                    </a>
+                </li>
+                <li>
+                    <a href=" http://wso2.org/projects/carbon/provisioning-wso2-carbon-with-equinox-p2">
+                        Provisioning
+                        WSO2 Carbon
+                    </a>
+                </li>
+            </ul>
+            <p>
+                If the user save the bucket in state 1 or state 2, he/she is able to add Inputs, Queries to the bucket at later time.
+
+                To create bucket with Esper
+                <span class="super">TM</span>
+                you need to enter following details :
+            </p>
+
+            <h4>State 1 - Basic Bucket Information</h4>
+            <pre xml:space="preserve">
+                Bucket Name (Name of the bucket)            : StockQuoteAnalyzer
+                Description (Description about the bucket)  : This bucket analyzes stock quotes and trigger an event if the last
+                                                              traded amount vary by 2 percent with regards to the average traded
+                                                              price within past 2 minutes.
+                Engine Provider(CEP Runtime engine to be used) : Esper<span class="super">TM</span>CEPRuntime [Choose from the drop down]
+            </pre>
+
+            <p>
+                <img src="../images/state1_esper.png" alt="CEP Create Bucket -State 1"/>
+            </p>
+
+            <h4>State 2 - Defining Inputs</h4>
+            <pre xml:space="preserve">
+                Click on Add Input link and it will provide a form to define inputs. You can define the sample input by
+                entering following values
+
+                Topic (topic to events be received)       : AllStockQuotes
+                Broker Name (Broker to be used)           : activemqJmsBroker
+                Mapping Stream (Name of the event stream) : allStockQuotes
+
+
+                Defining xpaths (Defining the)
+
+                XpathDefinition (xpath prefixes and NS)-Prefix    : quotedata
+                XpathDefinition (xpath prefixes and NS)-Namespace : http://ws.cdyne.com/
+
+                **Note : Click on add button to add the defined xpath top input and it will be appeared in the xpath
+                definitions table once it added
+
+
+                Defining input properties (these properties will be extracted from the received xml event and fed to the CEP engine)
+
+                Property  Name : symbol
+                xpath          : //quotedata:StockQuoteEvent/quotedata:StockSymbol
+                type           : java.lang.String [Choose from the dropdown ]
+
+                **Note : Click on add button to add the defined property to the input and it will be appeared in the
+                Properties table once it added
+
+                Property Name  : price
+                xpath          : //quotedata:StockQuoteEvent/quotedata:LastTradeAmount
+                type           : java.lang.Double [Choose from the dropdown]
+
+                **Note : Click on add button to add the defined property to the input and it will be appeared in the
+                Properties table once it added
+
+
+                *** Note : After filling all required fields click on the add button to add Input to the Bucket. Once
+                you clicked it will disappear the input form and added input will be appeared in Inputs table.
+            </pre>
+            <p>
+                <img src="../images/add_input_generic_jms.png"  alt="CEP Add Input"/>
+            </p>
+            <h4>Stage 3 - Defining Queries</h4>
+            <p>
+
+
+                Query Name (To identify the query)      : FastMovingStocksDetector
+            </p>
+            <p>**Note : We have provided two ways to provide a query expression.
+                1. Inlined - User can type the query in the provided space
+                2. Registry - User can browse the registry by clicking on the provided registry
+                browser and select the
+                query expression from
+                registry.(Before browsing the registry to get this from the registry , user needs to
+                store the query in
+                registry)
+            </p>
+
+            <p>Expression (Can be type inline or can get from registry):</p>
+            <pre xml:space="preserve">
+                select symbol,avg(price),price from allStockQuotes.win:time(1 min)
+                group by symbol having ((price > (avg(price)*1.02)) or ((avg(price)*0.98)>price ))
+            </pre>
+            <p>
+
+                Defining the Output :
+                Here we are defining the topic which filtered events are published and the structure
+                of the output xml
+                event
+            </p>
+            <pre xml:space="preserve">
+                Topic(topic which filtered event published) : FastMovingStockQuotes
+                BrokerName (Broker to be used)              : activemqJmsBroker
+            </pre>
+            <p>
+                **Note : There are two possible ways to define output event
+            </p>
+            <p>1. XML Mapping - User can provide the full output xml element to be fired with this.
+                When there are required fields to be filled with filtered values, names of those values
+                should be provided within curly brackets and CEP Server will identify them and
+                replace with the filtered values.
+            </p>
+
+            <p>2. Element Mapping - User can create the format of the output xml element by providing
+                properties and their types.
+            </p>
+
+            <p>xml Mapping (Output XML Element- Parameters which are needed to be replaced with
+                filtered vales are given in curly brackets)
+            </p>
+            <pre xml:space="preserve">
+                : &lt;quotedata:StockQuoteDataEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                             xmlns:quotedata="http://ws.cdyne.com/">
+                     &lt;quotedata:StockSymbol>{symbol}&lt;/quotedata:StockSymbol>
+                     &lt;quotedata:AvgLastTradeAmount>{avg(price)}&lt;/quotedata:AvgLastTradeAmount>
+                     &lt;quotedata:LastTradeAmount>{price}&lt;/quotedata:LastTradeAmount>
+                  &lt;/quotedata:StockQuoteDataEvent>
+            </pre>
+
+            <p>*** Note : After filling all the required fields of the Query , click on add query
+                button to add Query to the bucket. Once you clicked it will disappear the query form and added query will be appeared in Queries table.
+            </p>
+
+            <p>**** Note : As the last step of adding a bucket , click on save button. Once you  clicked it will redirect to the
+                deployed buckets page and deployed  bucket will be appeared in buckets table. Further to check whether you have
+                entered the details correctly you can  click on the link with the defined bucket and it will show added details.
+                You can  come back to the previous adding bucket page by  clicking on the back button provided or if needed to
+                edit the bucket you can click on the "Edit" link on the top of the View bucket Page.
+            </p>
+
+            <p>
+                <img src="../images/add_query_esper_generic_jms.png"
+                     alt="CEP Add Query"/>
+            </p>
+            <h2>Invoking Deployed Bucket</h2>
+            <p>It is needed to have a JMS Publisher and a JMS Subscriber to invoke the created
+                bucket.
+            </p>
+
+            <h3>Creating JMS Publisher</h3>
+
+            <p>JMS Publisher will publish events to the input topic of the bucket. In order to
+                create a JMS Publisher,  you need to have following libraries in  your class path.
+            </p>
+            <ul>
+                <li>activemq-core-5.5.1.jar</li>
+                <li>geronimo-jms_1.1_spec-1.1.0.jar</li>
+                <li>geronimo-j2ee-management_1.1_spec-1.0.1.jar</li>
+                <li>axiom-1.2.11.jar</li>
+                <li>commons-logging-1.1.1.jar</li>
+                <li>log4j-1.2.16.jar</li>
+                <li>slf4j-log4j12-1.6.4.jar</li>
+                <li>slf4j-api-1.6.4.jar</li>
+            </ul>
+
+            <p>To create the JMS Publisher, it is needed to have following classes and property
+                files in your project
+            </p>
+            <ul>
+                <li>JNDI Properties (put directly under src folder)</li>
+                <li>JNDIContext.java</li>
+                <li>Publisher.java</li>
+            </ul>
+            <p>jndi.properties</p>
+            <pre xml:space="preserve">
+                java.naming.factory.initial = org.apache.activemq.jndi.ActiveMQInitialContextFactory
+
+            </pre>
+
+            <p>JNDIContext.java</p>
+            <pre xml:space="preserve">
+                import javax.jms.TopicConnectionFactory;
+                import javax.naming.InitialContext;
+                import javax.naming.NamingException;
+
+
+                public class JNDIContext {
+                    private InitialContext initContext = null;
+                    private TopicConnectionFactory topicConnectionFactory = null;
+                    public static JNDIContext instance = null;
+
+                    private JNDIContext() {
+                        createInitialContext();
+                        createConnectionFactory();
+                    }
+
+                    public InitialContext getInitContext() {
+                        return initContext;
+                    }
+
+                    public TopicConnectionFactory getTopicConnectionFactory() {
+                        return topicConnectionFactory;
+                    }
+
+                    public static JNDIContext getInstance() {
+                        if (instance == null) {
+                            instance = new JNDIContext();
+                        }
+                        return instance;
+                    }
+
+                    /**
+                     * Create Connection factory with initial context
+                     */
+                    private void createConnectionFactory() {
+
+                        // create connection factory
+                        try {
+                            topicConnectionFactory = (TopicConnectionFactory) initContext.lookup("ConnectionFactory");
+                        } catch (NamingException e) {
+                            System.out.println("Can not create topic connection factory." + e);
+                        }
+                    }
+
+                    /**
+                     * Create Initial Context with given configuration
+                     */
+                    private void createInitialContext() {
+
+
+                        try {
+                            initContext = new InitialContext();
+                        } catch (NamingException e) {
+                            System.out.println("Can not create initial context with given parameters." + e);
+                        }
+                    }
+                }
+            </pre>
+
+            <p>Publisher.java</p>
+            <pre xml:space="preserve">
+
+                import org.apache.axiom.om.OMElement;
+                import org.apache.axiom.om.impl.builder.StAXOMBuilder;
+                import org.apache.axiom.om.util.StAXUtils;
+
+                import javax.jms.JMSException;
+                import javax.jms.MessageProducer;
+                import javax.jms.Session;
+                import javax.jms.TextMessage;
+                import javax.jms.Topic;
+                import javax.jms.TopicConnection;
+                import javax.jms.TopicConnectionFactory;
+                import javax.naming.InitialContext;
+                import javax.xml.stream.XMLStreamException;
+                import javax.xml.stream.XMLStreamReader;
+                import java.io.ByteArrayInputStream;
+
+                /**
+                 * Publish message to the topic created when defining Input
+                 */
+                public class Publisher {
+                    private static InitialContext initContext = null;
+                    private static TopicConnectionFactory topicConnectionFactory = null;
+
+                    public static void main(String[] args) throws XMLStreamException {
+
+
+                        String xmlElement1 = "&lt;quotedata:AllStockQuoteStream xmlns:quotedata=\"http://ws.cdyne.com/\">\n" +
+                                             " &lt;quotedata:StockQuoteEvent>\n" +
+                                             " &lt;quotedata:StockSymbol>MSFT&lt;/quotedata:StockSymbol>\n" +
+                                             " &lt;quotedata:LastTradeAmount>26.36 &lt;/quotedata:LastTradeAmount>\n" +
+                                             " &lt;quotedata:StockChange>0.05&lt;/quotedata:StockChange>\n" +
+                                             " &lt;quotedata:OpenAmount>25.05&lt;/quotedata:OpenAmount>\n" +
+                                             " &lt;quotedata:DayHigh>25.46&lt;/quotedata:DayHigh>\n" +
+                                             " &lt;quotedata:DayLow>25.01&lt;/quotedata:DayLow>\n" +
+                                             " &lt;quotedata:StockVolume>20452658&lt;/quotedata:StockVolume>\n" +
+                                             " &lt;quotedata:PrevCls>25.31&lt;/quotedata:PrevCls>\n" +
+                                             " &lt;quotedata:ChangePercent>0.20&lt;/quotedata:ChangePercent>\n" +
+                                             " &lt;quotedata:FiftyTwoWeekRange>22.73 - 31.58&lt;/quotedata:FiftyTwoWeekRange>\n" +
+                                             " &lt;quotedata:EarnPerShare>2.326&lt;/quotedata:EarnPerShare>\n" +
+                                             " &lt;quotedata:PE>10.88&lt;/quotedata:PE>\n" +
+                                             " &lt;quotedata:CompanyName>Microsoft Corpora&lt;/quotedata:CompanyName>\n" +
+                                             " &lt;quotedata:QuoteError>false&lt;/quotedata:QuoteError>\n" +
+                                             " &lt;/quotedata:StockQuoteEvent>\n" +
+                                             " &lt;/quotedata:AllStockQuoteStream>";
+
+                        String xmlElement2 = "&lt;quotedata:AllStockQuoteStream xmlns:quotedata=\"http://ws.cdyne.com/\">\n" +
+                                             " &lt;quotedata:StockQuoteEvent>\n" +
+                                             " &lt;quotedata:StockSymbol>MSFT&lt;/quotedata:StockSymbol>\n" +
+                                             " &lt;quotedata:LastTradeAmount>36.36&lt;/quotedata:LastTradeAmount>\n" +
+                                             " &lt;quotedata:StockChange>0.05&lt;/quotedata:StockChange>\n" +
+                                             " &lt;quotedata:OpenAmount>25.05&lt;/quotedata:OpenAmount>\n" +
+                                             " &lt;quotedata:DayHigh>25.46&lt;/quotedata:DayHigh>\n" +
+                                             " &lt;quotedata:DayLow>25.01&lt;/quotedata:DayLow>\n" +
+                                             " &lt;quotedata:StockVolume>20452658&lt;/quotedata:StockVolume>\n" +
+                                             " &lt;quotedata:PrevCls>25.31&lt;/quotedata:PrevCls>\n" +
+                                             " &lt;quotedata:ChangePercent>0.20&lt;/quotedata:ChangePercent>\n" +
+                                             " &lt;quotedata:FiftyTwoWeekRange>22.73 - 31.58&lt;/quotedata:FiftyTwoWeekRange>\n" +
+                                             " &lt;quotedata:EarnPerShare>2.326&lt;/quotedata:EarnPerShare>\n" +
+                                             " &lt;quotedata:PE>10.88&lt;/quotedata:PE>\n" +
+                                             " &lt;quotedata:CompanyName>Microsoft Corpora&lt;/quotedata:CompanyName>\n" +
+                                             " &lt;quotedata:QuoteError>false&lt;/quotedata:QuoteError>\n" +
+                                             " &lt;/quotedata:StockQuoteEvent>\n" +
+                                             " &lt;/quotedata:AllStockQuoteStream>";
+
+                        String xmlElement3 = "&lt;quotedata:AllStockQuoteStream xmlns:quotedata=\"http://ws.cdyne.com/\">\n" +
+                                             " &lt;quotedata:StockQuoteEvent>\n" +
+                                             " &lt;quotedata:StockSymbol>MSFT&lt;/quotedata:StockSymbol>\n" +
+                                             " &lt;quotedata:LastTradeAmount>6.36&lt;/quotedata:LastTradeAmount>\n" +
+                                             " &lt;quotedata:StockChange>0.05&lt;/quotedata:StockChange>\n" +
+                                             " &lt;quotedata:OpenAmount>25.05&lt;/quotedata:OpenAmount>\n" +
+                                             " &lt;quotedata:DayHigh>25.46&lt;/quotedata:DayHigh>\n" +
+                                             " &lt;quotedata:DayLow>25.01&lt;/quotedata:DayLow>\n" +
+                                             " &lt;quotedata:StockVolume>20452658&lt;/quotedata:StockVolume>\n" +
+                                             " &lt;quotedata:PrevCls>25.31&lt;/quotedata:PrevCls>\n" +
+                                             " &lt;quotedata:ChangePercent>0.20&lt;/quotedata:ChangePercent>\n" +
+                                             " &lt;quotedata:FiftyTwoWeekRange>22.73 - 31.58&lt;/quotedata:FiftyTwoWeekRange>\n" +
+                                             " &lt;quotedata:EarnPerShare>2.326&lt;/quotedata:EarnPerShare>\n" +
+                                             " &lt;quotedata:PE>10.88&lt;/quotedata:PE>\n" +
+                                             " &lt;quotedata:CompanyName>Microsoft Corpora&lt;/quotedata:CompanyName>\n" +
+                                             " &lt;quotedata:QuoteError>false&lt;/quotedata:QuoteError>\n" +
+                                             " &lt;/quotedata:StockQuoteEvent>\n" +
+                                             " &lt;/quotedata:AllStockQuoteStream>";
+
+
+                        initContext = JNDIContext.getInstance().getInitContext();
+                        topicConnectionFactory = JNDIContext.getInstance().getTopicConnectionFactory();
+
+                        Publisher publisher = new Publisher();
+
+                        XMLStreamReader reader1 = StAXUtils.createXMLStreamReader(new ByteArrayInputStream(
+                        xmlElement1.getBytes()));
+                        StAXOMBuilder builder1 = new StAXOMBuilder(reader1);
+                        OMElement OMMessage1 = builder1.getDocumentElement();
+                        publisher.publish("AllStockQuotes", OMMessage1);
+
+                        XMLStreamReader reader2 = StAXUtils.createXMLStreamReader(new ByteArrayInputStream(
+                        xmlElement2.getBytes()));
+                        StAXOMBuilder builder2 = new StAXOMBuilder(reader2);
+                        OMElement OMMessage2 = builder2.getDocumentElement();
+                        publisher.publish("AllStockQuotes", OMMessage2);
+
+                        XMLStreamReader reader3 = StAXUtils.createXMLStreamReader(new ByteArrayInputStream(
+                        xmlElement3.getBytes()));
+                        StAXOMBuilder builder3 = new StAXOMBuilder(reader3);
+                        OMElement OMMessage3 = builder3.getDocumentElement();
+                        publisher.publish("AllStockQuotes", OMMessage3);
+                    }
+
+                    /**
+                    * Publish message to given topic
+                    *
+                    * @param topicName - topic name to publish messages
+                    * @param message   - message to send
+                    */
+                    public void publish(String topicName, OMElement message) {
+                        // create topic connection
+                        TopicConnection topicConnection = null;
+                        try {
+                            topicConnection = topicConnectionFactory.createTopicConnection();
+                            topicConnection.start();
+                        } catch (JMSException e) {
+                            System.out.println("Can not create topic connection." + e);
+                            return;
+                       }
+
+                    // create session, producer, message and send message to given destination(topic)
+                    // OMElement message text is published here.
+                    Session session = null;
+                        try {
+                            session = topicConnection.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
+
+                            Topic topic = session.createTopic(topicName);
+                            MessageProducer producer = session.createProducer(topic);
+                            TextMessage jmsMessage = session.createTextMessage(message.toString());
+                            producer.send(jmsMessage);
+                            producer.close();
+                            session.close();
+                            topicConnection.stop();
+                            topicConnection.close();
+                        } catch (JMSException e) {
+                             System.out.println("Can not subscribe." + e);
+                        }
+                    }
+                }
+            </pre>
+
+            <p>Create a project with above classes and files and run the publisher. to publish
+                events to the topic.
+            </p>
+
+            <h3>Creating JMS Subscriber</h3>
+
+            <p>JMS Subscriber will receive events published to the output topic of the query. In
+                order to create a JMS
+                Subscriber , you need to have above
+                jndi.properties file and JNDIContext.java class and Subscriber.java class
+            </p>
+
+            <p>Subscriber.java</p>
+            <pre xml:space="preserve">
+                import javax.jms.JMSException;
+                import javax.jms.Message;
+                import javax.jms.MessageListener;
+                import javax.jms.TextMessage;
+                import javax.jms.Topic;
+                import javax.jms.TopicConnection;
+                import javax.jms.TopicConnectionFactory;
+                import javax.jms.TopicSession;
+                import javax.jms.TopicSubscriber;
+                import javax.naming.InitialContext;
+                import javax.xml.stream.XMLStreamException;
+
+                /**
+                 * Subscribe to myTopic and wait 10seconds to receive messages
+                 */
+                public class Subscriber implements MessageListener {
+                    private static InitialContext initContext = null;
+                    private static TopicConnectionFactory topicConnectionFactory = null;
+                    private boolean messageReceived = false;
+
+                    public static void main(String[] args) throws XMLStreamException {
+                        initContext = JNDIContext.getInstance().getInitContext();
+                        topicConnectionFactory = JNDIContext.getInstance().getTopicConnectionFactory();
+
+                        new Subscriber().subscribe("FastMovingStockQuotes");
+
+                    }
+
+                    public void subscribe(String topicName) {
+
+                        // create connection
+                        TopicConnection topicConnection = null;
+                        try {
+                            topicConnection = topicConnectionFactory.createTopicConnection();
+                        } catch (JMSException e) {
+                            System.out.println("Can not create topic connection." + e);
+                            return;
+                        }
+                        // create session, subscriber, message listener and listen on that topic
+                        TopicSession session = null;
+                        try {
+                            session = topicConnection.createTopicSession(false, javax.jms.Session.AUTO_ACKNOWLEDGE);
+                            // change topic name to brokerConfiguration name + topic name
+                            Topic topic = session.createTopic(topicName);
+                            TopicSubscriber subscriber = session.createSubscriber(topic);
+                            subscriber.setMessageListener(this);
+                            topicConnection.start();
+                            synchronized (this) {
+                                while (!messageReceived) {
+                                    try {
+                                        this.wait();
+                                    } catch (InterruptedException e) {
+                                    }
+                                }
+                            }
+
+                        } catch (JMSException e) {
+                            System.out.println("Can not subscribe." + e);
+                        }
+                    }
+
+                    public void onMessage(Message message) {
+                        if (message instanceof TextMessage) {
+                            TextMessage textMessage = (TextMessage) message;
+                            try {
+                                System.out.println("output = " + textMessage.getText());
+                                synchronized (this) {
+                                    messageReceived = true;
+                                }
+                            } catch (JMSException e) {
+                                System.out.println("error at getting text out of received message. = " + e);
+                            }
+                        } else {
+                            System.out.println("Received message is not a text message.");
+                        }
+                    }
+                }
+            </pre>
+
+            <p>
+                ***Note : Before publishing events using Publisher, You need to start Subscriber to
+                receive filtered events.
+            </p>
+
+            <p>Esper
+                <span class="super">TM</span>
+                is a registered trademark of EsperTech.
+            </p>
+        </p>
+    </body>
+</html>

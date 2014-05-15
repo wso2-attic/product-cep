@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventBuilder name="loginInfoBuilder" statistics="enable" trace="enable" xmlns="http://wso2.org/carbon/eventbuilder">
+    <from eventAdaptorName="WSO2EventAdaptor" eventAdaptorType="wso2event">
+        <property name="stream">org.wso2.sample.login.data</property>
+        <property name="version">1.1.0</property>
+    </from>
+    <mapping type="wso2event" customMapping="enable" >
+        <property>
+            <from dataType="payload" name="user_name"/>
+            <to name="username" type="string"/>
+        </property>
+        <property>
+            <from dataType="payload" name="ip_address"/>
+            <to name="ipAddress" type="string"/>
+        </property>
+        <property>
+            <from dataType="payload" name="browser"/>
+            <to name="browser" type="string"/>
+        </property>
+    </mapping>
+    <to streamName="org.wso2.sample.login.info" version="1.0.0"/>
+</eventBuilder>

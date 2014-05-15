@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inputEventAdaptor name="kafkaInputAdaptor" statistics="disable"
+  trace="disable" type="kafka" xmlns="http://wso2.org/carbon/eventadaptormanager">
+  <property name="group.id">group</property>
+  <property name="zookeeper.id">127.0.0.1</property>
+  <property name="threads">5</property>
+</inputEventAdaptor>

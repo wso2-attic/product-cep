@@ -1,0 +1,575 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+~ Copyright (c) 2009, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+~
+~ WSO2 Inc. licenses this file to you under the Apache License,
+~ Version 2.0 (the "License"); you may not use this file except
+~ in compliance with the License.
+~ You may obtain a copy of the License at
+~
+~ http://www.apache.org/licenses/LICENSE-2.0
+~
+~ Unless required by applicable law or agreed to in writing,
+~ software distributed under the License is distributed on an
+~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+~ KIND, either express or implied. See the License for the
+~ specific language governing permissions and limitations
+~ under the License.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+  <title>WSO2 CEP Developer Guide</title>
+  <link href="css/cep-docs.css" rel="stylesheet" />
+  <link href="styles/dist-docs.css" rel="stylesheet" type="text/css"
+  media="all" />
+</head>
+
+<body>
+<p>[<a href="docs_index.html">Documentation Index</a>] 
+<h1>WSO2 CEP Developer Guide</h1>
+
+<p>This guide is to demonstrate a simple Insurance Application which uses
+business rules. </p>
+
+<h2>Contents</h2>
+
+<div class="toc">
+<ul>
+  <li><a href="#RuleEngineExecution">RuleEngineExecution</a> </li>
+  <li><a href="#ProgrammingModel">ProgrammingModel</a> </li>
+</ul>
+</div>
+
+<h2 id="RuleEngineExecution">RuleEngineExecution</h2>
+
+<h3>Overall Design</h3>
+
+<p>Intuitive Requirement: create facts, invoke the rule engine with the created
+facts, and then process the results from the rule engine execution </p>
+
+<p>Expected Quality Attributes: Functionality, Performance, Modifiability,
+Re-Usability, Extensibility, and Conceptual Integrity </p>
+
+<p><img src="images/rule-execution.png" alt="Rule Engine Execution" /> </p>
+
+<p>In order to achieve a better performance, the rule engine execution was
+divided into three main orthogonal functionalities. Each functionality can be
+viewed as a separated stage or layer. <br />
+Separating into stages or orthogonal functionalities is enabled to adopt
+architectural styles such as SEDA, and Pipe and Filters, which are widely
+acknowledged as architectural styles for achieving higher performance. For the
+Pipe, and Filters, a stage is a filter and for a SEDA, it is a SEDA stage. <br
+/>
+Note: In the current implementation, we have not implemented any of above
+strategies for achieving a better performance. </p>
+
+<h3>Fact Adaptation</h3>
+
+<p>Facts have been named as inputs and the Input Manager is responsible for
+performing fact (input) adaptation. This stage is optional if the facts have
+already been formulated. However, if the facts have to be formulated based on
+the context in transit, the fact adaptation stage is required.</p>
+
+<p><img src="images/fact-adapt.png" alt="Fact Adaptation" /> </p>
+
+<p><strong>ResourceDescription</strong> Encapsulates the meta-data about both
+facts/results. Furthermore, this can be used to capture any other configuration
+information. For example, the adapter configuration in the
+rule-component.conf</p>
+
+<p><strong>Resource Adapter</strong> </p>
+</p>
+<pre>/**
+ * Resources Adapter - This can be adapted input or output. It is needed to tell what can adapt
+ * using OutputAdaptable, InputAdaptable , etc.
+ */
+public interface ResourceAdapter {
+    
+    /**
+     * Type of  the resource that this adapter responsible for adapt. For an input, the type is the target type
+     * for an output , it is a type of the source
+     *
+     * @return Resource type
+     */
+    String getType();
+}
+s</pre>
+
+<p>
+
+<p><strong>InputAdaptable</strong> To adapt a given object into a fact (input)
+type that the adapter is responsible.</p>
+</p>
+<pre>/**
+ * Adapts the given object based on the resource description. Note here that the given <strong>tobeAdapted</strong> is
+ * data and only need to convert that into the correct target type.
+ */
+public interface InputAdaptable {
+
+    /**
+     * Converts provide object into the object type defined in the resource description
+     *
+     * @param resourceDescription Input ResourceDescription
+     * @param tobeAdapted         The final calculated value ,
+     *                            only need to convert that into correct type
+     * @return Converted object representing expected type
+     */
+    Object adaptInput(ResourceDescription resourceDescription,
+                      Object tobeAdapted);
+}</pre>
+
+<p>There are a few implementations</p>
+
+<p><strong>POJOResourceAdapter </strong> Adapts a given object into a POJO</p>
+
+<p><strong>MessageFactAdapter</strong> Adapts a given object into a Message</p>
+
+<p><strong>DOMResorceAdapter</strong> Adapts a given object into a DOM node</p>
+
+<p><strong>OMElementResorceAdapter </strong> Adapts a given object into a OM
+Element</p>
+
+<p>To get know who to registering new InputAdapters , please refer extending
+BRS guide</p>
+
+<p><strong>InputAdapterFactory</strong> - Create, Initiate and Manage Input
+Adapters</p>
+
+<p><strong>MessageInterceptor </strong> This is to access message being passed
+between components in the system that rule component is used. When a BRS is
+used as the mediator or the axis2 web service, facts have to be formulated
+based on the message context objects. MessageInterceptor enables to decouple
+the fact adaptation from the underlying system. There are two message
+MessageInterceptor implementations : SynapseMessageInterceptor and
+Axis2MessageInterceptor. The SynapseMessageInterceptor intercepts the synapse
+message context whereas the Axis2MessageInterceptor intercepts the axis2
+message context.</p>
+
+<p><strong>InputAdaptationStrategy </strong>- Encapsulates an input Adaptation
+algorithm or logic. This formulates the inputs based on description, adapters,
+message interceptor, and context object.</p>
+
+<p><h3>Rule Engine Invocation</h3>
+</p>
+
+<p>In order to invoke a rule engine, a session instance should be obtained. For
+that purpose, RuleEngine can be used. How to obtain a RuleEngine will be
+discussed in the Programming Model section. </p>
+
+<p><img src="images/rule-invoke.png" alt="Rule Engine Invoke" /> </p>
+
+<p><strong>RuleEngine</strong> is to proxy the actual rule engine provider. It
+manages and controls the access to the rule engine provider. Actual rule engine
+provider is encapsulated with RuleBackendRuntime, which provide simplified API
+for accessing different rule engines, and allows plugging different rule
+engine. In that sense, it is analog to JSR 94 API. However, RuleBackendRuntime
+is simple and provide only functions required for the WSO2 BRS. It also
+provides a way to use native rule engines' API based on the requirement
+of WSO2 BRS. RuleBackendRuntime instance should be created only from
+RuleBackendRuntimeFactory. RuleEngine is responsible for loading correct
+RuleBackendRuntimeFactory and creating RuleBackendRuntime. Furthermore, it
+proxies all method calls to RuleBackendRuntime and do parameter and return
+value validation. Therefore, users must only access the rule engine provider
+through RuleEngine not from the RuleBackendRuntime.</p>
+
+<p><strong>RuleBackendRuntime</strong></p>
+
+<p>/**</p>
+
+<p>* Encapsulates the rule service provider or the engine implements a rule
+engine. This adapts an</p>
+
+<p>* existing rule engine implementation.</p>
+
+<p>* &lt;p/&gt;</p>
+
+<p>* This class exposes functionality required to create a rule execution set,
+a session associated</p>
+
+<p>* with a rule execution set and remove a registered execution set.
+Furthermore, this provide a</p>
+
+<p>* way to destroy underlying rule engine.</p>
+
+<p>*/</p>
+
+<p>public interface RuleBackendRuntime {</p>
+
+<p></p>
+
+<p>/**</p>
+
+<p>* Registers a rule set. The rule set should be given in the
+RuleSetDescription as the rule source.</p>
+
+<p>* Within this method , an executable rule set is created and registered with
+the rule engine</p>
+
+<p>*</p>
+
+<p>* @param description information about the rule set</p>
+
+<p>* @return Registered URI of the rule set</p>
+
+<p>*/</p>
+
+<p>public String addRuleSet(RuleSetDescription description);</p>
+
+<p></p>
+
+<p>/**</p>
+
+<p>* Create a session based on the given SessionDescription. The session can be
+stateful or stateless</p>
+
+<p>*</p>
+
+<p>* @param sessionDescription information about the session to be created</p>
+
+<p>* @return a valid &lt;code&gt;Session&lt;/code&gt; object, either stateful
+or stateless</p>
+
+<p>*/</p>
+
+<p>public Session createSession(SessionDescription sessionDescription);</p>
+
+<p></p>
+
+<p>/**</p>
+
+<p>* Removed a already registered rule set</p>
+
+<p>*</p>
+
+<p>* @param description information about the rule set to be removed</p>
+
+<p>*/</p>
+
+<p>public void removeRuleSet(RuleSetDescription description);</p>
+
+<p></p>
+
+<p>/**</p>
+
+<p>* Cleanup any resources used by the rule engine</p>
+
+<p>*/</p>
+
+<p>public void destroy();</p>
+
+<p>}</p>
+
+<p></p>
+
+<p><strong>RuleBackendRuntimeFactory</strong></p>
+<pre xml:space="preserve">/**
+ * A factory for creating a RuleBackendRuntime. This should provide a properly initiated
+ * RuleBackendRuntime instance. It is recommended to use this class as the only means for creating
+ * RuleBackendRuntime instances
+ */
+public interface RuleBackendRuntimeFactory {
+    /**
+     * Returns a  properly initiated RuleBackendRuntime instance.
+     *
+     * @param properties  properties to be used when creating the underlying rule service provider
+     * @param classLoader class loader to be used by the underlying rule service provider to load
+     *                    facts and other required classes
+     * @return properly initiated &lt;code&gt;RuleBackendRuntime&lt;/code&gt;  instance if there are on exceptions.
+     *         Otherwise, &lt;code&gt;LoggedRuntimeException/code&gt; should be thrown.
+     */
+    public RuleBackendRuntime createRuleBackendRuntime(Map&lt;String, PropertyDescription&gt; properties,
+                                                       ClassLoader classLoader);
+}</pre>
+
+<p><strong>Session </strong>is the runtime connection between the rule engine
+and its users.</p>
+<pre xml:space="preserve">**
+ * Runtime connection between the rule engine and its users
+ */
+public interface Session {
+
+    /**
+     * Execute the rule engine by providing inputs as a List of Objects
+     *
+     * @param facts facts as a list of objects
+     * @return a list of results from the rule engine execution
+     */
+    List execute(List&lt;Object&gt; facts);
+
+    /**
+     * Releases the session
+     */
+    void release();
+}</pre>
+
+<p></p>
+
+<h3>Results Adaptation</h3>
+
+<p>Results adaptation process is almost similar to the fact adaptation process.
+The difference is that the results adaptation deals with the results from the
+rule engine invocation. Results are used to enrich the context object being
+passed between components of the system uses the rule component. This stage is
+also an optional. </p>
+
+<p><img src="images/result-adapt.png" alt="Result Adaptation" /> </p>
+
+<p><strong>Output Adaptable Interface</strong></p>
+<pre xml:space="preserve">/**
+ * Adapts a result based on output description. Before call for adapt ,
+ * it is recommended to explicitly checks for whether result can be adapted or not
+ */
+
+public interface OutputAdaptable {
+
+    /**
+     * Adapts the result according to the corresponding output description. The result of adaptation
+     * is put into the context based on the information in the output description.
+     *
+     * @param description        Output ResourceDescription
+     * @param result             Result from the engine
+     * @param context            the context to be used for looking up resources
+     * @param messageInterceptor a helper class to locate resources from given context
+     * @return True if Successfully adapt
+     */
+    boolean adaptOutput(ResourceDescription description,
+                        Object result,
+                        Object context,
+                        MessageInterceptor messageInterceptor);
+
+    /**
+     * Explicitly checks for whether result can be adapted or not
+     *
+     * @param description Output ResourceDescription
+     * @param output      Result from the engine
+     * @return True if it is possible to successfully adapt
+     */
+    boolean canAdaptOutput(ResourceDescription description,
+                           Object output);
+
+    /**
+     * Adapts the result according to the corresponding output description.
+     *
+     * @param description information about target object
+     * @param result      the object to be adapted
+     * @return Adapted Object
+     */
+    public Object adaptOutput(ResourceDescription description, Object result);
+}</pre>
+
+<h2 id="ProgrammingModel">Programming Model</h2>
+
+<p>Rules component has exposed as an OSGI service. Therefore, the programming
+model to adopt rules component is coupled to the OSGI service model. </p>
+
+<h3>The OSGI Service </h3>
+
+<p>RuleServerManagerService is the OSGI service interface for exposing rules
+functionality. </p>
+<pre xml:space="preserve">/**
+ * RuleServerManagerService is to provide the functionality to create main components belong to the
+ * rule server, and information belong to it. There are three main components
+ * &lt;p/&gt;
+ * &lt;ul&gt;
+ * &lt;li&gt; Rule Engine
+ * &lt;li&gt; Input Manager
+ * &lt;li&gt; OutPut Manager
+ * &lt;/ul&gt;
+ * &lt;p/&gt;
+ * Rule Engine encapsulates the underlying rule service provider. Input Manager is to adapt
+ * given objects into target facts and OutPut Manager is to adapt results from the rule engine
+ * into target objects
+ */
+public interface RuleServerManagerService {
+
+    /**
+     * Factory method to create a RuleEngine instance. This method returns a new RuleEngine instance.
+     * The RuleEngine is created based on the RuleEngineProvider defined in the rule-component.conf
+     *
+     * @param ruleEngineClassLoader The class loader to be used by the RuleEngine instance
+     * @return a valid &lt;code&gt;RuleEngine&lt;code&gt; instance
+     */
+    RuleEngine createRuleEngine(ClassLoader ruleEngineClassLoader);
+
+    /**
+     * Create an input manager instance based on the given input descriptions.
+     *
+     * @param inputs             A list of ResourceDescriptions presenting information abouts facts
+     * @param messageInterceptor MessageInterceptor to be used for accessing the data in the message
+     *                           being transit
+     * @return a valid &lt;code&gt;InputManager &lt;/code&gt;  instance
+     */
+    InputManager createInputManager(List&lt;ResourceDescription&gt; inputs,
+                                    MessageInterceptor messageInterceptor);
+
+    /**
+     * Create an output manager instance based on the given input descriptions.
+     *
+     * @param outputs            A list of ResourceDescriptions presenting information abouts results
+     * @param messageInterceptor MessageInterceptor to be used for accessing the data in
+     *                           the message being transit
+     * @return a valid &lt;code&gt;OutputManager &lt;/code&gt;  instance
+     */
+    OutputManager createOutputManager(List&lt;ResourceDescription&gt; outputs,
+                                      MessageInterceptor messageInterceptor);
+
+    /**
+     * Returns the InputAdapterFactory in the rule server. This is useful when it
+     * is needed to access available input adapters and to add a new input adapter
+     *
+     * @return a valid &lt;code&gt;InputAdapterFactory&lt;/code&gt; instance
+     */
+    public InputAdapterFactory getFactAdapterFactory();
+
+    /**
+     * Returns the OutputAdapterFactory in the rule server. This is useful when it
+     * is needed to access available result adapters and to add a new result adapter
+     *
+     * @return a valid &lt;code&gt;OutputAdapterFactory&lt;/code&gt; instance
+     */
+    public OutputAdapterFactory getResultAdapterFactory();
+}</pre>
+
+<h3>Integration Process</h3>
+
+<p><strong>Step 1</strong> : Add an OSGI service reference and required maven
+dependencies </p>
+<pre xml:space="preserve">        * @scr.component name="ruleservices.component" immediate="true"
+        * @scr.reference name="ruleservermanager.component"
+        * interface="org.wso2.carbon.rule.server.RuleServerManagerService" cardinality="1..1"
+        * policy="dynamic" bind="setRuleServerManagerService" unbind="unSetRuleServerManagerService"</pre>
+
+<p></p>
+<pre xml:space="preserve">    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.wso2.carbon&lt;/groupId&gt;
+            &lt;artifactId&gt;org.wso2.carbon.rule.core&lt;/artifactId&gt;
+            &lt;version&gt;3.0.0&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.wso2.carbon&lt;/groupId&gt;
+            &lt;artifactId&gt;org.wso2.carbon.rule.server&lt;/artifactId&gt;
+            &lt;version&gt;3.0.0&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.wso2.carbon&lt;/groupId&gt;
+            &lt;artifactId&gt;org.wso2.carbon.rule.engine.drools&lt;/artifactId&gt;
+            &lt;version&gt;3.0.0&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.wso2.carbon&lt;/groupId&gt;
+            &lt;artifactId&gt;org.wso2.carbon.rule.engine.jsr94&lt;/artifactId&gt;
+            &lt;version&gt;3.0.0&lt;/version&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+    </pre>
+
+<p><strong>Step 2</strong> : Implementing MessageInterceptor</p>
+
+<p>This step is optional and required if the facts should be formulated from a
+message.</p>
+
+<p>MessageInterceptor Interface</p>
+<pre xml:space="preserve">/**
+ * Provides an abstraction intercepting the context object being passed between components of
+ * the system the rule component is used
+ * &lt;p/&gt;
+ * Provides required functionality to extractPayload data from the context and enrich the
+ * context with some data.
+ * &lt;p/&gt;
+ * This enables to decouple the context message from the implementation of the rule component
+ */
+public interface MessageInterceptor {
+
+    /**
+     * Looking up for a resource with the given key. The look up processes is coupled to
+     * the implementation
+     *
+     * @param key          an identifier to locate the resource
+     * @param message      the context object being passed between components of
+     *                     the system the rule component is used
+     * @param defaultValue default value in the case of there is no resource for the given key
+     * @return resorce corresponded to the given key if there is a resource for the give key.
+     *         Otherwise, the default value should be returned
+     */
+    public ReturnValue extract(String key, Object message, Object defaultValue);
+
+    /**
+     * Looking up for a resource with the given XPath expression. The look up processes is coupled
+     * to the implementation
+     *
+     * @param xPath        an expression to locate the resource
+     * @param message      the context object being passed between components of
+     *                     the system the rule component is used
+     * @param defaultValue default value in the case of there is no resource for the given expression
+     * @return resorce corresponded to the given key if there is a resource for the give expression.
+     *         Otherwise, the default value should be returned
+     */
+    public ReturnValue extract(XPath xPath, Object message, Object defaultValue);
+
+    /**
+     * Looking up for the default resource. The value of the default resource is coupled to
+     * the implementation
+     *
+     * @param message the context object being passed between components of
+     *                the system the rule component is used
+     * @return The default resource
+     */
+    public ReturnValue extractPayload(Object message);
+
+    /**
+     * Extracts the envelope of the message
+     *
+     * @param message the context object being passed between components of
+     *                the system the rule component is used
+     * @return the envelope of the message
+     */
+    public ReturnValue extractEnvelope(Object message);
+
+    /**
+     * Enrich the context message with the given object based on the given key.
+     * The enrichment process is coupled to the implementation
+     *
+     * @param key     an identifier for the resource
+     * @param message the context object being passed between components of
+     *                the system the rule component is used
+     * @param value   data to be used for enriching context message
+     */
+    public void enrich(String key, Object message, Object value);
+}      
+    </pre>
+
+<p><strong>Step 3</strong> : Using Rules Component </p>
+
+<p></p>
+<pre xml:space="preserve">// Creating Rule Engine Instance 
+RuleEngine  ruleEngine = ruleServerManager.createRuleEngine(classLoader);
+
+// registering a rule set 
+String bindURI = ruleEngine.addRuleSet(ruleSetDescription);
+
+// creating a Session to be used to access rule engine runtime
+SessionDescription sessionDescription = // get or create 
+sessionDescription.setRuleSetURI(bindURI);
+Session session = ruleEngine.createSession(sessionDescription);
+
+// to adapt facts from a message. This is optional
+InputManager  inputManager = ruleServerManager.createInputManager(getFactDescriptions(), interceptor); 
+List&lt;Object&gt; facts = inputManager.processInputs(msgCtx);
+
+// to execute the rules 
+List results = session.execute(facts);
+
+// to process results. This is optional
+OutputManager outputManager = ruleServerManager.createOutputManager(getResultsDescriptions(),interceptor);
+outputManager.processOutputs(results, msgCtx);     
+    </pre>
+
+<p>Note: The ruleServerManager is the RuleServerManagerService OSGI service. The
+ruleServerManager, outputManager and inputManager should be created once
+(Otherwise can be a minor performance issue). </p>
+</body>
+</html>

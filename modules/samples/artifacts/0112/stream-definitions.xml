@@ -1,0 +1,33 @@
+<streamDefinitions xmlns="http://wso2.org/carbon/databridge">
+    <streamDefinition>
+
+       {
+        "name":"serverLogStream",
+        "version":"1.0.0",
+        "metaData":[
+        {"name":"fileName","type":"STRING"},
+        {"name":"serverName","type":"STRING"}
+        ],
+        "payloadData":[
+        {"name":"className","type":"STRING"},
+        {"name":"logType","type":"STRING"}
+        ]
+        }
+    </streamDefinition>
+
+    <streamDefinition>
+    {
+        "name":"warnTypeLogStream",
+        "version":"1.0.0",
+        "metaData":[
+        {"name":"fileName","type":"STRING"},
+        {"name":"serverName","type":"STRING"}
+        ],
+        "payloadData":[
+        {"name":"className","type":"STRING"},
+        {"name":"logType","type":"STRING"}
+        ]
+        }
+    </streamDefinition>
+
+</streamDefinitions>

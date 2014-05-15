@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventBuilder name="BatchedPizzaOrder" statistics="disable"
+    trace="enable" xmlns="http://wso2.org/carbon/eventbuilder">
+    <from eventAdaptorName="WSEventLocalAdaptor" eventAdaptorType="ws-event-local">
+        <property name="topic">BatchedPizzaOrder</property>
+    </from>
+    <mapping customMapping="enable"
+        parentXpath="//mypizza:PizzaOrderStream" type="xml">
+        <xpathDefinition namespace="http://samples.wso2.org/" prefix="mypizza"/>
+        <property>
+            <from xpath="//mypizza:PizzaOrder/mypizza:OrderNo"/>
+            <to name="correlation_OrderNo" type="int"/>
+        </property>
+        <property>
+            <from xpath="//mypizza:PizzaOrder/mypizza:Type"/>
+            <to name="Type" type="string"/>
+        </property>
+        <property>
+            <from xpath="//mypizza:PizzaOrder/mypizza:Size"/>
+            <to name="Size" type="string"/>
+        </property>
+        <property>
+            <from xpath="//mypizza:PizzaOrder/mypizza:Quantity"/>
+            <to default="1" name="Quantity" type="int"/>
+        </property>
+        <property>
+            <from xpath="//mypizza:PizzaOrder/mypizza:Contact"/>
+            <to name="Contact" type="string"/>
+        </property>
+        <property>
+            <from xpath="//mypizza:PizzaOrder/mypizza:Address"/>
+            <to name="Address" type="string"/>
+        </property>
+    </mapping>
+    <to streamName="org.wso2.sample.pizza.order" version="1.0.0"/>
+</eventBuilder>

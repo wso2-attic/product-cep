@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventBuilder name="sensorEventBuilder" statistics="disable"
+    trace="disable" xmlns="http://wso2.org/carbon/eventbuilder">
+    <from eventAdaptorName="kafkaInputAdaptor" eventAdaptorType="kafka">
+        <property name="topic">sensorStream</property>
+    </from>
+    <mapping customMapping="disable" type="xml"/>
+    <to streamName="sensorInputEventStream" version="1.0.0"/>
+</eventBuilder>

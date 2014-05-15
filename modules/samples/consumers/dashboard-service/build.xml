@@ -1,0 +1,131 @@
+<!--
+  ~  Licensed to the Apache Software Foundation (ASF) under one
+  ~  or more contributor license agreements.  See the NOTICE file
+  ~  distributed with this work for additional information
+  ~  regarding copyright ownership.  The ASF licenses this file
+  ~  to you under the Apache License, Version 2.0 (the
+  ~  "License"); you may not use this file except in compliance
+  ~  with the License.  You may obtain a copy of the License at
+  ~
+  ~   http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing,
+  ~  software distributed under the License is distributed on an
+  ~   * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~  KIND, either express or implied.  See the License for the
+  ~  specific language governing permissions and limitations
+  ~  under the License.
+  -->
+
+<project default="build-service">
+
+    <property name="cep.home" value="../../.."/>
+    <property name="src.dir" value="src/main/java"/>
+    <property name="resources.dir" value="src/main/resources"/>
+    <property name="temp.dir" value="temp"/>
+    <property name="class.dir" value="${temp.dir}/classes"/>
+
+    <property name="sampleNo" value=""/>
+
+    <path id="javac.classpath">
+        <pathelement path="${class.dir}"/>
+        <fileset dir="${cep.home}/repository/components/plugins/">
+            <include name="org.wso2.carbon.logging_4.2.0.jar"/>
+            <include name="commons-pool_1.5.6.wso2v1.jar"/>
+            <include name="com.google.gson_2.1.0.jar"/>
+            <include name="geronimo-jms_1.1_spec-1.1.1.jar"/>
+            <include name="guava_12.0.0.wso2v1.jar"/>
+            <include name="httpclient_4.2.5.wso2v1.jar"/>
+            <include name="httpcore_4.3.0.wso2v1.jar"/>
+            <include name="commons-httpclient_3.1.0.wso2v2.jar"/>
+            <include name="commons-codec_1.4.0.wso2v1.jar"/>
+            <include name="libthrift_0.7.0.wso2v2.jar"/>
+            <include name="slf4j.log4j12_1.6.1.jar"/>
+            <include name="slf4j.api_1.6.1.jar"/>
+            <include name="json_2.0.0.wso2v1.jar"/>
+            <include name="axis2_1.6.1.wso2v10.jar"/>
+            <include name="axiom_1.2.11.wso2v4.jar"/>
+            <include name="wsdl4j_1.6.2.wso2v4.jar"/>
+            <include name="XmlSchema_1.4.7.wso2v2.jar"/>
+            <include name="neethi_2.0.4.wso2v4.jar"/>
+            <include name="org.wso2.securevault_1.0.0.wso2v2.jar"/>
+            <!--<include name="org.wso2.carbon.authenticator.stub_4.2.0.jar"/>-->
+            <!--<include name="org.wso2.carbon.databridge.agent.thrift_4.2.0.jar"/>-->
+            <!--<include name="org.wso2.carbon.databridge.commons.thrift_4.2.0.jar"/>-->
+            <!--<include name="org.wso2.carbon.databridge.commons_4.2.0.jar"/>-->
+            <!--<include name="org.wso2.carbon.databridge.core_4.2.0.jar"/>-->
+            <!--<include name="org.wso2.carbon.databridge.receiver.thrift_4.2.0.jar"/>-->
+            <include name="org.wso2.carbon.base_4.2.0.jar"/>
+            <include name="org.wso2.carbon.identity.authentication_4.2.0.jar"/>
+            <include name="org.wso2.carbon.queuing_4.2.0.jar"/>
+        </fileset>
+    </path>
+
+    <target name="init" depends="clean">
+        <mkdir dir="${temp.dir}"/>
+        <mkdir dir="${class.dir}"/>
+        <mkdir dir="${services.dir}"/>
+        <!--<echo>Services Dir : ${services.dir}</echo>-->
+    </target>
+
+    <target name="clean" depends="folder.set">
+        <delete dir="${temp.dir}"/>
+    </target>
+
+    <target name="folder.set" depends="-folder.check, -assign.sample, -assign.main"/>
+
+    <target name="-folder.check">
+        <condition property="main.folder">
+            <equals arg1="${sampleNo}" arg2=""/>
+        </condition>
+        <condition property="sample.folder">
+            <not>
+                <equals arg1="${sampleNo}" arg2=""/>
+            </not>
+        </condition>
+    </target>
+
+    <target name="-assign.sample" if="sample.folder">
+        <echo>Sample No : ${sampleNo}</echo>
+        <property name="services.dir" value="${cep.home}/samples/artifacts/${sampleNo}/axis2services"/>
+        <echo>Services Dir : ${services.dir}</echo>
+    </target>
+
+    <target name="-assign.main" if="main.folder">
+        <echo>Sample No : ${sampleNo}</echo>
+        <property name="services.dir" value="${cep.home}/repository/deployment/server/axis2services"/>
+        <echo>Services Dir : ${services.dir}</echo>
+    </target>
+
+    <target name="compile" depends="init">
+        <javac debug="on" srcdir="${src.dir}" destdir="${class.dir}">
+            <include name="*/**"/>
+            <classpath refid="javac.classpath"/>
+        </javac>
+        <copy todir="${class.dir}" overwrite="true">
+            <fileset dir="${resources.dir}">
+                <include name="*.properties"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="build-service" depends="compile">
+        <echo>To specify sample number, use -DsampleNo=${sampleNo}</echo>
+
+        <property name="LS.dir" value="${temp.dir}/DashboardService"/>
+        <mkdir dir="${LS.dir}"/>
+
+        <mkdir dir="${LS.dir}/META-INF"/>
+        <copy file="${resources.dir}/services.xml" tofile="${LS.dir}/META-INF/services.xml"/>
+        <copy toDir="${LS.dir}">
+            <fileset dir="${class.dir}">
+                <include name="**/*.class"/>
+            </fileset>
+        </copy>
+
+        <jar destfile="${services.dir}/DashboardService.aar">
+            <fileset dir="${LS.dir}"/>
+        </jar>
+    </target>
+
+</project>

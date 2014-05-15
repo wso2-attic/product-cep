@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventFormatter name="BasicStockQuotes" statistics="disable" trace="enable" xmlns="http://wso2.org/carbon/eventformatter">
+  <from streamName="org.wso2.sample.stock.quote.basic" version="1.0.0"/>
+  <mapping type="map" customMapping="enable">
+    <property>
+      <from name="price"/>
+      <to name="LastTradedPrice"/>
+    </property>
+    <property>
+      <from name="symbol"/>
+      <to name="Symbol"/>
+    </property>
+  </mapping>
+  <to eventAdaptorName="ActiveMQJMSAdaptor" eventAdaptorType="jms">
+    <property name="transport.jms.Destination">BasicStockQuotes</property>
+    <property name="transport.jms.Header">JMS_PRIORITY:4</property>
+  </to>
+</eventFormatter>

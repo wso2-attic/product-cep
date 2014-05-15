@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventFormatter name="PizzaDeliveryEventFormatter" statistics="disable"
+  trace="disable" xmlns="http://wso2.org/carbon/eventformatter">
+  <from streamName="deliveredOrders" version="1.0.0"/>
+  <mapping customMapping="enable" type="wso2event">
+    <payloadData>
+      <property>
+        <from name="sumOrderId"/>
+        <to name="sumOrderId" type="long"/>
+      </property>
+      <property>
+        <from name="customerName"/>
+        <to name="customerName" type="string"/>
+      </property>
+    </payloadData>
+  </mapping>
+  <to eventAdaptorName="DefaultWSO2EventOutputAdaptor" eventAdaptorType="wso2event">
+    <property name="stream">DeliveredEventStream</property>
+    <property name="version">1.0.0</property>
+  </to>
+</eventFormatter>

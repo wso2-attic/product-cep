@@ -1,0 +1,39 @@
+<bucket name="LongRunningPurchaseAnalyzer" xmlns="http://wso2.org/carbon/cep">
+    <description>
+Calculate the last 20 minutes total purchases summary.
+    </description>
+    <engineProviderConfiguration engineProvider="SiddhiCEPRuntime">
+        <property name="siddhi.persistence.snapshot.time.interval.minutes">1</property>
+        <property name="siddhi.enable.distributed.processing">false</property>
+    </engineProviderConfiguration>
+    <input topic="org.wso2.phone.retail.store/1.2.0" brokerName="localAgentBroker">
+        <tupleMapping stream="phoneRetailStream" queryEventType="Tuple">
+            <property name="brand" inputName="brand" inputDataType="payloadData"
+                      type="java.lang.String"/>
+            <property name="quantity" inputName="quantity" inputDataType="payloadData"
+                      type="java.lang.Integer"/>
+            <property name="totalPrice" inputName="total" inputDataType="payloadData"
+                      type="java.lang.Integer"/>
+            <property name="buyer" inputName="buyer" inputDataType="payloadData"
+                      type="java.lang.String"/>
+        </tupleMapping>
+    </input>
+    <query name="AllStocksQuery">
+        <expression >
+from phoneRetailStream#window.time(1200000)
+insert into retailSummaryStream
+count(brand) as purchaseOrders ,sum(quantity) as quantitySold, sum(totalPrice) as revenueEarned, avg(totalPrice) as avgRevenue
+        </expression>
+        <output topic="RetailSummary" brokerName="activemqJmsBroker">
+            <xmlMapping>
+                <quotedata:RetailSummaryEvent
+                        xmlns:quotedata="http://ws.cdyne.com/">
+                    <quotedata:PurchaseOrders>{purchaseOrders}</quotedata:PurchaseOrders>
+                    <quotedata:QuantitySold>{quantitySold}</quotedata:QuantitySold>
+                    <quotedata:RevenueEarned>{revenueEarned}</quotedata:RevenueEarned>
+                    <quotedata:AvgRevenuePerPurchase>{avgRevenue}</quotedata:AvgRevenuePerPurchase>
+                </quotedata:RetailSummaryEvent>
+            </xmlMapping>
+        </output>
+    </query>
+</bucket>

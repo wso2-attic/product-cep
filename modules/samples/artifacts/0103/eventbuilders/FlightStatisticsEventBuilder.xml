@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventBuilder name="FlightStatisticsEventBuilder" statistics="disable"
+    trace="disable" xmlns="http://wso2.org/carbon/eventbuilder">
+    <from eventAdaptorName="jmsQueueAdaptor" eventAdaptorType="jms">
+        <property name="transport.jms.Destination">FlightStats</property>
+    </from>
+    <mapping customMapping="enable" type="xml">
+        <xpathDefinition namespace="http://samples.wso2.org/" prefix="flightdata"/>
+        <property>
+            <from xpath="//flightdata:FlightArrivalStat/flightdata:FlightName"/>
+            <to name="flightName" type="string"/>
+        </property>
+        <property>
+            <from xpath="//flightdata:FlightArrivalStat/flightdata:FlightId"/>
+            <to name="flightId" type="string"/>
+        </property>
+        <property>
+            <from xpath="//flightdata:FlightArrivalStat/flightdata:FlightType"/>
+            <to name="flightType" type="string"/>
+        </property>
+        <property>
+            <from xpath="//flightdata:FlightArrivalStat/flightdata:ArrivalTime"/>
+            <to name="arrivalTime" type="string"/>
+        </property>
+        <property>
+            <from xpath="//flightdata:FlightArrivalStat/flightdata:TrackNo"/>
+            <to name="trackNo" type="string"/>
+        </property>
+        <property>
+            <from xpath="//flightdata:FlightArrivalStat/flightdata:Status"/>
+            <to name="status" type="string"/>
+        </property>
+    </mapping>
+    <to streamName="FlightArrivalStatsStream" version="1.0.0"/>
+</eventBuilder>

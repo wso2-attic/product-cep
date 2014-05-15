@@ -1,0 +1,22 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="CEPTestSuite" parallel="false">
+
+    <test name="CEP-Integration-Test" parallel="false" verbose="2">
+        <packages>
+            <package name="org.wso2.carbon.cep.broker.test"/>
+            <package name="org.wso2.carbon.cep.bucket.test"/>
+            <package name="org.wso2.carbon.cep.sample.test"/>
+            <package name="org.wso2.carbon.cep.services.test"/>
+        </packages>
+        <classes>
+            <!--<class name="org.wso2.carbon.cep.broker.test.BrokerInitializationTestCase"/>-->
+            <!--<class name="org.wso2.carbon.cep.sample.test.KPIAnalyzerTestCase"/>-->
+            <!--<class name="org.wso2.carbon.cep.bucket.test.WSEventSiddhiBucketCreationTestCase"/>-->
+
+            <!--<class name="org.wso2.carbon.dss.scheduletask.test.AddScheduleTaskTestCase"/>-->
+            <!--<class name="org.wso2.carbon.dss.services.test.DataServiceSqlDriverTestCase"/>-->
+            <!--<class name="org.wso2.carbon.dss.samples.test.GSpreadSQLDriverSampleTestCase"/>-->
+        </classes>
+    </test>
+</suite>

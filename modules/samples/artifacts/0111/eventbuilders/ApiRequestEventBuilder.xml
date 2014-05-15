@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventBuilder name="ApiRequestEventBuilder" statistics="disable"
+    trace="disable" xmlns="http://wso2.org/carbon/eventbuilder">
+    <from eventAdaptorName="soapInputEventAdaptor" eventAdaptorType="soap">
+        <property name="operation">apiRequestStream</property>
+    </from>
+    <mapping customMapping="disable" type="xml"/>
+    <to streamName="apiRequestStream" version="1.0.0"/>
+</eventBuilder>

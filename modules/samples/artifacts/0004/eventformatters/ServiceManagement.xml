@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventFormatter name="ServiceManagement" statistics="disable" trace="enable" xmlns="http://wso2.org/carbon/eventformatter">
+    <from streamName="org.wso2.sample.service.management" version="1.4.0"/>
+    <mapping type="json" customMapping="enable">
+        <inline>
+            { ServiceActionEvent:
+            { action:{{action}}, serviceName:{{service}}, person:{{person}}, NoOfDays:{{days}} }
+            }
+        </inline>
+    </mapping>
+    <to eventAdaptorName="ActiveMQJMSAdaptor" eventAdaptorType="jms">
+        <property name="transport.jms.Destination">ServiceManagement</property>
+    </to>
+</eventFormatter>
+                                    

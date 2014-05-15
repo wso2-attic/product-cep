@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outputEventAdaptor name="WSO2EventAdaptor" statistics="enable"
+  trace="enable" type="wso2event" xmlns="http://wso2.org/carbon/eventadaptormanager">
+  <property name="username">admin</property>
+  <property name="receiverURL">{tcp://localhost:7661,tcp://localhost:7662}</property>
+  <property name="password">admin</property>
+</outputEventAdaptor>

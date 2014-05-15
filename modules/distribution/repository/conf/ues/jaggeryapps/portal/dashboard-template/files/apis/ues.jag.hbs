@@ -1,0 +1,46 @@
+<%
+response.addHeader("Access-Control-Allow-Origin", "*");
+response.addHeader("Content-Type", "application/json");
+
+require('/modules/app.js').exec(function (ctx) {
+
+    var layout,
+            user = ctx.user;
+
+    if (!user) {
+        //response.sendError(401, 'Unauthorized');
+        //return;
+    }
+
+    var matcher = new URIMatcher(request.getRequestURI());
+    var ues = require('/modules/ues.js');
+
+    if (matcher.match('/{context}/apis/ues/layout/{appName}') ||
+        matcher.match('/{context}/apis/ues/layout/')) {
+
+        var method = request.getMethod();
+        var appName = matcher.elements().appName || matcher.elements().context;
+
+        if (method == 'GET') {
+            layout = ues.getDashboardLayout(appName, user);
+          //new Log().info(layout);
+          
+            if (layout) {
+                layout['user'] = user;
+                print(layout);
+            } else {
+                /*response.sendError(404, 'Layout doesn\'t exist for { dashboard: "' +
+                        appName + '", user: "' + user + '"}');*/
+                print(null);
+            }
+        } else if (method == 'POST') {
+            layout = request.getParameter('layout');
+            //new Log().info(layout);
+            print(ues.setDashboardLayout(appName, user, layout));
+
+        }
+    } else {
+        response.sendError(404, 'API Endpoint Not Found');
+    }
+}, request, response, session);
+%>

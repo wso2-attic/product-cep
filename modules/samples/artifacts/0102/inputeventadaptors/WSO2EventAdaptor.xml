@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inputEventAdaptor name="WSO2EventAdaptor" statistics="enable"
+  trace="disable" type="wso2event" xmlns="http://wso2.org/carbon/eventadaptormanager"/>

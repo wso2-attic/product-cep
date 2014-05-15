@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+  ~  Copyright (c) 2009, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~  WSO2 Inc. licenses this file to you under the Apache License,
+  ~  Version 2.0 (the "License"); you may not use this file except
+  ~  in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing,
+  ~  software distributed under the License is distributed on an
+  ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~  KIND, either express or implied.  See the License for the
+  ~  specific language governing permissions and limitations
+  ~  under the License.
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+  <title>Welcome to WSO2 CEP v1.0.0 </title>
+  <link href="css/cep-docs.css" rel="stylesheet" />
+  <link href="styles/dist-docs.css" rel="stylesheet" type="text/css"
+  media="all" />
+</head>
+
+<body xml:lang="en" lang="en">
+<h1>Welcome to WSO2 Complex Event Processor (CEP) v1.0.0 </h1>
+
+<p>WSO2 Complex Event Processor (WSO2 CEP) is to be your Complex Event
+Processing System (CEPS). Our ultimate goal is to provide you with the suitable 
+capability of filtering events and generating new events according to your
+ organization's decisions. </p>
+
+<p>CEP 1.0.0 supports applying your organization' decisions on receiving event
+streams and generating new events on matching events.
+<p>WSO2 CEP 1.0.0 is developed on top of the revolutionary <a
+href="http://wso2.org/projects/carbon">Carbon platform</a>
+, and is based on the OSGi framework to achieve the better modularity for
+your Service Oriented Architecture (SOA). This also contains a lots of new
+features and many other optional components to customize the behavior of the
+server. Further, if you do not want any of the built in features, you can
+uninstall those features without any trouble. In other words, CEP can be
+customized to your SOA needs. </p>
+
+<p>You can download this distribution from <a
+href="http://wso2.org/downloads/CEP">Project Download Page </a> and give it a
+try. </p>
+
+<h2>Getting Started</h2>
+
+<p>Getting your complex event processing project off the ground with the WSO2 CEP is
+fairly simple.</p>
+<ol>
+  <li><a href="http://wso2.org/downloads/CEP">Download</a> the WSO2 CEP
+  1.0.0</li>
+  <li>Read through the <a href="docs_index.html">Documentation Index</a></li>
+  <li>Visit our <a href="http://wso2.com/products/complex-event-processing-server/">Official Web
+    site</a></li>
+  <li>Look at the <a href="release-notes.html">Release Notes</a> for the high
+    level features, or the <a
+    href="http://wso2.com/products/complex-event-processing-server/#tabs">WSO2 CEP Data
+  Sheet</a></li>
+</ol>
+</p>
+</body>
+</html>

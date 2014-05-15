@@ -1,0 +1,303 @@
+<!--
+ ~ Copyright (c) 2005-2010, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ ~
+ ~ WSO2 Inc. licenses this file to you under the Apache License,
+ ~ Version 2.0 (the "License"); you may not use this file except
+ ~ in compliance with the License.
+ ~ You may obtain a copy of the License at
+ ~
+ ~    http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~ Unless required by applicable law or agreed to in writing,
+ ~ software distributed under the License is distributed on an
+ ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ ~ KIND, either express or implied.  See the License for the
+ ~ specific language governing permissions and limitations
+ ~ under the License.
+ -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.wso2.cep</groupId>
+    <artifactId>cep-parent</artifactId>
+    <packaging>pom</packaging>
+    <version>4.0.0-SNAPSHOT</version>
+    <name>WSO2 CEP - Parent</name>
+    <url>http://wso2.org/projects/cep/java</url>
+    <description>WSO2 Complex Event Processor</description>
+
+    <licenses>
+        <license>
+            <name>Apache License Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+    </licenses>
+
+    <modules>
+        <!--module>dependencies</module-->
+        <module>modules/styles</module>
+        <module>modules/samples</module>
+        <module>modules/features</module>
+        <module>modules/p2-profile-gen</module>
+        <module>modules/distribution</module>
+        <!--<module>modules/org.wso2.stratos.cep.dashboard.ui</module>-->
+        <module>modules/integration</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.wso2.siddhi</groupId>
+                <artifactId>siddhi-api</artifactId>
+                <version>${siddhi.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.wso2.siddhi</groupId>
+                <artifactId>siddhi-core</artifactId>
+                <version>${siddhi.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.wso2.siddhi</groupId>
+                <artifactId>siddhi-query</artifactId>
+                <version>${siddhi.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.wso2.carbon</groupId>
+                <artifactId>org.wso2.carbon.ui</artifactId>
+                <version>${carbon.platform.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.osgi</groupId>
+                <artifactId>org.eclipse.osgi</artifactId>
+                <version>${version.equinox.osgi}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.equinox</groupId>
+                <artifactId>org.eclipse.equinox.jsp.jasper</artifactId>
+                <version>1.0.1.R33x_v20070816</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.equinox</groupId>
+                <artifactId>org.eclipse.equinox.http.helper</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.osgi</groupId>
+                <artifactId>org.eclipse.osgi.services</artifactId>
+                <version>${version.equinox.osgi.services}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.equinox</groupId>
+                <artifactId>javax.servlet</artifactId>
+                <version>${javax.servlet.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.derby.wso2</groupId>
+                <artifactId>derby</artifactId>
+                <version>${apache.derby.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate.wso2</groupId>
+                <artifactId>hibernate</artifactId>
+                <version>${hibernate.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.bcel.wso2</groupId>
+                <artifactId>bcel</artifactId>
+                <version>${bcel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>asm.wso2</groupId>
+                <artifactId>asm</artifactId>
+                <version>${asm.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cglib.wso2</groupId>
+                <artifactId>cglib</artifactId>
+                <version>${cglib.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.axis2.wso2</groupId>
+                <artifactId>axis2-jibx</artifactId>
+                <version>${axis2.jibx.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jibx.wso2</groupId>
+                <artifactId>jibx</artifactId>
+                <version>${jibx.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.axis2.wso2</groupId>
+                <artifactId>axis2-jaxbri</artifactId>
+                <version>${axis2.jaxb.version}</version>
+            </dependency>
+
+            <!-- For stratos service -->
+            <dependency>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>org.apache.felix.framework</artifactId>
+                <version>1.0.3</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>org.apache.felix.main</artifactId>
+                <version>1.0.3</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>org.osgi.compendium</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.equinox</groupId>
+                <artifactId>org.eclipse.equinox.http.servlet</artifactId>
+                <version>${version.equinox.http.servlet}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.equinox</groupId>
+                <artifactId>javax.servlet.jsp</artifactId>
+                <version>${javax.servlet.jsp.version}</version>
+            </dependency>
+
+            <!-- For stratos service samples -->
+            <dependency>
+                <groupId>org.wso2.carbon</groupId>
+                <artifactId>org.wso2.carbon.core</artifactId>
+                <version>${carbon.platform.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.axis2.wso2</groupId>
+                <artifactId>axis2</artifactId>
+                <version>${axis2.version}</version>
+            </dependency>
+
+            <!-- Dependencies for dashboard ui -->
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>${version.log4j}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+                <version>${version.commons.logging}</version>
+            </dependency>
+
+            <!-- Dependencies for org.wso2.stratos.cep.login.ui -->
+            <dependency>
+                <groupId>org.apache.ws.commons.axiom.wso2</groupId>
+                <artifactId>axiom</artifactId>
+                <version>${orbit.version.axiom}</version>
+            </dependency>
+
+            <!-- Dependencies for sample installer -->
+            <dependency>
+                <groupId>org.wso2.carbon</groupId>
+                <artifactId>org.wso2.carbon.registry.core</artifactId>
+                <version>${carbon.platform.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <!--todo - update scm-->
+    <!--<scm>-->
+        <!--<connection>scm:svn:http://svn.wso2.org/repos/wso2/carbon/platform/trunk/products/cep/</connection>-->
+        <!--<developerConnection>scm:svn:https://svn.wso2.org/repos/wso2/carbon/platform/trunk/products/cep/</developerConnection>-->
+        <!--<url>https://svn.wso2.org/repos/wso2/carbon/platform/trunk/products/cep/</url>-->
+    <!--</scm>-->
+
+    <profiles>
+        <profile>
+            <id>sign</id>
+            <activation>
+                <property>
+                    <name>sign</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.0-alpha-3</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+    <organization>
+        <name>WSO2 Inc</name>
+        <url>http://wso2.com</url>
+    </organization>
+
+    <issueManagement>
+        <system>JIRA</system>
+        <url>https://wso2.org/jira/browse/CEP</url>
+    </issueManagement>
+
+    <properties>
+        <siddhi.version>3.0.0-SNAPSHOT</siddhi.version>
+        <carbon.platform.version>4.3.0-SNAPSHOT</carbon.platform.version>
+        <!--carbon.platform.version>${carbon.platform.version}</carbon.platform.version-->
+        <carbon.kernel.version>4.3.0-SNAPSHOT</carbon.kernel.version>
+        <carbon.p2.plugin.version>1.5.3</carbon.p2.plugin.version>
+        <!--todo 2.2.1-snapshot -->
+        <stratos.version>2.2.1</stratos.version>
+        <stratos.version.2.2.0>2.2.0</stratos.version.2.2.0>
+        <load.balance.version>2.2.0</load.balance.version>
+        <javax.servlet.version>3.0.0.v201112011016</javax.servlet.version>
+        <version.equinox.osgi>3.8.1.v20120830-144521</version.equinox.osgi>
+        <emma.version>2.1.5320</emma.version>
+        <javax.servlet.jsp.version>2.0.0.v200706191603</javax.servlet.jsp.version>
+        <version.equinox.http.servlet>2.2.2</version.equinox.http.servlet>
+        <apache.derby.version>10.3.2.1wso2v1</apache.derby.version>
+        <version.equinox.osgi.services>3.3.100.v20120522-1822</version.equinox.osgi.services>
+        <hibernate.version>3.2.5.ga-wso2v1</hibernate.version>
+        <bcel.version>5.2.0.wso2v1</bcel.version>
+        <asm.version>3.1.wso2v1</asm.version>
+        <cglib.version>2.2.wso2v1</cglib.version>
+        <axis2.jibx.version>1.6.0.wso2v1</axis2.jibx.version>
+        <jibx.version>1.2.1.wso2v1</jibx.version>
+        <axis2.jibx.version>1.6.0.wso2v1</axis2.jibx.version>
+        <axis2.jaxb.version>1.6.0.wso2v1</axis2.jaxb.version>
+        <axis2.version>1.6.1.wso2v11-SNAPSHOT</axis2.version>
+        <jaxb.version>2.2.5.wso2v1</jaxb.version>
+        <orbit.version.axiom>1.2.11.wso2v5-SNAPSHOT</orbit.version.axiom>
+        <version.commons.logging>1.1</version.commons.logging>
+        <version.log4j>1.2.13</version.log4j>
+        <!--stratos.version>${stratos.version}</stratos.version-->
+        <!--<appserver.version>5.2.0</appserver.version>-->
+    </properties>
+
+    <mailingLists>
+        <mailingList>
+            <name>WSO2 CEP Users' list</name>
+            <post>http://stackoverflow.com/questions/tagged/wso2</post>
+        </mailingList>
+        <mailingList>
+            <name>WSO2 CEP Developers' List</name>
+            <post>mailto:dev@wso2.org</post>
+            <archive>http://mail.wso2.org/mailarchive/dev/</archive>
+            <subscribe>mailto:dev-request@wso2.org?subject=subscribe</subscribe>
+            <unsubscribe>mailto:dev-request@wso2.org?subject=unsubscribe</unsubscribe>
+        </mailingList>
+    </mailingLists>
+
+</project>

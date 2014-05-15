@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventFormatter name="LoginInfoFormatter" statistics="enable"
+                trace="disable" xmlns="http://wso2.org/carbon/eventformatter">
+    <from streamName="org.wso2.sample.out.login.alerts" version="1.0.0"/>
+    <mapping type="wso2event" customMapping="enable">
+        <payloadData>
+
+            <property>
+                <from name="username"/>
+                <to name="username" type="string"/>
+            </property>
+            <property>
+                <from name="ip1"/>
+                <to name="firstAttemptedIP" type="string"/>
+            </property>
+            <property>
+                <from name="ip2"/>
+                <to name="secondAttemptedIP" type="string"/>
+            </property>
+        </payloadData>
+    </mapping>
+    <to eventAdaptorName="WSO2EventAdaptor" eventAdaptorType="wso2event">
+        <property name="stream">org.wso2.sample.login.alerts</property>
+        <property name="version">1.0.0</property>
+    </to>
+</eventFormatter>

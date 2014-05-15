@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventBuilder name="TwitterFeed" statistics="disable" trace="disable" xmlns="http://wso2.org/carbon/eventbuilder">
+    <from eventAdaptorName="WSO2EventAdaptor" eventAdaptorType="wso2event">
+        <property name="stream">twitterFeed</property>
+        <property name="version">1.0.0</property>
+    </from>
+    <mapping type="wso2event" customMapping="enable" >
+        <property>
+            <from dataType="payload" name="company"/>
+            <to name="company" type="string"/>
+        </property>
+        <property>
+            <from dataType="payload" name="wordCount"/>
+            <to name="wordCount" type="int"/>
+        </property>
+    </mapping>
+    <to streamName="org.wso2.sample.twitter.feed" version="1.0.0"/>
+</eventBuilder>
