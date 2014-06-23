@@ -382,6 +382,13 @@
                                 </featureArtifactDef>
 
                                 <!-- SSO -->
+
+                                <feaureArtifactDef>
+                                    org.wso2.carbon:org.wso2.carbon.identity.user.profile.server.feature:${carbon.platform.version}
+                                </feaureArtifactDef>
+                                <feaureArtifactDef>
+                                    org.wso2.carbon:org.wso2.carbon.identity.application.authentication.framework.server.feature:${carbon.platform.version}
+                                </feaureArtifactDef>
                                 <featureArtifactDef>
                                     org.wso2.carbon:org.wso2.carbon.identity.application.authentication.framework.server.feature:${carbon.platform.version}
                                 </featureArtifactDef>
@@ -404,6 +411,7 @@
                                     org.wso2.carbon:org.wso2.carbon.event.server.feature:${carbon.patchrelease.version.421}
                                 </featureArtifactDef-->
 
+ 				
                             </featureArtifacts>
                         </configuration>
                     </execution>
@@ -811,6 +819,16 @@
 
                                 <!-- sso -->
                                 <feature>
+                                    <id>org.wso2.carbon.identity.user.profile.server.feature.group</id>
+                                    <version>${carbon.platform.version}</version>
+                                </feature>
+
+                                <feature>
+                                    <id>org.wso2.carbon.identity.application.authentication.framework.server.feature.group</id>
+                                    <version>${carbon.platform.version}</version>
+                                </feature>
+
+                                <feature>
                                     <id>
                                         org.wso2.carbon.identity.application.authentication.framework.server.feature.group
                                     </id>
@@ -845,6 +863,7 @@
                                     <id>org.wso2.carbon.as.runtimes.cxf.feature.group</id>
                                     <version>${carbon.platform.version}</version>
                                 </feature>
+
 
                             </features>
                         </configuration>
