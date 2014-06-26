@@ -30,37 +30,6 @@
     <name>WSO2 CEP - P2 Profile Generation</name>
     <url>http://wso2.org</url>
 
-    <repositories>
-        <repository>
-            <id>wso2-maven2-repository</id>
-            <name>WSO2 Maven2 Repository</name>
-            <url>http://dist.wso2.org/maven2/</url>
-        </repository>
-        <repository>
-            <id>wso2-maven2-snapshot-repository</id>
-            <name>WSO2 Maven2 Snapshot Repository</name>
-            <url>http://dist.wso2.org/snapshots/maven2/</url>
-        </repository>
-        <!--repository>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>daily</updatePolicy>
-                <checksumPolicy>ignore</checksumPolicy>
-            </releases>
-            <id>wso2-nexus</id>
-            <name>WSO2 internal Repository</name>
-            <url>http://maven.wso2.org/nexus/content/groups/wso2-public/</url>
-        </repository>
-        <repository>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <id>central</id>
-            <name>Central Repository</name>
-            <url>http://repo.maven.apache.org/maven2</url>
-        </repository-->
-    </repositories>
-
     <build>
         <plugins>
             <plugin>
@@ -107,65 +76,6 @@
                             </artifactItems>
                         </configuration>
                     </execution>
-                    <!--<execution>
-                        <id>3-unpack-kernel-patch</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>unpack</goal>
-                        </goals>
-                        <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>org.wso2.carbon</groupId>
-                                    <artifactId>WSO2-CARBON-PATCH-4.2.0</artifactId>
-                                    <version>0001</version>
-                                    <type>zip</type>
-                                    <overWrite>true</overWrite>
-                                    <outputDirectory>target</outputDirectory>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.wso2.carbon</groupId>
-                                    <artifactId>WSO2-CARBON-PATCH-4.2.0</artifactId>
-                                    <version>0002</version>
-                                    <type>zip</type>
-                                    <overWrite>true</overWrite>
-                                    <outputDirectory>target</outputDirectory>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.wso2.carbon</groupId>
-                                    <artifactId>WSO2-CARBON-PATCH-4.2.0</artifactId>
-                                    <version>0003</version>
-                                    <type>zip</type>
-                                    <overWrite>true</overWrite>
-                                    <outputDirectory>target</outputDirectory>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.wso2.carbon</groupId>
-                                    <artifactId>WSO2-CARBON-PATCH-4.2.0</artifactId>
-                                    <version>0004</version>
-                                    <type>zip</type>
-                                    <overWrite>true</overWrite>
-                                    <outputDirectory>target</outputDirectory>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.wso2.carbon</groupId>
-                                    <artifactId>WSO2-CARBON-PATCH-4.2.0</artifactId>
-                                    <version>0005</version>
-                                    <type>zip</type>
-                                    <overWrite>true</overWrite>
-                                    <outputDirectory>target</outputDirectory>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.wso2.carbon</groupId>
-                                    <artifactId>WSO2-CARBON-PATCH-4.2.0</artifactId>
-                                    <version>0006</version>
-                                    <type>zip</type>
-                                    <overWrite>true</overWrite>
-                                    <outputDirectory>target</outputDirectory>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>-->
                 </executions>
             </plugin>
             <plugin>
@@ -199,9 +109,6 @@
                                     org.wso2.carbon:org.wso2.carbon.logging.mgt.feature:${carbon.platform.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
-                                    org.wso2.carbon:org.wso2.carbon.statistics.transport.feature:${carbon.platform.version}
-                                </featureArtifactDef>
-                                <featureArtifactDef>
                                     org.wso2.carbon:org.wso2.carbon.system.statistics.feature:${carbon.platform.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
@@ -222,12 +129,7 @@
                                 <featureArtifactDef>
                                     org.wso2.carbon:org.wso2.carbon.message.flows.feature:${carbon.platform.version}
                                 </featureArtifactDef>
-                                <!--<featureArtifactDef>-->
-                                    <!--org.wso2.carbon:org.wso2.carbon.xfer.feature:${carbon.platform.version}-->
-                                <!--</featureArtifactDef>-->
-                                <!--<featureArtifactDef>-->
-                                    <!--org.wso2.carbon:org.wso2.carbon.mex.feature:${carbon.platform.version}-->
-                                <!--</featureArtifactDef>-->
+
                                 <featureArtifactDef>
                                     org.wso2.carbon:org.wso2.carbon.tryit.feature:${carbon.platform.version}
                                 </featureArtifactDef>
@@ -253,35 +155,35 @@
 
                                 <!--cep-->
                                 <featureArtifactDef>
-                                    org.wso2.carbon:org.wso2.carbon.event.input.adaptor.feature:2.0.0-SNAPSHOT
+                                    org.wso2.carbon:org.wso2.carbon.event.input.adaptor.feature:${cep.feature.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
-                                    org.wso2.carbon:org.wso2.carbon.event.output.adaptor.feature:2.0.0-SNAPSHOT
+                                    org.wso2.carbon:org.wso2.carbon.event.output.adaptor.feature:${cep.feature.version}
                                 </featureArtifactDef>
 
                                 <featureArtifactDef>
-                                    org.wso2.carbon:org.wso2.carbon.event.builder.feature:2.0.0-SNAPSHOT
+                                    org.wso2.carbon:org.wso2.carbon.event.builder.feature:${cep.feature.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
-                                    org.wso2.carbon:org.wso2.carbon.event.formatter.feature:2.0.0-SNAPSHOT
+                                    org.wso2.carbon:org.wso2.carbon.event.formatter.feature:${cep.feature.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
-                                    org.wso2.carbon:org.wso2.carbon.event.processor.feature:2.0.0-SNAPSHOT
+                                    org.wso2.carbon:org.wso2.carbon.event.processor.feature:${cep.feature.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
-                                    org.wso2.carbon:org.wso2.carbon.event.tracer.feature:2.0.0-SNAPSHOT
+                                    org.wso2.carbon:org.wso2.carbon.event.tracer.feature:${cep.feature.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
-                                    org.wso2.carbon:org.wso2.carbon.event.flow.feature:2.0.0-SNAPSHOT
+                                    org.wso2.carbon:org.wso2.carbon.event.flow.feature:${cep.feature.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
-                                    org.wso2.carbon:org.wso2.carbon.event.statistics.feature:2.0.0-SNAPSHOT
+                                    org.wso2.carbon:org.wso2.carbon.event.statistics.feature:${cep.feature.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
-                                    org.wso2.carbon:org.wso2.carbon.event.stream.manager.feature:2.0.0-SNAPSHOT
+                                    org.wso2.carbon:org.wso2.carbon.event.stream.manager.feature:${cep.feature.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
-                                    org.wso2.carbon:org.wso2.carbon.event.simulator.feature:2.0.0-SNAPSHOT
+                                    org.wso2.carbon:org.wso2.carbon.event.simulator.feature:${cep.feature.version}
                                 </featureArtifactDef>
 
                                 <!-- service.mgt -->
@@ -323,9 +225,6 @@
                                 <featureArtifactDef>
                                     org.wso2.carbon:org.wso2.carbon.databridge.streamdefn.registry.server.feature:4.3.0-SNAPSHOT
                                 </featureArtifactDef>
-                                <!--<featureArtifactDef>-->
-                                    <!--org.wso2.carbon:org.wso2.carbon.databridge.streamdefn.cassandra.feature:${carbon.platform.version}-->
-                                <!--</featureArtifactDef>-->
 
 
                                 <!-- Features related to Cloud -->
@@ -381,27 +280,27 @@
                                 <!--</featureArtifactDef>-->
 
                                 <!-- Dashboard related features -->
-                                <featureArtifactDef>
-                                    org.jaggeryjs:org.jaggeryjs.server.feature:${jaggery.feature.version}
-                                </featureArtifactDef>
-                                <featureArtifactDef>
-                                    org.jaggeryjs.modules:markdown.feature:${markdown.feature.version}
-                                </featureArtifactDef>
-                                <featureArtifactDef>
-                                    org.jaggeryjs.modules:handlebars.feature:${handlebars.feature.version}
-                                </featureArtifactDef>
-                                <featureArtifactDef>
-                                    org.jaggeryjs.modules:caramel.feature:${caramel.feature.version}
-                                </featureArtifactDef>
-                                <featureArtifactDef>
-                                    org.jaggeryjs.modules:carbon.feature:${carbon.feature.version}
-                                </featureArtifactDef>
-                                <featureArtifactDef>
-                                    org.jaggeryjs.modules:process.feature:${process.feature.version}
-                                </featureArtifactDef>
-                                <featureArtifactDef>
-                                    org.jaggeryjs.modules:uuid.feature:${uuid.feature.version}
-                                </featureArtifactDef>
+                                <!--<featureArtifactDef>-->
+                                    <!--org.jaggeryjs:org.jaggeryjs.server.feature:${jaggery.feature.version}-->
+                                <!--</featureArtifactDef>-->
+                                <!--<featureArtifactDef>-->
+                                    <!--org.jaggeryjs.modules:markdown.feature:${markdown.feature.version}-->
+                                <!--</featureArtifactDef>-->
+                                <!--<featureArtifactDef>-->
+                                    <!--org.jaggeryjs.modules:handlebars.feature:${handlebars.feature.version}-->
+                                <!--</featureArtifactDef>-->
+                                <!--<featureArtifactDef>-->
+                                    <!--org.jaggeryjs.modules:caramel.feature:${caramel.feature.version}-->
+                                <!--</featureArtifactDef>-->
+                                <!--<featureArtifactDef>-->
+                                    <!--org.jaggeryjs.modules:carbon.feature:${carbon.feature.version}-->
+                                <!--</featureArtifactDef>-->
+                                <!--<featureArtifactDef>-->
+                                    <!--org.jaggeryjs.modules:process.feature:${process.feature.version}-->
+                                <!--</featureArtifactDef>-->
+                                <!--<featureArtifactDef>-->
+                                    <!--org.jaggeryjs.modules:uuid.feature:${uuid.feature.version}-->
+                                <!--</featureArtifactDef>-->
                                 <!--<featureArtifactDef>-->
                                     <!--org.wso2.store.modules:event.feature:${event.feature.version}-->
                                 <!--</featureArtifactDef>-->
@@ -423,18 +322,15 @@
                                 <!--<featureArtifactDef>-->
                                     <!--org.wso2.store.modules:ues.feature:${ues.feature.version}-->
                                 <!--</featureArtifactDef>-->
-                                <featureArtifactDef>
-                                    org.wso2.store.modules:claims.feature:${claims.feature.version}
-                                </featureArtifactDef>
                                 <!--<featureArtifactDef>-->
-                                <!--org.wso2.carbon:org.wso2.carbon.cassandra.explorer.feature:${carbon.platform.version}-->
+                                    <!--org.wso2.store.modules:claims.feature:${claims.feature.version}-->
                                 <!--</featureArtifactDef>-->
-                                <featureArtifactDef>
-                                    org.wso2.carbon:org.wso2.carbon.governance.lifecycle.management.server.feature:${carbon.platform.version}
-                                </featureArtifactDef>
-                                <featureArtifactDef>
-                                    org.wso2.carbon:org.wso2.carbon.cassandra-jdbc-1.1.1.server.feature:4.0.1
-                                </featureArtifactDef>
+                                <!--<featureArtifactDef>-->
+                                    <!--org.wso2.carbon:org.wso2.carbon.governance.lifecycle.management.server.feature:${carbon.platform.version}-->
+                                <!--</featureArtifactDef>-->
+                                <!--<featureArtifactDef>-->
+                                    <!--org.wso2.carbon:org.wso2.carbon.cassandra-jdbc-1.1.1.server.feature:4.0.1-->
+                                <!--</featureArtifactDef>-->
                                 <!--<featureArtifactDef>-->
                                     <!--org.wso2.carbon:org.wso2.carbon.databridge.cassandra.feature:${carbon.platform.version}-->
                                 <!--</featureArtifactDef>-->
@@ -448,33 +344,33 @@
                                 <!--<featureArtifactDef>-->
                                     <!--org.wso2.carbon:org.wso2.carbon.event.dashboard.feature:1.0.1-->
                                 <!--</featureArtifactDef>-->
-                                <featureArtifactDef>
-                                    org.wso2.carbon:org.wso2.carbon.claim.mgt.server.feature:${carbon.platform.version}
-                                </featureArtifactDef>
-                                <featureArtifactDef>
-                                    org.wso2.carbon:org.wso2.carbon.event.server.feature:${carbon.platform.version}
-                                </featureArtifactDef>
-                                <featureArtifactDef>
-                                    org.wso2.carbon:org.wso2.carbon.governance.metadata.server.feature:${carbon.platform.version}
-                                </featureArtifactDef>
+                                <!--<featureArtifactDef>-->
+                                    <!--org.wso2.carbon:org.wso2.carbon.claim.mgt.server.feature:${carbon.platform.version}-->
+                                <!--</featureArtifactDef>-->
+                                <!--<featureArtifactDef>-->
+                                    <!--org.wso2.carbon:org.wso2.carbon.event.server.feature:${carbon.platform.version}-->
+                                <!--</featureArtifactDef>-->
+                                <!--<featureArtifactDef>-->
+                                    <!--org.wso2.carbon:org.wso2.carbon.governance.metadata.server.feature:${carbon.platform.version}-->
+                                <!--</featureArtifactDef>-->
                                 <!--<featureArtifactDef>-->
                                 <!--org.wso2.carbon:org.wso2.carbon.governance.metadata.feature:${carbon.patchrelease.version.421}-->
                                 <!--</featureArtifactDef>-->
-                                <featureArtifactDef>
-                                    org.wso2.carbon:org.wso2.carbon.registry.associations.dependencies.server.feature:${carbon.platform.version}
-                                </featureArtifactDef>
-                                <featureArtifactDef>
-                                    org.wso2.carbon:org.wso2.carbon.registry.community.features.server.feature:${carbon.platform.version}
-                                </featureArtifactDef>
-                                <featureArtifactDef>
-                                    org.wso2.carbon:org.wso2.carbon.registry.extensions.server.feature:${carbon.platform.version}
-                                </featureArtifactDef>
-                                <featureArtifactDef>
-                                    org.wso2.carbon:org.wso2.carbon.registry.ws.feature:${carbon.platform.version}
-                                </featureArtifactDef>
-                                <featureArtifactDef>
-                                    org.wso2.carbon:org.wso2.carbon.registry.contentsearch.server.feature:${carbon.platform.version}
-                                </featureArtifactDef>
+                                <!--<featureArtifactDef>-->
+                                    <!--org.wso2.carbon:org.wso2.carbon.registry.associations.dependencies.server.feature:${carbon.platform.version}-->
+                                <!--</featureArtifactDef>-->
+                                <!--<featureArtifactDef>-->
+                                    <!--org.wso2.carbon:org.wso2.carbon.registry.community.features.server.feature:${carbon.platform.version}-->
+                                <!--</featureArtifactDef>-->
+                                <!--<featureArtifactDef>-->
+                                    <!--org.wso2.carbon:org.wso2.carbon.registry.extensions.server.feature:${carbon.platform.version}-->
+                                <!--</featureArtifactDef>-->
+                                <!--<featureArtifactDef>-->
+                                    <!--org.wso2.carbon:org.wso2.carbon.registry.ws.feature:${carbon.platform.version}-->
+                                <!--</featureArtifactDef>-->
+                                <!--<featureArtifactDef>-->
+                                    <!--org.wso2.carbon:org.wso2.carbon.registry.contentsearch.server.feature:${carbon.platform.version}-->
+                                <!--</featureArtifactDef>-->
                                 <!--<featureArtifactDef>-->
                                     <!--org.wso2.carbon:org.wso2.carbon.registry.ui.menu.governance.feature:${carbon.platform.version}-->
                                 <!--</featureArtifactDef>-->
@@ -486,6 +382,13 @@
                                 </featureArtifactDef>
 
                                 <!-- SSO -->
+
+                                <feaureArtifactDef>
+                                    org.wso2.carbon:org.wso2.carbon.identity.user.profile.server.feature:${carbon.platform.version}
+                                </feaureArtifactDef>
+                                <feaureArtifactDef>
+                                    org.wso2.carbon:org.wso2.carbon.identity.application.authentication.framework.server.feature:${carbon.platform.version}
+                                </feaureArtifactDef>
                                 <featureArtifactDef>
                                     org.wso2.carbon:org.wso2.carbon.identity.application.authentication.framework.server.feature:${carbon.platform.version}
                                 </featureArtifactDef>
@@ -508,6 +411,7 @@
                                     org.wso2.carbon:org.wso2.carbon.event.server.feature:${carbon.patchrelease.version.421}
                                 </featureArtifactDef-->
 
+ 				
                             </featureArtifacts>
                         </configuration>
                     </execution>
@@ -558,10 +462,10 @@
                                     <id>org.wso2.carbon.logging.mgt.feature.group</id>
                                     <version>${carbon.platform.version}</version>
                                 </feature>
-                                <feature>
+                                <!--feature>
                                     <id>org.wso2.carbon.statistics.transport.feature.group</id>
                                     <version>${carbon.platform.version}</version>
-                                </feature>
+                                </feature-->
                                 <feature>
                                     <id>org.wso2.carbon.system.statistics.feature.group</id>
                                     <version>${carbon.platform.version}</version>
@@ -637,43 +541,43 @@
                                 <!--cep-->
                                 <feature>
                                     <id>org.wso2.carbon.event.input.adaptor.feature.group</id>
-                                    <version>2.0.0-SNAPSHOT</version>
+                                    <version>${cep.feature.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.event.output.adaptor.feature.group</id>
-                                    <version>2.0.0-SNAPSHOT</version>
+                                    <version>${cep.feature.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.event.builder.feature.group</id>
-                                    <version>2.0.0-SNAPSHOT</version>
+                                    <version>${cep.feature.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.event.formatter.feature.group</id>
-                                    <version>2.0.0-SNAPSHOT</version>
+                                    <version>${cep.feature.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.event.processor.feature.group</id>
-                                    <version>2.0.0-SNAPSHOT</version>
+                                    <version>${cep.feature.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.event.tracer.feature.group</id>
-                                    <version>2.0.0-SNAPSHOT</version>
+                                    <version>${cep.feature.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.event.flow.feature.group</id>
-                                    <version>2.0.0-SNAPSHOT</version>
+                                    <version>${cep.feature.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.event.statistics.feature.group</id>
-                                    <version>2.0.0-SNAPSHOT</version>
+                                    <version>${cep.feature.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.event.stream.manager.feature.group</id>
-                                    <version>2.0.0-SNAPSHOT</version>
+                                    <version>${cep.feature.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.event.simulator.feature.group</id>
-                                    <version>2.0.0-SNAPSHOT</version>
+                                    <version>${cep.feature.version}</version>
                                 </feature>
 
                                 <!-- service.mgt -->
@@ -790,35 +694,35 @@
                                     <version>${carbon.platform.version}</version>
                                 </feature>
 
-                                <!-- UES related features -->
-                                <feature>
-                                    <id>org.jaggeryjs.server.feature.group</id>
-                                    <version>${jaggery.feature.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.jaggeryjs.modules.handlebars.feature.group</id>
-                                    <version>${handlebars.feature.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.jaggeryjs.modules.markdown.feature.group</id>
-                                    <version>${markdown.feature.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.jaggeryjs.modules.caramel.feature.group</id>
-                                    <version>${caramel.feature.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.jaggeryjs.modules.carbon.feature.group</id>
-                                    <version>${carbon.feature.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.jaggeryjs.modules.process.feature.group</id>
-                                    <version>${process.feature.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.jaggeryjs.modules.uuid.feature.group</id>
-                                    <version>${uuid.feature.version}</version>
-                                </feature>
+                                <!-- Dashboard related features -->
+                                <!--<feature>-->
+                                    <!--<id>org.jaggeryjs.server.feature.group</id>-->
+                                    <!--<version>${jaggery.feature.version}</version>-->
+                                <!--</feature>-->
+                                <!--<feature>-->
+                                    <!--<id>org.jaggeryjs.modules.handlebars.feature.group</id>-->
+                                    <!--<version>${handlebars.feature.version}</version>-->
+                                <!--</feature>-->
+                                <!--<feature>-->
+                                    <!--<id>org.jaggeryjs.modules.markdown.feature.group</id>-->
+                                    <!--<version>${markdown.feature.version}</version>-->
+                                <!--</feature>-->
+                                <!--<feature>-->
+                                    <!--<id>org.jaggeryjs.modules.caramel.feature.group</id>-->
+                                    <!--<version>${caramel.feature.version}</version>-->
+                                <!--</feature>-->
+                                <!--<feature>-->
+                                    <!--<id>org.jaggeryjs.modules.carbon.feature.group</id>-->
+                                    <!--<version>${carbon.feature.version}</version>-->
+                                <!--</feature>-->
+                                <!--<feature>-->
+                                    <!--<id>org.jaggeryjs.modules.process.feature.group</id>-->
+                                    <!--<version>${process.feature.version}</version>-->
+                                <!--</feature>-->
+                                <!--<feature>-->
+                                    <!--<id>org.jaggeryjs.modules.uuid.feature.group</id>-->
+                                    <!--<version>${uuid.feature.version}</version>-->
+                                <!--</feature>-->
                                 <!--<feature>-->
                                     <!--<id>org.wso2.store.modules.event.feature.group</id>-->
                                     <!--<version>${event.feature.version}</version>-->
@@ -852,10 +756,10 @@
                                     <!--<id>org.wso2.store.modules.ues.feature.group</id>-->
                                     <!--<version>${ues.feature.version}</version>-->
                                 <!--</feature>-->
-                                <feature>
-                                    <id>org.wso2.carbon.governance.lifecycle.management.server.feature.group</id>
-                                    <version>${carbon.platform.version}</version>
-                                </feature>
+                                <!--<feature>-->
+                                    <!--<id>org.wso2.carbon.governance.lifecycle.management.server.feature.group</id>-->
+                                    <!--<version>${carbon.platform.version}</version>-->
+                                <!--</feature>-->
                                 <!--todo add dashboard-->
                                 <!--<feature>-->
                                     <!--<id>org.wso2.store.feature.group</id>-->
@@ -865,18 +769,18 @@
                                     <!--<id>org.wso2.ues.feature.group</id>-->
                                     <!--<version>${ues.version}</version>-->
                                 <!--</feature>-->
-                                <feature>
-                                    <id>org.wso2.carbon.registry.extensions.server.feature.group</id>
-                                    <version>${carbon.platform.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.registry.contentsearch.server.feature.group</id>
-                                    <version>${carbon.platform.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.registry.ws.feature.group</id>
-                                    <version>${carbon.platform.version}</version>
-                                </feature>
+                                <!--<feature>-->
+                                    <!--<id>org.wso2.carbon.registry.extensions.server.feature.group</id>-->
+                                    <!--<version>${carbon.platform.version}</version>-->
+                                <!--</feature>-->
+                                <!--<feature>-->
+                                    <!--<id>org.wso2.carbon.registry.contentsearch.server.feature.group</id>-->
+                                    <!--<version>${carbon.platform.version}</version>-->
+                                <!--</feature>-->
+                                <!--<feature>-->
+                                    <!--<id>org.wso2.carbon.registry.ws.feature.group</id>-->
+                                    <!--<version>${carbon.platform.version}</version>-->
+                                <!--</feature>-->
                                 <!--<feature>-->
                                     <!--<id>org.wso2.carbon.registry.ui.menu.governance.feature.group</id>-->
                                     <!--<version>${carbon.platform.version}</version>-->
@@ -888,23 +792,42 @@
                                 <!--feature>
                                     <id>org.wso2.carbon.hostobjects.sso.server.feature.group</id>
                                     <version>${carbon.platform.version}</version>
-			        </feature-->
-                                <feature>
-                                    <id>org.wso2.carbon.cassandra-jdbc-1.1.1.server.feature.group</id>
-                                    <version>4.0.1</version>
-                                </feature>
+			                    </feature-->
+                                <!--<feature>-->
+                                    <!--<id>org.wso2.carbon.cassandra-jdbc-1.1.1.server.feature.group</id>-->
+                                    <!--<version>4.0.1</version>-->
+                                <!--</feature>-->
                                 <!--<feature>-->
                                     <!--<id>org.wso2.carbon.databridge.cassandra.feature.group</id>-->
                                     <!--<version>${carbon.platform.version}</version>-->
                                 <!--</feature>-->
-                                <feature>
-                                    <id>org.wso2.carbon.claim.mgt.server.feature.group</id>
-                                    <version>${carbon.platform.version}</version>
-                                </feature>
+                                <!--<feature>-->
+                                    <!--<id>org.wso2.carbon.claim.mgt.server.feature.group</id>-->
+                                    <!--<version>${carbon.platform.version}</version>-->
+                                <!--</feature>-->
+                                <!--<feature>-->
+                                    <!--<id>org.wso2.carbon.governance.metadata.server.feature.group-->
+                                    <!--</id>-->
+                                    <!--<version>${carbon.platform.version}</version>-->
+                                <!--</feature>-->
+                                <!--<feature>-->
+                                    <!--<id>org.wso2.carbon.event.server.feature.group</id>-->
+                                    <!--<version>${carbon.platform.version}</version>-->
+                                <!--</feature>-->
 
                                 <!-- End of UES related features -->
 
                                 <!-- sso -->
+                                <feature>
+                                    <id>org.wso2.carbon.identity.user.profile.server.feature.group</id>
+                                    <version>${carbon.platform.version}</version>
+                                </feature>
+
+                                <feature>
+                                    <id>org.wso2.carbon.identity.application.authentication.framework.server.feature.group</id>
+                                    <version>${carbon.platform.version}</version>
+                                </feature>
+
                                 <feature>
                                     <id>
                                         org.wso2.carbon.identity.application.authentication.framework.server.feature.group
@@ -929,35 +852,18 @@
                                     </id>
                                     <version>${carbon.platform.version}</version>
                                 </feature>
-                                <!--feature>
-                                    <id>org.wso2.carbon.governance.metadata.server.feature.group
-                                    </id>
-                                    <version>${carbon.patchrelease.version.421}</version>
-                                </feature-->
-                                <feature>
-                                    <id>org.wso2.carbon.governance.metadata.server.feature.group
-                                    </id>
-                                    <version>${carbon.platform.version}</version>
-                                </feature>
                                 <!--todo - add dashboard -->
                                 <!--<feature>-->
                                     <!--<id>org.wso2.carbon.event.dashboard.feature.group</id>-->
                                     <!--<version>2.0.0-SNAPSHOT</version>-->
                                 <!--</feature>-->
-                                <feature>
-                                    <id>org.wso2.carbon.event.server.feature.group</id>
-                                    <version>${carbon.platform.version}</version>
-                                </feature>
-                                <!--feature>
-                                    <id>org.wso2.carbon.event.server.feature.group</id>
-                                    <version>${carbon.patchrelease.version.421}</version>
-                                </feature-->
 
                                 <!-- class loading feature -->
                                 <feature>
                                     <id>org.wso2.carbon.as.runtimes.cxf.feature.group</id>
                                     <version>${carbon.platform.version}</version>
                                 </feature>
+
 
                             </features>
                         </configuration>
@@ -988,12 +894,8 @@
         </plugins>
     </build>
     <properties>
-        <cep.component.version>2.0.0-SNAPSHOT</cep.component.version>
-        <!--<cep.component.version.101>1.0.1</cep.component.version.101>-->
-        <!--<cep.component.version.110>1.1.0</cep.component.version.110>-->
-        <jaggery.feature.version>0.9.0.ALPHA4.wso2v4</jaggery.feature.version>
+        <jaggery.feature.version>0.9.0.ALPHA5.wso2v1-SNAPSHOT</jaggery.feature.version>
         <ues.version>1.1.0</ues.version>
-        <!--<es.version>1.0.2</es.version>-->
         <es.version>1.1.0</es.version>
         <caramel.feature.version>1.0.1</caramel.feature.version>
         <handlebars.feature.version>1.0.0</handlebars.feature.version>
@@ -1009,7 +911,8 @@
         <store.feature.version>1.0.0</store.feature.version>
         <ues.feature.version>1.0.0</ues.feature.version>
         <claims.feature.version>1.0.0</claims.feature.version>
-        <!--<stratos.patchrelease.version.221>2.2.1</stratos.patchrelease.version.221>-->
+        <cep.feature.version>2.0.0-SNAPSHOT</cep.feature.version>
     </properties>
 
 </project>
+

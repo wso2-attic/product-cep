@@ -112,7 +112,7 @@
         <java classname="org.wso2.carbon.sample.pizzadelivery.client.PizzaPublisherClient"
               classpathref="javac.classpath" fork="true">
             <arg value="${host}"/>
-            <arg value="${ThriftPort}"/>
+            <arg value="${port}"/>
             <arg value="${username}"/>
             <arg value="${password}"/>
         </java>
