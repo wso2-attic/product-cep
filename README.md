@@ -1,5 +1,6 @@
 WSO2 Complex Event Processor (CEP)
 ==================================
+V 4.0.0
 
 If snapshot versions of dependent jars are not available or out of date, to build this repository please build the following repositories first.
 
