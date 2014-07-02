@@ -44,7 +44,8 @@
         <module>modules/p2-profile-gen</module>
         <module>modules/distribution</module>
         <!--<module>modules/org.wso2.stratos.cep.dashboard.ui</module>-->
-        <module>modules/integration</module>
+        <!-- Disabling integration since it is not properly moved to git -->
+        <!--<module>modules/integration</module>-->
     </modules>
 
     <repositories>
