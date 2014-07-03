@@ -444,7 +444,7 @@
         </file>
 
         <!-- default input/output adaptor configurations -->
-        <!--<file>
+        <file>
             <source>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/cep/default-artifacts/inputeventadaptors/DefaultWSO2EventInputAdaptor.xml</source>
             <outputDirectory>
                 ${pom.artifactId}-${pom.version}/repository/deployment/server/inputeventadaptors/
@@ -452,8 +452,8 @@
             <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
--->
-<!--
+
+
         <file>
             <source>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/cep/default-artifacts/outputeventadaptors/DefaultLoggerOutputAdaptor.xml</source>
             <outputDirectory>
@@ -482,7 +482,7 @@
         </file>
 
 
--->
+
 
         <!--data bridge web app-->
         <!--restapi is deprecated-->
