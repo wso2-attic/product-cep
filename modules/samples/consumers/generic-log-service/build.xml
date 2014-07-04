@@ -21,7 +21,6 @@
 
     <property name="cep.home" value="../../.."/>
     <property name="src.dir" value="src/main/java"/>
-    <property name="resources.dir" value="src/main/resources"/>
     <property name="webapp.dir" value="src/main/webapp"/>
     <property name="temp.dir" value="temp"/>
     <property name="class.dir" value="${temp.dir}/classes"/>
@@ -31,7 +30,7 @@
     <path id="javac.classpath">
         <pathelement path="${class.dir}"/>
         <fileset dir="${cep.home}/repository/components/plugins/">
-            <include name="javax.servlet_*.jar"/>
+            <include name="tomcat-servlet-api_*.jar"/>
         </fileset>
     </path>
 
@@ -76,11 +75,6 @@
             <include name="*/**"/>
             <classpath refid="javac.classpath"/>
         </javac>
-        <copy todir="${class.dir}" overwrite="true">
-            <fileset dir="${resources.dir}">
-                <include name="*.properties"/>
-            </fileset>
-        </copy>
     </target>
 
     <target name="build-service" depends="compile">
