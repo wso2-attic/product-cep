@@ -17,9 +17,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wso2.carbon.cep.sample.client;
+package org.wso2.carbon.integration.test.client;
 
 import org.apache.log4j.Logger;
+import org.testng.Assert;
 import org.wso2.carbon.databridge.commons.Credentials;
 import org.wso2.carbon.databridge.commons.Event;
 import org.wso2.carbon.databridge.commons.StreamDefinition;
@@ -35,25 +36,18 @@ import org.wso2.carbon.user.api.UserStoreException;
 
 import java.net.SocketException;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
-public class TestAgentServer {
-    Logger log = org.apache.log4j.Logger.getLogger(TestAgentServer.class);
-    ThriftDataReceiver thriftDataReceiver;
-    static final TestAgentServer testServer = new TestAgentServer();
+public class TestAgentServer implements Runnable {
+//    private Logger log = Logger.getLogger(TestAgentServer.class);
+    private ThriftDataReceiver thriftDataReceiver;
+    private boolean eventReceived = false;
+    private AtomicLong msgCount = new AtomicLong(0);
 
-
-    public static void main(String[] args) throws DataBridgeException {
-        testServer.start(7661);
-        synchronized (testServer) {
-            try {
-                testServer.wait();
-            } catch (InterruptedException ignored) {
-
-
-            }
-        }
+    public void startServer() throws DataBridgeException {
+        msgCount.set(0);
+        start(7661);
     }
-
 
     public void start(int receiverPort) throws DataBridgeException {
         KeyStoreUtil.setKeyStoreParams();
@@ -62,8 +56,6 @@ public class TestAgentServer {
             public boolean authenticate(String userName,
                                         String password) {
                 return true;// allays authenticate to true
-
-
             }
 
             @Override
@@ -86,52 +78,56 @@ public class TestAgentServer {
 
             }
 
-            public void setThreadLocalContext(AgentSession agentSession) {
-                //To change body of implemented methods use File | Settings | File Templates.
-            }
         }, new InMemoryStreamDefinitionStore());
-
-
         thriftDataReceiver = new ThriftDataReceiver(receiverPort, databridge);
 
-
         databridge.subscribe(new AgentCallback() {
-            int totalSize = 0;
 
-
-            public void definedStream(StreamDefinition streamDefinition,
-                                      int tenantID) {
-                log.info("StreamDefinition " + streamDefinition);
+            @Override
+            public void definedStream(StreamDefinition streamDefinition, int tenantId) {
+                System.out.println("Added StreamDefinition " + streamDefinition);
             }
 
             @Override
-            public void removeStream(StreamDefinition streamDefinition, int tenantID) {
-                //To change body of implemented methods use File | Settings | File Templates.
+            public void removeStream(StreamDefinition streamDefinition, int tenantId) {
+                System.out.println("Removed StreamDefinition " + streamDefinition);
             }
-
 
             @Override
             public void receive(List<Event> eventList, Credentials credentials) {
-                log.info("eventListSize=" + eventList.size() + " eventList " + eventList + " for username " + credentials.getUsername());
+                System.out.println("eventListSize=" + eventList.size() + " eventList " + eventList + " for username " + credentials.getUsername());
+                eventReceived = true;
+                msgCount.addAndGet(eventList.size());
             }
-
 
         });
 
-
         try {
             String address = HostAddressFinder.findAddress("localhost");
-            log.info("Test Server starting on " + address);
+            System.out.println("Test Server starting on " + address);
             thriftDataReceiver.start(address);
-            log.info("Test Server Started");
+            System.out.println("Test Server Started");
         } catch (SocketException e) {
-            log.error("Test Server not started !", e);
+            System.out.println("Test Server not started !"+ e);
         }
     }
 
-
     public void stop() {
+        Assert.assertTrue(eventReceived);
         thriftDataReceiver.stop();
-        log.info("Test Server Stopped");
+        System.out.println("Test Server Stopped");
+    }
+
+    @Override
+    public void run() {
+        try {
+            startServer();
+        } catch (DataBridgeException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public long getMsgCount() {
+        return msgCount.get();
     }
 }
