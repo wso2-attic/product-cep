@@ -90,67 +90,12 @@ public class CEPIntegrationTest {
         return FrameworkPathUtil.getSystemResourceLocation();
     }
 
-//    protected void deployAarService(String serviceName, String fileNameWithExtension,
-//                                    String filePath, String serviceHierarchy)
-//            throws Exception {
-//        AARServiceUploaderClient aarServiceUploaderClient =
-//                new AARServiceUploaderClient(cepServer.getBackEndUrl(), cepServer.getSessionCookie());
-//        aarServiceUploaderClient.uploadAARFile(fileNameWithExtension, filePath, serviceHierarchy);
-//
-//        ServiceDeploymentUtil.isServiceDeployed(cepServer.getBackEndUrl(), cepServer.getSessionCookie(), serviceName);
-//        Assert.assertTrue(ServiceDeploymentUtil.
-//                isServiceDeployed(cepServer.getBackEndUrl(), cepServer.getSessionCookie(), serviceName),
-//                          "Service file uploading failed withing given deployment time");
-//    }
-//
-//    protected void deleteService(String serviceName) throws RemoteException {
-//        ServiceAdminClient adminServiceService =
-//                new ServiceAdminClient(cepServer.getBackEndUrl(), cepServer.getSessionCookie());
-//        if (ServiceDeploymentUtil.isFaultyService(cepServer.getBackEndUrl(),
-//                                                  cepServer.getSessionCookie(), serviceName)) {
-//            adminServiceService.deleteFaultyServiceByServiceName(serviceName);
-//
-//        } else if (ServiceDeploymentUtil.isServiceExist(cepServer.getBackEndUrl(),
-//                                                        cepServer.getSessionCookie(), serviceName)) {
-//            adminServiceService.deleteService(new String[]{adminServiceService.getServiceGroup(serviceName)});
-//        }
-//        ServiceDeploymentUtil.isServiceDeleted(cepServer.getBackEndUrl(), cepServer.getSessionCookie(), serviceName);
-//    }
 
     protected void gracefullyRestartServer() throws Exception {
         ServerConfigurationManager serverConfigurationManager = new ServerConfigurationManager(cepServer);
         serverConfigurationManager.restartGracefully();
     }
 
-//    protected boolean isServiceDeployed(String serviceName) throws RemoteException {
-//        return ServiceDeploymentUtil.isServiceDeployed(cepServer.getBackEndUrl(),
-//                                                       cepServer.getSessionCookie(), serviceName);
-//    }
-//
-//    protected boolean isServiceFaulty(String serviceName) throws RemoteException {
-//        return ServiceDeploymentUtil.isServiceFaulty(cepServer.getBackEndUrl(),
-//                                                     cepServer.getSessionCookie(), serviceName);
-//    }
-//
-//    protected String getSecuredServiceEndpoint(String serviceName) {
-//        return cepServer.getSecureServiceUrl() + "/" + serviceName;
-//    }
-//
-//    protected void applySecurity(String scenarioNumber, String serviceName, String userGroup)
-//            throws SecurityAdminServiceSecurityConfigExceptionException, RemoteException,
-//                   InterruptedException {
-//
-//        EnvironmentBuilder builder = new EnvironmentBuilder();
-//        securityAdminServiceClient =
-//                new SecurityAdminServiceClient(cepServer.getBackEndUrl(), cepServer.getSessionCookie());
-//
-//        String path = builder.getFrameworkSettings().getEnvironmentVariables().getKeystorePath();
-//        String KeyStoreName = path.substring(path.lastIndexOf(File.separator) + 1, path.length());
-//        securityAdminServiceClient.applySecurity(serviceName, scenarioNumber, new String[]{userGroup},
-//                                                 new String[]{KeyStoreName}, KeyStoreName);
-//        Thread.sleep(2000);
-//    }
-//
     protected String getArtifactConfigurationFromClasspath(String relativeFilePath)
             throws Exception {
         relativeFilePath = relativeFilePath.replaceAll("[\\\\/]", Matcher.quoteReplacement(File.separator));

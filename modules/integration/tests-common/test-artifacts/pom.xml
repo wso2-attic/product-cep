@@ -28,12 +28,6 @@
             <version>${carbon.platform.version}</version>
             <type>aar</type>
         </dependency>
-
-        <!--<dependency>-->
-        <!--<groupId>org.wso2.xfer</groupId>-->
-        <!--<artifactId>wso2xfer</artifactId>-->
-        <!--<version>3.3.0</version>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>org.wso2.carbon</groupId>
             <artifactId>org.wso2.carbon.tomcat</artifactId>

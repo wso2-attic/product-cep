@@ -31,6 +31,7 @@ import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config
 import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config.JMSBrokerConfigurationProvider;
 import org.wso2.carbon.event.formatter.stub.types.EventOutputPropertyConfigurationDto;
 import org.wso2.carbon.event.formatter.stub.types.PropertyDto;
+import org.wso2.carbon.integration.common.utils.LoginLogoutClient;
 import org.wso2.carbon.integration.common.utils.mgt.ServerConfigurationManager;
 import org.wso2.carbon.integration.test.CEPIntegrationTest;
 import org.wso2.carbon.integration.test.client.TestAgentServer;
@@ -77,7 +78,8 @@ public class JMSTextMessageTestCase extends CEPIntegrationTest {
             throw new RemoteException("Exception caught when restarting server", e);
         }
 
-        String loggedInSessionCookie = getSessionCookie();
+        super.init(TestUserMode.SUPER_TENANT_ADMIN);
+        String loggedInSessionCookie = new LoginLogoutClient(cepServer).login();
         eventBuilderAdminServiceClient = configurationUtil.getEventBuilderAdminServiceClient(backendURL, loggedInSessionCookie);
         eventFormatterAdminServiceClient = configurationUtil.getEventFormatterAdminServiceClient(backendURL, loggedInSessionCookie);
         eventProcessorAdminServiceClient = configurationUtil.getEventProcessorAdminServiceClient(backendURL, loggedInSessionCookie);
