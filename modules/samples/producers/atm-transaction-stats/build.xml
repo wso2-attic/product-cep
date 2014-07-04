@@ -33,17 +33,6 @@
         <pathelement path="${class.dir}"/>
         <fileset dir="${lib.dir}"/>
         <fileset dir="${carbon.home}/repository/components/plugins/"/>
-        <!--<include name="org.wso2.carbon.logging_*.jar"/>-->
-        <!--<include name="commons-pool_*.jar"/>-->
-        <!--<include name="com.google.gson_*.jar"/>-->
-        <!--<include name="httpclient_*.jar"/>-->
-        <!--<include name="libthrift_*.jar"/>-->
-        <!--<include name="slf4j.log4j12_*.jar"/>-->
-        <!--<include name="slf4j.api_*.jar"/>-->
-        <!--<include name="org.wso2.carbon.databridge.agent.thrift_*.jar"/>-->
-        <!--<include name="org.wso2.carbon.databridge.commons.thrift_*.jar"/>-->
-        <!--<include name="org.wso2.carbon.databridge.commons_*.jar"/>-->
-        <!--</fileset>-->
     </path>
 
 
