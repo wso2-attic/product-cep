@@ -496,6 +496,14 @@
             <fileMode>644</fileMode>
         </file>-->
 
+        <!--Storm Config File -->
+        <file>
+            <source>repository/conf/storm-deployment-config.xml</source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/
+            </outputDirectory>
+            <filtered>true</filtered>
+        </file>
+
         <!--Siddhi conf-->
         <file>
             <source>repository/conf/siddhi/siddhi.extension</source>

@@ -1,0 +1,17 @@
+<stromDeploymentConfigs>
+    <stormEnabled>false</stormEnabled>
+    <cepManager>
+       <hostName>localhost</hostName>
+       <port>9773</port>
+       <reconnectionInterval>20</reconnectionInterval>
+     </cepManager>
+   <receiverPortRange>
+      <min>15000</min>
+      <max>15100</max>
+   </receiverPortRange>
+   <security>
+      <keyStorePath>CEP_SERVER_HOME/samples/producers/performance-test/src/main/resources/wso2carbon.jks</keyStorePath>
+      <trustStorePath>CEP_SERVER_HOME/samples/producers/performance-test/src/main/resources/client-truststore.jks</trustStorePath>
+   </security>
+</stromDeploymentConfigs>
+

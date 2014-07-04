@@ -30,7 +30,7 @@ import org.wso2.carbon.databridge.core.Utils.AgentSession;
 import org.wso2.carbon.databridge.core.definitionstore.InMemoryStreamDefinitionStore;
 import org.wso2.carbon.databridge.core.exception.DataBridgeException;
 import org.wso2.carbon.databridge.core.internal.authentication.AuthenticationHandler;
-import org.wso2.carbon.databridge.receiver.thrift.internal.ThriftDataReceiver;
+import org.wso2.carbon.databridge.receiver.thrift.ThriftDataReceiver;
 import org.wso2.carbon.user.api.UserStoreException;
 
 import java.net.SocketException;
