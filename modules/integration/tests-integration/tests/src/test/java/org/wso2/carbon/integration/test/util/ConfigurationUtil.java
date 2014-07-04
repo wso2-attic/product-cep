@@ -61,27 +61,25 @@ public class ConfigurationUtil {
     public EventStreamManagerAdminServiceClient getEventStreamManagerAdminServiceClient(
             String backendURL,
             String loggedInSessionCookie) throws AxisFault {
-        if (eventStreamManagerAdminServiceClient == null) {
-            initEventStreamManagerAdminServiceClient(backendURL, loggedInSessionCookie);
-        }
+
+        initEventStreamManagerAdminServiceClient(backendURL, loggedInSessionCookie);
         return eventStreamManagerAdminServiceClient;
     }
 
     public EventFormatterAdminServiceClient getEventFormatterAdminServiceClient(String backendURL,
                                                                                 String loggedInSessionCookie)
             throws AxisFault {
-        if (eventFormatterAdminServiceClient == null) {
-            initEventFormatterAdminServiceClient(backendURL, loggedInSessionCookie);
-        }
+
+        initEventFormatterAdminServiceClient(backendURL, loggedInSessionCookie);
+
         return eventFormatterAdminServiceClient;
     }
 
     public EventBuilderAdminServiceClient getEventBuilderAdminServiceClient(String backendURL,
                                                                             String loggedInSessionCookie)
             throws AxisFault {
-        if (eventBuilderAdminServiceClient == null) {
-            initEventBuilderAdminServiceClient(backendURL, loggedInSessionCookie);
-        }
+
+        initEventBuilderAdminServiceClient(backendURL, loggedInSessionCookie);
         return eventBuilderAdminServiceClient;
     }
 
@@ -89,28 +87,24 @@ public class ConfigurationUtil {
             String backendURL,
             String loggedInSessionCookie)
             throws AxisFault {
-        if (eventProcessorAdminServiceClient == null) {
-            initEventProcessorAdminServiceClient(backendURL, loggedInSessionCookie);
-        }
+
+        initEventProcessorAdminServiceClient(backendURL, loggedInSessionCookie);
         return eventProcessorAdminServiceClient;
     }
 
     public InputEventAdaptorManagerAdminServiceClient getInputEventAdaptorManagerAdminServiceClient(
             String backendURL,
             String loggedInSessionCookie) throws AxisFault {
-        if (inputEventAdaptorManagerAdminServiceClient == null) {
-            initInputEventAdaptorAdminServiceClient(backendURL, loggedInSessionCookie);
-        }
 
+        initInputEventAdaptorAdminServiceClient(backendURL, loggedInSessionCookie);
         return inputEventAdaptorManagerAdminServiceClient;
     }
 
     public OutputEventAdaptorManagerAdminServiceClient getOutputEventAdaptorManagerAdminServiceClient(
             String backendURL,
             String loggedInSessionCookie) throws AxisFault {
-        if (outputEventAdaptorManagerAdminServiceClient == null) {
-            initOutputEventAdaptorAdminServiceClient(backendURL, loggedInSessionCookie);
-        }
+
+        initOutputEventAdaptorAdminServiceClient(backendURL, loggedInSessionCookie);
         return outputEventAdaptorManagerAdminServiceClient;
     }
 

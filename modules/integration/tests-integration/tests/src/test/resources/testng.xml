@@ -14,7 +14,8 @@
             <class name="org.wso2.carbon.integration.test.services.JMSBrokerStartupTestCase"/>
             <class name="org.wso2.carbon.integration.test.processflow.LocalProcessFlowCreatingTestCase"/>
             <class name="org.wso2.carbon.integration.test.processflow.EventFlowTestCase"/>
-            <!--<class name="org.wso2.carbon.integration.test.processflow.JMSTextMessageTestCase"/>-->
+            <class name="org.wso2.carbon.integration.test.processflow.JMSTextMessageTestCase"/>
+            <!--<class name="org.wso2.carbon.integration.test.patches.CEP883TestCase"/>-->
         </classes>
 
     </test>

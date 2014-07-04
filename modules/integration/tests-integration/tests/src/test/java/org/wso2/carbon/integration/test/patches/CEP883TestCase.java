@@ -1,4 +1,4 @@
-package org.wso2.carbon.integration.test.processflow;
+package org.wso2.carbon.integration.test.patches;
 
 /*
 * Copyright 2004,2005 The Apache Software Foundation.
@@ -22,8 +22,12 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.carbon.authenticator.stub.LoginAuthenticationExceptionException;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
+import org.wso2.carbon.automation.extensions.servers.jmsserver.client.JMSTopicMessageConsumer;
+import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.JMSBrokerController;
+import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config.JMSBrokerConfiguration;
+import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config.JMSBrokerConfigurationProvider;
+import org.wso2.carbon.databridge.agent.thrift.DataPublisher;
 import org.wso2.carbon.databridge.agent.thrift.exception.AgentException;
 import org.wso2.carbon.databridge.commons.exception.AuthenticationException;
 import org.wso2.carbon.databridge.commons.exception.DifferentStreamDefinitionAlreadyDefinedException;
@@ -34,40 +38,74 @@ import org.wso2.carbon.databridge.commons.exception.TransportException;
 import org.wso2.carbon.databridge.core.exception.DataBridgeException;
 import org.wso2.carbon.event.builder.stub.types.EventBuilderConfigurationDto;
 import org.wso2.carbon.event.builder.stub.types.EventInputPropertyConfigurationDto;
-import org.wso2.carbon.event.formatter.stub.types.EventOutputPropertyConfigurationDto;
 import org.wso2.carbon.event.formatter.stub.types.PropertyDto;
 import org.wso2.carbon.event.input.adaptor.manager.stub.types.InputEventAdaptorPropertyDto;
 import org.wso2.carbon.event.output.adaptor.manager.stub.types.OutputEventAdaptorPropertyDto;
 import org.wso2.carbon.event.processor.stub.types.ExecutionPlanConfigurationDto;
 import org.wso2.carbon.event.processor.stub.types.SiddhiConfigurationDto;
 import org.wso2.carbon.event.processor.stub.types.StreamConfigurationDto;
-import org.wso2.carbon.event.stream.manager.stub.types.EventStreamAttributeDto;
+import org.wso2.carbon.integration.common.utils.mgt.ServerConfigurationManager;
 import org.wso2.carbon.integration.test.CEPIntegrationTest;
-import org.wso2.carbon.integration.test.client.PhoneRetailAgent;
-import org.wso2.carbon.integration.test.client.TestAgentServer;
+import org.wso2.carbon.integration.test.client.KeyStoreUtil;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.SocketException;
+import java.net.URISyntaxException;
 import java.rmi.RemoteException;
 
-public class EventFlowTestCase extends CEPIntegrationTest {
+public class CEP883TestCase extends CEPIntegrationTest {
 
-    private static final Log log = LogFactory.getLog(EventFlowTestCase.class);
+    private static final Log log = LogFactory.getLog(CEP883TestCase.class);
+    private final String ACTIVEMQ_CORE = "activemq-core-5.7.0.jar";
+    private final String GERONIMO_J2EE_MANAGEMENT = "geronimo-j2ee-management_1.1_spec-1.0.1.jar";
+    private final String JAR_LOCATION = "/artifacts/CEP/jar";
+    private JMSBrokerController activeMqBroker = null;
+    private ServerConfigurationManager serverManager = null;
+
 
     @BeforeClass(alwaysRun = true)
-    public void init() throws Exception, RemoteException {
-        super.init(TestUserMode.SUPER_TENANT_ADMIN);
-        String loggedInSessionCookie = getSessionCookie();
+    protected void init() throws Exception, RemoteException {
 
+        super.init(TestUserMode.SUPER_TENANT_ADMIN);
+        try {
+            serverManager = new ServerConfigurationManager(cepServer);
+        } catch (MalformedURLException e) {
+            throw new RemoteException("Malformed URL exception thrown when initializing JMS broker", e);
+        }
+        setupJmsBroker();
+        //copying dependency jms jar files to component/lib
+        try {
+            serverManager.copyToComponentLib(new File(getClass().getResource(JAR_LOCATION + File.separator + ACTIVEMQ_CORE).toURI()));
+            serverManager.copyToComponentLib(new File(getClass().getResource(JAR_LOCATION + File.separator + GERONIMO_J2EE_MANAGEMENT).toURI()));
+            serverManager.restartGracefully();
+        } catch (IOException e) {
+            throw new RemoteException("IOException when initializing JMS broker", e);
+        } catch (URISyntaxException e) {
+            throw new RemoteException("URISyntaxException when initializing JMS broker", e);
+        } catch (Exception e) {
+            throw new RemoteException("Exception caught when restarting server", e);
+        }
+
+        String loggedInSessionCookie = getSessionCookie();
         eventBuilderAdminServiceClient = configurationUtil.getEventBuilderAdminServiceClient(backendURL, loggedInSessionCookie);
         eventFormatterAdminServiceClient = configurationUtil.getEventFormatterAdminServiceClient(backendURL, loggedInSessionCookie);
         eventProcessorAdminServiceClient = configurationUtil.getEventProcessorAdminServiceClient(backendURL, loggedInSessionCookie);
         inputEventAdaptorManagerAdminServiceClient = configurationUtil.getInputEventAdaptorManagerAdminServiceClient(backendURL, loggedInSessionCookie);
         outputEventAdaptorManagerAdminServiceClient = configurationUtil.getOutputEventAdaptorManagerAdminServiceClient(backendURL, loggedInSessionCookie);
         eventStreamManagerAdminServiceClient = configurationUtil.getEventStreamManagerAdminServiceClient(backendURL, loggedInSessionCookie);
+
     }
 
-    //Scenario 1 adding order
+
+    private void setupJmsBroker() {
+        //starting jms broker
+        activeMqBroker = new JMSBrokerController("localhost", getJMSBrokerConfiguration());
+        if (!JMSBrokerController.isBrokerStarted()) {
+            Assert.assertTrue(activeMqBroker.start(), "JMS Broker(ActiveMQ) starting failed");
+        }
+    }
+
 
     @Test(groups = {"wso2.cep"}, description = "Test the configuration file deployment order ITA, EB, EP, OTA, EF")
     public void addInputEventAdaptorTestScenario1()
@@ -87,51 +125,6 @@ public class EventFlowTestCase extends CEPIntegrationTest {
 
     @Test(groups = {"wso2.cep"}, dependsOnMethods = {"addInputEventAdaptorTestScenario1"})
     public void addEventBuilderTestScenario1() throws RemoteException, InterruptedException {
-
-        log.info("=======================Adding a stream definition====================");
-        int streamStartCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
-
-        EventStreamAttributeDto metaEventStreamAttributeDto1 = new EventStreamAttributeDto();
-        metaEventStreamAttributeDto1.setAttributeName("ipAddress");
-        metaEventStreamAttributeDto1.setAttributeType("string");
-
-        EventStreamAttributeDto[] metaEventStreamAttributeDtos = new EventStreamAttributeDto[]{metaEventStreamAttributeDto1};
-
-        EventStreamAttributeDto payloadEventStreamAttributeDto1 = new EventStreamAttributeDto();
-        payloadEventStreamAttributeDto1.setAttributeName("userID");
-        payloadEventStreamAttributeDto1.setAttributeType("string");
-
-        EventStreamAttributeDto payloadEventStreamAttributeDto2 = new EventStreamAttributeDto();
-        payloadEventStreamAttributeDto2.setAttributeName("searchTerms");
-        payloadEventStreamAttributeDto2.setAttributeType("string");
-
-        EventStreamAttributeDto[] payloadEventStreamAttributeDtos = new EventStreamAttributeDto[]{payloadEventStreamAttributeDto1, payloadEventStreamAttributeDto2};
-
-        eventStreamManagerAdminServiceClient.addEventStream("analytics_Statistics", "1.3.0", metaEventStreamAttributeDtos, null, payloadEventStreamAttributeDtos, "", "");
-
-        Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), streamStartCount + 1);
-
-        log.info("=======================Adding a stream definition====================");
-
-        EventStreamAttributeDto metaEventStreamAttributeDto21 = new EventStreamAttributeDto();
-        metaEventStreamAttributeDto21.setAttributeName("ipAddress");
-        metaEventStreamAttributeDto21.setAttributeType("string");
-
-        EventStreamAttributeDto[] metaEventStreamAttributeDtos2 = new EventStreamAttributeDto[]{metaEventStreamAttributeDto21};
-
-        EventStreamAttributeDto payloadEventStreamAttributeDto21 = new EventStreamAttributeDto();
-        payloadEventStreamAttributeDto21.setAttributeName("user");
-        payloadEventStreamAttributeDto21.setAttributeType("string");
-
-        EventStreamAttributeDto payloadEventStreamAttributeDto22 = new EventStreamAttributeDto();
-        payloadEventStreamAttributeDto22.setAttributeName("keywords");
-        payloadEventStreamAttributeDto22.setAttributeType("string");
-
-        EventStreamAttributeDto[] payloadEventStreamAttributeDtos2 = new EventStreamAttributeDto[]{payloadEventStreamAttributeDto21, payloadEventStreamAttributeDto22};
-
-        eventStreamManagerAdminServiceClient.addEventStream("summarizedStatistics", "1.0.0", metaEventStreamAttributeDtos2, null, payloadEventStreamAttributeDtos2, "", "");
-
-        Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), streamStartCount + 2);
 
         log.info("=======================Adding a event builder ======================= ");
         int startCount = eventBuilderAdminServiceClient.getActiveEventBuilderCount();
@@ -180,42 +173,13 @@ public class EventFlowTestCase extends CEPIntegrationTest {
     }
 
     @Test(groups = {"wso2.cep"}, dependsOnMethods = {"addEventBuilderTestScenario1"})
-    public void addEventStreamTestScenario1() throws RemoteException, InterruptedException {
-
-        int streamStartCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
-
-        log.info("=======================Adding a stream definition====================");
-
-        EventStreamAttributeDto metaEventStreamAttributeDto21 = new EventStreamAttributeDto();
-        metaEventStreamAttributeDto21.setAttributeName("ipAddress");
-        metaEventStreamAttributeDto21.setAttributeType("string");
-
-        EventStreamAttributeDto[] metaEventStreamAttributeDtos2 = new EventStreamAttributeDto[]{metaEventStreamAttributeDto21};
-
-        EventStreamAttributeDto payloadEventStreamAttributeDto21 = new EventStreamAttributeDto();
-        payloadEventStreamAttributeDto21.setAttributeName("user");
-        payloadEventStreamAttributeDto21.setAttributeType("string");
-
-        EventStreamAttributeDto payloadEventStreamAttributeDto22 = new EventStreamAttributeDto();
-        payloadEventStreamAttributeDto22.setAttributeName("keywords");
-        payloadEventStreamAttributeDto22.setAttributeType("string");
-
-        EventStreamAttributeDto[] payloadEventStreamAttributeDtos2 = new EventStreamAttributeDto[]{payloadEventStreamAttributeDto21, payloadEventStreamAttributeDto22};
-
-        eventStreamManagerAdminServiceClient.addEventStream("statisticsStream", "1.0.0", metaEventStreamAttributeDtos2, null, payloadEventStreamAttributeDtos2, "", "");
-
-        Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), streamStartCount + 1);
-
-    }
-
-    @Test(groups = {"wso2.cep"}, dependsOnMethods = {"addEventStreamTestScenario1"})
     public void addEventProcessorTestScenario1() throws RemoteException, InterruptedException {
         log.info("=======================Adding a execution plan ======================= ");
         int startCount = eventProcessorAdminServiceClient.getAllActiveExecutionPlanConfigurationCount();
         //configurationUtil.addEventProcessor();
 
         ExecutionPlanConfigurationDto executionPlanConfigurationDto = new ExecutionPlanConfigurationDto();
-        executionPlanConfigurationDto.setName("KPIAnalyzer");
+        executionPlanConfigurationDto.setName("statsProcessor");
         StreamConfigurationDto inStream = new StreamConfigurationDto();
         inStream.setSiddhiStreamName("summarizedStatistics");
         inStream.setStreamId("summarizedStatistics:1.0.0");
@@ -252,24 +216,25 @@ public class EventFlowTestCase extends CEPIntegrationTest {
         //configurationUtil.addOutputEventAdaptor();
 
         OutputEventAdaptorPropertyDto inputEventAdaptorProperty1 = new OutputEventAdaptorPropertyDto();
-        inputEventAdaptorProperty1.setKey("username");
-        inputEventAdaptorProperty1.setValue("admin");
+        inputEventAdaptorProperty1.setKey("java.naming.provider.url");
+        inputEventAdaptorProperty1.setValue("tcp://localhost:61616");
 
         OutputEventAdaptorPropertyDto inputEventAdaptorProperty2 = new OutputEventAdaptorPropertyDto();
-        inputEventAdaptorProperty2.setKey("receiverURL");
-        inputEventAdaptorProperty2.setValue("tcp://localhost:7661");
+        inputEventAdaptorProperty2.setKey("java.naming.factory.initial");
+        inputEventAdaptorProperty2.setValue("org.apache.activemq.jndi.ActiveMQInitialContextFactory");
 
         OutputEventAdaptorPropertyDto inputEventAdaptorProperty3 = new OutputEventAdaptorPropertyDto();
-        inputEventAdaptorProperty3.setKey("password");
-        inputEventAdaptorProperty3.setValue("admin");
+        inputEventAdaptorProperty3.setKey("transport.jms.ConnectionFactoryJNDIName");
+        inputEventAdaptorProperty3.setValue("TopicConnectionFactory");
 
         OutputEventAdaptorPropertyDto inputEventAdaptorProperty4 = new OutputEventAdaptorPropertyDto();
-        inputEventAdaptorProperty4.setKey("authenticatorURL");
-        inputEventAdaptorProperty4.setValue("ssl://localhost:7761");
+        inputEventAdaptorProperty4.setKey("transport.jms.DestinationType");
+        inputEventAdaptorProperty4.setValue("topic");
+
 
         OutputEventAdaptorPropertyDto[] outputEventAdaptorPropertyDtos = new OutputEventAdaptorPropertyDto[]{inputEventAdaptorProperty1, inputEventAdaptorProperty2, inputEventAdaptorProperty3, inputEventAdaptorProperty4};
 
-        outputEventAdaptorManagerAdminServiceClient.addOutputEventAdaptorConfiguration("localEventSender", "wso2event", outputEventAdaptorPropertyDtos);
+        outputEventAdaptorManagerAdminServiceClient.addOutputEventAdaptorConfiguration("jmsSender", "jms", outputEventAdaptorPropertyDtos);
 
         Thread.sleep(1000);
         log.info("=======================Check the active output event adaptors======================= ");
@@ -284,34 +249,18 @@ public class EventFlowTestCase extends CEPIntegrationTest {
         log.info("=======================Adding a event formatter ======================= ");
         //configurationUtil.addEventFormatter();
 
-        EventOutputPropertyConfigurationDto eventOutputProperty1 = new EventOutputPropertyConfigurationDto();
-        eventOutputProperty1.setName("ipAddress");
-        eventOutputProperty1.setValueOf("meta_ipAddress");
-        eventOutputProperty1.setType("string");
-        EventOutputPropertyConfigurationDto[] metaEventOutputPropertyConfigurationDtos = new EventOutputPropertyConfigurationDto[]{eventOutputProperty1};
+        PropertyDto topic = new PropertyDto();
+        topic.setKey("transport.jms.Destination");
+        topic.setValue("analyticStats");
 
-        EventOutputPropertyConfigurationDto eventOutputProperty2 = new EventOutputPropertyConfigurationDto();
-        eventOutputProperty2.setName("user");
-        eventOutputProperty2.setValueOf("user");
-        eventOutputProperty2.setType("string");
-        EventOutputPropertyConfigurationDto eventOutputProperty3 = new EventOutputPropertyConfigurationDto();
-        eventOutputProperty3.setName("keywords");
-        eventOutputProperty3.setValueOf("keywords");
-        eventOutputProperty3.setType("string");
-        EventOutputPropertyConfigurationDto[] payloadEventOutputPropertyConfigurationDtos = new EventOutputPropertyConfigurationDto[]{eventOutputProperty2, eventOutputProperty3};
+        PropertyDto eventFormatterPropertyDtos[] = new PropertyDto[]{topic};
 
+        String jsonEvent = "{\"meta_ipAddress\" : {{meta_ipAddress}} ,  \n" +
+                           "\"user\" : {{user}} ,\n" +
+                           "\"keywords\" : {{keywords}} }";
 
-        PropertyDto eventFormatterProperty1 = new PropertyDto();
-        eventFormatterProperty1.setKey("stream");
-        eventFormatterProperty1.setValue("analytics_outStream");
+        eventFormatterAdminServiceClient.addJSONEventFormatterConfiguration("AnalyticsFormatter", "statisticsStream:1.0.0", "jmsSender", "jms", jsonEvent, eventFormatterPropertyDtos, "inline", true);
 
-        PropertyDto eventFormatterProperty2 = new PropertyDto();
-        eventFormatterProperty2.setKey("version");
-        eventFormatterProperty2.setValue("1.3.0");
-
-        PropertyDto eventFormatterPropertyDtos[] = new PropertyDto[]{eventFormatterProperty1, eventFormatterProperty2};
-
-        eventFormatterAdminServiceClient.addWso2EventFormatterConfiguration("wso2eventformatter", "statisticsStream:1.0.0", "localEventSender", "wso2event", metaEventOutputPropertyConfigurationDtos, null, payloadEventOutputPropertyConfigurationDtos, eventFormatterPropertyDtos, true);
         Thread.sleep(1000);
         log.info("=======================Check the active event formatters======================= ");
         Assert.assertEquals(eventFormatterAdminServiceClient.getActiveEventFormatterCount(), 1 + startCount);
@@ -319,33 +268,103 @@ public class EventFlowTestCase extends CEPIntegrationTest {
     }
 
     @Test(groups = {"wso2.cep"}, dependsOnMethods = {"addEventFormatterTestScenario1"})
-    public void kpiAnalyzerTest() throws AgentException, MalformedURLException,
-                                         AuthenticationException,
-                                         javax.security.sasl.AuthenticationException,
-                                         MalformedStreamDefinitionException, SocketException,
-                                         StreamDefinitionException,
-                                         NoStreamDefinitionExistException,
-                                         DifferentStreamDefinitionAlreadyDefinedException,
-                                         InterruptedException, DataBridgeException,
-                                         TransportException {
-        TestAgentServer testAgentServer = new TestAgentServer();
-        Thread thread = new Thread(testAgentServer);
-        thread.start();
+    public void JMSJSONSenderTest() throws Exception {
 
-        Thread.sleep(5000);
 
-        PhoneRetailAgent.publish();
+        JMSTopicMessageConsumer consumer = new JMSTopicMessageConsumer(
+                JMSBrokerConfigurationProvider.getInstance().getBrokerConfiguration());
+        try {
+            consumer.subscribe("analyticStats");
+            publishEvents();
+            Thread.sleep(5000);
 
-        Thread.sleep(5000);
-        testAgentServer.stop();
+            for (int i = 0; i < 30; i++) {
+                if (consumer.getMessages().size() == 1) {
+                    break;
+                }
+                Thread.sleep(1000);
+            }
+        } finally {
+            consumer.stopConsuming();
+        }
+        log.info("=======================Check json message count======================= ");
+        Assert.assertEquals(consumer.getMessages().size(), 1, "Message count mismatched in Topic." +
+                                                              " JSON message not received");
+
     }
 
     @AfterClass(alwaysRun = true)
     public void clean() throws Exception {
-        eventFormatterAdminServiceClient.removeActiveEventFormatterConfiguration("wso2eventformatter");
-        outputEventAdaptorManagerAdminServiceClient.removeActiveOutputEventAdaptorConfiguration("localEventSender");
-        eventProcessorAdminServiceClient.removeActiveExecutionPlan("KPIAnalyzer");
+        eventFormatterAdminServiceClient.removeActiveEventFormatterConfiguration("AnalyticsFormatter");
+        outputEventAdaptorManagerAdminServiceClient.removeActiveOutputEventAdaptorConfiguration("jmsSender");
+        eventProcessorAdminServiceClient.removeActiveExecutionPlan("statsProcessor");
         eventBuilderAdminServiceClient.removeActiveEventBuilderConfiguration("wso2eventbuilder");
         inputEventAdaptorManagerAdminServiceClient.removeActiveInputEventAdaptorConfiguration("localEventReceiver");
     }
+
+    private JMSBrokerConfiguration getJMSBrokerConfiguration() {
+        return JMSBrokerConfigurationProvider.getInstance().getBrokerConfiguration();
+    }
+
+
+    private void publishEvents()
+            throws DataBridgeException, AgentException, MalformedURLException,
+                   AuthenticationException, TransportException, MalformedStreamDefinitionException,
+                   StreamDefinitionException, DifferentStreamDefinitionAlreadyDefinedException,
+                   InterruptedException {
+
+        KeyStoreUtil.setTrustStoreParams();
+
+        //according to the convention the authentication port will be 7611+100= 7711 and its host will be the same
+
+        DataPublisher dataPublisher = new DataPublisher("tcp://localhost:7611", "admin", "admin");
+
+        String streamId;
+        try {
+            streamId = dataPublisher.findStream("analytics_Statistics", "1.3.0");
+        } catch (NoStreamDefinitionExistException e) {
+            streamId = dataPublisher.defineStream("{" +
+                                                  "  'name':'analytics_Statistics'," +
+                                                  "  'version':'1.3.0'," +
+                                                  "  'nickName': 'Analytics Statistics Information'," +
+                                                  "  'description': 'Details of Analytics Statistics'," +
+                                                  "  'metaData':[" +
+                                                  "          {'name':'ipAddress','type':'STRING'}" +
+                                                  "  ]," +
+                                                  "  'payloadData':[" +
+                                                  "          {'name':'userID','type':'STRING'}," +
+                                                  "          {'name':'searchTerms','type':'STRING'}" +
+                                                  "  ]" +
+                                                  "}");
+
+        }
+        Thread.sleep(1000);
+        //In this case correlation data is null
+        dataPublisher.publish(streamId, new Object[]{"192.168.1.1"}, null, new Object[]{"abc@org1.com", null});
+
+        Thread.sleep(3000);
+        dataPublisher.stop();
+    }
+
+
+    @AfterClass(alwaysRun = true)
+    public void destroy() throws Exception {
+        try {
+            Thread.sleep(5000);
+            if (activeMqBroker != null) {
+                activeMqBroker.stop();
+            }
+            Thread.sleep(5000); //let server to clear the artifact undeployment
+        } finally {
+            //reverting the changes done to cep sever
+            if (serverManager != null) {
+                serverManager.removeFromComponentLib(ACTIVEMQ_CORE);
+                serverManager.removeFromComponentLib(GERONIMO_J2EE_MANAGEMENT);
+                serverManager.restoreToLastConfiguration();
+            }
+
+        }
+        super.cleanup();
+    }
+
 }
