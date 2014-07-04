@@ -49,12 +49,6 @@
             <include name="XmlSchema*.jar"/>
             <include name="neethi*.jar"/>
             <include name="org.wso2.securevault*.jar"/>
-            <!--<include name="org.wso2.carbon.authenticator.stub_4.2.0.jar"/>-->
-            <!--<include name="org.wso2.carbon.databridge.agent.thrift_4.2.0.jar"/>-->
-            <!--<include name="org.wso2.carbon.databridge.commons.thrift_4.2.0.jar"/>-->
-            <!--<include name="org.wso2.carbon.databridge.commons_4.2.0.jar"/>-->
-            <!--<include name="org.wso2.carbon.databridge.core_4.2.0.jar"/>-->
-            <!--<include name="org.wso2.carbon.databridge.receiver.thrift_4.2.0.jar"/>-->
             <include name="org.wso2.carbon.base*.jar"/>
             <include name="org.wso2.carbon.identity.authentication*.jar"/>
             <include name="org.wso2.carbon.queuing*.jar"/>
