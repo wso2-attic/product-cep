@@ -276,6 +276,14 @@
                     <artifactId>slf4j-api</artifactId>
                     <groupId>org.slf4j</groupId>
                 </exclusion>
+                <exclusion>
+                    <artifactId>httpclient</artifactId>
+                    <groupId>org.apache.httpcomponents</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>httpcore</artifactId>
+                    <groupId>org.apache.httpcomponents</groupId>
+                </exclusion>
             </exclusions>
 
         </dependency>
@@ -371,9 +379,21 @@
             <version>6.8</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.httpcomponents.wso2</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>${httpclient.wso2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents.wso2</groupId>
+            <artifactId>httpcore</artifactId>
+            <version>4.3.0.wso2v1</version>
+        </dependency>
     </dependencies>
 
     <properties>
         <test-automation-framework-version>4.3.0-SNAPSHOT</test-automation-framework-version>
+        <httpclient.wso2.version>4.2.5.wso2v1</httpclient.wso2.version>
     </properties>
 </project>
