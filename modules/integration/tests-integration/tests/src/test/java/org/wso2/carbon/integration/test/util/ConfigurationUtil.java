@@ -264,6 +264,10 @@ public class ConfigurationUtil {
         eventStreamManagerAdminServiceClient.addEventStream("OutStream", "1.0.0", null, null, payloadData, "This is a output test stream", "test");
     }
 
+    public void addWso2EventInputEventAdaptor(String name) throws RemoteException {
+        inputEventAdaptorManagerAdminServiceClient.addInputEventAdaptorConfiguration(name, "wso2event", null);
+    }
+
     public void addThriftInputEventAdaptor() throws RemoteException {
         inputEventAdaptorManagerAdminServiceClient.addInputEventAdaptorConfiguration("wso2EventReceiver", "wso2event", new InputEventAdaptorPropertyDto[0]);
     }
@@ -309,6 +313,13 @@ public class ConfigurationUtil {
         eventBuilderConfigurationDto.setToStreamName("org.wso2.test.inflow");
         eventBuilderConfigurationDto.setToStreamVersion("1.0.0");
         return eventBuilderConfigurationDto;
+    }
+
+    public static EventStreamAttributeDto createEventStreamAttributeDto(String fieldName, String dataType){
+        EventStreamAttributeDto eventStreamAttribute = new EventStreamAttributeDto();
+        eventStreamAttribute.setAttributeName(fieldName);
+        eventStreamAttribute.setAttributeType(dataType);
+        return eventStreamAttribute;
     }
 
     /*

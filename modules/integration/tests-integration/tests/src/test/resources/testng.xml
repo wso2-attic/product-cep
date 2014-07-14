@@ -17,6 +17,7 @@
             <class name="org.wso2.carbon.integration.test.processflow.JMSTextMessageTestCase"/>
             <class name="org.wso2.carbon.integration.test.patches.CEP883TestCase"/>
             <class name="org.wso2.carbon.integration.test.processflow.HTTPXMLMessageTestCase"/>
+            <class name="org.wso2.carbon.integration.test.processflow.PassThroughWithWso2Event"/>
         </classes>
 
     </test>
