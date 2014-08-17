@@ -292,6 +292,15 @@
             </outputDirectory>
         </fileSet>
 
+        <fileSet>
+            <directory> ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/deployment/server/webapps</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/webapps
+            </outputDirectory>
+            <includes>
+                <include>inputwebsocket.war</include>
+                <include>outputwebsocket.war</include>
+            </includes>
+        </fileSet>
 
         <!-- Copying WSO2-CARBON-PATCH-4.2.0-0001 files to patches directory -->
        <!-- <fileSet>
@@ -480,9 +489,6 @@
             <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
-
-
-
 
         <!--data bridge web app-->
         <!--restapi is deprecated-->
