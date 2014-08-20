@@ -1,5 +1,6 @@
 package org.wso2.carbon.cep.sample.client;
 
+import org.apache.log4j.Logger;
 import org.wso2.carbon.cep.sample.client.util.DataProvider;
 import org.wso2.carbon.databridge.agent.thrift.DataPublisher;
 import org.wso2.carbon.databridge.agent.thrift.exception.AgentException;
@@ -12,6 +13,8 @@ import java.net.MalformedURLException;
 
 public class AnalyticsStatisticsClient {
 
+
+    private static Logger log = Logger.getLogger(AnalyticsStatisticsClient.class);
 
     public static void main(String[] args)
             throws DataBridgeException, AgentException, MalformedURLException,
@@ -37,6 +40,7 @@ public class AnalyticsStatisticsClient {
             streamDefinition.addMetaData("ipAdd", AttributeType.STRING);
             streamDefinition.addMetaData("index", AttributeType.LONG);
             streamDefinition.addMetaData("timestamp", AttributeType.LONG);
+            streamDefinition.addMetaData("nanoTime", AttributeType.LONG);
             streamDefinition.addPayloadData("userID", AttributeType.STRING);
             streamDefinition.addPayloadData("searchTerms", AttributeType.STRING);
             streamId = dataPublisher.defineStream(streamDefinition);
@@ -47,13 +51,14 @@ public class AnalyticsStatisticsClient {
         System.out.println("Starting event sending...");
         long startTime = System.nanoTime();
         for (long i = 0; i < totalEventCount; i++) {
-            Object[] metaDataArray = new Object[]{DataProvider.getMeta(), i, System.currentTimeMillis()};
+            Object[] metaDataArray = new Object[]{DataProvider.getMeta(), i, System.currentTimeMillis(), System.nanoTime()};
             dataPublisher.publish(streamId, metaDataArray, null, DataProvider.getPayload());
             if ((i + 1) % 100000 == 0) {
                 long elapsedTime = System.nanoTime() - startTime;
                 double timeInSec = elapsedTime / 1000000000D;
                 double throughputPerSec = (i + 1) / timeInSec;
-                System.out.println("Sent " + (i + 1) + " events in " + timeInSec + " seconds with total throughput of " + throughputPerSec + " events per second.");
+                log.info("Sent " + (i + 1) + " events in " + timeInSec + " seconds with total throughput of " + throughputPerSec + " events per second.");
+                startTime = System.nanoTime();
             }
         }
 

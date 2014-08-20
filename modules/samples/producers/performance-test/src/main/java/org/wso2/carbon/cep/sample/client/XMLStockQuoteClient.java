@@ -42,7 +42,7 @@ public class XMLStockQuoteClient {
             serviceClient.setOptions(options);
 
             if (serviceClient != null) {
-                String xmlElement1 = "<quotedata:AllStockQuoteStream xmlns:quotedata=\"http://samples.wso2.org/\">\n"
+                String xmlElement1 = "<quotedata:AllStockQuoteStream xmlns:quotedata=\"http://ws.cdyne.com/\">\n"
                         + "        <quotedata:StockQuoteEvent>\n"
                         + "              <quotedata:StockSymbol>MSFT</quotedata:StockSymbol>\n"
                         + "              <quotedata:LastTradeAmount>26.36</quotedata:LastTradeAmount>\n"
@@ -61,7 +61,7 @@ public class XMLStockQuoteClient {
                         + "        </quotedata:StockQuoteEvent>\n"
                         + "</quotedata:AllStockQuoteStream>";
 
-                String xmlElement2 = "<quotedata:AllStockQuoteStream xmlns:quotedata=\"http://samples.wso2.org/\">\n"
+                String xmlElement2 = "<quotedata:AllStockQuoteStream xmlns:quotedata=\"http://ws.cdyne.com/\">\n"
                         + "        <quotedata:StockQuoteEvent>\n"
                         + "              <quotedata:StockSymbol>WSO2</quotedata:StockSymbol>\n"
                         + "              <quotedata:LastTradeAmount>15</quotedata:LastTradeAmount>\n"
@@ -80,7 +80,7 @@ public class XMLStockQuoteClient {
                         + "        </quotedata:StockQuoteEvent>\n"
                         + "</quotedata:AllStockQuoteStream>";
 
-                String xmlElement3 = "<quotedata:AllStockQuoteStream xmlns:quotedata=\"http://samples.wso2.org/\">\n"
+                String xmlElement3 = "<quotedata:AllStockQuoteStream xmlns:quotedata=\"http://ws.cdyne.com/\">\n"
                         + "          <quotedata:StockQuoteEvent>\n"
                         + "              <quotedata:StockSymbol>MSFT</quotedata:StockSymbol>\n"
                         + "              <quotedata:LastTradeAmount>36</quotedata:LastTradeAmount>\n"
