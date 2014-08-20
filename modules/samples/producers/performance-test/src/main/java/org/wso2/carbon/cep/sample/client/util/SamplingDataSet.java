@@ -24,21 +24,21 @@ import java.util.List;
 
 public class SamplingDataSet {
     public static final List<String> SEARCH_TERMS = Collections.unmodifiableList(new ArrayList<String>() {{
-        add("CEP");
-        add("WSO2");
-        add("Complex Event Processing");
-        add("ESB");
-        add("Open Source");
-        add("Middleware");
-        add("jaggery");
-        add(".jag files");
-        add("Siddhi");
-        add("siddhi query language");
-        add("CEP performance numbers");
-        add("Complex Eventing");
-        add("CEP throughput");
-        add("WSO2Con");
-        add("WSO2 Roadmap");
+        add("CEP |This is an extended string to increase the event size. IIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
+        add("WSO2 |This is an extended string to increase the event size. IIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
+        add("Complex Event Processing |This is an extended string to increase the event size. IIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
+        add("ESB |This is an extended string to increase the event size. IIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
+        add("Open Source |This is an extended string to increase the event size. IIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
+        add("Middleware |This is an extended string to increase the event size. IIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
+        add("jaggery |This is an extended string to increase the event size. IIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
+        add(".jag files |This is an extended string to increase the event size. IIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
+        add("Siddhi |This is an extended string to increase the event size. IIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
+        add("siddhi query language |This is an extended string to increase the event size. IIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
+        add("CEP performance numbers |This is an extended string to increase the event size. IIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
+        add("Complex Eventing |This is an extended string to increase the event size. IIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
+        add("CEP throughput |This is an extended string to increase the event size. IIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
+        add("WSO2Con |This is an extended string to increase the event size. IIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
+        add("WSO2 Roadmap |This is an extended string to increase the event size. IIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
     }});
 
     public static final List<String> IP_ADDRESSES = Collections.unmodifiableList(new ArrayList<String>() {{
