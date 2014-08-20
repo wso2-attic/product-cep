@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventFormatter name="PizzaDeliveryNofication" statistics="disable"
+  trace="enable" xmlns="http://wso2.org/carbon/eventformatter">
+  <from streamName="org.wso2.sample.pizza.order" version="1.0.0"/>
+  <mapping type="xml" customMapping="enable">
+    <inline>
+        <pizzadata:PizzaOrderDataEvent xmlns:pizzadata="http://samples.wso2.org/">
+            <pizzadata:Name>{{Contact}}</pizzadata:Name>
+            <pizzadata:Type>{{Type}}</pizzadata:Type>
+            <pizzadata:Size>{{Size}}</pizzadata:Size>
+            <pizzadata:Quantity>{{Quantity}}</pizzadata:Quantity>
+            <pizzadata:Address>{{Address}}</pizzadata:Address>
+        </pizzadata:PizzaOrderDataEvent>
+</inline>
+  </mapping>
+    <to eventAdaptorName="HttpOutputEventAdaptor" eventAdaptorType="http">
+        <property name="http.url">http://localhost:9763/GenericLogService/log</property>
+    </to>
+</eventFormatter>

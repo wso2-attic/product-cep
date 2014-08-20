@@ -210,11 +210,31 @@ public class ConfigurationUtil {
             responseTime.setAttributeType("int");
             metaData = new EventStreamAttributeDto[]{filename};
             payloadData = new EventStreamAttributeDto[]{timestamp, url, responseTime};
+        } else if (usecase.equals("HTTP_XML")) {
+            EventStreamAttributeDto orderNo = new EventStreamAttributeDto();
+            orderNo.setAttributeName("OrderNo");
+            orderNo.setAttributeType("int");
+            EventStreamAttributeDto type = new EventStreamAttributeDto();
+            type.setAttributeName("Type");
+            type.setAttributeType("string");
+            EventStreamAttributeDto size = new EventStreamAttributeDto();
+            size.setAttributeName("Size");
+            size.setAttributeType("string");
+            EventStreamAttributeDto quantity = new EventStreamAttributeDto();
+            quantity.setAttributeName("Quantity");
+            quantity.setAttributeType("int");
+            EventStreamAttributeDto contact = new EventStreamAttributeDto();
+            contact.setAttributeName("Contact");
+            contact.setAttributeType("string");
+            EventStreamAttributeDto address = new EventStreamAttributeDto();
+            address.setAttributeName("Address");
+            address.setAttributeType("string");
+            correlationData = new EventStreamAttributeDto[]{orderNo};
+            payloadData = new EventStreamAttributeDto[]{type, size, quantity, contact, address};
         } else {
             throw new UnsupportedOperationException("The stream attributes for use case :" + usecase + " is not defined.");
         }
-
-        eventStreamManagerAdminServiceClient.addEventStream(streamName, version, metaData, correlationData, payloadData, "This is a output test stream", "access.logs");
+        eventStreamManagerAdminServiceClient.addEventStream(streamName, version, metaData, correlationData, payloadData, "This is a  test stream", "access.logs");
     }
 
     public void addInEventStream() throws RemoteException {
@@ -244,6 +264,10 @@ public class ConfigurationUtil {
         eventStreamManagerAdminServiceClient.addEventStream("OutStream", "1.0.0", null, null, payloadData, "This is a output test stream", "test");
     }
 
+    public void addWso2EventInputEventAdaptor(String name) throws RemoteException {
+        inputEventAdaptorManagerAdminServiceClient.addInputEventAdaptorConfiguration(name, "wso2event", null);
+    }
+
     public void addThriftInputEventAdaptor() throws RemoteException {
         inputEventAdaptorManagerAdminServiceClient.addInputEventAdaptorConfiguration("wso2EventReceiver", "wso2event", new InputEventAdaptorPropertyDto[0]);
     }
@@ -263,6 +287,10 @@ public class ConfigurationUtil {
         destinationType.setValue("topic");
 
         inputEventAdaptorManagerAdminServiceClient.addInputEventAdaptorConfiguration(adaptorName, "jms", new InputEventAdaptorPropertyDto[]{namingProviderURL, initialFactory, connFactoryJndiName, destinationType});
+    }
+
+    public void addHTTPInputEventAdaptor(String adaptorName) throws RemoteException {
+        inputEventAdaptorManagerAdminServiceClient.addInputEventAdaptorConfiguration(adaptorName, "http", new InputEventAdaptorPropertyDto[0]);
     }
 
     public void addEventBuilder() throws RemoteException {
@@ -285,6 +313,13 @@ public class ConfigurationUtil {
         eventBuilderConfigurationDto.setToStreamName("org.wso2.test.inflow");
         eventBuilderConfigurationDto.setToStreamVersion("1.0.0");
         return eventBuilderConfigurationDto;
+    }
+
+    public static EventStreamAttributeDto createEventStreamAttributeDto(String fieldName, String dataType){
+        EventStreamAttributeDto eventStreamAttribute = new EventStreamAttributeDto();
+        eventStreamAttribute.setAttributeName(fieldName);
+        eventStreamAttribute.setAttributeType(dataType);
+        return eventStreamAttribute;
     }
 
     /*
@@ -420,6 +455,10 @@ public class ConfigurationUtil {
         authenticatorURL.setValue("ssl://localhost:7761");
 
         outputEventAdaptorManagerAdminServiceClient.addOutputEventAdaptorConfiguration("DefaultWSO2EventOutputAdaptor", "wso2event", new OutputEventAdaptorPropertyDto[]{username, password, receiverUrl, authenticatorURL});
+    }
+
+    public void addHTTPOutputEventAdaptor(String name) throws RemoteException {
+        outputEventAdaptorManagerAdminServiceClient.addOutputEventAdaptorConfiguration(name, "http", new OutputEventAdaptorPropertyDto[0]);
     }
 
     public void removeThriftOutputEventAdaptor() throws RemoteException {

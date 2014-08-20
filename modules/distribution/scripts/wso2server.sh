@@ -296,6 +296,7 @@ do
     -Dorg.terracotta.quartz.skipUpdateCheck=true \
     -Djava.security.egd=file:/dev/./urandom \
     -Dfile.encoding=UTF8 \
+    -Dnet.sf.ehcache.pool.sizeof.AgentSizeOf.bypass=true \
     -Ddisable.cassandra.server.startup=true \
     org.wso2.carbon.bootstrap.Bootstrap $*
     status=$?
