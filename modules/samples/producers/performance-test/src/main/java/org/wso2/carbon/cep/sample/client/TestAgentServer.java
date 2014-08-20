@@ -37,10 +37,9 @@ import java.net.SocketException;
 import java.util.List;
 
 public class TestAgentServer {
+    static final TestAgentServer testServer = new TestAgentServer();
     Logger log = org.apache.log4j.Logger.getLogger(TestAgentServer.class);
     ThriftDataReceiver thriftDataReceiver;
-    static final TestAgentServer testServer = new TestAgentServer();
-
 
     public static void main(String[] args) throws DataBridgeException {
         testServer.start(7661);
@@ -48,12 +47,10 @@ public class TestAgentServer {
             try {
                 testServer.wait();
             } catch (InterruptedException ignored) {
-
-
+                System.out.println("Error: Thread interrupted; " + ignored.getMessage());
             }
         }
     }
-
 
     public void start(int receiverPort) throws DataBridgeException {
         KeyStoreUtil.setKeyStoreParams();
@@ -62,8 +59,6 @@ public class TestAgentServer {
             public boolean authenticate(String userName,
                                         String password) {
                 return true;// allays authenticate to true
-
-
             }
 
             @Override
@@ -85,53 +80,66 @@ public class TestAgentServer {
             public void destroyContext(AgentSession agentSession) {
 
             }
-
-            public void setThreadLocalContext(AgentSession agentSession) {
-                //To change body of implemented methods use File | Settings | File Templates.
-            }
         }, new InMemoryStreamDefinitionStore());
-
 
         thriftDataReceiver = new ThriftDataReceiver(receiverPort, databridge);
 
-
         databridge.subscribe(new AgentCallback() {
-            int totalSize = 0;
-
-
-            public void definedStream(StreamDefinition streamDefinition,
-                                      int tenantID) {
+            @Override
+            public void definedStream(StreamDefinition streamDefinition, int i) {
                 log.info("StreamDefinition " + streamDefinition);
             }
 
             @Override
-            public void removeStream(StreamDefinition streamDefinition, int tenantID) {
-                //To change body of implemented methods use File | Settings | File Templates.
-            }
+            public void removeStream(StreamDefinition streamDefinition, int i) {
 
+            }
 
             @Override
             public void receive(List<Event> eventList, Credentials credentials) {
-                log.info("eventListSize=" + eventList.size() + " eventList " + eventList + " for username " + credentials.getUsername());
+                long receivedTimeNanos = System.nanoTime();
+                long receivedTimeMillis = System.currentTimeMillis();
+                long producerIndex = (Long) eventList.get(0).getMetaData()[1];
+                long rcvCount = producerIndex;
+                int eventCount = 0;
+                long startOfFirstEventMillis = (Long) eventList.get(0).getMetaData()[2];
+                long startOfFirstEventNanos = (Long) eventList.get(0).getMetaData()[3];
+                long firstEventLatency = receivedTimeMillis - startOfFirstEventMillis;
+                long nanoOffSet = receivedTimeNanos - startOfFirstEventNanos + firstEventLatency;
+                long totalLatency = 0L;
+                for (Event event : eventList) {
+                    producerIndex = (Long) event.getMetaData()[1];
+                    long startOfEventNanos = (Long) event.getMetaData()[3];
+                    if (producerIndex == rcvCount) {
+                        long latency = (receivedTimeNanos - startOfEventNanos + nanoOffSet);
+                        totalLatency += latency;
+                        eventCount++;
+                    } else {
+                        log.warn("[" + Thread.currentThread().getName() + "]: Event not received in order. Dropped event??");
+                    }
+                    rcvCount++;
+                }
+                double throughput = (totalLatency / eventCount) / 1000000000D;
+                log.info("[" + Thread.currentThread().getName() + "]: A batch of " + eventCount + " events received from index " + eventList.get(0).getMetaData()[1] + " to " + producerIndex + " with throughput " + throughput + " events per second.");
+                //log.info("eventListSize=" + eventList.size() + " eventList " + eventList + " for username " + credentials.getUsername());
             }
-
-
         });
 
 
         try {
             String address = HostAddressFinder.findAddress("localhost");
+            System.out.println("Test Server starting on " + address);
             log.info("Test Server starting on " + address);
             thriftDataReceiver.start(address);
             log.info("Test Server Started");
         } catch (SocketException e) {
-            log.error("Test Server not started !", e);
+            log.info("Test Server not started !" + e);
         }
     }
-
 
     public void stop() {
         thriftDataReceiver.stop();
         log.info("Test Server Stopped");
+        System.out.println("Test Server Stopped");
     }
 }
