@@ -196,6 +196,7 @@
                                         <include name="**/images/**/*.*"/>
                                     </fileset>
                                 </copy>
+                                <delete dir="src/site"/>
 
                                 <!--testing -->
                                 <unzip src="target/shindig/WEB-INF/lib/shindig-common-${shindig.version}.jar"
@@ -269,7 +270,6 @@
                                 <delete dir="target/antrun/"/>
                                 <delete dir="target/site"/>
                                 <delete dir="target/shindig"/>
-                                <delete dir="src/site"/>
                             </target>
                         </configuration>
                         <goals>

@@ -290,6 +290,40 @@
         <!--<url>https://svn.wso2.org/repos/wso2/carbon/platform/trunk/products/cep/</url>-->
     <!--</scm>-->
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.rat</groupId>
+                <artifactId>apache-rat-plugin</artifactId>
+                <version>0.10</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/*.iml</exclude>
+                        <exclude>**/*.json</exclude>
+                        <exclude>**/*.log</exclude>
+                        <exclude>**/*.product</exclude>
+                        <exclude>**/*.txt</exclude>
+                        <exclude>**/*.csv</exclude>
+                        <exclude>**/*.mar</exclude>
+                        <exclude>**/target/**</exclude>
+                        <exclude>**/repository/resources/**</exclude>
+                        <exclude>**/repository/conf/ues/**</exclude>
+                        <exclude>**/p2.inf</exclude>
+                        <exclude>**/*.policy</exclude>
+                        <exclude>**/*.extension</exclude>
+                    </excludes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
     <profiles>
         <profile>
             <id>sign</id>
