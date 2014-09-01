@@ -290,7 +290,7 @@
         <!--<url>https://svn.wso2.org/repos/wso2/carbon/platform/trunk/products/cep/</url>-->
     <!--</scm>-->
 
-    <build>
+    <!--build>
         <plugins>
             <plugin>
                 <groupId>org.apache.rat</groupId>
@@ -323,7 +323,7 @@
                 </executions>
             </plugin>
         </plugins>
-    </build>
+    </build-->
     <profiles>
         <profile>
             <id>sign</id>
