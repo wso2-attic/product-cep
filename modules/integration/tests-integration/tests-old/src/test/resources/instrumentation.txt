@@ -1,7 +1,0 @@
-org.wso2.carbon.cep.admin_
-org.wso2.carbon.cep.core_
-org.wso2.carbon.cep.fusion_
-org.wso2.carbon.cep.siddhi_
-org.wso2.carbon.broker.core_
-org.wso2.carbon.brokermanager.admin_
-org.wso2.carbon.brokermanager.core_
