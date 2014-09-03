@@ -39,31 +39,4 @@
         <module>tests-integration/tests</module>
     </modules>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.rat</groupId>
-                <artifactId>apache-rat-plugin</artifactId>
-                <version>0.10</version>
-                <configuration>
-                    <excludes>
-                        <exclude>**/*.iml</exclude>
-                        <exclude>**/*.log</exclude>
-                        <exclude>**/*.txt</exclude>
-                        <exclude>**/*.csv</exclude>
-                        <exclude>**/*.mar</exclude>
-                    </excludes>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
-
 </project>
