@@ -612,6 +612,14 @@
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/etc</outputDirectory>
             <filtered>true</filtered>
         </file>
+        <file>
+             <source>
+                ../p2-profile/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/etc/cassandra-environments.xml
+            </source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/etc</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
 
         <!-- UES integration config files -->
 
