@@ -614,7 +614,7 @@
         </file>
         <file>
              <source>
-                ../p2-profile/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/etc/cassandra-environments.xml
+                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/etc/cassandra-environments.xml
             </source>
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/etc</outputDirectory>
             <filtered>true</filtered>
