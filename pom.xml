@@ -285,9 +285,9 @@
 
     <!--todo - update scm-->
     <!--<scm>-->
-        <!--<connection>scm:svn:http://svn.wso2.org/repos/wso2/carbon/platform/trunk/products/cep/</connection>-->
-        <!--<developerConnection>scm:svn:https://svn.wso2.org/repos/wso2/carbon/platform/trunk/products/cep/</developerConnection>-->
-        <!--<url>https://svn.wso2.org/repos/wso2/carbon/platform/trunk/products/cep/</url>-->
+    <!--<connection>scm:svn:http://svn.wso2.org/repos/wso2/carbon/platform/trunk/products/cep/</connection>-->
+    <!--<developerConnection>scm:svn:https://svn.wso2.org/repos/wso2/carbon/platform/trunk/products/cep/</developerConnection>-->
+    <!--<url>https://svn.wso2.org/repos/wso2/carbon/platform/trunk/products/cep/</url>-->
     <!--</scm>-->
 
     <!--build>
@@ -324,6 +324,19 @@
             </plugin>
         </plugins>
     </build-->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
     <profiles>
         <profile>
             <id>sign</id>
