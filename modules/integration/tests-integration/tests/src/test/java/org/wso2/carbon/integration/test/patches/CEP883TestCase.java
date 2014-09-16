@@ -46,8 +46,8 @@ import org.wso2.carbon.event.processor.stub.types.ExecutionPlanConfigurationDto;
 import org.wso2.carbon.event.processor.stub.types.SiddhiConfigurationDto;
 import org.wso2.carbon.event.processor.stub.types.StreamConfigurationDto;
 import org.wso2.carbon.integration.common.utils.mgt.ServerConfigurationManager;
-import org.wso2.carbon.integration.test.CEPIntegrationTest;
 import org.wso2.carbon.integration.test.client.KeyStoreUtil;
+import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
 
 import java.io.File;
 import java.io.IOException;

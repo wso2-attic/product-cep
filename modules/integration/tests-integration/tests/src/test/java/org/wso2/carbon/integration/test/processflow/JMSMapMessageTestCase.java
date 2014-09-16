@@ -31,8 +31,8 @@ import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config
 import org.wso2.carbon.event.formatter.stub.types.EventOutputPropertyConfigurationDto;
 import org.wso2.carbon.event.formatter.stub.types.PropertyDto;
 import org.wso2.carbon.integration.common.utils.mgt.ServerConfigurationManager;
-import org.wso2.carbon.integration.test.CEPIntegrationTest;
 import org.wso2.carbon.integration.test.client.TestAgentServer;
+import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
 
 import java.io.File;
 import java.io.IOException;

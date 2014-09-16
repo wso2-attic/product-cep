@@ -32,8 +32,8 @@ import org.wso2.carbon.event.formatter.stub.types.EventOutputPropertyConfigurati
 import org.wso2.carbon.event.formatter.stub.types.PropertyDto;
 import org.wso2.carbon.integration.common.utils.LoginLogoutClient;
 import org.wso2.carbon.integration.common.utils.mgt.ServerConfigurationManager;
-import org.wso2.carbon.integration.test.CEPIntegrationTest;
 import org.wso2.carbon.integration.test.client.TestAgentServer;
+import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
 import org.xml.sax.SAXException;
 
 import javax.xml.stream.XMLStreamException;

@@ -28,8 +28,8 @@ import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
 import org.wso2.carbon.automation.test.utils.common.FileManager;
 import org.wso2.carbon.integration.common.utils.LoginLogoutClient;
 import org.wso2.carbon.integration.common.utils.mgt.ServerConfigurationManager;
-import org.wso2.carbon.integration.test.CEPIntegrationTest;
 import org.wso2.carbon.integration.test.client.PizzaOrderClient;
+import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
 import org.xml.sax.SAXException;
 
 import javax.xml.stream.XMLStreamException;

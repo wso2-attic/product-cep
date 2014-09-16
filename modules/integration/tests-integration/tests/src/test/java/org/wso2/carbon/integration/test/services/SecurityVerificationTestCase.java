@@ -29,7 +29,7 @@ import org.testng.annotations.Test;
 import org.wso2.carbon.authenticator.stub.LoginAuthenticationExceptionException;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.automation.test.utils.axis2client.AxisServiceClient;
-import org.wso2.carbon.integration.test.CEPIntegrationTest;
+import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
 
 import javax.xml.xpath.XPathExpressionException;
 
