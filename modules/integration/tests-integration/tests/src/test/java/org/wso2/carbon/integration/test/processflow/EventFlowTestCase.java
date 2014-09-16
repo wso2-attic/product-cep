@@ -37,9 +37,9 @@ import org.wso2.carbon.event.processor.stub.types.ExecutionPlanConfigurationDto;
 import org.wso2.carbon.event.processor.stub.types.SiddhiConfigurationDto;
 import org.wso2.carbon.event.processor.stub.types.StreamConfigurationDto;
 import org.wso2.carbon.event.stream.manager.stub.types.EventStreamAttributeDto;
-import org.wso2.carbon.integration.test.CEPIntegrationTest;
 import org.wso2.carbon.integration.test.client.PhoneRetailAgent;
 import org.wso2.carbon.integration.test.client.TestAgentServer;
+import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
 
 import java.net.MalformedURLException;
 import java.net.SocketException;
