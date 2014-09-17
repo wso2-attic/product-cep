@@ -43,7 +43,8 @@ import java.util.List;
 public class NonAtomicPerfTestClient {
     private final static NonAtomicPerfTestClient perfTestClient = new NonAtomicPerfTestClient();
     private final static Object warmUpLock = new Object();
-    private static int groupSize = 10000;
+    public static final int GROUP_SIZE = 100000;
+    private static int receiverGroupSize = 10000;
     private static long totalEvents = 1010000L;
     private static int warmUpThreshold = 100000;
     private static long sleepAfterWarmUpMillis = 15000;
@@ -52,7 +53,7 @@ public class NonAtomicPerfTestClient {
     private static long groupStartIndex = 0;
     private static long groupStartTimeNanos = 0;
     private static long totalStartTimeNanos = 0;
-    private Logger log = Logger.getLogger(TestAgentServer.class);
+    private Logger log = Logger.getLogger(NonAtomicPerfTestClient.class);
     private ThriftDataReceiver thriftDataReceiver;
 
     public static void main(String[] args) throws DataBridgeException {
@@ -60,7 +61,7 @@ public class NonAtomicPerfTestClient {
             totalEvents = Long.valueOf(args[0]);
         }
         if (args.length > 1) {
-            groupSize = Integer.valueOf(args[1]);
+            receiverGroupSize = Integer.valueOf(args[1]);
         }
         if (args.length > 2) {
             warmUpThreshold = Integer.valueOf(args[2]);
@@ -125,14 +126,14 @@ public class NonAtomicPerfTestClient {
             for (long i = 0; i < totalEvents; i++) {
                 Object[] metaDataArray = new Object[]{DataProvider.getMeta(), i, System.currentTimeMillis(), System.nanoTime()};
                 dataPublisher.publish(streamId, metaDataArray, null, DataProvider.getPayload());
-                if ((i + 1) % 100000 == 0) {
+                if ((i + 1) % GROUP_SIZE == 0) {
                     if ((i + 1) == warmUpThreshold) {
                         Thread.sleep(sleepAfterWarmUpMillis);
                     }
                     long elapsedTime = System.nanoTime() - startTime;
                     double timeInSec = elapsedTime / 1000000000D;
-                    double throughputPerSec = (i + 1) / timeInSec;
-                    System.out.println("Sent " + (i + 1) + " events in " + timeInSec + " seconds with throughput of " + throughputPerSec + " events per second.");
+                    double throughputPerSec = GROUP_SIZE / timeInSec;
+                    System.out.println("Total events: " + (i + 1) + ", sent " + GROUP_SIZE + " events in " + timeInSec + " seconds with throughput of " + throughputPerSec + " events per second.");
                     startTime = System.nanoTime();
                 }
             }
@@ -256,7 +257,7 @@ public class NonAtomicPerfTestClient {
                 producerIndex = (Long) event.getMetaData()[1];
 //                timeStampNanos = (Long) event.getMetaData()[3];
 //                log.trace("[" + threadName + "]: Received event with index |" + producerIndex + "|, produced at |" + timeStampNanos + "|, with payload : " + Arrays.toString(event.getPayloadData()));
-                if (groupCount >= groupSize) {
+                if (groupCount >= receiverGroupSize) {
                     double elapsedTimeInSec = (receivedTimeNanos - groupStartTimeNanos) / 1000000000D;
                     double totalElapsedTimeInSec = (receivedTimeNanos - totalStartTimeNanos) / 1000000000D;
                     double totalThroughput = totalEventCount / totalElapsedTimeInSec;

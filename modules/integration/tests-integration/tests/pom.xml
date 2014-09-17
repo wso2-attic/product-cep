@@ -272,7 +272,6 @@
         <dependency>
             <groupId>org.wso2.carbon.automation</groupId>
             <artifactId>org.wso2.carbon.automation.test.utils</artifactId>
-            <version>4.3.1-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.slf4j</groupId>
@@ -287,7 +286,6 @@
         <dependency>
             <groupId>org.wso2.carbon.automation</groupId>
             <artifactId>org.wso2.carbon.automation.extensions</artifactId>
-            <version>4.3.1-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
                     <artifactId>slf4j-api</artifactId>
@@ -307,12 +305,10 @@
         <dependency>
             <groupId>org.wso2.carbon.automation</groupId>
             <artifactId>org.wso2.carbon.automation.engine</artifactId>
-            <version>4.3.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.wso2.carbon</groupId>
             <artifactId>org.wso2.carbon.integration.common.utils</artifactId>
-            <version>4.3.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.wso2.carbon</groupId>
@@ -322,7 +318,29 @@
         <dependency>
             <groupId>org.wso2.carbon</groupId>
             <artifactId>org.wso2.carbon.integration.common.tests</artifactId>
-            <version>4.3.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.cep</groupId>
+            <artifactId>org.wso2.cep.integration.common.clients</artifactId>
+            <version>${project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.wso2.carbon</groupId>
+                    <artifactId>org.wso2.carbon.rest.api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.wso2.cep</groupId>
+            <artifactId>org.wso2.cep.integration.common.utils</artifactId>
+            <version>${project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.wso2.carbon</groupId>
+                    <artifactId>org.wso2.carbon.rest.api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.wso2.carbon</groupId>
@@ -383,11 +401,6 @@
             <groupId>org.wso2.carbon</groupId>
             <artifactId>org.wso2.carbon.authenticator.stub</artifactId>
             <version>4.3.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.wso2.cep</groupId>
-            <artifactId>org.wso2.cep.integration.common.clients</artifactId>
-            <version>4.0.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>

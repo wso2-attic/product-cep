@@ -26,10 +26,10 @@ import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.event.stream.manager.stub.types.EventStreamAttributeDto;
 import org.wso2.carbon.integration.common.utils.LoginLogoutClient;
-import org.wso2.carbon.integration.test.CEPIntegrationTest;
 import org.wso2.carbon.integration.test.client.StatPublisherAgent;
 import org.wso2.carbon.integration.test.client.TestAgentServer;
-import org.wso2.carbon.integration.test.util.ConfigurationUtil;
+import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
+import org.wso2.cep.integration.common.utils.ConfigurationUtil;
 
 import java.rmi.RemoteException;
 
