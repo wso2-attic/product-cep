@@ -28,7 +28,7 @@ import org.wso2.cep.integration.common.ui.page.main.HomePage;
 import org.wso2.cep.integration.common.utils.CEPIntegrationUITest;
 
 
-public class ESBLoginTestCase extends CEPIntegrationUITest {
+public class CEPLoginTestCase extends CEPIntegrationUITest {
     private WebDriver driver;
 
     @BeforeClass(alwaysRun = true)
@@ -38,7 +38,7 @@ public class ESBLoginTestCase extends CEPIntegrationUITest {
         driver.get(getLoginURL());
     }
 
-    @Test(groups = "wso2.ues", description = "verify login to ESB Server")
+    @Test(groups = "wso2.cep", description = "verify login to CEP Server")
     public void testLogin() throws Exception {
         LoginPage test = new LoginPage(driver);
         HomePage home = test.loginAs(cepServer.getContextTenant().getContextUser().getUserName()
