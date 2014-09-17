@@ -31,11 +31,11 @@ import org.wso2.carbon.integration.test.CEPIntegrationTest;
 import java.rmi.RemoteException;
 
 /**
- * Check whether CEPAdminService properly creates SiddhiBucket to be used with localBroker
+ * Check whether CEPAdminService properly creates Process Flows in any order.
  */
-public class LocalProcessFlowCreatingTestCase extends CEPIntegrationTest {
+public class ProcessFlowCreationTestCase extends CEPIntegrationTest {
 
-    private static final Log log = LogFactory.getLog(LocalProcessFlowCreatingTestCase.class);
+    private static final Log log = LogFactory.getLog(ProcessFlowCreationTestCase.class);
     private EventFormatterAdminServiceClient eventFormatterAdminServiceClient;
     private EventBuilderAdminServiceClient eventBuilderAdminServiceClient;
     private EventProcessorAdminServiceClient eventProcessorAdminServiceClient;
