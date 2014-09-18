@@ -25,7 +25,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.appserver.integration.common.clients.*;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
-import org.wso2.carbon.integration.test.CEPIntegrationTest;
+import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
 
 import java.rmi.RemoteException;
 
