@@ -98,7 +98,7 @@ public class EventProcessorAdminServiceClient {
             eventProcessorAdminServiceStub.deployExecutionPlanConfigurationFromConfigXml(executionPlanConfigurationXml);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
-            throw new RemoteException();
+            throw new RemoteException(e.getMessage(),e);
         }
     }
 
