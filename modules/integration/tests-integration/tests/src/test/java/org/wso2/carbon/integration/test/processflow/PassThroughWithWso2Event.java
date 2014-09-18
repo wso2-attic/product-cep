@@ -36,8 +36,8 @@ import java.rmi.RemoteException;
 /**
  * Sample 0001 - Simple Pass-through with WSO2Event
  */
-public class PassThroughWithWSO2Event extends CEPIntegrationTest {
-    private static final Log log = LogFactory.getLog(PassThroughWithWSO2Event.class);
+public class PassThroughWithWso2Event extends CEPIntegrationTest {
+    private static final Log log = LogFactory.getLog(PassThroughWithWso2Event.class);
     private static final String INPUT_STREAM_NAME = "org.wso2.sample.service.data";
     private static final String OUTPUT_STREAM_NAME = "org.wso2.sample.service.response.time";
     private static final String STREAM_VERSION = "1.0.0";
