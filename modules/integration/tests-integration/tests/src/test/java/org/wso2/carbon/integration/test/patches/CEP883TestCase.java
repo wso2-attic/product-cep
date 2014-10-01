@@ -256,11 +256,9 @@ public class CEP883TestCase extends CEPIntegrationTest {
 
         PropertyDto eventFormatterPropertyDtos[] = new PropertyDto[]{topic};
 
-        String jsonEvent = "{\n" +
-                           "\"meta_ipAddress\": \"{{meta_ipAddress}}\",\n" +
-                           "\"user\": \"{{user}}\",\n" +
-                           "\"keywords\": \"{{keywords}}\",\n" +
-                           "}";
+        String jsonEvent = "{\"meta_ipAddress\" : \"{{meta_ipAddress}}\" ,  \n" +
+                           "\"user\" : \"{{user}}\" ,\n" +
+                           "\"keywords\" : \"{{keywords}}\" }";
 
         eventFormatterAdminServiceClient.addJSONEventFormatterConfiguration("AnalyticsFormatter", "statisticsStream:1.0.0", "jmsSender", "jms", jsonEvent, eventFormatterPropertyDtos, "inline", true);
 
