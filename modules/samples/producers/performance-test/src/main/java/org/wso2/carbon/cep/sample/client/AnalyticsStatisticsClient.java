@@ -40,7 +40,7 @@ public class AnalyticsStatisticsClient {
             InterruptedException {
 
         KeyStoreUtil.setTrustStoreParams();
-        long totalEventCount = 5000000L;
+        long totalEventCount = 10;
         if (args.length >= 1) {
             totalEventCount = Long.valueOf(args[0]);
         }
