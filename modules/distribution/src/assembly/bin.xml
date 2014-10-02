@@ -301,6 +301,15 @@
             </includes>
         </fileSet>
 
+        <!--Storm Jar-->
+        <fileSet>
+            <directory>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/cep/storm</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/cep/storm</outputDirectory>
+            <includes>
+                <include>org.wso2.carbon.event.processor.storm.jar</include>
+            </includes>
+        </fileSet>
+
         <!-- Copying WSO2-CARBON-PATCH-4.2.0-0001 files to patches directory -->
        <!-- <fileSet>
             <directory>../p2-profile-gen/target/WSO2-CARBON-PATCH-4.2.0-0001</directory>
@@ -510,12 +519,6 @@
         </file>
         <file>
             <source>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/cep/storm/storm.yaml</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/cep/storm/
-            </outputDirectory>
-            <filtered>true</filtered>
-        </file>
-        <file>
-            <source>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/cep/storm/org.wso2.carbon.event.processor.storm.jar</source>
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/cep/storm/
             </outputDirectory>
             <filtered>true</filtered>
