@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 ~ Copyright (c) 2005-2014, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
 ~
@@ -15,20 +16,10 @@
 ~ specific language governing permissions and limitations
 ~ under the License.
 -->
-<stromDeploymentConfigs>
-    <stormEnabled>false</stormEnabled>
-    <cepManager>
-       <hostName>localhost</hostName>
-       <port>9773</port>
-       <reconnectionInterval>20</reconnectionInterval>
-     </cepManager>
-   <receiverPortRange>
-      <min>15000</min>
-      <max>15100</max>
-   </receiverPortRange>
-   <security>
-      <keyStorePath>CEP_SERVER_HOME/samples/producers/performance-test/src/main/resources/wso2carbon.jks</keyStorePath>
-      <trustStorePath>CEP_SERVER_HOME/samples/producers/performance-test/src/main/resources/client-truststore.jks</trustStorePath>
-   </security>
-</stromDeploymentConfigs>
-
+<!--
+     This adaptor is used by default to send WSO2 events to the CEP server.
+     DO NOT DELETE this file since this file is needed when event builder/event formatter 
+     configurations are created using default values.
+-->     
+<inputEventAdaptor name="DefaultWSO2EventInputAdaptor"
+  statistics="disable" trace="disable" type="wso2event" xmlns="http://wso2.org/carbon/eventadaptormanager"/>
