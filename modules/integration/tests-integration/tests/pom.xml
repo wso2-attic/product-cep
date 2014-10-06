@@ -420,10 +420,23 @@
             <artifactId>httpcore</artifactId>
             <version>4.3.0.wso2v1</version>
         </dependency>
+        <dependency>
+            <groupId>org.eclipse.paho</groupId>
+            <artifactId>mqtt-client</artifactId>
+            <version>0.4.0</version>
+        </dependency>
     </dependencies>
 
     <properties>
         <test-automation-framework-version>4.3.0-SNAPSHOT</test-automation-framework-version>
         <httpclient.wso2.version>4.2.5.wso2v1</httpclient.wso2.version>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>spring-milestones</id>
+            <url>http://repo.springsource.org/libs-milestone/</url>
+        </repository>
+    </repositories>
+
 </project>

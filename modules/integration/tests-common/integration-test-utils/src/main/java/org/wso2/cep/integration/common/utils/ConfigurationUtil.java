@@ -227,7 +227,20 @@ public class ConfigurationUtil {
             address.setAttributeType("string");
             correlationData = new EventStreamAttributeDto[]{orderNo};
             payloadData = new EventStreamAttributeDto[]{type, size, quantity, contact, address};
-        } else {
+        } else if(usecase.equals("MQTT_XML")){
+            EventStreamAttributeDto sensorType = new EventStreamAttributeDto();
+            sensorType.setAttributeName("sensorType");
+            sensorType.setAttributeType("string");
+            EventStreamAttributeDto sensorId = new EventStreamAttributeDto();
+            sensorId.setAttributeName("sensorId");
+            sensorId.setAttributeType("string");
+            EventStreamAttributeDto sensorValue = new EventStreamAttributeDto();
+            sensorValue.setAttributeName("sensorValue");
+            sensorValue.setAttributeType("double");
+            metaData = new EventStreamAttributeDto[]{sensorType};
+            payloadData = new EventStreamAttributeDto[]{sensorId , sensorValue};
+
+        } else{
             throw new UnsupportedOperationException("The stream attributes for use case :" + usecase + " is not defined.");
         }
         eventStreamManagerAdminServiceClient.addEventStream(streamName, version, metaData, correlationData, payloadData, "This is a  test stream", "access.logs");
