@@ -106,6 +106,8 @@
                                 <!--<featureArtifactDef>-->
                                     <!--org.wso2.carbon:org.wso2.carbon.jaxws.webapp.mgt.feature:${carbon.platform.version}-->
                                 <!--</featureArtifactDef>-->
+				<featureArtifactDef>org.jaggeryjs:org.jaggeryjs.feature:${jaggery.feature.version}
+				</featureArtifactDef>
                                 <featureArtifactDef>
                                     org.wso2.carbon:org.wso2.carbon.webapp.mgt.server.feature:${carbon.platform.version}
                                 </featureArtifactDef>
@@ -366,9 +368,9 @@
                                 <!--<featureArtifactDef>-->
                                     <!--org.wso2.carbon:org.wso2.carbon.registry.community.features.server.feature:${carbon.platform.version}-->
                                 <!--</featureArtifactDef>-->
-                                <!--<featureArtifactDef>-->
-                                    <!--org.wso2.carbon:org.wso2.carbon.registry.extensions.server.feature:${carbon.platform.version}-->
-                                <!--</featureArtifactDef>-->
+                                <featureArtifactDef>
+                                    org.wso2.carbon:org.wso2.carbon.registry.extensions.server.feature:${carbon.platform.version}
+                                </featureArtifactDef>
                                 <!--<featureArtifactDef>-->
                                     <!--org.wso2.carbon:org.wso2.carbon.registry.ws.feature:${carbon.platform.version}-->
                                 <!--</featureArtifactDef>-->
@@ -458,6 +460,10 @@
                                     <!--<id>org.wso2.carbon.jaxws.webapp.mgt.feature.group</id>-->
                                     <!--<version>${carbon.platform.version}</version>-->
                                 <!--</feature>-->
+				<feature>
+					<id>org.jaggeryjs.feature.group</id>
+					<version>${jaggery.feature.version}</version>
+				</feature>
                                 <feature>
                                     <id>org.wso2.carbon.webapp.mgt.server.feature.group</id>
                                     <version>${carbon.platform.version}</version>
@@ -773,10 +779,10 @@
                                     <!--<id>org.wso2.ues.feature.group</id>-->
                                     <!--<version>${ues.version}</version>-->
                                 <!--</feature>-->
-                                <!--<feature>-->
-                                    <!--<id>org.wso2.carbon.registry.extensions.server.feature.group</id>-->
-                                    <!--<version>${carbon.platform.version}</version>-->
-                                <!--</feature>-->
+                                <feature>
+                                    <id>org.wso2.carbon.registry.extensions.server.feature.group</id>
+                                    <version>${carbon.platform.version}</version>
+                                </feature>
                                 <!--<feature>-->
                                     <!--<id>org.wso2.carbon.registry.contentsearch.server.feature.group</id>-->
                                     <!--<version>${carbon.platform.version}</version>-->
