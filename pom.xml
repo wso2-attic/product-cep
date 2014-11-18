@@ -471,7 +471,7 @@
         <axis2.jaxb.version>1.6.0.wso2v1</axis2.jaxb.version>
         <axis2.version>1.6.1.wso2v11-SNAPSHOT</axis2.version>
         <jaxb.version>2.2.5.wso2v1</jaxb.version>
-        <orbit.version.axiom>1.2.11.wso2v5-SNAPSHOT</orbit.version.axiom>
+        <orbit.version.axiom>1.2.11.wso2v5</orbit.version.axiom>
         <version.commons.logging>1.1</version.commons.logging>
         <version.log4j>1.2.13</version.log4j>
         <!--stratos.version>${stratos.version}</stratos.version-->

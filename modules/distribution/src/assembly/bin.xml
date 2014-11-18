@@ -284,12 +284,12 @@
             </includes>
         </fileSet>
 
-        <fileSet>
+        <!--<fileSet>
             <directory>repository/conf/ues/jaggeryapps</directory>
             <outputDirectory>
                 ${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/
             </outputDirectory>
-        </fileSet>
+        </fileSet>-->
 
         <fileSet>
             <directory> ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/deployment/server/webapps</directory>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventFormatter name="mqttEventFormatter" statistics="disable"
+  trace="disable" xmlns="http://wso2.org/carbon/eventformatter">
+  <from streamName="org.wso2.sensorStream" version="1.0.0"/>
+  <mapping customMapping="disable" type="xml"/>
+  <to eventAdaptorName="mqttOutputAdaptor" eventAdaptorType="mqtt">
+    <property name="topic">sensorOutputStream</property>
+    <property name="qos">1</property>
+    <property name="clientId">cep-mqtt-publisher</property>
+  </to>
+</eventFormatter>
