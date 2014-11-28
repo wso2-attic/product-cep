@@ -35,7 +35,7 @@
         <!--
          Change this to true if you want to enable framework dashboard
         -->
-        <frameworkDashboard>false</frameworkDashboard>
+        <frameworkDashboard>true</frameworkDashboard>
         <!--
          Browser type with used by framework to execute UI test, supported types - chrome|firefox|opera|ie|htmlUnit
         -->
@@ -223,7 +223,7 @@
         <platformExecutionManager>
             <extentionClasses>
                 <class>
-                    <name>org.wso2.carbon.integration.common.extensions.carbonserver.CarbonServerExtension</name>
+                    <name>org.wso2.carbon.automation.extensions.servers.carbonserver.CarbonServerExtension</name>
                     <!--<parameter name="-DportOffset" value="0" />-->
                     <!--<parameter name="cmdArg" value="debug 5005" />-->
                 </class>
