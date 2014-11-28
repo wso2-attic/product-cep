@@ -298,12 +298,15 @@
                                 <!--<featureArtifactDef>-->
                                     <!--org.jaggeryjs.modules:caramel.feature:${caramel.feature.version}-->
                                 <!--</featureArtifactDef>-->
-                                <!--<featureArtifactDef>-->
-                                    <!--org.jaggeryjs.modules:carbon.feature:${carbon.feature.version}-->
-                                <!--</featureArtifactDef>-->
-                                <!--<featureArtifactDef>-->
-                                    <!--org.jaggeryjs.modules:process.feature:${process.feature.version}-->
-                                <!--</featureArtifactDef>-->
+                                <featureArtifactDef>
+                                    org.jaggeryjs.modules:carbon.feature:${carbon.feature.version}
+                                </featureArtifactDef>
+                                <featureArtifactDef>
+                                    org.jaggeryjs.modules:process.feature:${process.feature.version}
+                                </featureArtifactDef>
+				<featureArtifactDef>
+                                    org.jaggeryjs.modules:ws.feature:${ws.feature.version}
+                                </featureArtifactDef>
                                 <!--<featureArtifactDef>-->
                                     <!--org.jaggeryjs.modules:uuid.feature:${uuid.feature.version}-->
                                 <!--</featureArtifactDef>-->
@@ -721,14 +724,18 @@
                                     <!--<id>org.jaggeryjs.modules.caramel.feature.group</id>-->
                                     <!--<version>${caramel.feature.version}</version>-->
                                 <!--</feature>-->
-                                <!--<feature>-->
-                                    <!--<id>org.jaggeryjs.modules.carbon.feature.group</id>-->
-                                    <!--<version>${carbon.feature.version}</version>-->
-                                <!--</feature>-->
-                                <!--<feature>-->
-                                    <!--<id>org.jaggeryjs.modules.process.feature.group</id>-->
-                                    <!--<version>${process.feature.version}</version>-->
-                                <!--</feature>-->
+                                <feature>
+                                    <id>org.jaggeryjs.modules.carbon.feature.group</id>
+                                    <version>${carbon.feature.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.jaggeryjs.modules.process.feature.group</id>
+                                    <version>${process.feature.version}</version>
+                                </feature>
+				<feature>
+                                    <id>org.jaggeryjs.modules.ws.feature.group</id>
+                                    <version>${ws.feature.version}</version>
+                                </feature>
                                 <!--<feature>-->
                                     <!--<id>org.jaggeryjs.modules.uuid.feature.group</id>-->
                                     <!--<version>${uuid.feature.version}</version>-->
@@ -904,7 +911,7 @@
         </plugins>
     </build>
     <properties>
-        <jaggery.feature.version>0.9.0.ALPHA5.wso2v1-SNAPSHOT</jaggery.feature.version>
+        <jaggery.feature.version>0.9.0-SNAPSHOT</jaggery.feature.version>
         <ues.version>1.1.0</ues.version>
         <es.version>1.1.0</es.version>
         <caramel.feature.version>1.0.1</caramel.feature.version>
@@ -914,6 +921,7 @@
         <carbon.feature.version>1.0.0</carbon.feature.version>
         <event.feature.version>1.0.0</event.feature.version>
         <uuid.feature.version>1.0.0</uuid.feature.version>
+	<ws.feature.version>1.0.0</ws.feature.version>
         <login.feature.version>1.0.0</login.feature.version>
         <permission.feature.version>1.0.0</permission.feature.version>
         <registration.feature.version>1.0.0</registration.feature.version>
