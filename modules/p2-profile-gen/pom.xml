@@ -419,6 +419,10 @@
                                 <!--featureArtifactDef>
                                     org.wso2.carbon:org.wso2.carbon.event.server.feature:${carbon.patchrelease.version.421}
                                 </featureArtifactDef-->
+				<featureArtifactDef>
+                                    org.wso2.carbon:org.wso2.carbon.transport.commons.feature:${carbon.platform.version}
+                                </featureArtifactDef>
+
 
  				
                             </featureArtifacts>
@@ -878,6 +882,12 @@
                                 <!-- class loading feature -->
                                 <feature>
                                     <id>org.wso2.carbon.as.runtimes.cxf.feature.group</id>
+                                    <version>${carbon.platform.version}</version>
+                                </feature>
+				<feature>
+                                    <id>
+                                        org.wso2.carbon.transport.commons.feature.group
+                                    </id>
                                     <version>${carbon.platform.version}</version>
                                 </feature>
 
