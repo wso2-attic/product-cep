@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<executionPlan name="odGroupByFramePlan" statistics="disable"
+	trace="disable" xmlns="http://wso2.org/carbon/eventprocessor">
+	<description />
+	<siddhiConfiguration>
+		<property name="siddhi.persistence.snapshot.time.interval.minutes">0</property>
+		<property name="siddhi.enable.distributed.processing">false</property>
+	</siddhiConfiguration>
+	<importedStreams>
+		<stream as="intputODStream" name="org.wso2.sample.objectdetection.data"
+			version="1.0.0" />
+	</importedStreams>
+	<queryExpressions><![CDATA[from intputODStream#window.time( 500 milliseconds )
+        select timestamp, frame_id, camera_id, image, cascade, count(frame_id) as object_count
+        group by frame_id
+        insert into outputODStream;]]></queryExpressions>
+	<exportedStreams>
+		<stream name="org.wso2.sample.objectdetection.output" valueOf="outputODStream"
+			version="1.0.0" />
+	</exportedStreams>
+</executionPlan>

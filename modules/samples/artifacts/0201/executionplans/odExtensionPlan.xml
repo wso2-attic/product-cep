@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<executionPlan name="odExtensionPlan" statistics="disable"
+	trace="disable" xmlns="http://wso2.org/carbon/eventprocessor">
+	<description />
+	<siddhiConfiguration>
+		<property name="siddhi.persistence.snapshot.time.interval.minutes">0</property>
+		<property name="siddhi.enable.distributed.processing">false</property>
+	</siddhiConfiguration>
+	<importedStreams>
+		<stream as="inputVideoStream" name="org.wso2.sample.video.frames"
+			version="1.0.0" />
+	</importedStreams>
+	<queryExpressions><![CDATA[from inputVideoStream
+        select timestamp, frame_id, camera_id, image, cascade, imageprocessorobjectdetection:count(image, cascade ) as object_count
+        insert into outputVideoStream;
+    ]]></queryExpressions>
+	<exportedStreams>
+		<stream name="org.wso2.sample.objectdetection.output" valueOf="outputVideoStream"
+			version="1.0.0" />
+	</exportedStreams>
+</executionPlan>

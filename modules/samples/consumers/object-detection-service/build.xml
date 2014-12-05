@@ -1,0 +1,111 @@
+<!--
+  ~  Licensed to the Apache Software Foundation (ASF) under one
+  ~  or more contributor license agreements.  See the NOTICE file
+  ~  distributed with this work for additional information
+  ~  regarding copyright ownership.  The ASF licenses this file
+  ~  to you under the Apache License, Version 2.0 (the
+  ~  "License"); you may not use this file except in compliance
+  ~  with the License.  You may obtain a copy of the License at
+  ~
+  ~   http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing,
+  ~  software distributed under the License is distributed on an
+  ~   * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~  KIND, either express or implied.  See the License for the
+  ~  specific language governing permissions and limitations
+  ~  under the License.
+  -->
+
+<project default="build-service">
+
+    <property name="cep.home" value="../../.."/>
+    <property name="src.dir" value="src/main/java"/>
+    <property name="resources.dir" value="src/main/resources"/>
+    <property name="webapp.dir" value="src/main/webapp"/>
+    <property name="temp.dir" value="temp"/>
+    <property name="lib.dir" value="../../lib"/>
+    <property name="class.dir" value="${temp.dir}/classes"/>
+
+    <property name="sampleNo" value=""/>
+
+    <path id="javac.classpath">
+        <pathelement path="${class.dir}"/>
+        <fileset dir="${lib.dir}"/>
+        <fileset dir="${cep.home}/repository/components/plugins/">
+            <include name="javax.servlet_*.jar"/>
+            <include name="org.wso2.carbon.logging_*.jar" />
+        </fileset>
+    </path>
+
+    <target name="init" depends="clean">
+        <mkdir dir="${temp.dir}"/>
+        <mkdir dir="${class.dir}"/>
+        <mkdir dir="${services.dir}"/>
+        <!--<echo>Services Dir : ${services.dir}</echo>-->
+    </target>
+
+    <target name="clean" depends="folder.set">
+        <delete dir="${temp.dir}"/>
+    </target>
+
+    <target name="folder.set" depends="-folder.check, -assign.sample, -assign.main"/>
+
+    <target name="-folder.check">
+        <condition property="main.folder">
+            <equals arg1="${sampleNo}" arg2=""/>
+        </condition>
+        <condition property="sample.folder">
+            <not>
+                <equals arg1="${sampleNo}" arg2=""/>
+            </not>
+        </condition>
+    </target>
+
+    <target name="-assign.sample" if="sample.folder">
+        <echo>Sample No : ${sampleNo}</echo>
+        <property name="services.dir" value="${cep.home}/samples/artifacts/${sampleNo}/webapps"/>
+        <echo>Services Dir : ${services.dir}</echo>
+    </target>
+
+    <target name="-assign.main" if="main.folder">
+        <echo>Sample No : ${sampleNo}</echo>
+        <property name="services.dir" value="${cep.home}/repository/deployment/server/webapps"/>
+        <echo>Services Dir : ${services.dir}</echo>
+    </target>
+
+    <target name="compile" depends="init">
+        <javac debug="on" srcdir="${src.dir}" destdir="${class.dir}">
+            <include name="*/**"/>
+            <classpath refid="javac.classpath"/>
+        </javac>
+        <copy todir="${class.dir}" overwrite="true">
+            <fileset dir="${resources.dir}">
+                <include name="*.properties"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="build-service" depends="compile">
+        <property name="LS.dir" value="${temp.dir}/ObjectDetectionService"/>
+        <mkdir dir="${LS.dir}"/>
+
+        <mkdir dir="${LS.dir}/META-INF"/>
+        <copy toDir="${LS.dir}/">
+            <fileset dir="${webapp.dir}">
+                <exclude name="**/*.war"/>
+            </fileset>
+        </copy>
+
+        <copy toDir="${LS.dir}/WEB-INF/classes">
+            <fileset dir="${class.dir}">
+                <include name="**/*.class"/>
+            </fileset>
+        </copy>
+
+        <jar destfile="${services.dir}/objectdetection.war">
+            <fileset dir="${LS.dir}"/>
+        </jar>
+    </target>
+
+</project>

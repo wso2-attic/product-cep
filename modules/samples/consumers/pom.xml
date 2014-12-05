@@ -38,6 +38,7 @@
         <module>axis2-log-service</module>
         <module>generic-log-service</module>
         <module>dashboard-service</module>
+        <module>object-detection-service</module>
     </modules>
 
 </project>
