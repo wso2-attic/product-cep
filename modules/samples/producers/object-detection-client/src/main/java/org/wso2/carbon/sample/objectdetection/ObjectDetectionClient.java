@@ -55,6 +55,7 @@ public class ObjectDetectionClient {
 	/** Stream version. */
 	public static final String VERSION1 = "1.0.0";
 
+	/** Image to Hex encoding format */
 	public static final String encodingFormat = ".jpg";
 
 	// loading native libraries for opencv
@@ -178,6 +179,7 @@ public class ObjectDetectionClient {
 							                 new Event(streamID, System.currentTimeMillis(), null,
 							                           null, payloadData);
 							dataPublisher.publish(eventOne);
+							System.out.println("published");
 						}
 
 						// delaying to fit siddhi window size in execution

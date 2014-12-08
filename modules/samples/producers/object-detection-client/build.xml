@@ -27,9 +27,9 @@
 	<property name="class.dir" value="${temp.dir}/classes" />
 	<property name="main-class" value="org.wso2.carbon.sample.objectdetection.ObjectDetectionClient" />
 
-	<property name="source" value="${resources.dir}/video/tunnel.mp4" />
+	<property name="source" value="${resources.dir}/video/pedestrians.mp4" />
 	<property name="cascade" value="${resources.dir}/cascades/haarcascade_fullbody.xml" />
-	<property name="maxFrameCount" value="20" />
+	<property name="maxFrameCount" value="15" />
 	<property name="preprocess" value="true" />
 	<property name="skipFrames" value="1" />
 	<property name="host" value="localhost" />
