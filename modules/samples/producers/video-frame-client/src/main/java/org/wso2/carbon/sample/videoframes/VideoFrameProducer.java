@@ -157,8 +157,8 @@ public class VideoFrameProducer {
 					log.error("Frame was empty!");
 				}
 
-				// skipping frames. propId = 1 (CAP_PROP_POS_FRAMES)
-				vCap.set(1, vCap.get(1) + skipFrames);
+				// skipping frames. propId = 1 (CAP_PROP_POS_FRAMES). outcome varies with operating system.
+				// vCap.set(1, vCap.get(1) + skipFrames);
 			}
 		}
 
