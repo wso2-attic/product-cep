@@ -1,13 +1,13 @@
 /*
  * Copyright (c) 2014, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
- * 
+ *
  * WSO2 Inc. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
  * in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -19,11 +19,10 @@ package org.wso2.carbon.sample.objectdetection;
 
 import java.net.MalformedURLException;
 
-import nu.pattern.OpenCV;
-
 import org.apache.commons.lang.NumberUtils;
 import org.apache.commons.ssl.util.Hex;
 import org.apache.log4j.Logger;
+import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfByte;
 import org.opencv.core.MatOfRect;
@@ -60,8 +59,7 @@ public class ObjectDetectionClient {
 
 	// loading native libraries for opencv
 	static {
-		// System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-		OpenCV.loadLibrary();
+		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 	}
 
 	/**
@@ -87,14 +85,14 @@ public class ObjectDetectionClient {
 	 *             the interrupted exception
 	 */
 	public static void main(String[] args) throws MalformedURLException, AgentException,
-	                                      AuthenticationException, TransportException,
-	                                      MalformedStreamDefinitionException,
-	                                      StreamDefinitionException,
-	                                      DifferentStreamDefinitionAlreadyDefinedException,
-	                                      InterruptedException {
+	AuthenticationException, TransportException,
+	MalformedStreamDefinitionException,
+	StreamDefinitionException,
+	DifferentStreamDefinitionAlreadyDefinedException,
+	InterruptedException {
 
 		KeyStoreUtil.setTrustStoreParams();
-		
+
 		String source = args[0];
 		String cascadeFile = args[1];
 		int maxFrameCount = Integer.parseInt(args[2]);
@@ -107,8 +105,8 @@ public class ObjectDetectionClient {
 
 		// new data publisher
 		DataPublisher dataPublisher =
-		                              new DataPublisher("tcp://" + host + ":" + port, username,
-		                                                password);
+				new DataPublisher("tcp://" + host + ":" + port, username,
+				                  password);
 		// getting stream id
 		String streamID = getStreamID(dataPublisher);
 
@@ -140,7 +138,7 @@ public class ObjectDetectionClient {
 					if (vCap.read(frame)) {
 						long currentTime = System.currentTimeMillis();
 						Mat frameClone = frame.clone();
-						
+
 						// pre-processing
 						if (preprocess) {
 							Imgproc.cvtColor(frame, frameClone, Imgproc.COLOR_RGB2GRAY);
@@ -163,12 +161,12 @@ public class ObjectDetectionClient {
 							String croppedImageHex = matToHex(croppedImage);
 							// payload data
 							Object[] payloadData =
-							                       new Object[] { currentTime, tempFrameCount, source,
-							                                     croppedImageHex,
-							                                     croppedImage.type(),
-							                                     croppedImage.width(),
-							                                     croppedImage.height(),
-							                                     encodingFormat, cascadeFile };
+									new Object[] { currentTime, tempFrameCount,
+									               source, croppedImageHex,
+									               croppedImage.type(),
+									               croppedImage.width(),
+									               croppedImage.height(),
+									               encodingFormat, cascadeFile };
 
 							// logging
 							log.info("Sending frame " + Integer.toString(tempFrameCount) +
@@ -176,8 +174,8 @@ public class ObjectDetectionClient {
 
 							// creating event and publishing
 							Event eventOne =
-							                 new Event(streamID, System.currentTimeMillis(), null,
-							                           null, payloadData);
+									new Event(streamID, System.currentTimeMillis(), null,
+									          null, payloadData);
 							dataPublisher.publish(eventOne);
 							System.out.println("published");
 						}
@@ -232,10 +230,10 @@ public class ObjectDetectionClient {
 	 *             the different stream definition already defined exception
 	 */
 	private static String getStreamID(DataPublisher dataPublisher)
-	                                                              throws AgentException,
-	                                                              MalformedStreamDefinitionException,
-	                                                              StreamDefinitionException,
-	                                                              DifferentStreamDefinitionAlreadyDefinedException {
+			throws AgentException,
+			MalformedStreamDefinitionException,
+			StreamDefinitionException,
+			DifferentStreamDefinitionAlreadyDefinedException {
 		// Stream definition
 		// // timestamp - time which the object was identified
 		// // frame_id - unique id for the frame
@@ -248,26 +246,26 @@ public class ObjectDetectionClient {
 		// // cascade - cascade file used for object detection.
 		log.info("Creating stream " + STREAM_NAME + ":" + VERSION1);
 		String streamId =
-		                  dataPublisher.defineStream("{" +
-		                                             "  'name':'" +
-		                                             STREAM_NAME +
-		                                             "'," +
-		                                             "  'version':'" +
-		                                             VERSION1 +
-		                                             "'," +
-		                                             "  'nickName': 'Object_Detection_Monitoring'," +
-		                                             "  'description': 'A sample for Object Detection Monitoring'," +
-		                                             "  'payloadData':[" +
-		                                             "          {'name':'timestamp','type':'LONG'}," +
-		                                             "          {'name':'frame_id','type':'INT'}," +
-		                                             "          {'name':'camera_id','type':'STRING'}," +
-		                                             "          {'name':'image','type':'STRING'}," +
-		                                             "          {'name':'image_type','type':'INT'}," +
-		                                             "          {'name':'image_width','type':'INT'}," +
-		                                             "          {'name':'image_height','type':'INT'}," +
-		                                             "          {'name':'encoding_format','type':'STRING'}," +
-		                                             "          {'name':'cascade','type':'STRING'}" +
-		                                             "  ]" + "}");
+				dataPublisher.defineStream("{" +
+						"  'name':'" +
+						STREAM_NAME +
+						"'," +
+						"  'version':'" +
+						VERSION1 +
+						"'," +
+						"  'nickName': 'Object_Detection_Monitoring'," +
+						"  'description': 'A sample for Object Detection Monitoring'," +
+						"  'payloadData':[" +
+						"          {'name':'timestamp','type':'LONG'}," +
+						"          {'name':'frame_id','type':'INT'}," +
+						"          {'name':'camera_id','type':'STRING'}," +
+						"          {'name':'image','type':'STRING'}," +
+						"          {'name':'image_type','type':'INT'}," +
+						"          {'name':'image_width','type':'INT'}," +
+						"          {'name':'image_height','type':'INT'}," +
+						"          {'name':'encoding_format','type':'STRING'}," +
+						"          {'name':'cascade','type':'STRING'}" +
+						"  ]" + "}");
 
 		return streamId;
 	}

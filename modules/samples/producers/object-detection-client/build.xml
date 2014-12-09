@@ -56,7 +56,6 @@
 
 
 	<target name="clean">
-		<!--<delete dir="target" quiet="true"/>-->
 		<delete dir="${class.dir}" quiet="true" />
 		<delete dir="${temp.dir}" />
 	</target>
@@ -82,7 +81,7 @@
 		<echo>To configure source, cascade, no. of frames, allow preprocessing, no. of frames to skip, host, port, username and password use -Dsource=xxxx -Dcascade=xxxx -DmaxFrameCount=xxxx -Dpreprocess=xxxx -DskipFrames=xxxx -Dhost=xx -Dport=xx -Dusername=xxxx -Dpassword=xxxx. 
 		</echo>
 		<java classname="${main-class}" classpathref="javac.classpath" fork="true">
-
+			<sysproperty key="java.library.path" path="${nativeDir}"/>
 			<arg value="${source}" />
 			<arg value="${cascade}" />
 			<arg value="${maxFrameCount}" />

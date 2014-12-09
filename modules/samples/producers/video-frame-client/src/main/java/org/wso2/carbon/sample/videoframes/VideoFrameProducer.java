@@ -1,13 +1,13 @@
 /*
  * Copyright (c) 2014, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
- * 
+ *
  * WSO2 Inc. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
  * in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -19,23 +19,20 @@ package org.wso2.carbon.sample.videoframes;
 
 import java.net.MalformedURLException;
 
-import nu.pattern.OpenCV;
-
 import org.apache.commons.lang.NumberUtils;
 import org.apache.commons.ssl.util.Hex;
 import org.apache.log4j.Logger;
+import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfByte;
 import org.opencv.highgui.Highgui;
 import org.opencv.highgui.VideoCapture;
-import org.opencv.objdetect.CascadeClassifier;
 import org.wso2.carbon.databridge.agent.thrift.DataPublisher;
 import org.wso2.carbon.databridge.agent.thrift.exception.AgentException;
 import org.wso2.carbon.databridge.commons.Event;
 import org.wso2.carbon.databridge.commons.exception.AuthenticationException;
 import org.wso2.carbon.databridge.commons.exception.DifferentStreamDefinitionAlreadyDefinedException;
 import org.wso2.carbon.databridge.commons.exception.MalformedStreamDefinitionException;
-import org.wso2.carbon.databridge.commons.exception.NoStreamDefinitionExistException;
 import org.wso2.carbon.databridge.commons.exception.StreamDefinitionException;
 import org.wso2.carbon.databridge.commons.exception.TransportException;
 
@@ -58,8 +55,7 @@ public class VideoFrameProducer {
 
 	// loading native libraries for opencv
 	static {
-		// System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-		OpenCV.loadLibrary();
+		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 	}
 
 	/**
@@ -85,12 +81,12 @@ public class VideoFrameProducer {
 	 *             the interrupted exception
 	 */
 	public static void main(String[] args) throws MalformedURLException, AgentException,
-	                                      AuthenticationException, TransportException,
-	                                      MalformedStreamDefinitionException,
-	                                      StreamDefinitionException,
-	                                      DifferentStreamDefinitionAlreadyDefinedException,
-	                                      InterruptedException {
-		
+	AuthenticationException, TransportException,
+	MalformedStreamDefinitionException,
+	StreamDefinitionException,
+	DifferentStreamDefinitionAlreadyDefinedException,
+	InterruptedException {
+
 		KeyStoreUtil.setTrustStoreParams();
 		String source = args[0];
 		String cascadeFile = args[1];
@@ -103,8 +99,8 @@ public class VideoFrameProducer {
 
 		// new data publisher
 		DataPublisher dataPublisher =
-		                              new DataPublisher("tcp://" + host + ":" + port, username,
-		                                                password);
+				new DataPublisher("tcp://" + host + ":" + port, username,
+				                  password);
 		// getting stream id
 		String streamID = getStreamID(dataPublisher);
 
@@ -134,8 +130,8 @@ public class VideoFrameProducer {
 					String croppedImageHex = matToHex(frame);
 					// payload data
 					Object[] payloadData =
-					                       new Object[] { currentTime, tempFrameCount, source,
-					                                      croppedImageHex, cascadeFile };
+							new Object[] { currentTime, tempFrameCount, source,
+							               croppedImageHex, cascadeFile };
 
 					// logging
 					log.info("Sending frame " + Integer.toString(tempFrameCount) +
@@ -143,8 +139,8 @@ public class VideoFrameProducer {
 
 					// creating event and publishing
 					Event eventOne =
-					                 new Event(streamID, System.currentTimeMillis(), null, null,
-					                           payloadData);
+							new Event(streamID, System.currentTimeMillis(), null, null,
+							          payloadData);
 					dataPublisher.publish(eventOne);
 
 				} else {
@@ -191,10 +187,10 @@ public class VideoFrameProducer {
 	 *             the different stream definition already defined exception
 	 */
 	private static String getStreamID(DataPublisher dataPublisher)
-	                                                              throws AgentException,
-	                                                              MalformedStreamDefinitionException,
-	                                                              StreamDefinitionException,
-	                                                              DifferentStreamDefinitionAlreadyDefinedException {
+			throws AgentException,
+			MalformedStreamDefinitionException,
+			StreamDefinitionException,
+			DifferentStreamDefinitionAlreadyDefinedException {
 		// Stream definition
 		// // timestamp - time which the object was identified
 		// // frame_id - unique id for the frame
@@ -202,22 +198,22 @@ public class VideoFrameProducer {
 		// // image - cropped image of the detected object sent as a hex
 		log.info("Creating stream " + STREAM_NAME + ":" + VERSION1);
 		String streamId =
-		                  dataPublisher.defineStream("{" +
-		                                             "  'name':'" +
-		                                             STREAM_NAME +
-		                                             "'," +
-		                                             "  'version':'" +
-		                                             VERSION1 +
-		                                             "'," +
-		                                             "  'nickName': 'Video_Frame_Feeding'," +
-		                                             "  'description': 'A sample for Video Frame Feeding'," +
-		                                             "  'payloadData':[" +
-		                                             "          {'name':'timestamp','type':'LONG'}," +
-		                                             "          {'name':'frame_id','type':'INT'}," +
-		                                             "          {'name':'camera_id','type':'STRING'}," +
-		                                             "          {'name':'image','type':'STRING'}," +
-		                                             "          {'name':'cascade','type':'STRING'}" +
-		                                             "  ]" + "}");
+				dataPublisher.defineStream("{" +
+						"  'name':'" +
+						STREAM_NAME +
+						"'," +
+						"  'version':'" +
+						VERSION1 +
+						"'," +
+						"  'nickName': 'Video_Frame_Feeding'," +
+						"  'description': 'A sample for Video Frame Feeding'," +
+						"  'payloadData':[" +
+						"          {'name':'timestamp','type':'LONG'}," +
+						"          {'name':'frame_id','type':'INT'}," +
+						"          {'name':'camera_id','type':'STRING'}," +
+						"          {'name':'image','type':'STRING'}," +
+						"          {'name':'cascade','type':'STRING'}" +
+						"  ]" + "}");
 
 		return streamId;
 	}

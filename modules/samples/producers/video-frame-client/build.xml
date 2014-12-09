@@ -80,10 +80,10 @@
 	</target>
 
 	<target name="run" depends="compile">
-		<echo>To configure source, cascade, no. of frames,  no. of frames to skip, host, port, username and password use -Dsource=xxxx -Dcascade=xxxx -DmaxFrameCount=xxxx -DskipFrames=xxxx -Dhost=xx -Dport=xx -Dusername=xxxx -Dpassword=xxxx. 
+		<echo>To configure source, cascade, no. of frames, no. of frames to skip, host, port, username and password use -Dsource=xxxx -Dcascade=xxxx -DmaxFrameCount=xxxx -DskipFrames=xxxx -Dhost=xx -Dport=xx -Dusername=xxxx -Dpassword=xxxx. 
 		</echo>
 		<java classname="${main-class}" classpathref="javac.classpath" fork="true">
-
+			<sysproperty key="java.library.path" path="${nativeDir}"/>
 			<arg value="${source}" />
 			<arg value="${cascade}" />
 			<arg value="${maxFrameCount}" />
