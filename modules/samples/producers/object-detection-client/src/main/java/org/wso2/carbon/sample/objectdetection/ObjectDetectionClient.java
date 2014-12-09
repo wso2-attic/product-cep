@@ -19,6 +19,8 @@ package org.wso2.carbon.sample.objectdetection;
 
 import java.net.MalformedURLException;
 
+import nu.pattern.OpenCV;
+
 import org.apache.commons.lang.NumberUtils;
 import org.apache.commons.ssl.util.Hex;
 import org.apache.log4j.Logger;
@@ -59,7 +61,15 @@ public class ObjectDetectionClient {
 
 	// loading native libraries for opencv
 	static {
-		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+		try {
+			System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+		} catch (UnsatisfiedLinkError ex) {
+			try {
+				OpenCV.loadLibrary();
+			} catch (Exception exe) {
+				log.error(exe);
+			}
+		}
 	}
 
 	/**
