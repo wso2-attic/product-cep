@@ -202,15 +202,17 @@
                                 <featureArtifactDef>
                                     org.wso2.carbon:org.wso2.carbon.module.mgt.server.feature:${carbon.platform.version}
                                 </featureArtifactDef>
-                                <featureArtifactDef>
+                                <!--featureArtifactDef>
                                     org.wso2.carbon:org.wso2.carbon.throttle.server.feature:${carbon.platform.version}
-                                </featureArtifactDef>
+                                </featureArtifactDef-->
                                 <featureArtifactDef>
                                     org.wso2.carbon:org.wso2.carbon.caching.server.feature:${carbon.platform.version}
                                 </featureArtifactDef>
+<!--
                                 <featureArtifactDef>
                                     org.wso2.carbon:org.wso2.carbon.rm.server.feature:${carbon.platform.version}
                                 </featureArtifactDef>
+-->
 
 
                                 <!-- cep ui features -->
@@ -610,18 +612,22 @@
                                     <id>org.wso2.carbon.module.mgt.server.feature.group</id>
                                     <version>${carbon.platform.version}</version>
                                 </feature>
+<!--
                                 <feature>
                                     <id>org.wso2.carbon.throttle.server.feature.group</id>
                                     <version>${carbon.platform.version}</version>
                                 </feature>
+-->
                                 <feature>
                                     <id>org.wso2.carbon.caching.server.feature.group</id>
                                     <version>${carbon.platform.version}</version>
                                 </feature>
+<!--
                                 <feature>
                                     <id>org.wso2.carbon.rm.server.feature.group</id>
                                     <version>${carbon.platform.version}</version>
                                 </feature>
+-->
 
 
                                 <!-- cep ui features -->
