@@ -532,6 +532,16 @@
             <filtered>true</filtered>
         </file>
 
+        <!--Adding RDBMS Output Adaptor Configuration-->
+        <file>
+            <source>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/adaptor/rdbms-output-adaptor.xml</source>
+            <outputDirectory>
+                ${pom.artifactId}-${pom.version}/repository/conf/adaptor/
+            </outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+
         <!--CEP HA conf-->
         <file>
             <source>repository/conf/cep-ha-management.xml</source>
