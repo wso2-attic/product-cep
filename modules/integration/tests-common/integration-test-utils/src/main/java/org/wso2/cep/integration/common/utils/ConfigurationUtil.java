@@ -30,6 +30,7 @@ import org.wso2.carbon.event.processor.stub.types.ExecutionPlanConfigurationDto;
 import org.wso2.carbon.event.processor.stub.types.SiddhiConfigurationDto;
 import org.wso2.carbon.event.processor.stub.types.StreamConfigurationDto;
 import org.wso2.carbon.event.stream.manager.stub.types.EventStreamAttributeDto;
+import org.wso2.carbon.event.stream.manager.stub.types.EventStreamDefinitionDto;
 
 import java.rmi.RemoteException;
 
@@ -169,6 +170,7 @@ public class ConfigurationUtil {
         EventStreamAttributeDto[] metaData = null;
         EventStreamAttributeDto[] correlationData = null;
         EventStreamAttributeDto[] payloadData = null;
+        EventStreamDefinitionDto eventStreamDefinitionDto = new EventStreamDefinitionDto();
         if (usecase.equals("JMS_TEXT")) {
             EventStreamAttributeDto clientIp = new EventStreamAttributeDto();
             clientIp.setAttributeName("IP_CLIENT");
@@ -243,34 +245,72 @@ public class ConfigurationUtil {
         } else{
             throw new UnsupportedOperationException("The stream attributes for use case :" + usecase + " is not defined.");
         }
-        eventStreamManagerAdminServiceClient.addEventStream(streamName, version, metaData, correlationData, payloadData, "This is a  test stream", "access.logs");
+        eventStreamDefinitionDto.setName(streamName);
+        eventStreamDefinitionDto.setVersion(version);
+        eventStreamDefinitionDto.setMetaData(metaData);
+        eventStreamDefinitionDto.setCorrelationData(correlationData);
+        eventStreamDefinitionDto.setPayloadData(payloadData);
+        eventStreamDefinitionDto.setDescription("This is a  test stream");
+        eventStreamDefinitionDto.setNickName("access.logs");
+
+        eventStreamManagerAdminServiceClient.addEventStream(eventStreamDefinitionDto);
     }
 
     public void addInEventStream() throws RemoteException {
         EventStreamAttributeDto payloadDto = new EventStreamAttributeDto();
+        EventStreamDefinitionDto eventStreamDefinitionDto = new EventStreamDefinitionDto();
         payloadDto.setAttributeName("testProperty");
         payloadDto.setAttributeType("string");
 
         EventStreamAttributeDto[] payloadData = new EventStreamAttributeDto[]{payloadDto};
-        eventStreamManagerAdminServiceClient.addEventStream("InStream", "1.0.0", null, null, payloadData, "This is a input test stream", "test");
+
+        eventStreamDefinitionDto.setName("InStream");
+        eventStreamDefinitionDto.setVersion("1.0.0");
+        eventStreamDefinitionDto.setMetaData(null);
+        eventStreamDefinitionDto.setCorrelationData(null);
+        eventStreamDefinitionDto.setPayloadData(payloadData);
+        eventStreamDefinitionDto.setDescription("This is a  test stream");
+        eventStreamDefinitionDto.setNickName("test");
+
+        eventStreamManagerAdminServiceClient.addEventStream(eventStreamDefinitionDto);
     }
 
     public void addOutEventStream() throws RemoteException {
         EventStreamAttributeDto payloadDto = new EventStreamAttributeDto();
+        EventStreamDefinitionDto eventStreamDefinitionDto = new EventStreamDefinitionDto();
         payloadDto.setAttributeName("testProperty");
         payloadDto.setAttributeType("string");
 
         EventStreamAttributeDto[] payloadData = new EventStreamAttributeDto[]{payloadDto};
-        eventStreamManagerAdminServiceClient.addEventStream("OutStream", "1.0.0", null, null, payloadData, "This is a output test stream", "test");
+
+        eventStreamDefinitionDto.setName("OutStream");
+        eventStreamDefinitionDto.setVersion("1.0.0");
+        eventStreamDefinitionDto.setMetaData(null);
+        eventStreamDefinitionDto.setCorrelationData(null);
+        eventStreamDefinitionDto.setPayloadData(payloadData);
+        eventStreamDefinitionDto.setDescription("This is a output test stream");
+        eventStreamDefinitionDto.setNickName("test");
+
+        eventStreamManagerAdminServiceClient.addEventStream(eventStreamDefinitionDto);
     }
 
     public void addAnalyticsStream() throws RemoteException {
         EventStreamAttributeDto payloadDto = new EventStreamAttributeDto();
+        EventStreamDefinitionDto eventStreamDefinitionDto = new EventStreamDefinitionDto();
         payloadDto.setAttributeName("testProperty");
         payloadDto.setAttributeType("string");
 
         EventStreamAttributeDto[] payloadData = new EventStreamAttributeDto[]{payloadDto};
-        eventStreamManagerAdminServiceClient.addEventStream("OutStream", "1.0.0", null, null, payloadData, "This is a output test stream", "test");
+
+        eventStreamDefinitionDto.setName("OutStream");
+        eventStreamDefinitionDto.setVersion("1.0.0");
+        eventStreamDefinitionDto.setMetaData(null);
+        eventStreamDefinitionDto.setCorrelationData(null);
+        eventStreamDefinitionDto.setPayloadData(payloadData);
+        eventStreamDefinitionDto.setDescription("This is a output test stream");
+        eventStreamDefinitionDto.setNickName("test");
+
+        eventStreamManagerAdminServiceClient.addEventStream(eventStreamDefinitionDto);
     }
 
     public void addWso2EventInputEventAdaptor(String name) throws RemoteException {

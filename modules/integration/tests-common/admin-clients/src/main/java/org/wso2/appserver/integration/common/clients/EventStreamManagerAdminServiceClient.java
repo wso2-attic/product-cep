@@ -24,6 +24,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.event.stream.manager.stub.EventStreamAdminServiceStub;
 import org.wso2.carbon.event.stream.manager.stub.types.EventStreamAttributeDto;
+import org.wso2.carbon.event.stream.manager.stub.types.EventStreamDefinitionDto;
 import org.wso2.carbon.event.stream.manager.stub.types.EventStreamInfoDto;
 
 import java.rmi.RemoteException;
@@ -56,7 +57,7 @@ public class EventStreamManagerAdminServiceClient {
     public int getEventStreamCount()
             throws RemoteException {
         try {
-            EventStreamInfoDto[] streamInfoDtos = eventStreamAdminServiceStub.getAllEventStreamInfoDto();
+            EventStreamInfoDto[] streamInfoDtos = eventStreamAdminServiceStub.getAllEventStreamDefinitionDto();
             if (streamInfoDtos == null) {
                 return 0;
             } else {
@@ -68,24 +69,20 @@ public class EventStreamManagerAdminServiceClient {
     }
 
 
-    public void addEventStream(String streamName, String streamVersion,
-                               EventStreamAttributeDto[] metaAttributes,
-                               EventStreamAttributeDto[] correlationAttributes,
-                               EventStreamAttributeDto[] payloadAttributes, String description,
-                               String nickname)
+    public void addEventStream(EventStreamDefinitionDto eventStreamDefinitionDto)
             throws RemoteException {
         try {
-            eventStreamAdminServiceStub.addEventStreamInfo(streamName, streamVersion, metaAttributes, correlationAttributes, payloadAttributes, description, nickname);
+            eventStreamAdminServiceStub.addEventStreamDefinitionAsDto(eventStreamDefinitionDto);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
             throw new RemoteException();
         }
     }
 
-    public void removeEventStream(String streamName, String streamVersion)
+    public void removeEventStream(String eventStreamName, String eventStreamVersion)
             throws RemoteException {
         try {
-            eventStreamAdminServiceStub.removeEventStreamInfo(streamName, streamVersion);
+            eventStreamAdminServiceStub.removeEventStreamDefinition(eventStreamName, eventStreamVersion);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
             throw new RemoteException();
