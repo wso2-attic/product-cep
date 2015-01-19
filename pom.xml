@@ -112,7 +112,7 @@
             <dependency>
                 <groupId>org.wso2.carbon</groupId>
                 <artifactId>org.wso2.carbon.ui</artifactId>
-                <version>${carbon.platform.version}</version>
+                <version>${carbon.kernel.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.eclipse.osgi</groupId>
@@ -211,7 +211,7 @@
             <dependency>
                 <groupId>org.wso2.carbon</groupId>
                 <artifactId>org.wso2.carbon.core</artifactId>
-                <version>${carbon.platform.version}</version>
+                <version>${carbon.kernel.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.axis2.wso2</groupId>
@@ -242,7 +242,7 @@
             <dependency>
                 <groupId>org.wso2.carbon</groupId>
                 <artifactId>org.wso2.carbon.registry.core</artifactId>
-                <version>${carbon.platform.version}</version>
+                <version>4.3.0</version>
             </dependency>
 
             <!--Dependency for Integration Tests-->
@@ -448,7 +448,7 @@
         <siddhi.version>3.0.0-SNAPSHOT</siddhi.version>
         <carbon.platform.version>4.3.0-SNAPSHOT</carbon.platform.version>
         <!--carbon.platform.version>${carbon.platform.version}</carbon.platform.version-->
-        <carbon.kernel.version>4.3.0-SNAPSHOT</carbon.kernel.version>
+        <carbon.kernel.version>4.3.0</carbon.kernel.version>
         <carbon.p2.plugin.version>1.5.3</carbon.p2.plugin.version>
         <!--todo 2.2.1-snapshot -->
         <stratos.version>2.2.1</stratos.version>
@@ -477,7 +477,7 @@
         <!--stratos.version>${stratos.version}</stratos.version-->
         <!--<appserver.version>5.2.0</appserver.version>-->
 
-        <test.framework.version>4.3.1-SNAPSHOT</test.framework.version>
+        <test.framework.version>4.3.1</test.framework.version>
         <test.framework.util.version>4.3.0-SNAPSHOT</test.framework.util.version>
         <operadriver.version>0.8.1</operadriver.version>
         <selenium.version>2.40.0</selenium.version>
