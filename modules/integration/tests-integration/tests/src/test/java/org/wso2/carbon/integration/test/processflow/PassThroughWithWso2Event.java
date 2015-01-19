@@ -25,6 +25,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.event.stream.manager.stub.types.EventStreamAttributeDto;
+import org.wso2.carbon.event.stream.manager.stub.types.EventStreamDefinitionDto;
 import org.wso2.carbon.integration.common.utils.LoginLogoutClient;
 import org.wso2.carbon.integration.test.client.StatPublisherAgent;
 import org.wso2.carbon.integration.test.client.TestAgentServer;
@@ -109,6 +110,7 @@ public class PassThroughWithWso2Event extends CEPIntegrationTest {
     private void addStreamDefinition(String streamName, String version, String description, String nickName, boolean isOutput) throws RemoteException {
         EventStreamAttributeDto[] metaData;
         EventStreamAttributeDto[] payloadData;
+        EventStreamDefinitionDto eventStreamDefinitionDto = new EventStreamDefinitionDto();
         final String metaPrefix = (isOutput) ? "meta_" : "";
 
         EventStreamAttributeDto requestUrl = ConfigurationUtil.createEventStreamAttributeDto(metaPrefix + "request_url", "string");
@@ -128,7 +130,15 @@ public class PassThroughWithWso2Event extends CEPIntegrationTest {
         EventStreamAttributeDto faultCount = ConfigurationUtil.createEventStreamAttributeDto("fault_count", "int");
         payloadData = new EventStreamAttributeDto[]{serviceName, operationName, timestamp, responseTime, requestCount, responseCount, faultCount};
 
-        eventStreamManagerAdminServiceClient.addEventStream(streamName, version, metaData, null, payloadData, description, nickName);
+        eventStreamDefinitionDto.setName(streamName);
+        eventStreamDefinitionDto.setVersion(version);
+        eventStreamDefinitionDto.setMetaData(metaData);
+        eventStreamDefinitionDto.setCorrelationData(null);
+        eventStreamDefinitionDto.setPayloadData(payloadData);
+        eventStreamDefinitionDto.setDescription(description);
+        eventStreamDefinitionDto.setNickName(nickName);
+
+        eventStreamManagerAdminServiceClient.addEventStream(eventStreamDefinitionDto);
     }
 
     @AfterClass(alwaysRun = true)

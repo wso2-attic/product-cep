@@ -37,6 +37,7 @@ import org.wso2.carbon.event.processor.stub.types.ExecutionPlanConfigurationDto;
 import org.wso2.carbon.event.processor.stub.types.SiddhiConfigurationDto;
 import org.wso2.carbon.event.processor.stub.types.StreamConfigurationDto;
 import org.wso2.carbon.event.stream.manager.stub.types.EventStreamAttributeDto;
+import org.wso2.carbon.event.stream.manager.stub.types.EventStreamDefinitionDto;
 import org.wso2.carbon.integration.test.client.PhoneRetailAgent;
 import org.wso2.carbon.integration.test.client.TestAgentServer;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
@@ -84,6 +85,9 @@ public class EventFlowTestCase extends CEPIntegrationTest {
     public void addEventBuilderTestScenario1() throws RemoteException, InterruptedException {
 
         log.info("=======================Adding a stream definition====================");
+
+        EventStreamDefinitionDto eventStreamDefinitionDto = new EventStreamDefinitionDto();
+
         int streamStartCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
 
         EventStreamAttributeDto metaEventStreamAttributeDto1 = new EventStreamAttributeDto();
@@ -102,7 +106,15 @@ public class EventFlowTestCase extends CEPIntegrationTest {
 
         EventStreamAttributeDto[] payloadEventStreamAttributeDtos = new EventStreamAttributeDto[]{payloadEventStreamAttributeDto1, payloadEventStreamAttributeDto2};
 
-        eventStreamManagerAdminServiceClient.addEventStream("analytics_Statistics", "1.3.0", metaEventStreamAttributeDtos, null, payloadEventStreamAttributeDtos, "", "");
+        eventStreamDefinitionDto.setName("analytics_Statistics");
+        eventStreamDefinitionDto.setVersion("1.3.0");
+        eventStreamDefinitionDto.setMetaData(metaEventStreamAttributeDtos);
+        eventStreamDefinitionDto.setCorrelationData(null);
+        eventStreamDefinitionDto.setPayloadData(payloadEventStreamAttributeDtos);
+        eventStreamDefinitionDto.setDescription("");
+        eventStreamDefinitionDto.setNickName("");
+
+        eventStreamManagerAdminServiceClient.addEventStream(eventStreamDefinitionDto);
 
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), streamStartCount + 1);
 
@@ -124,7 +136,15 @@ public class EventFlowTestCase extends CEPIntegrationTest {
 
         EventStreamAttributeDto[] payloadEventStreamAttributeDtos2 = new EventStreamAttributeDto[]{payloadEventStreamAttributeDto21, payloadEventStreamAttributeDto22};
 
-        eventStreamManagerAdminServiceClient.addEventStream("summarizedStatistics", "1.0.0", metaEventStreamAttributeDtos2, null, payloadEventStreamAttributeDtos2, "", "");
+        eventStreamDefinitionDto = new EventStreamDefinitionDto();
+        eventStreamDefinitionDto.setName("summarizedStatistics");
+        eventStreamDefinitionDto.setVersion("1.0.0");
+        eventStreamDefinitionDto.setMetaData(metaEventStreamAttributeDtos);
+        eventStreamDefinitionDto.setCorrelationData(null);
+        eventStreamDefinitionDto.setPayloadData(payloadEventStreamAttributeDtos);
+        eventStreamDefinitionDto.setDescription("");
+        eventStreamDefinitionDto.setNickName("");
+        eventStreamManagerAdminServiceClient.addEventStream(eventStreamDefinitionDto);
 
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), streamStartCount + 2);
 
@@ -178,6 +198,7 @@ public class EventFlowTestCase extends CEPIntegrationTest {
     public void addEventStreamTestScenario1() throws RemoteException, InterruptedException {
 
         int streamStartCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
+        EventStreamDefinitionDto eventStreamDefinitionDto = new EventStreamDefinitionDto();
 
         log.info("=======================Adding a stream definition====================");
 
@@ -197,7 +218,14 @@ public class EventFlowTestCase extends CEPIntegrationTest {
 
         EventStreamAttributeDto[] payloadEventStreamAttributeDtos2 = new EventStreamAttributeDto[]{payloadEventStreamAttributeDto21, payloadEventStreamAttributeDto22};
 
-        eventStreamManagerAdminServiceClient.addEventStream("statisticsStream", "1.0.0", metaEventStreamAttributeDtos2, null, payloadEventStreamAttributeDtos2, "", "");
+        eventStreamDefinitionDto.setName("statisticsStream");
+        eventStreamDefinitionDto.setVersion("1.0.0");
+        eventStreamDefinitionDto.setMetaData(metaEventStreamAttributeDtos2);
+        eventStreamDefinitionDto.setCorrelationData(null);
+        eventStreamDefinitionDto.setPayloadData(payloadEventStreamAttributeDtos2);
+        eventStreamDefinitionDto.setDescription("");
+        eventStreamDefinitionDto.setNickName("");
+        eventStreamManagerAdminServiceClient.addEventStream(eventStreamDefinitionDto);
 
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), streamStartCount + 1);
 
