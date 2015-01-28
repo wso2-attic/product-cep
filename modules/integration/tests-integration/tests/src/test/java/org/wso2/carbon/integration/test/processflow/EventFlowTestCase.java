@@ -139,9 +139,9 @@ public class EventFlowTestCase extends CEPIntegrationTest {
         eventStreamDefinitionDto = new EventStreamDefinitionDto();
         eventStreamDefinitionDto.setName("summarizedStatistics");
         eventStreamDefinitionDto.setVersion("1.0.0");
-        eventStreamDefinitionDto.setMetaData(metaEventStreamAttributeDtos);
+        eventStreamDefinitionDto.setMetaData(metaEventStreamAttributeDtos2);
         eventStreamDefinitionDto.setCorrelationData(null);
-        eventStreamDefinitionDto.setPayloadData(payloadEventStreamAttributeDtos);
+        eventStreamDefinitionDto.setPayloadData(payloadEventStreamAttributeDtos2);
         eventStreamDefinitionDto.setDescription("");
         eventStreamDefinitionDto.setNickName("");
         eventStreamManagerAdminServiceClient.addEventStream(eventStreamDefinitionDto);
