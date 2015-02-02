@@ -104,15 +104,15 @@
                                     org.jaggeryjs:org.jaggeryjs.feature:${jaggery.version}
                                 </featureArtifactDef>
 
-                                <featureArtifactDef>
-                                    org.jaggeryjs.modules:carbon.feature:${jaggery.modules.version}
-                                </featureArtifactDef>
-                                <featureArtifactDef>
-                                    org.jaggeryjs.modules:process.feature:${jaggery.modules.version}
-                                </featureArtifactDef>
-                                <featureArtifactDef>
-                                    org.jaggeryjs.modules:ws.feature:${jaggery.modules.version}
-                                </featureArtifactDef>
+                                <!--<featureArtifactDef>-->
+                                    <!--org.jaggeryjs.modules:carbon.feature:${jaggery.modules.version}-->
+                                <!--</featureArtifactDef>-->
+                                <!--<featureArtifactDef>-->
+                                    <!--org.jaggeryjs.modules:process.feature:${jaggery.modules.version}-->
+                                <!--</featureArtifactDef>-->
+                                <!--<featureArtifactDef>-->
+                                    <!--org.jaggeryjs.modules:ws.feature:${jaggery.modules.version}-->
+                                <!--</featureArtifactDef>-->
 
                                 <featureArtifactDef>
                                     org.wso2.carbon.deployment:org.wso2.carbon.webapp.mgt.server.feature:${carbon.deployment.version}
@@ -125,13 +125,6 @@
                                 </featureArtifactDef>
                                 <featureArtifactDef>
                                     org.wso2.carbon.deployment:org.wso2.carbon.as.runtimes.cxf.feature:${carbon.deployment.version}
-                                </featureArtifactDef>
-
-                                <featureArtifactDef>
-                                    org.wso2.carbon:org.wso2.carbon.logging.mgt.feature:${carbon.kernel.version}
-                                </featureArtifactDef>
-                                <featureArtifactDef>
-                                    org.wso2.carbon:org.wso2.carbon.ndatasource.feature:${carbon.kernel.version}
                                 </featureArtifactDef>
 
                                 <featureArtifactDef>
@@ -159,6 +152,15 @@
                                 <featureArtifactDef>
                                     org.wso2.carbon.commons:org.wso2.carbon.databridge.streamdefn.registry.server.feature:${carbon.commons.version}
                                 </featureArtifactDef>
+                                <featureArtifactDef>
+                                    org.wso2.carbon.commons:org.wso2.carbon.logging.mgt.feature:${carbon.commons.version}
+                                </featureArtifactDef>
+                                <featureArtifactDef>
+                                    org.wso2.carbon.commons:org.wso2.carbon.ndatasource.feature:${carbon.commons.version}
+                                </featureArtifactDef>
+                                <featureArtifactDef>
+                                    org.wso2.carbon.common:org.wso2.carbon.user.mgt.feature:${carbon.commons.version}
+                                </featureArtifactDef>
 
                                 <featureArtifactDef>
                                     org.wso2.carbon.identity:org.wso2.carbon.security.mgt.feature:${carbon.identity.version}
@@ -166,9 +168,6 @@
                                 <!--<featureArtifactDef>-->
                                 <!--org.wso2.carbon.identity:org.wso2.carbon.um.ws.service.server.feature:${carbon.identity.version}-->
                                 <!--</featureArtifactDef>-->
-                                <featureArtifactDef>
-                                    org.wso2.carbon.identity:org.wso2.carbon.user.mgt.feature:${carbon.identity.version}
-                                </featureArtifactDef>
                                 <featureArtifactDef>
                                     org.wso2.carbon.identity:org.wso2.carbon.identity.authenticator.saml2.sso.feature:${carbon.identity.version}
                                 </featureArtifactDef>
@@ -313,17 +312,8 @@
                                 </feature>
 
                                 <feature>
-                                    <id>org.wso2.carbon.logging.mgt.feature.group</id>
-                                    <version>${carbon.kernel.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.ndatasource.feature.group</id>
-                                    <version>${carbon.kernel.version}</version>
-                                </feature>
-
-                                <feature>
                                     <id>org.wso2.carbon.tenant.common.feature.group</id>
-                                    <version>${carbon.platform.version}</version>
+                                    <version>${carbon.multitenancy.version}</version>
                                 </feature>
 
                                 <feature>
@@ -354,6 +344,18 @@
                                     <id>org.wso2.carbon.databridge.streamdefn.registry.server.feature.group</id>
                                     <version>${carbon.commons.version}</version>
                                 </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.logging.mgt.feature.group</id>
+                                    <version>${carbon.commons.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.ndatasource.feature.group</id>
+                                    <version>${carbon.commons.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.user.mgt.feature.group</id>
+                                    <version>${carbon.commons.version}</version>
+                                </feature>
 
                                 <feature>
                                     <id>org.wso2.carbon.security.mgt.feature.group</id>
@@ -364,16 +366,12 @@
                                 <!--<version>${carbon.identity.version}</version>-->
                                 <!--</feature>-->
                                 <feature>
-                                    <id>org.wso2.carbon.user.mgt.feature.group</id>
-                                    <version>${carbon.identity.version}</version>
-                                </feature>
-                                <feature>
                                     <id>org.wso2.carbon.identity.authenticator.saml2.sso.feature.group</id>
                                     <version>${carbon.identity.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.identity.core.feature.group</id>
-                                    <version>${carbon.platform.version}</version>
+                                    <version>${carbon.identity.version}</version>
                                 </feature>
 
                                 <feature>
@@ -408,7 +406,7 @@
 
                                 <feature>
                                     <id>org.wso2.carbon.registry.extensions.server.feature.group</id>
-                                    <version>${carbon.platform.version}</version>
+                                    <version>${carbon.governance.version}</version>
                                 </feature>
 
                                 <!--cep-->
