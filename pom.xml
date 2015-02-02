@@ -289,6 +289,12 @@
                 <artifactId>org.wso2.carbon.databridge.receiver.thrift</artifactId>
                 <version>${carbon.commons.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.commons</groupId>
+                <artifactId>org.wso2.carbon.statistics.ui</artifactId>
+                <version>${carbon.commons.version}</version>
+            </dependency>
+
 
             <!--Third party-->
             <dependency>
