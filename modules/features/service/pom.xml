@@ -36,8 +36,7 @@
 
     <modules>
         <module>org.wso2.stratos.cep.styles.feature</module>
-        <!--todo add dashboard-->
-        <!--<module>org.wso2.stratos.cep.dashboard.ui.feature</module>-->
+        <module>org.wso2.stratos.cep.dashboard.ui.feature</module>
     </modules>
 
 </project>
