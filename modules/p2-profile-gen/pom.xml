@@ -106,8 +106,8 @@
                                 <!--<featureArtifactDef>-->
                                     <!--org.wso2.carbon:org.wso2.carbon.jaxws.webapp.mgt.feature:${carbon.platform.version}-->
                                 <!--</featureArtifactDef>-->
-				<featureArtifactDef>org.jaggeryjs:org.jaggeryjs.feature:${jaggery.feature.version}
-				</featureArtifactDef>
+				                <featureArtifactDef>org.jaggeryjs:org.jaggeryjs.feature:${jaggery.feature.version}
+				                </featureArtifactDef>
                                 <featureArtifactDef>
                                     org.wso2.carbon:org.wso2.carbon.webapp.mgt.server.feature:${carbon.platform.version}
                                 </featureArtifactDef>
@@ -421,7 +421,7 @@
                                 <!--featureArtifactDef>
                                     org.wso2.carbon:org.wso2.carbon.event.server.feature:${carbon.patchrelease.version.421}
                                 </featureArtifactDef-->
-				<featureArtifactDef>
+				                <featureArtifactDef>
                                     org.wso2.carbon:org.wso2.carbon.transport.commons.feature:${carbon.platform.version}
                                 </featureArtifactDef>
 
@@ -469,10 +469,10 @@
                                     <!--<id>org.wso2.carbon.jaxws.webapp.mgt.feature.group</id>-->
                                     <!--<version>${carbon.platform.version}</version>-->
                                 <!--</feature>-->
-				<feature>
-					<id>org.jaggeryjs.feature.group</id>
-					<version>${jaggery.feature.version}</version>
-				</feature>
+				                <feature>
+					                <id>org.jaggeryjs.feature.group</id>
+					                <version>${jaggery.feature.version}</version>
+				                </feature>
                                 <feature>
                                     <id>org.wso2.carbon.webapp.mgt.server.feature.group</id>
                                     <version>${carbon.platform.version}</version>
@@ -742,7 +742,7 @@
                                     <id>org.jaggeryjs.modules.process.feature.group</id>
                                     <version>${process.feature.version}</version>
                                 </feature>
-				<feature>
+				                <feature>
                                     <id>org.jaggeryjs.modules.ws.feature.group</id>
                                     <version>${ws.feature.version}</version>
                                 </feature>
@@ -890,7 +890,7 @@
                                     <id>org.wso2.carbon.as.runtimes.cxf.feature.group</id>
                                     <version>${carbon.platform.version}</version>
                                 </feature>
-				<feature>
+				                <feature>
                                     <id>
                                         org.wso2.carbon.transport.commons.feature.group
                                     </id>
@@ -937,7 +937,7 @@
         <carbon.feature.version>1.0.0</carbon.feature.version>
         <event.feature.version>1.0.0</event.feature.version>
         <uuid.feature.version>1.0.0</uuid.feature.version>
-	<ws.feature.version>1.0.0</ws.feature.version>
+	    <ws.feature.version>1.0.0</ws.feature.version>
         <login.feature.version>1.0.0</login.feature.version>
         <permission.feature.version>1.0.0</permission.feature.version>
         <registration.feature.version>1.0.0</registration.feature.version>

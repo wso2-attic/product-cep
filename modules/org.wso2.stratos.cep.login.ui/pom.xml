@@ -88,19 +88,13 @@
     <dependencies>
 
         <dependency>
-            <groupId>log4j</groupId>
+            <groupId>org.apache.log4j.wso2</groupId>
             <artifactId>log4j</artifactId>
         </dependency>
-        <!--<dependency>
-            <groupId>org.wso2.carbon</groupId>
-            <artifactId>org.wso2.carbon.registry.common.ui</artifactId>
-            <version>${registry-component.version}</version>
-        </dependency>-->
         <dependency>
             <groupId>org.wso2.carbon</groupId>
             <artifactId>org.wso2.carbon.registry.core</artifactId>
         </dependency>
-
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
@@ -121,12 +115,10 @@
         <dependency>
             <groupId>org.wso2.carbon</groupId>
             <artifactId>org.wso2.carbon.ui</artifactId>
-            <version>${carbon.kernel.version}</version>
         </dependency>
         <dependency>
             <groupId>org.wso2.carbon</groupId>
             <artifactId>org.wso2.carbon.core</artifactId>
-            <version>${carbon.kernel.version}</version>
         </dependency>
     </dependencies>
 </project>

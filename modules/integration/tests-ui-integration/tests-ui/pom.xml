@@ -10,7 +10,6 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.wso2.cep</groupId>
     <artifactId>org.wso2.cep.ui.integration.test</artifactId>
     <packaging>jar</packaging>
     <name>org.wso2.cep.ui.integration.test</name>
@@ -240,25 +239,24 @@
             <artifactId>org.wso2.carbon.automation.test.utils</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.wso2.carbon</groupId>
+            <groupId>org.wso2.carbon.automationutils</groupId>
             <artifactId>org.wso2.carbon.integration.common.admin.client</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.wso2.carbon</groupId>
+            <groupId>org.wso2.carbon.automationutils</groupId>
             <artifactId>org.wso2.carbon.integration.common.utils</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.wso2.carbon</groupId>
+            <groupId>org.wso2.carbon.automationutils</groupId>
             <artifactId>org.wso2.carbon.integration.common.extensions</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.wso2.carbon</groupId>
+            <groupId>org.wso2.carbon.automationutils</groupId>
             <artifactId>org.wso2.carbon.integration.common.tests</artifactId>
         </dependency>
         <dependency>
             <groupId>org.wso2.cep</groupId>
             <artifactId>org.wso2.cep.integration.common.clients</artifactId>
-            <version>${project.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.wso2.carbon</groupId>
@@ -270,7 +268,6 @@
         <dependency>
             <groupId>org.wso2.cep</groupId>
             <artifactId>org.wso2.cep.integration.common.utils</artifactId>
-            <version>${project.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.wso2.carbon</groupId>
@@ -281,28 +278,17 @@
         <dependency>
             <groupId>org.wso2.cep</groupId>
             <artifactId>ui-pages</artifactId>
-            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.seleniumhq.selenium</groupId>
-                    <artifactId>selenium-android-driver</artifactId>
-                </exclusion>
-            </exclusions>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.opera</groupId>
             <artifactId>operadriver</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.seleniumhq.selenium</groupId>
-                    <artifactId>selenium-remote-driver</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
+
     </dependencies>
 
     <properties>
