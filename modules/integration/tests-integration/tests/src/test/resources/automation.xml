@@ -216,7 +216,31 @@
                 <properties>
                 </properties>
             </instance>
+            <instance name="cep002" type="standalone" nonBlockingTransportEnabled="false">
+                <hosts>
+                    <host type="default">localhost</host><!--Your IP here-->
+                </hosts>
+                <ports>
+                    <port type="http">9764</port><!--Your HTTP port here-->
+                    <port type="https">9444</port><!--Your HTTPS port here-->
+                </ports>
+                <properties>
+                </properties>
+            </instance>
+            <instance name="cep003" type="standalone" nonBlockingTransportEnabled="false">
+                <hosts>
+                    <host type="default">localhost</host><!--Your IP here-->
+                </hosts>
+                <ports>
+                    <port type="http">9765</port><!--Your HTTP port here-->
+                    <port type="https">9445</port><!--Your HTTPS port here-->
+                </ports>
+                <properties>
+                </properties>
+            </instance>
         </productGroup>
+
+
     </platform>
 
     <listenerExtensions>

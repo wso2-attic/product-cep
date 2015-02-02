@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<executionPlan name="PreprocessStats" statistics="enable" trace="enable" xmlns="http://wso2.org/carbon/eventprocessor">
+  <description>Pre-processes analytics statistics for efficiency</description>
+  <siddhiConfiguration>
+    <property name="siddhi.enable.distributed.processing">Distributed</property>
+    <property name="siddhi.persistence.snapshot.time.interval.minutes">0</property>
+  </siddhiConfiguration>
+  <importedStreams>
+    <stream as="analyticsStats" name="analytics_Statistics" version="1.3.0"/>
+    <stream as="stockQuote" name="stock_quote" version="1.3.0"/>
+  </importedStreams>
+  <queryExpressions><![CDATA[
+from analyticsStats[searchTerms=="google" or searchTerms=="wso2" or searchTerms=="msft" or searchTerms=="oracle"]
+select userID, searchTerms as symbol
+insert into filteredStatStream;
+
+from stockQuote[price>100]
+select price, symbol
+insert into highStockQuote;
+
+from highStockQuote#window.time(5 min) as h join filteredStatStream#window.time(5 min) as f   
+on h.symbol==f.symbol
+select h.price as price, h.symbol as symbol, f.userID as userid
+insert into joinStream;
+
+from joinStream#window.time(5 min)
+select price, symbol, count(userid) as count
+insert into countedStream;
+
+from countedStream[count>10]   
+select price, symbol, count
+insert into fortuneCompanyStream;  
+        ]]></queryExpressions>
+  <exportedStreams>
+    <stream name="fortuneCompanyStream" valueOf="fortuneCompanyStream" version="1.0.0"/>
+  </exportedStreams>
+</executionPlan>
