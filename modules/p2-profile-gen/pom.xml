@@ -236,10 +236,10 @@
 
                                 <!-- cep ui features -->
                                 <featureArtifactDef>
-                                    org.wso2.cep:org.wso2.cep.styles.feature:${project.version}
+                                    org.wso2.cep:org.wso2.cep.styles.feature:${cep.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
-                                    org.wso2.cep:org.wso2.stratos.cep.dashboard.ui.feature:${project.version}
+                                    org.wso2.cep:org.wso2.stratos.cep.dashboard.ui.feature:${cep.version}
                                 </featureArtifactDef>
 
                             </featureArtifacts>
@@ -454,11 +454,11 @@
                                 <!-- cep ui features -->
                                 <feature>
                                     <id>org.wso2.cep.styles.feature.group</id>
-                                    <version>${project.version}</version>
+                                    <version>${cep.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.stratos.cep.dashboard.ui.feature.group</id>
-                                    <version>${project.version}</version>
+                                    <version>${cep.version}</version>
                                 </feature>
 
                             </features>
