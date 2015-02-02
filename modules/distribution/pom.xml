@@ -22,7 +22,7 @@
 
     <parent>
         <groupId>org.wso2.cep</groupId>
-        <artifactId>cep-parent</artifactId>
+        <artifactId>wso2cep-parent</artifactId>
         <version>4.0.0-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
@@ -38,7 +38,6 @@
         <dependency>
             <groupId>org.apache.rampart</groupId>
             <artifactId>rampart</artifactId>
-            <version>1.6.1-wso2v11</version>
             <type>mar</type>
         </dependency>
     </dependencies>

@@ -27,7 +27,6 @@
         <version>4.0.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>org.wso2.cep</groupId>
     <artifactId>twitter-feed-client</artifactId>
     <name>WSO2 CEP - Producer - Twitter Feed Client</name>
 
@@ -37,24 +36,20 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.wso2.carbon</groupId>
+            <groupId>org.wso2.carbon.commons</groupId>
             <artifactId>org.wso2.carbon.databridge.commons</artifactId>
-            <version>4.3.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>org.wso2.carbon</groupId>
+            <groupId>org.wso2.carbon.commons</groupId>
             <artifactId>org.wso2.carbon.databridge.commons.thrift</artifactId>
-            <version>4.3.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>org.wso2.carbon</groupId>
+            <groupId>org.wso2.carbon.commons</groupId>
             <artifactId>org.wso2.carbon.databridge.receiver.thrift</artifactId>
-            <version>4.3.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>org.wso2.carbon</groupId>
+            <groupId>org.wso2.carbon.commons</groupId>
             <artifactId>org.wso2.carbon.databridge.agent.thrift</artifactId>
-            <version>4.3.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

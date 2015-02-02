@@ -18,21 +18,20 @@
 
 package org.wso2.cep.integration.common.ui.page;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.wso2.cep.integration.common.ui.page.main.HomePage;
 import org.wso2.cep.integration.common.ui.page.util.UIElementMapper;
-
+import org.apache.log4j.Logger;
 import java.io.IOException;
+import org.openqa.selenium.WebDriver;
 
 /**
  * login page class - contains methods to login to wso2 products.
  */
 public class LoginPage {
-    private static final Log log = LogFactory.getLog(LoginPage.class);
+    private static final Logger log = Logger.getLogger(LoginPage.class);
     private WebDriver driver;
     private boolean isCloudEnvironment = false;
 

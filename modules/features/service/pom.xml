@@ -23,7 +23,7 @@
 
     <parent>
         <groupId>org.wso2.cep</groupId>
-    	<artifactId>cep-features-parent</artifactId>
+    	<artifactId>wso2cep-features-parent</artifactId>
         <version>4.0.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -33,16 +33,6 @@
     <packaging>pom</packaging>
     <name>WSO2 Stratos CEP - Features </name>
     <description>Features specific to the WSO2 CEP</description>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.wso2.cep</groupId>
-                <artifactId>org.wso2.stratos.cep.styles</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <modules>
         <module>org.wso2.stratos.cep.styles.feature</module>
