@@ -18,8 +18,7 @@
 
 package org.wso2.cep.integration.common.ui.page.main;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -38,7 +37,7 @@ import java.util.List;
 public class HomePage {
 
 
-    private static final Log log = LogFactory.getLog(HomePage.class);
+    private static final Logger log = Logger.getLogger(HomePage.class);
     private WebDriver driver;
     private boolean isCloudEnvironment = false;
     private boolean isTenant = false;
