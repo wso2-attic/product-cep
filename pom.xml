@@ -1,5 +1,5 @@
 <!--
-~ Copyright (c) 2005-2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+~ Copyright (c) 2005-2014, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
 ~
 ~ WSO2 Inc. licenses this file to you under the Apache License,
 ~ Version 2.0 (the "License"); you may not use this file except
@@ -27,7 +27,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.wso2.cep</groupId>
-    <artifactId>cep-parent</artifactId>
+    <artifactId>wso2cep-parent</artifactId>
     <packaging>pom</packaging>
     <version>4.0.0-SNAPSHOT</version>
     <name>WSO2 CEP - Parent</name>
@@ -47,7 +47,8 @@
         <module>modules/features</module>
         <module>modules/p2-profile-gen</module>
         <module>modules/distribution</module>
-        <!--<module>modules/org.wso2.stratos.cep.dashboard.ui</module>-->
+        <module>modules/org.wso2.stratos.cep.login.ui</module>
+        <module>modules/org.wso2.stratos.cep.dashboard.ui</module>
         <module>modules/integration</module>
     </modules>
 
@@ -107,42 +108,42 @@
             <dependency>
                 <groupId>org.wso2.carbon.event-processing</groupId>
                 <artifactId>org.wso2.carbon.event.input.adaptor.manager.stub</artifactId>
-                <version>${event.processing.version}</version>
+                <version>${carbon.event-processing.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.wso2.carbon.event-processing</groupId>
                 <artifactId>org.wso2.carbon.event.output.adaptor.manager.stub</artifactId>
-                <version>${event.processing.version}</version>
+                <version>${carbon.event-processing.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.wso2.carbon.event-processing</groupId>
                 <artifactId>org.wso2.carbon.event.builder.stub</artifactId>
-                <version>${event.processing.version}</version>
+                <version>${carbon.event-processing.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.wso2.carbon.event-processing</groupId>
                 <artifactId>org.wso2.carbon.event.formatter.stub</artifactId>
-                <version>${event.processing.version}</version>
+                <version>${carbon.event-processing.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.wso2.carbon.event-processing</groupId>
                 <artifactId>org.wso2.carbon.event.processor.stub</artifactId>
-                <version>${event.processing.version}</version>
+                <version>${carbon.event-processing.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.wso2.carbon.event-processing</groupId>
                 <artifactId>org.wso2.carbon.event.tracer.stub</artifactId>
-                <version>${event.processing.version}</version>
+                <version>${carbon.event-processing.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.wso2.carbon.event-processing</groupId>
                 <artifactId>org.wso2.carbon.event.statistics.stub</artifactId>
-                <version>${event.processing.version}</version>
+                <version>${carbon.event-processing.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.wso2.carbon.event-processing</groupId>
                 <artifactId>org.wso2.carbon.event.stream.manager.stub</artifactId>
-                <version>${event.processing.version}</version>
+                <version>${carbon.event-processing.version}</version>
             </dependency>
 
             <!--Carbon kernel-->
@@ -599,9 +600,20 @@
 
     <properties>
         <!--CEP versions-->
+        <jaggery.version>0.9.0-Alpha6</jaggery.version>
+        <jaggery.modules.version>0.9.0-Alpha6</jaggery.modules.version>
+        <carbon.deployment.version>4.3.0</carbon.deployment.version>
+        <carbon.commons.version>4.3.2</carbon.commons.version>
+        <carbon.identity.version>4.3.1</carbon.identity.version>
+        <carbon.registry.version>4.3.0</carbon.registry.version>
+        <carbon.storagemgt.version>4.3.0</carbon.storagemgt.version>
+        <carbon.multitenancy.version>4.3.0</carbon.multitenancy.version>
+        <carbon.governance.version>4.3.0</carbon.governance.version>
+        
         <siddhi.version>3.0.0-SNAPSHOT</siddhi.version>
         <cep.version>4.0.0-SNAPSHOT</cep.version>
-        <event.processing.version>2.0.1</event.processing.version>
+        <carbon.event-processing.version>2.0.1</carbon.event-processing.version>
+
         <!-- Carbon kernel version-->
         <carbon.kernel.version>4.3.0</carbon.kernel.version>
         <carbon.kernel.imp.pkg.version>[4.3.0, 4.4.0)</carbon.kernel.imp.pkg.version>
@@ -609,7 +621,6 @@
         <carbon.p2.plugin.version>1.5.3</carbon.p2.plugin.version>
 
         <!--WSO2 versions-->
-        <carbon.commons.version>4.3.1</carbon.commons.version>
         <rampart.wso2.version>1.6.1.wso2v13</rampart.wso2.version>
         <bcel.version>5.2.0.wso2v1</bcel.version>
         <asm.version>3.1.wso2v1</asm.version>
