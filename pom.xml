@@ -285,11 +285,6 @@
                 <version>${activemq.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.apache.ws.commons.axiom</groupId>
-                <artifactId>axiom-api</artifactId>
-                <version>${apache.axiom.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>emma</groupId>
                 <artifactId>emma</artifactId>
                 <version>${emma.version}</version>
@@ -558,7 +553,6 @@
         <activemq.version>5.7.0</activemq.version>
         <geronimo.j2ee.version>1.0.1</geronimo.j2ee.version>
         <geronimo.jms.version>1.1.1</geronimo.jms.version>
-        <apache.axiom.version>1.2.14</apache.axiom.version>
         <paho.mqtt.version>0.4.0</paho.mqtt.version>
         <apache.kafka.version>0.8.1</apache.kafka.version>
         <javax.servlet.api.version>2.5</javax.servlet.api.version>
