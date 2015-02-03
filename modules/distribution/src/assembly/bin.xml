@@ -17,6 +17,7 @@
 ~ under the License.
 -->
 <assembly>
+    <id>wso2cep-bin</id>
     <formats>
         <format>zip</format>
     </formats>
@@ -460,43 +461,43 @@
             <fileMode>644</fileMode>
         </file>
 
-        <!-- default input/output adaptor configurations -->
-        <file>
-            <source>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/cep/default-artifacts/inputeventadaptors/DefaultWSO2EventInputAdaptor.xml</source>
-            <outputDirectory>
-                ${pom.artifactId}-${pom.version}/repository/deployment/server/inputeventadaptors/
-            </outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
+        <!--&lt;!&ndash; default input/output adaptor configurations &ndash;&gt;-->
+        <!--<file>-->
+            <!--<source>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/cep/default-artifacts/inputeventadaptors/DefaultWSO2EventInputAdaptor.xml</source>-->
+            <!--<outputDirectory>-->
+                <!--${pom.artifactId}-${pom.version}/repository/deployment/server/inputeventadaptors/-->
+            <!--</outputDirectory>-->
+            <!--<filtered>true</filtered>-->
+            <!--<fileMode>644</fileMode>-->
+        <!--</file>-->
 
 
-        <file>
-            <source>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/cep/default-artifacts/outputeventadaptors/DefaultLoggerOutputAdaptor.xml</source>
-            <outputDirectory>
-                ${pom.artifactId}-${pom.version}/repository/deployment/server/outputeventadaptors/
-            </outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
+        <!--<file>-->
+            <!--<source>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/cep/default-artifacts/outputeventadaptors/DefaultLoggerOutputAdaptor.xml</source>-->
+            <!--<outputDirectory>-->
+                <!--${pom.artifactId}-${pom.version}/repository/deployment/server/outputeventadaptors/-->
+            <!--</outputDirectory>-->
+            <!--<filtered>true</filtered>-->
+            <!--<fileMode>644</fileMode>-->
+        <!--</file>-->
 
-        <file>
-            <source>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/cep/default-artifacts/inputeventadaptors/DefaultWSO2EventInputAdaptor.xml</source>
-            <outputDirectory>
-                ${pom.artifactId}-${pom.version}/repository/conf/cep/default-artifacts/inputeventadaptors/
-            </outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
+        <!--<file>-->
+            <!--<source>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/cep/default-artifacts/inputeventadaptors/DefaultWSO2EventInputAdaptor.xml</source>-->
+            <!--<outputDirectory>-->
+                <!--${pom.artifactId}-${pom.version}/repository/conf/cep/default-artifacts/inputeventadaptors/-->
+            <!--</outputDirectory>-->
+            <!--<filtered>true</filtered>-->
+            <!--<fileMode>644</fileMode>-->
+        <!--</file>-->
 
-        <file>
-            <source>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/cep/default-artifacts/outputeventadaptors/DefaultLoggerOutputAdaptor.xml</source>
-            <outputDirectory>
-                ${pom.artifactId}-${pom.version}/repository/conf/cep/default-artifacts/outputeventadaptors/
-            </outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
+        <!--<file>-->
+            <!--<source>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/cep/default-artifacts/outputeventadaptors/DefaultLoggerOutputAdaptor.xml</source>-->
+            <!--<outputDirectory>-->
+                <!--${pom.artifactId}-${pom.version}/repository/conf/cep/default-artifacts/outputeventadaptors/-->
+            <!--</outputDirectory>-->
+            <!--<filtered>true</filtered>-->
+            <!--<fileMode>644</fileMode>-->
+        <!--</file>-->
 
         <!--data bridge web app-->
         <!--restapi is deprecated-->
@@ -511,18 +512,18 @@
         </file>-->
 
         <!--Storm Config File -->
-        <file>
-            <source>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/cep/storm/storm-deployment-config.xml</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/cep/storm/
-            </outputDirectory>
-            <filtered>true</filtered>
-        </file>
-        <file>
-            <source>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/cep/storm/storm.yaml</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/cep/storm/
-            </outputDirectory>
-            <filtered>true</filtered>
-        </file>
+        <!--<file>-->
+            <!--<source>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/cep/storm/storm-deployment-config.xml</source>-->
+            <!--<outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/cep/storm/-->
+            <!--</outputDirectory>-->
+            <!--<filtered>true</filtered>-->
+        <!--</file>-->
+        <!--<file>-->
+            <!--<source>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/cep/storm/storm.yaml</source>-->
+            <!--<outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/cep/storm/-->
+            <!--</outputDirectory>-->
+            <!--<filtered>true</filtered>-->
+        <!--</file>-->
 
         <!--Siddhi conf-->
         <file>
@@ -542,13 +543,13 @@
             <fileMode>644</fileMode>
         </file>
 
-        <!--CEP HA conf-->
-        <file>
-            <source>repository/conf/cep-ha-management.xml</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/
-            </outputDirectory>
-            <filtered>true</filtered>
-        </file>
+        <!--&lt;!&ndash;CEP HA conf&ndash;&gt;-->
+        <!--<file>-->
+            <!--<source>repository/conf/cep-ha-management.xml</source>-->
+            <!--<outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/-->
+            <!--</outputDirectory>-->
+            <!--<filtered>true</filtered>-->
+        <!--</file>-->
 
         <!-- copying event broker config file -->
         <!--file>

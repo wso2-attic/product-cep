@@ -369,10 +369,10 @@
                                     <id>org.wso2.carbon.identity.authenticator.saml2.sso.feature.group</id>
                                     <version>${carbon.identity.version}</version>
                                 </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.identity.core.feature.group</id>
-                                    <version>${carbon.identity.version}</version>
-                                </feature>
+                                <!--<feature>-->
+                                    <!--<id>org.wso2.carbon.identity.core.feature.group</id>-->
+                                    <!--<version>${carbon.identity.version}</version>-->
+                                <!--</feature>-->
 
                                 <feature>
                                     <id>org.wso2.carbon.registry.core.feature.group</id>
