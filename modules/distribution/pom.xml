@@ -126,7 +126,7 @@
                         </goals>
                         <configuration>
                             <target>
-                                <property name="shindig.version" value="2.5.0-beta5"/>
+                                <!--<property name="shindig.version" value="2.5.0-beta5"/>-->
                                 <property name="tempdir" value="target/docs-temp"/>
                                 <property name="jardir" value="target/jardir"/>
                                 <mkdir dir="${tempdir}"/>
@@ -197,22 +197,22 @@
                                 <delete dir="src/site"/>
 
                                 <!--testing -->
-                                <unzip src="target/shindig/WEB-INF/lib/shindig-common-${shindig.version}.jar"
-                                       dest="${jardir}/shindig-common-${shindig.version}">
-                                    <patternset>
-                                        <exclude name="**/shindig.properties"/>
-                                    </patternset>
-                                </unzip>
-                                <copy file="repository/conf/ues/shindig.properties"
-                                      todir="${jardir}/shindig-common-${shindig.version}"/>
-                                <delete file="target/shindig/WEB-INF/lib/shindig-common-${shindig.version}.jar"></delete>
-                                <zip destfile="target/shindig/WEB-INF/lib/shindig-common-${shindig.version}.jar"
-                                     basedir="${jardir}/shindig-common-${shindig.version}"/>
-                                <delete>
-                                    <fileset dir="target/shindig/WEB-INF/lib" includes="slf4j*"/>
-                                </delete>
-                                <copy file="repository/resources/shindig/index.jsp"
-                                      todir="target/shindig"/>
+                                <!--<unzip src="target/shindig/WEB-INF/lib/shindig-common-${shindig.version}.jar"-->
+                                       <!--dest="${jardir}/shindig-common-${shindig.version}">-->
+                                    <!--<patternset>-->
+                                        <!--<exclude name="**/shindig.properties"/>-->
+                                    <!--</patternset>-->
+                                <!--</unzip>-->
+                                <!--<copy file="repository/conf/ues/shindig.properties"-->
+                                      <!--todir="${jardir}/shindig-common-${shindig.version}"/>-->
+                                <!--<delete file="target/shindig/WEB-INF/lib/shindig-common-${shindig.version}.jar"></delete>-->
+                                <!--<zip destfile="target/shindig/WEB-INF/lib/shindig-common-${shindig.version}.jar"-->
+                                     <!--basedir="${jardir}/shindig-common-${shindig.version}"/>-->
+                                <!--<delete>-->
+                                    <!--<fileset dir="target/shindig/WEB-INF/lib" includes="slf4j*"/>-->
+                                <!--</delete>-->
+                                <!--<copy file="repository/resources/shindig/index.jsp"-->
+                                      <!--todir="target/shindig"/>-->
 
                                 <!--<zip destfile="target/ROOT.war"
                                      basedir="target/shindig"  />-->
