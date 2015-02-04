@@ -185,18 +185,18 @@
                                     org.wso2.carbon.registry:org.wso2.carbon.registry.resource.properties.feature:${carbon.registry.version}
                                 </featureArtifactDef>
 
-                                <featureArtifactDef>
-                                    org.wso2.carbon.storagemgt:org.wso2.carbon.cassandra.server.feature:${carbon.storagemgt.version}
-                                </featureArtifactDef>
-                                <featureArtifactDef>
-                                    org.wso2.carbon.storagemgt:org.wso2.carbon.cassandra.mgt.feature:${carbon.storagemgt.version}
-                                </featureArtifactDef>
-                                <featureArtifactDef>
-                                    org.wso2.carbon.storagemgt:org.wso2.carbon.cassandra.dataaccess.feature:${carbon.storagemgt.version}
-                                </featureArtifactDef>
-                                <featureArtifactDef>
-                                    org.wso2.carbon.storagemgt:org.wso2.carbon.cassandra.common.feature:${carbon.storagemgt.version}
-                                </featureArtifactDef>
+                                <!--<featureArtifactDef>-->
+                                    <!--org.wso2.carbon.storagemgt:org.wso2.carbon.cassandra.server.feature:${carbon.storagemgt.version}-->
+                                <!--</featureArtifactDef>-->
+                                <!--<featureArtifactDef>-->
+                                    <!--org.wso2.carbon.storagemgt:org.wso2.carbon.cassandra.mgt.feature:${carbon.storagemgt.version}-->
+                                <!--</featureArtifactDef>-->
+                                <!--<featureArtifactDef>-->
+                                    <!--org.wso2.carbon.storagemgt:org.wso2.carbon.cassandra.dataaccess.feature:${carbon.storagemgt.version}-->
+                                <!--</featureArtifactDef>-->
+                                <!--<featureArtifactDef>-->
+                                    <!--org.wso2.carbon.storagemgt:org.wso2.carbon.cassandra.common.feature:${carbon.storagemgt.version}-->
+                                <!--</featureArtifactDef>-->
 
                                 <featureArtifactDef>
                                     org.wso2.carbon.governance:org.wso2.carbon.registry.extensions.server.feature:${carbon.governance.version}
@@ -387,22 +387,22 @@
                                     <version>${carbon.registry.version}</version>
                                 </feature>
 
-                                <feature>
-                                    <id>org.wso2.carbon.cassandra.server.feature.group</id>
-                                    <version>${carbon.storagemgt.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.cassandra.mgt.feature.group</id>
-                                    <version>${carbon.storagemgt.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.cassandra.dataaccess.feature.group</id>
-                                    <version>${carbon.storagemgt.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.cassandra.common.feature.group</id>
-                                    <version>${carbon.storagemgt.version}</version>
-                                </feature>
+                                <!--<feature>-->
+                                    <!--<id>org.wso2.carbon.cassandra.server.feature.group</id>-->
+                                    <!--<version>${carbon.storagemgt.version}</version>-->
+                                <!--</feature>-->
+                                <!--<feature>-->
+                                    <!--<id>org.wso2.carbon.cassandra.mgt.feature.group</id>-->
+                                    <!--<version>${carbon.storagemgt.version}</version>-->
+                                <!--</feature>-->
+                                <!--<feature>-->
+                                    <!--<id>org.wso2.carbon.cassandra.dataaccess.feature.group</id>-->
+                                    <!--<version>${carbon.storagemgt.version}</version>-->
+                                <!--</feature>-->
+                                <!--<feature>-->
+                                    <!--<id>org.wso2.carbon.cassandra.common.feature.group</id>-->
+                                    <!--<version>${carbon.storagemgt.version}</version>-->
+                                <!--</feature>-->
 
                                 <feature>
                                     <id>org.wso2.carbon.registry.extensions.server.feature.group</id>
