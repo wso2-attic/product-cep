@@ -527,7 +527,7 @@
     <properties>
         <!--CEP versions-->
         <jaggery.version>0.9.0</jaggery.version>
-        <jaggery.modules.version>0.9.0.ALPHA6</jaggery.modules.version>
+        <jaggery.modules.version>1.2.0</jaggery.modules.version>
         <carbon.deployment.version>4.3.1</carbon.deployment.version>
         <carbon.commons.version>4.3.4</carbon.commons.version>
         <carbon.identity.version>4.3.2</carbon.identity.version>
