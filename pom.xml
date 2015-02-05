@@ -484,6 +484,18 @@
                     <target>1.6</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <configuration>
+                    <preparationGoals>clean install</preparationGoals>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+            </plugin>
         </plugins>
     </build>
     <profiles>
@@ -535,7 +547,7 @@
         <!--<carbon.storagemgt.version>4.3.1-SNAPSHOT</carbon.storagemgt.version>-->
         <carbon.multitenancy.version>4.3.3</carbon.multitenancy.version>
         <carbon.governance.version>4.3.0</carbon.governance.version>
-        
+
         <!--<siddhi.version>3.</siddhi.version>-->
         <cep.version>4.0.0-SNAPSHOT</cep.version>
         <carbon.event-processing.version>2.0.2</carbon.event-processing.version>
@@ -570,6 +582,9 @@
         <paho.mqtt.version>0.4.0</paho.mqtt.version>
         <apache.kafka.version>0.8.1</apache.kafka.version>
         <javax.servlet.api.version>2.5</javax.servlet.api.version>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.scm.id>my-scm-server</project.scm.id>
     </properties>
 
     <mailingLists>
