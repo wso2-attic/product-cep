@@ -15,9 +15,7 @@
 ~ specific language governing permissions and limitations
 ~ under the License.
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <parent>
         <groupId>org.wso2</groupId>
@@ -29,7 +27,7 @@
     <groupId>org.wso2.cep</groupId>
     <artifactId>wso2cep-parent</artifactId>
     <packaging>pom</packaging>
-    <version>4.0.0-SNAPSHOT</version>
+    <version>4.0.0-M0</version>
     <name>WSO2 CEP - Parent</name>
     <url>http://wso2.org/projects/cep/java</url>
     <description>WSO2 Complex Event Processor</description>
@@ -438,7 +436,7 @@
         <url>https://github.com/wso2/product-cep.git</url>
         <developerConnection>scm:git:https://github.com/wso2/product-cep.git</developerConnection>
         <connection>scm:git:https://github.com/wso2/product-cep.git</connection>
-        <tag>HEAD</tag>
+        <tag>wso2cep-4.0.0-M0</tag>
     </scm>
     <!--build>
         <plugins>
@@ -549,7 +547,7 @@
         <carbon.governance.version>4.3.0</carbon.governance.version>
 
         <!--<siddhi.version>3.</siddhi.version>-->
-        <cep.version>4.0.0-SNAPSHOT</cep.version>
+        <cep.version>4.0.0-M0</cep.version>
         <carbon.event-processing.version>2.0.2</carbon.event-processing.version>
 
         <!-- Carbon kernel version-->

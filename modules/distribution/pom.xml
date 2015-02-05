@@ -16,14 +16,12 @@
 ~ specific language governing permissions and limitations
 ~ under the License.
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <parent>
         <groupId>org.wso2.cep</groupId>
         <artifactId>wso2cep-parent</artifactId>
-        <version>4.0.0-SNAPSHOT</version>
+        <version>4.0.0-M0</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
 
@@ -126,132 +124,115 @@
                         </goals>
                         <configuration>
                             <target>
-                                <!--<property name="shindig.version" value="2.5.0-beta5"/>-->
-                                <property name="tempdir" value="target/docs-temp"/>
-                                <property name="jardir" value="target/jardir"/>
-                                <mkdir dir="${tempdir}"/>
+                                <!--<property name="shindig.version" value="2.5.0-beta5" />-->
+                                <property name="tempdir" value="target/docs-temp" />
+                                <property name="jardir" value="target/jardir" />
+                                <mkdir dir="${tempdir}" />
                                 <unzip dest="${tempdir}">
                                     <fileset dir="target">
-                                        <include name="${project.artifactId}-${project.version}.zip"/>
+                                        <include name="${project.artifactId}-${project.version}.zip" />
                                     </fileset>
                                 </unzip>
-                                <copy todir="target/wso2carbon-core-${carbon.kernel.version}/repository/components"
-                                      overwrite="true">
-                                    <fileset
-                                            dir="${tempdir}/${project.artifactId}-${project.version}/repository/components">
+                                <copy todir="target/wso2carbon-core-${carbon.kernel.version}/repository/components" overwrite="true">
+                                    <fileset dir="${tempdir}/${project.artifactId}-${project.version}/repository/components">
                                     </fileset>
                                 </copy>
-                                <delete file="target/${project.artifactId}-${project.version}.zip"/>
-                                <delete dir="${tempdir}"/>
-                                <mkdir dir="${tempdir}"/>
+                                <delete file="target/${project.artifactId}-${project.version}.zip" />
+                                <delete dir="${tempdir}" />
+                                <mkdir dir="${tempdir}" />
                                 <unzip dest="${tempdir}">
-                                    <fileset
-                                            dir="target/wso2carbon-core-${carbon.kernel.version}/repository/components/plugins/">
-                                        <include name="*.ui*.jar"/>
+                                    <fileset dir="target/wso2carbon-core-${carbon.kernel.version}/repository/components/plugins/">
+                                        <include name="*.ui*.jar" />
                                     </fileset>
                                 </unzip>
                                 <move todir="${tempdir}/web/" includeemptydirs="false">
                                     <fileset dir="${tempdir}/web/">
-                                        <exclude name="**/yui/**"/>
-                                        <exclude name="**/ajax/**"/>
-                                        <exclude name="**/editarea/**"/>
-                                        <exclude name="**/codepress/**"/>
-                                        <exclude name="**/WEB-INF/**"/>
-                                        <include name="**/*.html"/>
+                                        <exclude name="**/yui/**" />
+                                        <exclude name="**/ajax/**" />
+                                        <exclude name="**/editarea/**" />
+                                        <exclude name="**/codepress/**" />
+                                        <exclude name="**/WEB-INF/**" />
+                                        <include name="**/*.html" />
                                     </fileset>
-                                    <mapper type="glob" from="*.html" to="*.xml"/>
+                                    <mapper type="glob" from="*.html" to="*.xml" />
                                 </move>
-                                <mkdir dir="src/site/xdoc"/>
-                                <copy todir="src/site/xdoc" overwrite="false"
-                                      includeemptydirs="false">
+                                <mkdir dir="src/site/xdoc" />
+                                <copy todir="src/site/xdoc" overwrite="false" includeemptydirs="false">
                                     <fileset dir="${tempdir}/web">
-                                        <exclude name="**/yui/**"/>
-                                        <exclude name="**/ajax/**"/>
-                                        <exclude name="**/WEB-INF/**"/>
-                                        <exclude name="**/*.html"/>
-                                        <exclude name="**/*.js"/>
-                                        <exclude name="**/*.jsp"/>
-                                        <exclude name="**/*.xsl"/>
-                                        <exclude name="*.*"/>
+                                        <exclude name="**/yui/**" />
+                                        <exclude name="**/ajax/**" />
+                                        <exclude name="**/WEB-INF/**" />
+                                        <exclude name="**/*.html" />
+                                        <exclude name="**/*.js" />
+                                        <exclude name="**/*.jsp" />
+                                        <exclude name="**/*.xsl" />
+                                        <exclude name="*.*" />
                                     </fileset>
                                 </copy>
                                 <copy todir="src/site" overwrite="false" includeemptydirs="false">
                                     <fileset dir="../../docs">
-                                        <exclude name="**/images/**/*.*"/>
+                                        <exclude name="**/images/**/*.*" />
                                     </fileset>
                                     <filterset>
-                                        <filter token="buildNumber" value="${buildNumber}"/>
+                                        <filter token="buildNumber" value="${buildNumber}" />
                                     </filterset>
                                 </copy>
                                 <copy todir="src/site" overwrite="false" includeemptydirs="false">
                                     <fileset dir="../../docs">
-                                        <include name="**/images/**/*.*"/>
+                                        <include name="**/images/**/*.*" />
                                     </fileset>
                                 </copy>
-                                <copy todir="target/site/" overwrite="false"
-                                      includeemptydirs="false">
+                                <copy todir="target/site/" overwrite="false" includeemptydirs="false">
                                     <fileset dir="src/site/xdoc/">
-                                        <include name="**/images/**/*.*"/>
+                                        <include name="**/images/**/*.*" />
                                     </fileset>
                                 </copy>
-                                <delete dir="src/site"/>
+                                <delete dir="src/site" />
 
                                 <!--testing -->
                                 <!--<unzip src="target/shindig/WEB-INF/lib/shindig-common-${shindig.version}.jar"-->
                                        <!--dest="${jardir}/shindig-common-${shindig.version}">-->
                                     <!--<patternset>-->
-                                        <!--<exclude name="**/shindig.properties"/>-->
+                                        <!--<exclude name="**/shindig.properties" />-->
                                     <!--</patternset>-->
                                 <!--</unzip>-->
                                 <!--<copy file="repository/conf/ues/shindig.properties"-->
-                                      <!--todir="${jardir}/shindig-common-${shindig.version}"/>-->
+                                      <!--todir="${jardir}/shindig-common-${shindig.version}" />-->
                                 <!--<delete file="target/shindig/WEB-INF/lib/shindig-common-${shindig.version}.jar"></delete>-->
                                 <!--<zip destfile="target/shindig/WEB-INF/lib/shindig-common-${shindig.version}.jar"-->
-                                     <!--basedir="${jardir}/shindig-common-${shindig.version}"/>-->
+                                     <!--basedir="${jardir}/shindig-common-${shindig.version}" />-->
                                 <!--<delete>-->
-                                    <!--<fileset dir="target/shindig/WEB-INF/lib" includes="slf4j*"/>-->
+                                    <!--<fileset dir="target/shindig/WEB-INF/lib" includes="slf4j*" />-->
                                 <!--</delete>-->
                                 <!--<copy file="repository/resources/shindig/index.jsp"-->
-                                      <!--todir="target/shindig"/>-->
+                                      <!--todir="target/shindig" />-->
 
-                                <!--<zip destfile="target/ROOT.war"
-                                     basedir="target/shindig"  />-->
+                                <!--<zip destfile="target/ROOT.war" basedir="target/shindig"   />-->
 
 
                                 <!-- Sign all the jars in the distribution -->
-                                <taskdef resource="net/sf/antcontrib/antcontrib.properties"
-                                         classpathref="maven.plugin.classpath"/>
+                                <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="maven.plugin.classpath" />
                                 <if>
-                                    <equals arg1="${profile}" arg2="signJar"/>
+                                    <equals arg1="${profile}" arg2="signJar" />
                                     <then>
-                                        <signjar alias="wso2carbon"
-                                                 keystore="target/wso2carbon-core-${carbon.kernel.version}/repository/resources/security/wso2carbon.jks"
-                                                 storepass="wso2carbon" lazy="true">
-                                            <fileset
-                                                    dir="target/wso2carbon-core-${carbon.kernel.version}/repository/components/plugins"
-                                                    includes="**/*.jar"/>
-                                            <fileset
-                                                    dir="target/wso2carbon-core-${carbon.kernel.version}/lib"
-                                                    includes="**/*.jar"/>
+                                        <signjar alias="wso2carbon" keystore="target/wso2carbon-core-${carbon.kernel.version}/repository/resources/security/wso2carbon.jks" storepass="wso2carbon" lazy="true">
+                                            <fileset dir="target/wso2carbon-core-${carbon.kernel.version}/repository/components/plugins" includes="**/*.jar" />
+                                            <fileset dir="target/wso2carbon-core-${carbon.kernel.version}/lib" includes="**/*.jar" />
                                             <!--fileset
                                                     dir="target/wso2carbon-core-${carbon.kernel.version}/lib/api"
                                                     includes="**/*.jar"/-->
-                                            <fileset
-                                                    dir="target/wso2carbon-core-${carbon.kernel.version}/bin"
-                                                    includes="**/*.jar"/>
+                                            <fileset dir="target/wso2carbon-core-${carbon.kernel.version}/bin" includes="**/*.jar" />
                                             <!--fileset
                                                     dir="target/wso2carbon-core-${carbon.kernel.version}/lib/xboot"
                                                     includes="**/*.jar"/-->
-                                            <fileset
-                                                    dir="target/wso2carbon-core-${carbon.kernel.version}/lib/endorsed"
-                                                    includes="**/*.jar"/>
+                                            <fileset dir="target/wso2carbon-core-${carbon.kernel.version}/lib/endorsed" includes="**/*.jar" />
                                             <!--fileset
                                                     dir="target/wso2carbon-core-${carbon.kernel.version}/lib/core/WEB-INF/lib"
                                                     includes="**/*.jar"/-->
                                         </signjar>
                                     </then>
                                 </if>
-                                <delete dir="${tempdir}"/>
+                                <delete dir="${tempdir}" />
                             </target>
                         </configuration>
                     </execution>
@@ -260,15 +241,15 @@
                         <phase>install</phase>
                         <configuration>
                             <target>
-                                <delete dir="target/archive-tmp"/>
-                                <delete dir="target/dependency-maven-plugin-markers"/>
-                                <delete dir="target/maven-archiver"/>
-                                <delete dir="target/wso2carbon-core-${carbon.kernel.version}"/>
-                                <delete file="target/${project.artifactId}-${project.version}.jar"/>
-                                <delete dir="target/sources"/>
-                                <delete dir="target/antrun/"/>
-                                <delete dir="target/site"/>
-                                <delete dir="target/shindig"/>
+                                <delete dir="target/archive-tmp" />
+                                <delete dir="target/dependency-maven-plugin-markers" />
+                                <delete dir="target/maven-archiver" />
+                                <delete dir="target/wso2carbon-core-${carbon.kernel.version}" />
+                                <delete file="target/${project.artifactId}-${project.version}.jar" />
+                                <delete dir="target/sources" />
+                                <delete dir="target/antrun/" />
+                                <delete dir="target/site" />
+                                <delete dir="target/shindig" />
                             </target>
                         </configuration>
                         <goals>
