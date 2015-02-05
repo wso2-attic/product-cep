@@ -47,7 +47,7 @@
         <module>modules/distribution</module>
         <module>modules/org.wso2.stratos.cep.login.ui</module>
         <module>modules/org.wso2.stratos.cep.dashboard.ui</module>
-        <!--<module>modules/integration</module>-->
+        <module>modules/integration</module>
     </modules>
 
     <dependencyManagement>
