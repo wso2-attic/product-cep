@@ -202,6 +202,9 @@
                                 <featureArtifactDef>
                                     org.wso2.carbon.governance:org.wso2.carbon.registry.extensions.server.feature:${carbon.governance.version}
                                 </featureArtifactDef>
+                                <featureArtifactDef>
+                                    org.wso2.carbon.governance:org.wso2.carbon.governance.metadata.server.feature:${carbon.governance.version}
+                                </featureArtifactDef>
 
                                 <!--cep-->
                                 <featureArtifactDef>
@@ -416,7 +419,10 @@
                                     <id>org.wso2.carbon.registry.extensions.server.feature.group</id>
                                     <version>${carbon.governance.version}</version>
                                 </feature>
-
+                                <feature>
+                                    <id>org.wso2.carbon.governance.metadata.server.feature.group</id>
+                                    <version>${carbon.governance.version}</version>
+                                </feature>
                                 <!--cep-->
                                 <feature>
                                     <id>org.wso2.carbon.event.input.adaptor.feature.group</id>
