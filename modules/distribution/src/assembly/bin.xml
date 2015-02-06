@@ -47,9 +47,9 @@
                 <exclude>**/log4j.properties</exclude>
                 <exclude>**/bin/ciphertool.bat</exclude>
                 <exclude>**/conf/identity.xml</exclude>
-                <exclude>**/conf/registry.xml</exclude>
-		<exclude>**/conf/multitenancy/cloud-services-dec.xml</exclude>
-		<exclude>**/conf/datasources/master-datasources.xml</exclude>
+                <!--<exclude>**/conf/registry.xml</exclude>-->
+		<!--<exclude>**/conf/multitenancy/cloud-services-dec.xml</exclude>-->
+		<!--<exclude>**/conf/datasources/master-datasources.xml</exclude>-->
 
            </excludes>
         </fileSet>
@@ -232,9 +232,9 @@
             <includes>
                 <include>**/stratos.xml</include>
                 <include>**/multitenancy-packages.xml</include>
-		<include>**/usage-throttling-agent-config.xml</include>
-		<!-- cloud-services-desc.xml is copied from bin -->
-                <!--include>**/cloud-services-desc.xml</include-->
+                <include>**/usage-throttling-agent-config.xml</include>
+                <!-- cloud-services-desc.xml is copied from bin -->
+                <include>**/cloud-services-desc.xml</include>
             </includes>
         </fileSet>
 
@@ -649,45 +649,45 @@
 
         <!-- UES integration config files -->
 
-        <file>
-            <source>repository/conf/sso-idp-config.xml</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf</outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
+        <!--<file>-->
+            <!--<source>repository/conf/sso-idp-config.xml</source>-->
+            <!--<outputDirectory>${pom.artifactId}-${pom.version}/repository/conf</outputDirectory>-->
+            <!--<filtered>true</filtered>-->
+            <!--<fileMode>644</fileMode>-->
+        <!--</file>-->
 
-       <file>
-	    <source>repository/conf/security/application-authenticators.xml</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/security
-            </outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
+       <!--<file>-->
+	    <!--<source>repository/conf/security/application-authenticators.xml</source>-->
+            <!--<outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/security-->
+            <!--</outputDirectory>-->
+            <!--<filtered>true</filtered>-->
+            <!--<fileMode>644</fileMode>-->
+        <!--</file>-->
 
 	<!-- Copying registry.xml as indexing configuration is needed for UES -->
-        <file>
-	    <source>repository/conf/registry.xml</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf
-            </outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
+        <!--<file>-->
+	    <!--<source>repository/conf/registry.xml</source>-->
+            <!--<outputDirectory>${pom.artifactId}-${pom.version}/repository/conf-->
+            <!--</outputDirectory>-->
+            <!--<filtered>true</filtered>-->
+            <!--<fileMode>644</fileMode>-->
+        <!--</file>-->
 
-         <file>
-	    <source>repository/conf/datasources/master-datasources.xml</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/datasources
-            </outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-         </file>
- 
-	 <file>
-            <source>repository/conf/multitenancy/cloud-services-desc.xml</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/multitenancy
-            </outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-         </file>
+         <!--<file>-->
+	    <!--<source>repository/conf/datasources/master-datasources.xml</source>-->
+            <!--<outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/datasources-->
+            <!--</outputDirectory>-->
+            <!--<filtered>true</filtered>-->
+            <!--<fileMode>644</fileMode>-->
+         <!--</file>-->
+ <!---->
+	 <!--<file>-->
+            <!--<source>repository/conf/multitenancy/cloud-services-desc.xml</source>-->
+            <!--<outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/multitenancy-->
+            <!--</outputDirectory>-->
+            <!--<filtered>true</filtered>-->
+            <!--<fileMode>644</fileMode>-->
+         <!--</file>-->
 
 
         <!-- End UES integration config files -->
