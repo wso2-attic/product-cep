@@ -102,15 +102,15 @@
                                     org.jaggeryjs:org.jaggeryjs.feature:${jaggery.version}
                                 </featureArtifactDef>
 
-                                <!--<featureArtifactDef>-->
-                                    <!--org.jaggeryjs.modules:carbon.feature:${jaggery.modules.version}-->
-                                <!--</featureArtifactDef>-->
-                                <!--<featureArtifactDef>-->
-                                    <!--org.jaggeryjs.modules:process.feature:${jaggery.modules.version}-->
-                                <!--</featureArtifactDef>-->
-                                <!--<featureArtifactDef>-->
-                                    <!--org.jaggeryjs.modules:ws.feature:${jaggery.modules.version}-->
-                                <!--</featureArtifactDef>-->
+                                <featureArtifactDef>
+                                    org.jaggeryjs.modules:carbon.feature:${jaggery.modules.version}
+                                </featureArtifactDef>
+                                <featureArtifactDef>
+                                    org.jaggeryjs.modules:process.feature:${jaggery.modules.version}
+                                </featureArtifactDef>
+                                <featureArtifactDef>
+                                    org.jaggeryjs.modules:ws.feature:${jaggery.modules.version}
+                                </featureArtifactDef>
 
                                 <featureArtifactDef>
                                     org.wso2.carbon.deployment:org.wso2.carbon.webapp.mgt.server.feature:${carbon.deployment.version}
@@ -199,12 +199,12 @@
                                     <!--org.wso2.carbon.storagemgt:org.wso2.carbon.cassandra.common.feature:${carbon.storagemgt.version}-->
                                 <!--</featureArtifactDef>-->
 
-                                <featureArtifactDef>
-                                    org.wso2.carbon.governance:org.wso2.carbon.registry.extensions.server.feature:${carbon.governance.version}
-                                </featureArtifactDef>
-                                <featureArtifactDef>
-                                    org.wso2.carbon.governance:org.wso2.carbon.governance.metadata.server.feature:${carbon.governance.version}
-                                </featureArtifactDef>
+                                <!--<featureArtifactDef>-->
+                                    <!--org.wso2.carbon.governance:org.wso2.carbon.registry.extensions.server.feature:${carbon.governance.version}-->
+                                <!--</featureArtifactDef>-->
+                                <!--<featureArtifactDef>-->
+                                    <!--org.wso2.carbon.governance:org.wso2.carbon.governance.metadata.server.feature:${carbon.governance.version}-->
+                                <!--</featureArtifactDef>-->
 
                                 <!--cep-->
                                 <featureArtifactDef>
@@ -288,18 +288,18 @@
                                     <version>${jaggery.version}</version>
                                 </feature>
 
-                                <!--<feature>-->
-                                    <!--<id>org.jaggeryjs.modules.carbon.feature.group</id>-->
-                                    <!--<version>${jaggery.modules.version}</version>-->
-                                <!--</feature>-->
-                                <!--<feature>-->
-                                    <!--<id>org.jaggeryjs.modules.process.feature.group</id>-->
-                                    <!--<version>${jaggery.modules.version}</version>-->
-                                <!--</feature>-->
-                                <!--<feature>-->
-                                    <!--<id>org.jaggeryjs.modules.ws.feature.group</id>-->
-                                    <!--<version>${jaggery.modules.version}</version>-->
-                                <!--</feature>-->
+                                <feature>
+                                    <id>org.jaggeryjs.modules.carbon.feature.group</id>
+                                    <version>${jaggery.modules.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.jaggeryjs.modules.process.feature.group</id>
+                                    <version>${jaggery.modules.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.jaggeryjs.modules.ws.feature.group</id>
+                                    <version>${jaggery.modules.version}</version>
+                                </feature>
 
                                 <feature>
                                     <id>org.wso2.carbon.webapp.mgt.server.feature.group</id>
@@ -415,14 +415,14 @@
                                     <!--<version>${carbon.storagemgt.version}</version>-->
                                 <!--</feature>-->
 
-                                <feature>
-                                    <id>org.wso2.carbon.registry.extensions.server.feature.group</id>
-                                    <version>${carbon.governance.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.governance.metadata.server.feature.group</id>
-                                    <version>${carbon.governance.version}</version>
-                                </feature>
+                                <!--<feature>-->
+                                    <!--<id>org.wso2.carbon.registry.extensions.server.feature.group</id>-->
+                                    <!--<version>${carbon.governance.version}</version>-->
+                                <!--</feature>-->
+                                <!--<feature>-->
+                                    <!--<id>org.wso2.carbon.governance.metadata.server.feature.group</id>-->
+                                    <!--<version>${carbon.governance.version}</version>-->
+                                <!--</feature>-->
                                 <!--cep-->
                                 <feature>
                                     <id>org.wso2.carbon.event.input.adaptor.feature.group</id>

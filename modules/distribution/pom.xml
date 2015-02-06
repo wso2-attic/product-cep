@@ -84,14 +84,6 @@
                                     <overWrite>true</overWrite>
                                     <outputDirectory>target</outputDirectory>
                                 </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.apache.shindig</groupId>
-                                    <artifactId>shindig-server</artifactId>
-                                    <version>2.5.0-beta5</version>
-                                    <type>war</type>
-                                    <overWrite>true</overWrite>
-                                    <outputDirectory>target/shindig</outputDirectory>
-                                </artifactItem>
                             </artifactItems>
                         </configuration>
                     </execution>
@@ -124,7 +116,6 @@
                         </goals>
                         <configuration>
                             <target>
-                                <!--<property name="shindig.version" value="2.5.0-beta5" />-->
                                 <property name="tempdir" value="target/docs-temp" />
                                 <property name="jardir" value="target/jardir" />
                                 <mkdir dir="${tempdir}" />
@@ -189,27 +180,6 @@
                                 </copy>
                                 <delete dir="src/site" />
 
-                                <!--testing -->
-                                <!--<unzip src="target/shindig/WEB-INF/lib/shindig-common-${shindig.version}.jar"-->
-                                       <!--dest="${jardir}/shindig-common-${shindig.version}">-->
-                                    <!--<patternset>-->
-                                        <!--<exclude name="**/shindig.properties" />-->
-                                    <!--</patternset>-->
-                                <!--</unzip>-->
-                                <!--<copy file="repository/conf/ues/shindig.properties"-->
-                                      <!--todir="${jardir}/shindig-common-${shindig.version}" />-->
-                                <!--<delete file="target/shindig/WEB-INF/lib/shindig-common-${shindig.version}.jar"></delete>-->
-                                <!--<zip destfile="target/shindig/WEB-INF/lib/shindig-common-${shindig.version}.jar"-->
-                                     <!--basedir="${jardir}/shindig-common-${shindig.version}" />-->
-                                <!--<delete>-->
-                                    <!--<fileset dir="target/shindig/WEB-INF/lib" includes="slf4j*" />-->
-                                <!--</delete>-->
-                                <!--<copy file="repository/resources/shindig/index.jsp"-->
-                                      <!--todir="target/shindig" />-->
-
-                                <!--<zip destfile="target/ROOT.war" basedir="target/shindig" />-->
-
-
                                 <!-- Sign all the jars in the distribution -->
                                 <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="maven.plugin.classpath" />
                                 <if>
@@ -249,7 +219,6 @@
                                 <delete dir="target/sources" />
                                 <delete dir="target/antrun/" />
                                 <delete dir="target/site" />
-                                <delete dir="target/shindig" />
                             </target>
                         </configuration>
                         <goals>
@@ -301,24 +270,6 @@
         </plugins>
     </build>
 
-    <properties>
-    </properties>
-
-    <!--<reporting>-->
-    <!--<plugins>-->
-    <!--<plugin>-->
-    <!--<groupId>org.apache.maven.plugins</groupId>-->
-    <!--<artifactId>maven-project-info-reports-plugin</artifactId>-->
-    <!--<reportSets>-->
-    <!--<reportSet>-->
-    <!--<reports>-->
-    <!--<report>index</report>-->
-    <!--</reports>-->
-    <!--</reportSet>-->
-    <!--</reportSets>-->
-    <!--</plugin>-->
-    <!--</plugins>-->
-    <!--</reporting>-->
 </project>
 
 
