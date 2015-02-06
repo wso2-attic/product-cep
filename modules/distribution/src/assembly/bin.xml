@@ -17,6 +17,7 @@
 ~ under the License.
 -->
 <assembly>
+    <id>wso2cep-bin</id>
     <formats>
         <format>zip</format>
     </formats>
@@ -619,32 +620,32 @@
         </file>
 
 
-        <!--Cassandra configs-->
-        <file>
-            <source>repository/conf/cassandra/hector-config.xml</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/etc</outputDirectory>
-            <filtered>true</filtered>
-        </file>
-        <file>
-            <source>repository/conf/cassandra/cassandra.yaml</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/etc</outputDirectory>
-            <filtered>true</filtered>
-        </file>
-        <file>
-            <source>
-                repository/conf/etc/cassandra-topology.properties
-            </source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/etc</outputDirectory>
-            <filtered>true</filtered>
-        </file>
-        <file>
-             <source>
-                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/etc/cassandra-environments.xml
-            </source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/etc</outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
+        <!--&lt;!&ndash;Cassandra configs&ndash;&gt;-->
+        <!--<file>-->
+            <!--<source>repository/conf/cassandra/hector-config.xml</source>-->
+            <!--<outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/etc</outputDirectory>-->
+            <!--<filtered>true</filtered>-->
+        <!--</file>-->
+        <!--<file>-->
+            <!--<source>repository/conf/cassandra/cassandra.yaml</source>-->
+            <!--<outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/etc</outputDirectory>-->
+            <!--<filtered>true</filtered>-->
+        <!--</file>-->
+        <!--<file>-->
+            <!--<source>-->
+                <!--repository/conf/etc/cassandra-topology.properties-->
+            <!--</source>-->
+            <!--<outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/etc</outputDirectory>-->
+            <!--<filtered>true</filtered>-->
+        <!--</file>-->
+        <!--<file>-->
+             <!--<source>-->
+                <!--../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/etc/cassandra-environments.xml-->
+            <!--</source>-->
+            <!--<outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/etc</outputDirectory>-->
+            <!--<filtered>true</filtered>-->
+            <!--<fileMode>644</fileMode>-->
+        <!--</file>-->
 
         <!-- UES integration config files -->
 

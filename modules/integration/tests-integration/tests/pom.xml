@@ -319,7 +319,6 @@
         <dependency>
             <groupId>org.wso2.cep</groupId>
             <artifactId>org.wso2.cep.integration.common.clients</artifactId>
-            <version>${project.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.wso2.carbon</groupId>

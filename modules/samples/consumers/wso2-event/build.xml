@@ -45,6 +45,7 @@
             <include name="org.wso2.carbon.databridge.core_*.jar"/>
             <include name="org.wso2.carbon.databridge.receiver.thrift_*.jar"/>
             <include name="org.wso2.carbon.base_*.jar"/>
+            <include name="org.wso2.carbon.identity.authentication_*.jar"/>
         </fileset>
     </path>
 

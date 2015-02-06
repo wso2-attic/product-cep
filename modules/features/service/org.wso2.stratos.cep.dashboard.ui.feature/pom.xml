@@ -15,13 +15,11 @@
 ~ specific language governing permissions and limitations
 ~ under the License.
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <parent>
         <groupId>org.wso2.cep</groupId>
-    	<artifactId>wso2stratos-cep-features</artifactId>
+        <artifactId>wso2stratos-cep-features</artifactId>
         <version>4.0.0-SNAPSHOT</version>
     </parent>
 
@@ -35,21 +33,20 @@
         <dependency>
             <groupId>org.wso2.cep</groupId>
             <artifactId>org.wso2.stratos.cep.dashboard.ui</artifactId>
-            <version>${project.version}</version>
         </dependency>
-	<dependency>
+        <dependency>
             <groupId>org.wso2.carbon</groupId>
             <artifactId>org.wso2.carbon.ui.menu.stratos</artifactId>
-            <version>${stratos.version.2.2.0}</version>
         </dependency>
     </dependencies>
 
+
     <build>
-       <plugins>
+        <plugins>
             <plugin>
                 <groupId>org.wso2.maven</groupId>
                 <artifactId>carbon-p2-plugin</artifactId>
-               <version>${carbon.p2.plugin.version}</version>
+                <version>${carbon.p2.plugin.version}</version>
                 <executions>
                     <execution>
                         <id>p2-feature-generation</id>
@@ -64,10 +61,10 @@
                                 <properties>
                                     <propertyDef>org.wso2.carbon.p2.category.type:console</propertyDef>
                                 </properties>
-                            </adviceFile>                            
+                            </adviceFile>
                             <bundles>
                                 <bundleDef>org.wso2.cep:org.wso2.stratos.cep.dashboard.ui</bundleDef>
-				<bundleDef>org.wso2.carbon:org.wso2.carbon.ui.menu.stratos</bundleDef>
+                                <bundleDef>org.wso2.carbon:org.wso2.carbon.ui.menu.stratos</bundleDef>
                             </bundles>
                             <importFeatures>
                                 <importFeatureDef>org.wso2.carbon.core.ui:${carbon.kernel.version}</importFeatureDef>

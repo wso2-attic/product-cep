@@ -275,7 +275,6 @@ do
     -Xms256m -Xmx1024m -XX:MaxPermSize=256m \
     -XX:+HeapDumpOnOutOfMemoryError \
     -XX:HeapDumpPath="$CARBON_HOME/repository/logs/heap-dump.hprof" \
-    -javaagent:"$CARBON_HOME/repository/components/plugins/jamm_0.2.5.wso2v2.jar" \
     $JAVA_OPTS \
     -Dcom.sun.management.jmxremote \
     -classpath "$CARBON_CLASSPATH" \
@@ -300,7 +299,6 @@ do
     -Djava.security.egd=file:/dev/./urandom \
     -Dfile.encoding=UTF8 \
     -Dnet.sf.ehcache.pool.sizeof.AgentSizeOf.bypass=true \
-    -Ddisable.cassandra.server.startup=true \
     org.wso2.carbon.bootstrap.Bootstrap $*
     status=$?
 done
