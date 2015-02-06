@@ -37,6 +37,7 @@ import org.wso2.carbon.integration.test.client.StockQuoteClient;
 import org.wso2.carbon.integration.test.client.TestAgentServer;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
 
+import javax.xml.xpath.XPathExpressionException;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Map;
@@ -78,10 +79,10 @@ public class StormTestCase extends CEPIntegrationTest {
 
         Thread.sleep(5000);
 
-        AnalyticStatClient.publish(contextMap.get("receiver").getInstance().getHosts().get("default"),
-                contextMap.get("receiver").getInstance().getPorts().get("thrift_receiver"), "admin", "admin", 100);
-        StockQuoteClient.publish(contextMap.get("receiver").getInstance().getHosts().get("default"),
-                contextMap.get("receiver").getInstance().getPorts().get("thrift_receiver"), "admin", "admin", 100);
+        AnalyticStatClient.publish(contextMap.get("cep002").getInstance().getHosts().get("default"),
+                contextMap.get("cep002").getInstance().getPorts().get("thrift_receiver"), "admin", "admin", 100);
+        StockQuoteClient.publish(contextMap.get("cep002").getInstance().getHosts().get("default"),
+                contextMap.get("cep002").getInstance().getPorts().get("thrift_receiver"), "admin", "admin", 100);
 
         Thread.sleep(10000);
         Assert.assertTrue(testAgentServer.getMsgCount()>0);
@@ -142,7 +143,7 @@ public class StormTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventBuilderAdminServiceClient.getActiveEventBuilderCount(), startEbCount + 1);
     }
 
-    private void addOutputEventAdaptor() throws RemoteException {
+    private void addOutputEventAdaptor() throws RemoteException, XPathExpressionException {
         OutputEventAdaptorPropertyDto username = new OutputEventAdaptorPropertyDto();
         username.setKey("username");
         username.setValue("admin");
@@ -151,10 +152,11 @@ public class StormTestCase extends CEPIntegrationTest {
         password.setValue("admin");
         OutputEventAdaptorPropertyDto receiverUrl = new OutputEventAdaptorPropertyDto();
         receiverUrl.setKey("receiverURL");
-        receiverUrl.setValue("tcp://localhost:7661");
+        int receiverPort = Integer.parseInt(contextMap.get("cep003").getInstance().getPorts().get("thrift_publisher"));
+        receiverUrl.setValue("tcp://localhost:"+receiverPort);
         OutputEventAdaptorPropertyDto authenticatorURL = new OutputEventAdaptorPropertyDto();
         authenticatorURL.setKey("authenticatorURL");
-        authenticatorURL.setValue("ssl://localhost:7761");
+        authenticatorURL.setValue("ssl://localhost:"+receiverPort+100);
 
         outputEventAdaptorManagerAdminServiceClient.addOutputEventAdaptorConfiguration("WSO2EventAdaptor", "wso2event", new OutputEventAdaptorPropertyDto[]{username, password, receiverUrl, authenticatorURL});
     }

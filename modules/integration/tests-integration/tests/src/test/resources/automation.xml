@@ -223,6 +223,8 @@
                 <ports>
                     <port type="http">9764</port><!--Your HTTP port here-->
                     <port type="https">9444</port><!--Your HTTPS port here-->
+                    <port type="thrift_receiver">7611</port>
+                    <port type="thrift_publisher">7661</port>
                 </ports>
                 <properties>
                 </properties>
@@ -234,6 +236,8 @@
                 <ports>
                     <port type="http">9765</port><!--Your HTTP port here-->
                     <port type="https">9445</port><!--Your HTTPS port here-->
+                    <port type="thrift_receiver">7612</port>
+                    <port type="thrift_publisher">7661</port>
                 </ports>
                 <properties>
                 </properties>
