@@ -10,8 +10,9 @@
     <stream as="analyticsStats" name="analytics_Statistics" version="1.3.0"/>
   </importedStreams>
   <queryExpressions><![CDATA[
-        define stream analyticsStats (meta_ipAdd string, meta_index long, meta_timestamp long, meta_nanoTime
-        long,userID string, searchTerms string);
+        from analyticsStats[meta_ipAdd != '192.168.1.1']#window.time(5 min)
+        select meta_ipAdd, meta_index, meta_timestamp, meta_nanoTime, userID
+        insert into filteredStatStream;
    ]]></queryExpressions>
   <exportedStreams>
     <stream name="filteredStatStream" valueOf="filteredStatStream" version="1.0.0"/>

@@ -46,12 +46,12 @@ public class StatAgent {
         add("Open Source");
         add("Middleware");
         add("jaggery");
-        add(".jag files");
+        add("MSFT");
         add("Siddhi");
         add("siddhi query language");
         add("CEP performance numbers");
         add("Complex Eventing");
-        add("CEP throughput");
+        add("IBM");
         add("WSO2Con");
         add("WSO2 Roadmap");
     }});
