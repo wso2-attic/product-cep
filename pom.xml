@@ -494,6 +494,10 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
             </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.4</version>
+            </plugin>
         </plugins>
     </build>
     <profiles>
@@ -548,7 +552,7 @@
 
         <!--<siddhi.version>3.</siddhi.version>-->
         <cep.version>4.0.0-SNAPSHOT</cep.version>
-        <carbon.event-processing.version>2.0.3</carbon.event-processing.version>
+        <carbon.event-processing.version>2.0.4-SNAPSHOT</carbon.event-processing.version>
 
         <!-- Carbon kernel version-->
         <carbon.kernel.version>4.3.0</carbon.kernel.version>
