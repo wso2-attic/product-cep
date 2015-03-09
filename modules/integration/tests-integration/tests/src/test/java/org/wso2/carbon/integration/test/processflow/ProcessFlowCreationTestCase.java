@@ -820,6 +820,8 @@ public class ProcessFlowCreationTestCase extends CEPIntegrationTest {
         eventBuilderAdminServiceClient = null;
         eventProcessorAdminServiceClient = null;
         eventFormatterAdminServiceClient = null;
+        eventStreamManagerAdminServiceClient.removeEventStream("InStream","1.0.0");
+        eventStreamManagerAdminServiceClient.removeEventStream("OutStream","1.0.0");
     }
 
 }

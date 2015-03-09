@@ -370,5 +370,8 @@ public class EventFlowTestCase extends CEPIntegrationTest {
         eventProcessorAdminServiceClient.removeActiveExecutionPlan("KPIAnalyzer");
         eventBuilderAdminServiceClient.removeActiveEventBuilderConfiguration("wso2eventbuilder");
         inputEventAdaptorManagerAdminServiceClient.removeActiveInputEventAdaptorConfiguration("localEventReceiver");
+        eventStreamManagerAdminServiceClient.removeEventStream("analytics_Statistics","1.3.0");
+        eventStreamManagerAdminServiceClient.removeEventStream("summarizedStatistics","1.0.0");
+        eventStreamManagerAdminServiceClient.removeEventStream("statisticsStream","1.0.0");
     }
 }
