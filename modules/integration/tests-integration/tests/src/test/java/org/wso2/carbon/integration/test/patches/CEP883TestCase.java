@@ -45,9 +45,12 @@ import org.wso2.carbon.event.output.adaptor.manager.stub.types.OutputEventAdapto
 import org.wso2.carbon.event.processor.stub.types.ExecutionPlanConfigurationDto;
 import org.wso2.carbon.event.processor.stub.types.SiddhiConfigurationDto;
 import org.wso2.carbon.event.processor.stub.types.StreamConfigurationDto;
+import org.wso2.carbon.event.stream.manager.stub.types.EventStreamAttributeDto;
+import org.wso2.carbon.event.stream.manager.stub.types.EventStreamDefinitionDto;
 import org.wso2.carbon.integration.common.utils.mgt.ServerConfigurationManager;
 import org.wso2.carbon.integration.test.client.KeyStoreUtil;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
+import org.wso2.cep.integration.common.utils.ConfigurationUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -126,6 +129,83 @@ public class CEP883TestCase extends CEPIntegrationTest {
 
     @Test(groups = {"wso2.cep"}, dependsOnMethods = {"addInputEventAdaptorTestScenario1"})
     public void addEventBuilderTestScenario1() throws RemoteException, InterruptedException {
+
+
+        log.info("=======================Adding a stream definition====================");
+
+        EventStreamDefinitionDto eventStreamDefinitionDto = new EventStreamDefinitionDto();
+
+        int streamStartCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
+
+        EventStreamAttributeDto metaEventStreamAttributeDto1 = new EventStreamAttributeDto();
+        metaEventStreamAttributeDto1.setAttributeName("ipAddress");
+        metaEventStreamAttributeDto1.setAttributeType("string");
+
+        EventStreamAttributeDto[] metaEventStreamAttributeDtos = new EventStreamAttributeDto[]{metaEventStreamAttributeDto1};
+
+        EventStreamAttributeDto payloadEventStreamAttributeDto1 = new EventStreamAttributeDto();
+        payloadEventStreamAttributeDto1.setAttributeName("userID");
+        payloadEventStreamAttributeDto1.setAttributeType("string");
+
+        EventStreamAttributeDto payloadEventStreamAttributeDto2 = new EventStreamAttributeDto();
+        payloadEventStreamAttributeDto2.setAttributeName("searchTerms");
+        payloadEventStreamAttributeDto2.setAttributeType("string");
+
+        EventStreamAttributeDto[] payloadEventStreamAttributeDtos = new EventStreamAttributeDto[]{payloadEventStreamAttributeDto1, payloadEventStreamAttributeDto2};
+
+        eventStreamDefinitionDto.setName("analytics_Statistics");
+        eventStreamDefinitionDto.setVersion("1.3.0");
+        eventStreamDefinitionDto.setMetaData(metaEventStreamAttributeDtos);
+        eventStreamDefinitionDto.setCorrelationData(null);
+        eventStreamDefinitionDto.setPayloadData(payloadEventStreamAttributeDtos);
+        eventStreamDefinitionDto.setDescription("");
+        eventStreamDefinitionDto.setNickName("");
+
+        eventStreamManagerAdminServiceClient.addEventStream(eventStreamDefinitionDto);
+
+        Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), streamStartCount + 1);
+
+        log.info("=======================Adding a stream definition====================");
+
+        EventStreamAttributeDto metaEventStreamAttributeDto21 = new EventStreamAttributeDto();
+        metaEventStreamAttributeDto21.setAttributeName("ipAddress");
+        metaEventStreamAttributeDto21.setAttributeType("string");
+
+        EventStreamAttributeDto[] metaEventStreamAttributeDtos2 = new EventStreamAttributeDto[]{metaEventStreamAttributeDto21};
+
+        EventStreamAttributeDto payloadEventStreamAttributeDto21 = new EventStreamAttributeDto();
+        payloadEventStreamAttributeDto21.setAttributeName("user");
+        payloadEventStreamAttributeDto21.setAttributeType("string");
+
+        EventStreamAttributeDto payloadEventStreamAttributeDto22 = new EventStreamAttributeDto();
+        payloadEventStreamAttributeDto22.setAttributeName("keywords");
+        payloadEventStreamAttributeDto22.setAttributeType("string");
+
+        EventStreamAttributeDto[] payloadEventStreamAttributeDtos2 = new EventStreamAttributeDto[]{payloadEventStreamAttributeDto21, payloadEventStreamAttributeDto22};
+
+        eventStreamDefinitionDto = new EventStreamDefinitionDto();
+        eventStreamDefinitionDto.setName("summarizedStatistics");
+        eventStreamDefinitionDto.setVersion("1.0.0");
+        eventStreamDefinitionDto.setMetaData(metaEventStreamAttributeDtos2);
+        eventStreamDefinitionDto.setCorrelationData(null);
+        eventStreamDefinitionDto.setPayloadData(payloadEventStreamAttributeDtos2);
+        eventStreamDefinitionDto.setDescription("");
+        eventStreamDefinitionDto.setNickName("");
+        eventStreamManagerAdminServiceClient.addEventStream(eventStreamDefinitionDto);
+
+        eventStreamDefinitionDto = new EventStreamDefinitionDto();
+        eventStreamDefinitionDto.setName("statisticsStream");
+        eventStreamDefinitionDto.setVersion("1.0.0");
+        eventStreamDefinitionDto.setMetaData(metaEventStreamAttributeDtos2);
+        eventStreamDefinitionDto.setCorrelationData(null);
+        eventStreamDefinitionDto.setPayloadData(payloadEventStreamAttributeDtos2);
+        eventStreamDefinitionDto.setDescription("");
+        eventStreamDefinitionDto.setNickName("");
+        eventStreamManagerAdminServiceClient.addEventStream(eventStreamDefinitionDto);
+
+
+        Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), streamStartCount + 3);
+
 
         log.info("=======================Adding a event builder ======================= ");
         int startCount = eventBuilderAdminServiceClient.getActiveEventBuilderCount();
@@ -301,6 +381,9 @@ public class CEP883TestCase extends CEPIntegrationTest {
         eventProcessorAdminServiceClient.removeActiveExecutionPlan("statsProcessor");
         eventBuilderAdminServiceClient.removeActiveEventBuilderConfiguration("wso2eventbuilder");
         inputEventAdaptorManagerAdminServiceClient.removeActiveInputEventAdaptorConfiguration("localEventReceiver");
+        eventStreamManagerAdminServiceClient.removeEventStream("analytics_Statistics","1.3.0");
+        eventStreamManagerAdminServiceClient.removeEventStream("summarizedStatistics","1.0.0");
+        eventStreamManagerAdminServiceClient.removeEventStream("statisticsStream","1.0.0");
     }
 
     private JMSBrokerConfiguration getJMSBrokerConfiguration() {
