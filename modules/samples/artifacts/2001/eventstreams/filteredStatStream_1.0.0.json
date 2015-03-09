@@ -1,0 +1,30 @@
+{
+  "name": "filteredStatStream",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "metaData": [
+    {
+      "name": "ipAdd",
+      "type": "STRING"
+    },
+    {
+      "name": "index",
+      "type": "LONG"
+    },
+    {
+      "name": "timestamp",
+      "type": "LONG"
+    },
+    {
+      "name": "nanoTime",
+      "type": "LONG"
+    }
+  ],
+  "payloadData": [
+    {
+      "name": "userID",
+      "type": "STRING"
+    }
+  ]
+}
