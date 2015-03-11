@@ -20,32 +20,30 @@ package org.wso2.carbon.sample.objectdetection;
 import java.io.File;
 
 /**
- * The Class KeyStoreUtil.
+ * Class to add key store and trust store parameters to system properties.
  */
 public class KeyStoreUtil {
 
-	/** The file path to stor. */
-	static File filePath = new File("src/main/resources/store");
+    /**
+     * The file path to trust store and key store.
+     */
+    private static File filePath = new File("src/main/resources/store");
 
-	/**
-	 * Sets the trust store params.
-	 */
-	public static void setTrustStoreParams() {
-		String trustStore = filePath.getAbsolutePath();
-		System.setProperty("javax.net.ssl.trustStore", trustStore
-				+ "/client-truststore.jks");
-		System.setProperty("javax.net.ssl.trustStorePassword", "wso2carbon");
+    /**
+     * Sets the trust store values to system properties.
+     */
+    public static void setTrustStoreParams() {
+        String trustStore = filePath.getAbsolutePath();
+        System.setProperty("javax.net.ssl.trustStore", trustStore + "/client-truststore.jks");
+        System.setProperty("javax.net.ssl.trustStorePassword", "wso2carbon");
+    }
 
-	}
-
-	/**
-	 * Sets the key store params.
-	 */
-	public static void setKeyStoreParams() {
-		String keyStore = filePath.getAbsolutePath();
-		System.setProperty("Security.KeyStore.Location", keyStore
-				+ "/wso2carbon.jks");
-		System.setProperty("Security.KeyStore.Password", "wso2carbon");
-
-	}
+    /**
+     * Sets the key store values to system properties.
+     */
+    public static void setKeyStoreParams() {
+        String keyStore = filePath.getAbsolutePath();
+        System.setProperty("Security.KeyStore.Location", keyStore + "/wso2carbon.jks");
+        System.setProperty("Security.KeyStore.Password", "wso2carbon");
+    }
 }

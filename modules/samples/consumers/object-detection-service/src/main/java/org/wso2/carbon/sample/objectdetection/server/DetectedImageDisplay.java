@@ -60,7 +60,7 @@ public class DetectedImageDisplay extends HttpServlet {
             throws ServletException, IOException {
         String event = request.getParameter("event");
         if (event.equals("display")) {
-            TreeMap<Integer, StreamData> streamDataMap = MapHelper.getMap();
+            TreeMap<Integer, StreamData> streamDataMap = MapHelper.getStreamDataTreeMap();
             if (!streamDataMap.isEmpty()) {
                 StreamData streamData = streamDataMap.firstEntry().getValue();
                 Gson gson = new Gson();
@@ -72,7 +72,7 @@ public class DetectedImageDisplay extends HttpServlet {
                 response.getWriter().print(jsonObject);
             }
         } else if (event.equals("clear")) {
-            MapHelper.getMap().clear();
+            MapHelper.getStreamDataTreeMap().clear();
         }
     }
 

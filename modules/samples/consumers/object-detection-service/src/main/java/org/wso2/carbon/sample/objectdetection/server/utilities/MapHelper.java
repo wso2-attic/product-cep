@@ -22,28 +22,22 @@ import java.util.TreeMap;
 import org.wso2.carbon.sample.objectdetection.server.data.StreamData;
 
 /**
- * The Map helper.
+ * The Map that stores stream data collected by the HTTP servlet
  */
 public class MapHelper {
 
-	/** The object frames map of size 100. */
-	private static TreeMap<Integer, StreamData> objectMap = new TreeMap<Integer, StreamData>();
+	/**
+	 * The map that stores streamed data.
+	 */
+	private static TreeMap<Integer, StreamData> streamDataTreeMap =
+																new TreeMap<Integer, StreamData>();
 
 	/**
 	 * Gets the object frames map.
 	 *
 	 * @return the object frame map
 	 */
-	public static TreeMap<Integer, StreamData> getMap() {
-		return objectMap;
-	}
-
-	/**
-	 * Sets the object frames map.
-	 *
-	 * @param objectMap the object frame map
-	 */
-	public static void setObjectMap(TreeMap<Integer, StreamData> objectMap) {
-		MapHelper.objectMap = objectMap;
+	public static TreeMap<Integer, StreamData> getStreamDataTreeMap() {
+		return streamDataTreeMap;
 	}
 }

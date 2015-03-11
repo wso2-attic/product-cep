@@ -92,11 +92,11 @@ public class ObjectDetectionDataSourceHandler extends HttpServlet {
             // Creating/updating stream data in map.
             StreamData streamData;
 
-            if (MapHelper.getMap().containsKey(Integer.parseInt((String) payLoadData.
+            if (MapHelper.getStreamDataTreeMap().containsKey(Integer.parseInt((String) payLoadData.
                                                                                 get("frame_id")))) {
 
                 // Use existing data to modify when frame ID already exists in map.
-                streamData = MapHelper.getMap().get(Integer.parseInt((String) payLoadData.
+                streamData = MapHelper.getStreamDataTreeMap().get(Integer.parseInt((String) payLoadData.
                                                                                 get("frame_id")));
 
                 // Updating the images list.
@@ -122,12 +122,12 @@ public class ObjectDetectionDataSourceHandler extends HttpServlet {
                 streamData.setObjectCount(Long.parseLong((String) payLoadData.get("object_count")));
 
                 // Clearing the map if maximum size exceeds as a caution.
-                if (MapHelper.getMap().size() >= MAX_MAP_SIZE) {
-                    MapHelper.getMap().clear();
+                if (MapHelper.getStreamDataTreeMap().size() >= MAX_MAP_SIZE) {
+                    MapHelper.getStreamDataTreeMap().clear();
                 }
 
                 // Add the processed stream data to map.
-                MapHelper.getMap().put(streamData.getFrameID(), streamData);
+                MapHelper.getStreamDataTreeMap().put(streamData.getFrameID(), streamData);
             }
 
             log.info("Received frame ID : " + Integer.toString(streamData.getFrameID()));
