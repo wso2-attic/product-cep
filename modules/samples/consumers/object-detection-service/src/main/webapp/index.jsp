@@ -45,10 +45,12 @@ img {
 </style>
 <script type="text/javascript">
 	$(document).ready(function() {
+		// Refresh table content
 		setInterval(showTableData, 100);
 		$("#tablediv").hide();
 		$("#showTable").click(showTableData);
-		
+
+		// Displaying the stream data
 		function showTableData(){
 			$.ajax({
 				  type: "POST",
@@ -81,7 +83,8 @@ img {
 				  }
 			});
 		}
-		
+
+		// Clearing the table content and map.
 		$("#clearQueueTable").click(function(){
 			$.ajax({
 				  type: "POST",
