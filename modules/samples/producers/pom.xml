@@ -26,7 +26,6 @@
         <version>4.0.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>org.wso2.cep</groupId>
     <artifactId>cep-samples-producers</artifactId>
     <name>WSO2 CEP - Samples Producers</name>
     <version>4.0.0-SNAPSHOT</version>
