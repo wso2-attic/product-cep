@@ -66,9 +66,7 @@ public class VideoFrameProducer {
     /**
      * Loading the OpenCV native libraries
      * @see <a href="https://github.com/PatternConsulting/opencv#api">OpenCV API loading.</a>
-     * @see <a href="http://docs.opencv
-     * .org/doc/tutorials/introduction/desktop_java/java_dev_intro
-     * .html#java-sample-with-ant">Native OpenCV API loading.</a>
+     * @see <a href="http://docs.opencv.org/doc/tutorials/introduction/desktop_java/java_dev_intro.html#java-sample-with-ant">Native OpenCV API loading.</a>
      */
     static {
         try {
