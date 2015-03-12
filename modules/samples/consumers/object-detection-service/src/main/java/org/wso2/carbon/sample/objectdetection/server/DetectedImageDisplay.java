@@ -65,7 +65,7 @@ public class DetectedImageDisplay extends HttpServlet {
                 StreamData streamData = streamDataMap.firstEntry().getValue();
                 Gson gson = new Gson();
                 JsonElement element = gson.toJsonTree(streamData, new TypeToken<StreamData>() {
-                }.getType());
+                                                                                    }.getType());
 
                 JsonObject jsonObject = element.getAsJsonObject();
                 response.setContentType("application/json");

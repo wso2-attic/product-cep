@@ -104,13 +104,11 @@ public class ObjectDetectionClient {
      * @throws StreamDefinitionException                        The stream definition exception
      * @throws DifferentStreamDefinitionAlreadyDefinedException The different stream definition
      *                                                          already defined exception
-     * @throws InterruptedException                             The interrupted exception
      */
     public static void main(String[] args)
             throws MalformedURLException, AgentException, AuthenticationException,
                    TransportException, MalformedStreamDefinitionException,
-                   StreamDefinitionException, DifferentStreamDefinitionAlreadyDefinedException,
-                   InterruptedException {
+                   StreamDefinitionException, DifferentStreamDefinitionAlreadyDefinedException{
 
         KeyStoreUtil.setTrustStoreParams();
         KeyStoreUtil.setKeyStoreParams();
@@ -203,7 +201,13 @@ public class ObjectDetectionClient {
                         }
 
                         // Delaying to fit siddhi window size in execution plan
-                        Thread.sleep(500 - System.currentTimeMillis() % 500);
+                        try {
+                            Thread.sleep(500 - System.currentTimeMillis() % 500);
+                        } catch (InterruptedException e) {
+                            Thread.currentThread().interrupt();
+                            log.error("Unable to add sleep to synchronize with the siddhi " +
+                                      "                                                 extension");
+                        }
                     } else {
                         log.error("Frame was empty!");
                     }
