@@ -108,7 +108,7 @@ public class ObjectDetectionClient {
     public static void main(String[] args)
             throws MalformedURLException, AgentException, AuthenticationException,
                    TransportException, MalformedStreamDefinitionException,
-                   StreamDefinitionException, DifferentStreamDefinitionAlreadyDefinedException{
+                   StreamDefinitionException, DifferentStreamDefinitionAlreadyDefinedException {
 
         KeyStoreUtil.setTrustStoreParams();
         KeyStoreUtil.setKeyStoreParams();
@@ -206,7 +206,7 @@ public class ObjectDetectionClient {
                         } catch (InterruptedException e) {
                             Thread.currentThread().interrupt();
                             log.error("Unable to add sleep to synchronize with the siddhi " +
-                                      "                                                 extension");
+                                                                                    "extension");
                         }
                     } else {
                         log.error("Frame was empty!");
