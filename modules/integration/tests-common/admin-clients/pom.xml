@@ -61,8 +61,8 @@
             <artifactId>org.wso2.carbon.event.statistics.stub</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.wso2.carbon.event-processing</groupId>
-            <artifactId>org.wso2.carbon.event.stream.manager.stub</artifactId>
+            <groupId>org.wso2.carbon.analytics-common</groupId>
+            <artifactId>org.wso2.carbon.event.stream.stub</artifactId>
         </dependency>
         <dependency>
             <groupId>org.wso2.carbon</groupId>

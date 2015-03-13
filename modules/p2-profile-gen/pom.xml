@@ -207,17 +207,17 @@
                                 <!--</featureArtifactDef>-->
 
                                 <!--cep-->
+                                <!--<featureArtifactDef>-->
+                                    <!--org.wso2.carbon.event-processing:org.wso2.carbon.event.input.adapter.feature:${carbon.event-processing.version}-->
+                                <!--</featureArtifactDef>-->
+                                <!--<featureArtifactDef>-->
+                                    <!--org.wso2.carbon.event-processing:org.wso2.carbon.event.output.adapter.feature:${carbon.event-processing.version}-->
+                                <!--</featureArtifactDef>-->
                                 <featureArtifactDef>
-                                    org.wso2.carbon.event-processing:org.wso2.carbon.event.input.adaptor.feature:${carbon.event-processing.version}
+                                    org.wso2.carbon.event-processing:org.wso2.carbon.event.receiver.feature:${carbon.event-processing.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
-                                    org.wso2.carbon.event-processing:org.wso2.carbon.event.output.adaptor.feature:${carbon.event-processing.version}
-                                </featureArtifactDef>
-                                <featureArtifactDef>
-                                    org.wso2.carbon.event-processing:org.wso2.carbon.event.builder.feature:${carbon.event-processing.version}
-                                </featureArtifactDef>
-                                <featureArtifactDef>
-                                    org.wso2.carbon.event-processing:org.wso2.carbon.event.formatter.feature:${carbon.event-processing.version}
+                                    org.wso2.carbon.event-processing:org.wso2.carbon.event.publisher.feature:${carbon.event-processing.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
                                     org.wso2.carbon.event-processing:org.wso2.carbon.event.processor.feature:${carbon.event-processing.version}
@@ -232,13 +232,18 @@
                                     org.wso2.carbon.event-processing:org.wso2.carbon.event.statistics.feature:${carbon.event-processing.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
-                                    org.wso2.carbon.event-processing:org.wso2.carbon.event.stream.manager.feature:${carbon.event-processing.version}
+                                    org.wso2.carbon.analytics-common:org.wso2.carbon.event.stream.feature:${carbon.analytics-common.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
                                     org.wso2.carbon.event-processing:org.wso2.carbon.event.simulator.feature:${carbon.event-processing.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
                                     org.wso2.carbon.event-processing:org.wso2.carbon.event.processing.application.deployer.feature:${carbon.event-processing.version}
+                                </featureArtifactDef>
+
+                                <!--cep adapters-->
+                                <featureArtifactDef>
+                                    org.wso2.carbon.event-processing:org.wso2.carbon.event.output.adapter.email.server.feature:${carbon.event-processing.version}
                                 </featureArtifactDef>
 
                                 <!-- cep ui features -->
@@ -423,21 +428,22 @@
                                     <!--<id>org.wso2.carbon.governance.metadata.server.feature.group</id>-->
                                     <!--<version>${carbon.governance.version}</version>-->
                                 <!--</feature>-->
+
                                 <!--cep-->
+                                <!--<feature>-->
+                                    <!--<id>org.wso2.carbon.event.input.adapter.feature.group</id>-->
+                                    <!--<version>${carbon.event-processing.version}</version>-->
+                                <!--</feature>-->
+                                <!--<feature>-->
+                                    <!--<id>org.wso2.carbon.event.output.adapter.feature.group</id>-->
+                                    <!--<version>${carbon.event-processing.version}</version>-->
+                                <!--</feature>-->
                                 <feature>
-                                    <id>org.wso2.carbon.event.input.adaptor.feature.group</id>
+                                    <id>org.wso2.carbon.event.receiver.feature.group</id>
                                     <version>${carbon.event-processing.version}</version>
                                 </feature>
                                 <feature>
-                                    <id>org.wso2.carbon.event.output.adaptor.feature.group</id>
-                                    <version>${carbon.event-processing.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.event.builder.feature.group</id>
-                                    <version>${carbon.event-processing.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.event.formatter.feature.group</id>
+                                    <id>org.wso2.carbon.event.publisher.feature.group</id>
                                     <version>${carbon.event-processing.version}</version>
                                 </feature>
                                 <feature>
@@ -457,8 +463,8 @@
                                     <version>${carbon.event-processing.version}</version>
                                 </feature>
                                 <feature>
-                                    <id>org.wso2.carbon.event.stream.manager.feature.group</id>
-                                    <version>${carbon.event-processing.version}</version>
+                                    <id>org.wso2.carbon.event.stream.feature.group</id>
+                                    <version>${carbon.analytics-common.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.event.simulator.feature.group</id>
@@ -466,6 +472,12 @@
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.event.processing.application.deployer.feature.group</id>
+                                    <version>${carbon.event-processing.version}</version>
+                                </feature>
+
+                                <!--cep adapters-->
+                                <feature>
+                                    <id>org.wso2.carbon.event.output.adapter.email.server.feature.group</id>
                                     <version>${carbon.event-processing.version}</version>
                                 </feature>
 

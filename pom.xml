@@ -47,7 +47,7 @@
         <module>modules/distribution</module>
         <module>modules/org.wso2.stratos.cep.login.ui</module>
         <module>modules/org.wso2.stratos.cep.dashboard.ui</module>
-        <module>modules/integration</module>
+        <!--<module>modules/integration</module>-->
     </modules>
 
     <dependencyManagement>
@@ -110,22 +110,12 @@
             <!--Carbon-event-processing-->
             <dependency>
                 <groupId>org.wso2.carbon.event-processing</groupId>
-                <artifactId>org.wso2.carbon.event.input.adaptor.manager.stub</artifactId>
+                <artifactId>org.wso2.carbon.event.receiver.stub</artifactId>
                 <version>${carbon.event-processing.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.wso2.carbon.event-processing</groupId>
-                <artifactId>org.wso2.carbon.event.output.adaptor.manager.stub</artifactId>
-                <version>${carbon.event-processing.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.carbon.event-processing</groupId>
-                <artifactId>org.wso2.carbon.event.builder.stub</artifactId>
-                <version>${carbon.event-processing.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.carbon.event-processing</groupId>
-                <artifactId>org.wso2.carbon.event.formatter.stub</artifactId>
+                <artifactId>org.wso2.carbon.event.publihser.stub</artifactId>
                 <version>${carbon.event-processing.version}</version>
             </dependency>
             <dependency>
@@ -144,9 +134,9 @@
                 <version>${carbon.event-processing.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.carbon.event-processing</groupId>
-                <artifactId>org.wso2.carbon.event.stream.manager.stub</artifactId>
-                <version>${carbon.event-processing.version}</version>
+                <groupId>org.wso2.carbon.analytics-common</groupId>
+                <artifactId>org.wso2.carbon.event.stream.stub</artifactId>
+                <version>${carbon.analytics-common.version}</version>
             </dependency>
 
             <!--Carbon kernel-->
@@ -544,6 +534,7 @@
         <jaggery.modules.version>1.2.0</jaggery.modules.version>
         <carbon.deployment.version>4.3.1</carbon.deployment.version>
         <carbon.commons.version>4.3.4</carbon.commons.version>
+        <carbon.analytics-common.version>1.0.0-SNAPSHOT</carbon.analytics-common.version>
         <carbon.identity.version>4.3.2</carbon.identity.version>
         <carbon.registry.version>4.3.0</carbon.registry.version>
         <!--<carbon.storagemgt.version>4.3.1-SNAPSHOT</carbon.storagemgt.version>-->

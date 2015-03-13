@@ -334,10 +334,10 @@ org.wso2.carbon.event.simulator.ui_1.0.0.jar                                    
 org.wso2.carbon.event.statistics.stub_1.0.0.jar                                 bundle         apache2   2404      
 org.wso2.carbon.event.statistics.ui_1.0.1.jar                                   bundle         apache2   3092      
 org.wso2.carbon.event.statistics_1.0.1.jar                                      bundle         apache2   3091      
-org.wso2.carbon.event.stream.manager.admin_1.0.1.jar                            bundle         apache2   3090      
-org.wso2.carbon.event.stream.manager.core_1.0.1.jar                             bundle         apache2   3089      
-org.wso2.carbon.event.stream.manager.stub_1.0.1.jar                             bundle         apache2   3088      
-org.wso2.carbon.event.stream.manager.ui_1.0.1.jar                               bundle         apache2   3087      
+org.wso2.carbon.event.stream.admin_1.0.1.jar                            bundle         apache2   3090
+org.wso2.carbon.event.stream.core_1.0.1.jar                             bundle         apache2   3089
+org.wso2.carbon.event.stream.stub_1.0.1.jar                             bundle         apache2   3088
+org.wso2.carbon.event.stream.ui_1.0.1.jar                               bundle         apache2   3087
 org.wso2.carbon.event.tracer.stub_1.0.0.jar                                     bundle         apache2   2463      
 org.wso2.carbon.event.tracer.ui_1.0.1.jar                                       bundle         apache2   3086      
 org.wso2.carbon.event.tracer_1.0.1.jar                                          bundle         apache2   3085      

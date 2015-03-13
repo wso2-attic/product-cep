@@ -23,7 +23,7 @@ org.wso2.carbon.event.output.adaptor.http_
 org.wso2.carbon.event.input.adaptor.soap_
 org.wso2.carbon.event.input.adaptor.wso2event_
 org.wso2.carbon.event.output.adaptor.wso2event_
-org.wso2.carbon.event.stream.manager.core_
+org.wso2.carbon.event.stream.core_
 org.wso2.carbon.event.tracer_
 org.wso2.carbon.event.input.adaptor.email_
 org.wso2.carbon.event.builder.core_

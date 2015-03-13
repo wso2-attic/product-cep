@@ -22,10 +22,10 @@ import org.apache.axis2.AxisFault;
 import org.apache.axis2.client.ServiceClient;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.wso2.carbon.event.stream.manager.stub.EventStreamAdminServiceStub;
-import org.wso2.carbon.event.stream.manager.stub.types.EventStreamAttributeDto;
-import org.wso2.carbon.event.stream.manager.stub.types.EventStreamDefinitionDto;
-import org.wso2.carbon.event.stream.manager.stub.types.EventStreamInfoDto;
+import org.wso2.carbon.event.stream.stub.EventStreamAdminServiceStub;
+import org.wso2.carbon.event.stream.stub.types.EventStreamAttributeDto;
+import org.wso2.carbon.event.stream.stub.types.EventStreamDefinitionDto;
+import org.wso2.carbon.event.stream.stub.types.EventStreamInfoDto;
 
 import java.rmi.RemoteException;
 

@@ -329,52 +329,6 @@
             <fileMode>644</fileMode>
         </file>
 
-        <!-- default input/output adaptor configurations -->
-        <file>
-            <source>
-                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/cep/default-artifacts/inputeventadaptors/DefaultWSO2EventInputAdaptor.xml
-            </source>
-            <outputDirectory>
-                ${pom.artifactId}-${pom.version}/repository/deployment/server/inputeventadaptors/
-            </outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
-
-
-        <file>
-            <source>
-                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/cep/default-artifacts/outputeventadaptors/DefaultLoggerOutputAdaptor.xml
-            </source>
-            <outputDirectory>
-                ${pom.artifactId}-${pom.version}/repository/deployment/server/outputeventadaptors/
-            </outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
-
-        <file>
-            <source>
-                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/cep/default-artifacts/inputeventadaptors/DefaultWSO2EventInputAdaptor.xml
-            </source>
-            <outputDirectory>
-                ${pom.artifactId}-${pom.version}/repository/conf/cep/default-artifacts/inputeventadaptors/
-            </outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
-
-        <file>
-            <source>
-                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/cep/default-artifacts/outputeventadaptors/DefaultLoggerOutputAdaptor.xml
-            </source>
-            <outputDirectory>
-                ${pom.artifactId}-${pom.version}/repository/conf/cep/default-artifacts/outputeventadaptors/
-            </outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
-
         <!--Storm Config File -->
         <file>
             <source>
@@ -399,18 +353,6 @@
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/siddhi/
             </outputDirectory>
             <filtered>true</filtered>
-        </file>
-
-        <!--Adding RDBMS Output Adaptor Configuration-->
-        <file>
-            <source>
-                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/adaptor/rdbms-output-adaptor.xml
-            </source>
-            <outputDirectory>
-                ${pom.artifactId}-${pom.version}/repository/conf/adaptor/
-            </outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
         </file>
 
         <!--CEP HA conf-->
