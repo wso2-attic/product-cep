@@ -69,10 +69,20 @@ public class EventStreamManagerAdminServiceClient {
     }
 
 
-    public void addEventStream(EventStreamDefinitionDto eventStreamDefinitionDto)
+    public void addEventStreamAsDTO(EventStreamDefinitionDto eventStreamDefinitionDto)
             throws RemoteException {
         try {
             eventStreamAdminServiceStub.addEventStreamDefinitionAsDto(eventStreamDefinitionDto);
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException();
+        }
+    }
+
+    public void addEventStreamAsString(String eventStreamDefinition)
+            throws RemoteException {
+        try {
+            eventStreamAdminServiceStub.addEventStreamDefinitionAsString(eventStreamDefinition);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
             throw new RemoteException();
