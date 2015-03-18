@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<executionPlan name="testPlan" statistics="disable" trace="disable" xmlns="http://wso2.org/carbon/eventprocessor">
+  <description/>
+  <siddhiConfiguration>
+    <property name="siddhi.persistence.snapshot.time.interval.minutes">0</property>
+    <property name="siddhi.enable.distributed.processing">false</property>
+  </siddhiConfiguration>
+  <importedStreams>
+    <stream as="pizzaStream" name="org.wso2.sample.pizza.order" version="1.0.0"/>
+  </importedStreams>
+  <queryExpressions><![CDATA[from pizzaStream
+select *
+insert into outStream;]]></queryExpressions>
+  <exportedStreams>
+    <stream name="outStream" valueOf="outStream" version="1.0.0"/>
+  </exportedStreams>
+</executionPlan>
