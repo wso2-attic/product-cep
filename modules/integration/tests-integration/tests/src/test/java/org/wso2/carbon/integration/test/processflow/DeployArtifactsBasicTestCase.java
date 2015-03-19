@@ -28,7 +28,7 @@ import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
 
 /**
- * Deploying artifacts using given XML files in typical deployment order.
+ * Deploying artifacts using given config files (of type XML/JSON), in typical deployment order.
  */
 public class DeployArtifactsBasicTestCase  extends CEPIntegrationTest {
 
