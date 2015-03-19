@@ -34,9 +34,10 @@
             <!--<class name="org.wso2.carbon.integration.test.processflow.EventFlowTestCase"/>-->
             <!--<class name="org.wso2.carbon.integration.test.processflow.JMSTextMessageTestCase"/>-->
             <!--<class name="org.wso2.carbon.integration.test.patches.CEP883TestCase"/>-->
-            <!--<class name="org.wso2.carbon.integration.test.processflow.HTTPXMLMessageTestCase2"/>-->
-            <class name="org.wso2.carbon.integration.test.processflow.DeployArtifactsBasicTestCase"/>
-            <class name="org.wso2.carbon.integration.test.processflow.DeployArtifactsViaAPITestCase"/>
+            <class name="org.wso2.carbon.integration.test.processflow.HTTPXMLMessageTestCase"/>
+            <!--<class name="org.wso2.carbon.integration.test.processflow.DeployArtifactsBasicTestCase"/>-->
+            <!--<class name="org.wso2.carbon.integration.test.processflow.DeployArtifactsViaAPITestCase"/>-->
+            <!--<class name="org.wso2.carbon.integration.test.processflow.DeployArtifactsTestCase"/>-->
             <!--<class name="org.wso2.carbon.integration.test.processflow.PassThroughWithWso2Event"/>-->
             <!--<class name="org.wso2.carbon.integration.test.processflow.MQTTXMLMessageTestCase"/>-->
             <!--<class name="org.wso2.carbon.integration.test.storm.StormTestCase"/>-->
