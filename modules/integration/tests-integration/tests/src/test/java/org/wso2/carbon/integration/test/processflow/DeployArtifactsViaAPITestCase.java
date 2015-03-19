@@ -21,6 +21,7 @@ package org.wso2.carbon.integration.test.processflow;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
@@ -226,5 +227,26 @@ public class DeployArtifactsViaAPITestCase extends CEPIntegrationTest {
                 textData,outputPropertyConfiguration,"inline",true);
 
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), ++eventPublisherCount);
+    }
+
+    @Test(groups = {"wso2.cep"}, description = "Removing artifacts.")
+    public void removeArtifactsTestScenario() throws Exception {
+        eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.sample.pizza.order","1.0.0");
+        eventStreamManagerAdminServiceClient.removeEventStream("outStream","1.0.0");
+        Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), eventStreamCount - 2);
+
+        eventReceiverAdminServiceClient.removeActiveEventReceiverConfiguration("PizzaOrder");
+        Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), eventReceiverCount - 1);
+
+        eventPublisherAdminServiceClient.removeActiveEventPublisherConfiguration("PizzaDeliveryNofication");
+        Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), eventPublisherCount - 1);
+
+        eventProcessorAdminServiceClient.removeActiveExecutionPlan("testPlan");
+        Assert.assertEquals(eventProcessorAdminServiceClient.getExecutionPlanConfigurationCount(), executionPlanCount - 1);
+    }
+
+    @AfterClass(alwaysRun = true)
+    public void destroy() throws Exception {
+        super.cleanup();
     }
 }
