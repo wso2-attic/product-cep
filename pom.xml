@@ -115,7 +115,7 @@
             </dependency>
             <dependency>
                 <groupId>org.wso2.carbon.event-processing</groupId>
-                <artifactId>org.wso2.carbon.event.publihser.stub</artifactId>
+                <artifactId>org.wso2.carbon.event.publisher.stub</artifactId>
                 <version>${carbon.event-processing.version}</version>
             </dependency>
             <dependency>
