@@ -17,7 +17,7 @@
 ~ under the License.
 -->
 <outputEventAdaptor name="WSO2EventAdaptor" statistics="disable"
-  trace="enable" type="wso2event" xmlns="http://wso2.org/carbon/eventadaptormanager">
+  trace="disable" type="wso2event" xmlns="http://wso2.org/carbon/eventadaptormanager">
   <property name="receiverURL">tcp://localhost:7661</property>
   <property name="username">admin</property>
   <property name="password">admin</property>
