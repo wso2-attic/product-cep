@@ -18,20 +18,24 @@
  */
 package org.wso2.carbon.integration.test.client;
 
-import org.wso2.carbon.databridge.agent.thrift.DataPublisher;
-import org.wso2.carbon.databridge.agent.thrift.exception.AgentException;
-import org.wso2.carbon.databridge.commons.AttributeType;
-import org.wso2.carbon.databridge.commons.StreamDefinition;
-import org.wso2.carbon.databridge.commons.exception.*;
+//import org.wso2.carbon.databridge.agent.DataPublisher;
+//import org.wso2.carbon.databridge.agent.exception.DataEndpointAgentConfigurationException;
+//import org.wso2.carbon.databridge.agent.exception.DataEndpointAuthenticationException;
+//import org.wso2.carbon.databridge.agent.exception.DataEndpointConfigurationException;
+//import org.wso2.carbon.databridge.agent.exception.DataEndpointException;
+//import org.wso2.carbon.databridge.agent.thrift.exception.AgentException;
+//import org.wso2.carbon.databridge.commons.AttributeType;
+//import org.wso2.carbon.databridge.commons.StreamDefinition;
+//import org.wso2.carbon.databridge.commons.exception.*;
+//
+//import javax.security.sasl.AuthenticationException;
+//import java.net.MalformedURLException;
+//import java.net.SocketException;
+//import java.util.ArrayList;
+//import java.util.Collections;
+//import java.util.List;
 
-import javax.security.sasl.AuthenticationException;
-import java.net.MalformedURLException;
-import java.net.SocketException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-public class AnalyticStatClient {
+public class AnalyticStatClient {/*
     private static long sentEventCount = 0;
     public static final String STREAM_NAME1 = "analytics_Statistics";
     public static final String VERSION1 = "1.3.0";
@@ -99,7 +103,8 @@ public class AnalyticStatClient {
             MalformedURLException,
             AuthenticationException, NoStreamDefinitionExistException,
             org.wso2.carbon.databridge.commons.exception.AuthenticationException,
-            TransportException, SocketException {
+            TransportException, SocketException, DataEndpointAgentConfigurationException, DataEndpointException,
+            DataEndpointAuthenticationException, DataEndpointConfigurationException {
         System.out.println("Starting Statistics Agent");
 
         KeyStoreUtil.setTrustStoreParams();
@@ -147,5 +152,5 @@ public class AnalyticStatClient {
     private static Object[] getMeta() {
         int ipIndex = Math.round((float) Math.random() * MULTIPLIER);
         return new Object[]{IP_ADDRESSES.get(ipIndex), sentEventCount, System.currentTimeMillis(), System.nanoTime()};
-    }
+    }*/
 }
