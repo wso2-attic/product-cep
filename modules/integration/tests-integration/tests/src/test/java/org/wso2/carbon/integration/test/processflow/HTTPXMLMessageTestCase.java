@@ -98,6 +98,10 @@ public class HTTPXMLMessageTestCase extends CEPIntegrationTest{
             log.error("Exception thrown: " + e.getMessage(), e);
             Assert.fail("Exception: " + e.getMessage());
         }
+
+        eventPublisherAdminServiceClient.removeActiveEventPublisherConfiguration("PizzaDeliveryNofication");
+        eventReceiverAdminServiceClient.removeActiveEventReceiverConfiguration("PizzaOrder");
+        eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.sample.pizza.order","1.0.0");
     }
 
 

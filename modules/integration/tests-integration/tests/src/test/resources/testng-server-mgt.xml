@@ -28,7 +28,7 @@
 
     <test name="cep-integration-tests-server-mgt" preserve-order="true" parallel="false">
         <classes>
-            <class name="org.wso2.carbon.integration.test.ServerStartupTestCase"/>
+            <!--<class name="org.wso2.carbon.integration.test.ServerStartupTestCase"/>-->
         </classes>
     </test>
 

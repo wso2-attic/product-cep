@@ -231,9 +231,6 @@ public class DeployArtifactsViaAPITestCase extends CEPIntegrationTest {
 
     @Test(groups = {"wso2.cep"}, description = "Removing artifacts.")
     public void removeArtifactsTestScenario() throws Exception {
-        eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.sample.pizza.order","1.0.0");
-        eventStreamManagerAdminServiceClient.removeEventStream("outStream","1.0.0");
-        Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), eventStreamCount - 2);
 
         eventReceiverAdminServiceClient.removeActiveEventReceiverConfiguration("PizzaOrder");
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), eventReceiverCount - 1);
@@ -243,6 +240,10 @@ public class DeployArtifactsViaAPITestCase extends CEPIntegrationTest {
 
         eventProcessorAdminServiceClient.removeActiveExecutionPlan("testPlan");
         Assert.assertEquals(eventProcessorAdminServiceClient.getExecutionPlanConfigurationCount(), executionPlanCount - 1);
+
+        eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.sample.pizza.order","1.0.0");
+        eventStreamManagerAdminServiceClient.removeEventStream("outStream","1.0.0");
+        Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), eventStreamCount - 2);
     }
 
     @AfterClass(alwaysRun = true)

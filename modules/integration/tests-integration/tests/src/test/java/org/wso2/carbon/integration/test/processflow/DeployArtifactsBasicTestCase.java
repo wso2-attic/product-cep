@@ -88,13 +88,13 @@ public class DeployArtifactsBasicTestCase  extends CEPIntegrationTest {
         eventStreamManagerAdminServiceClient.removeEventStream("outStream","1.0.0");
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), eventStreamCount - 2);
 
-        eventReceiverAdminServiceClient.removeActiveEventReceiverConfiguration("PizzaOrder");
+        eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("PizzaOrder.xml");
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), eventReceiverCount - 1);
 
-        eventPublisherAdminServiceClient.removeActiveEventPublisherConfiguration("PizzaDeliveryNofication");
+        eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("PizzaDeliveryNofication.xml");
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), eventPublisherCount - 1);
 
-        eventProcessorAdminServiceClient.removeActiveExecutionPlan("testPlan");
+        eventProcessorAdminServiceClient.removeInactiveExecutionPlan("testPlan.xml");
         Assert.assertEquals(eventProcessorAdminServiceClient.getExecutionPlanConfigurationCount(), executionPlanCount - 1);
     }
 

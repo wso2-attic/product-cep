@@ -66,6 +66,21 @@ public class EventReceiverAdminServiceClient {
 
     }
 
+    public int getInactiveEventReceiverCount()
+            throws RemoteException {
+        try {
+            EventReceiverConfigurationFileDto[] configs = eventReceiverAdminServiceStub.getAllInactiveEventReceiverConfigurations();
+            if (configs == null) {
+                return 0;
+            } else {
+                return configs.length;
+            }
+        } catch (RemoteException e) {
+            throw new RemoteException("RemoteException", e);
+        }
+
+    }
+
     public int getEventReceiverCount()
             throws RemoteException {
         try {
