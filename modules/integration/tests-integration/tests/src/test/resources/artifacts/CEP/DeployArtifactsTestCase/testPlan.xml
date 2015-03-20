@@ -18,7 +18,7 @@
   ~ under the License.
   -->
 
-<executionPlan name="testPlan1" statistics="disable" trace="disable" xmlns="http://wso2.org/carbon/eventprocessor">
+<executionPlan name="testPlan" statistics="disable" trace="disable" xmlns="http://wso2.org/carbon/eventprocessor">
   <description/>
   <siddhiConfiguration>
     <property name="siddhi.persistence.snapshot.time.interval.minutes">0</property>

@@ -74,7 +74,7 @@ public class DeployArtifactsTestCase extends CEPIntegrationTest{
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), ++eventStreamCount);
 
         log.info("=======================Adding an execution plan ======================= ");
-        String executionPlanConfig = getXMLArtifactConfiguration("DeployArtifactsTestCase", "testPlan1.xml");
+        String executionPlanConfig = getXMLArtifactConfiguration("DeployArtifactsTestCase", "testPlan.xml");
         eventProcessorAdminServiceClient.addExecutionPlan(executionPlanConfig);
         Assert.assertEquals(eventProcessorAdminServiceClient.getExecutionPlanConfigurationCount(), ++executionPlanCount);
 
@@ -82,7 +82,19 @@ public class DeployArtifactsTestCase extends CEPIntegrationTest{
 
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), ++eventReceiverCount);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), ++eventPublisherCount);
+    }
 
+    @Test(groups = {"wso2.cep"}, description = "Removing artifacts.")
+    public void removeArtifactsTestScenario() throws Exception {
+        eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.sample.pizza.order","1.0.0");
+        eventStreamManagerAdminServiceClient.removeEventStream("outStream","1.0.0");
+        Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), eventStreamCount - 2);
+        Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), eventReceiverCount - 1);
+        Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), eventPublisherCount - 1);
+        eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("PizzaOrder.xml");
+        eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("PizzaDeliveryNofication.xml");
+        eventProcessorAdminServiceClient.removeInactiveExecutionPlan("testPlan.xml");
+        Assert.assertEquals(eventProcessorAdminServiceClient.getExecutionPlanConfigurationCount(), executionPlanCount - 1);
     }
 
     @AfterClass(alwaysRun = true)

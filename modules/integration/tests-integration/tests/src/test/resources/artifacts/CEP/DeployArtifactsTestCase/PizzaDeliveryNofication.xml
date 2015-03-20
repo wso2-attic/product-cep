@@ -18,9 +18,9 @@
   ~ under the License.
   -->
 
-<eventPublisher name="PizzaDeliveryNofication1" statistics="disable"
+<eventPublisher name="PizzaDeliveryNofication" statistics="disable"
                 trace="disable" xmlns="http://wso2.org/carbon/eventpublisher">
-    <from streamName="org.wso2.sample.pizza.order1" version="1.0.0"/>
+    <from streamName="org.wso2.sample.pizza.order" version="1.0.0"/>
     <mapping customMapping="enable" type="xml">
         <inline>
             <pizzadata:PizzaOrderDataEvent xmlns:pizzadata="http://samples.wso2.org/">
