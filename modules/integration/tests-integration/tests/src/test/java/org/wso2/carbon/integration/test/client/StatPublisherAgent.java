@@ -17,15 +17,19 @@
 */
 package org.wso2.carbon.integration.test.client;
 
-import org.wso2.carbon.databridge.agent.thrift.DataPublisher;
-import org.wso2.carbon.databridge.agent.thrift.exception.AgentException;
-import org.wso2.carbon.databridge.commons.Event;
-import org.wso2.carbon.databridge.commons.exception.*;
+//import org.wso2.carbon.databridge.agent.DataPublisher;
+//import org.wso2.carbon.databridge.agent.exception.DataEndpointAgentConfigurationException;
+//import org.wso2.carbon.databridge.agent.exception.DataEndpointAuthenticationException;
+//import org.wso2.carbon.databridge.agent.exception.DataEndpointConfigurationException;
+//import org.wso2.carbon.databridge.agent.exception.DataEndpointException;
+//import org.wso2.carbon.databridge.agent.thrift.exception.AgentException;
+//import org.wso2.carbon.databridge.commons.Event;
+//import org.wso2.carbon.databridge.commons.exception.*;
 
 import java.net.MalformedURLException;
 import java.util.*;
 
-public class StatPublisherAgent {
+public class StatPublisherAgent {/*
     public static final String STREAM_NAME1 = "org.wso2.sample.service.data";
     public static final String VERSION1 = "1.0.0";
     public static String[] hosts = {"esb.foo.org", "dss.foo.org", "as.it.foo.org", "as.mkt.foo.com",
@@ -95,7 +99,9 @@ public class StatPublisherAgent {
         return (rand.nextInt(max - min + 1) + min);
     }
 
-    public static void start(int events) throws MalformedURLException, AgentException, AuthenticationException, TransportException, MalformedStreamDefinitionException, StreamDefinitionException, DifferentStreamDefinitionAlreadyDefinedException {
+    public static void start(int events) throws MalformedURLException, AgentException, AuthenticationException, TransportException,
+            MalformedStreamDefinitionException, StreamDefinitionException, DifferentStreamDefinitionAlreadyDefinedException,
+            DataEndpointAgentConfigurationException, DataEndpointException, DataEndpointAuthenticationException, DataEndpointConfigurationException {
         DataPublisher dataPublisher = new DataPublisher("tcp://localhost:7611" , "admin", "admin");
 
         String streamId1 = dataPublisher.defineStream("{" +
@@ -175,5 +181,5 @@ public class StatPublisherAgent {
         Event statisticsEvent = new Event(streamId, System.currentTimeMillis(), meta, null, payload);
         dataPublisher.publish(statisticsEvent);
 
-    }
+    }*/
 }

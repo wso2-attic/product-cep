@@ -35,7 +35,9 @@ import java.net.SocketException;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class TestAgentServer implements Runnable {
+public class TestAgentServer {
+//public class TestAgentServer implements Runnable {
+/*
 //    private Logger log = Logger.getLogger(TestAgentServer.class);
     private ThriftDataReceiver thriftDataReceiver;
     private boolean eventReceived = false;
@@ -126,5 +128,5 @@ public class TestAgentServer implements Runnable {
 
     public long getMsgCount() {
         return msgCount.get();
-    }
+    }*/
 }

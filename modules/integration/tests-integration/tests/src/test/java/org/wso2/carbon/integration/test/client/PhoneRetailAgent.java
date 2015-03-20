@@ -17,26 +17,31 @@
 */
 package org.wso2.carbon.integration.test.client;
 
-import org.wso2.carbon.databridge.agent.thrift.DataPublisher;
-import org.wso2.carbon.databridge.agent.thrift.exception.AgentException;
-import org.wso2.carbon.databridge.commons.exception.AuthenticationException;
-import org.wso2.carbon.databridge.commons.exception.DifferentStreamDefinitionAlreadyDefinedException;
-import org.wso2.carbon.databridge.commons.exception.MalformedStreamDefinitionException;
-import org.wso2.carbon.databridge.commons.exception.NoStreamDefinitionExistException;
-import org.wso2.carbon.databridge.commons.exception.StreamDefinitionException;
-import org.wso2.carbon.databridge.commons.exception.TransportException;
-import org.wso2.carbon.databridge.core.exception.DataBridgeException;
+//import org.wso2.carbon.databridge.agent.DataPublisher;
+//import org.wso2.carbon.databridge.agent.exception.DataEndpointAgentConfigurationException;
+//import org.wso2.carbon.databridge.agent.exception.DataEndpointAuthenticationException;
+//import org.wso2.carbon.databridge.agent.exception.DataEndpointConfigurationException;
+//import org.wso2.carbon.databridge.agent.exception.DataEndpointException;
+//import org.wso2.carbon.databridge.agent.thrift.exception.AgentException;
+//import org.wso2.carbon.databridge.commons.exception.AuthenticationException;
+//import org.wso2.carbon.databridge.commons.exception.DifferentStreamDefinitionAlreadyDefinedException;
+//import org.wso2.carbon.databridge.commons.exception.MalformedStreamDefinitionException;
+//import org.wso2.carbon.databridge.commons.exception.NoStreamDefinitionExistException;
+//import org.wso2.carbon.databridge.commons.exception.StreamDefinitionException;
+//import org.wso2.carbon.databridge.commons.exception.TransportException;
+//import org.wso2.carbon.databridge.core.exception.DataBridgeException;
 
 import java.net.MalformedURLException;
 
-public class PhoneRetailAgent {
+public class PhoneRetailAgent {/*
 
 
     public static void publish()
             throws DataBridgeException, AgentException, MalformedURLException,
-                   AuthenticationException, TransportException, MalformedStreamDefinitionException,
-                   StreamDefinitionException, DifferentStreamDefinitionAlreadyDefinedException,
-                   InterruptedException {
+            AuthenticationException, TransportException, MalformedStreamDefinitionException,
+            StreamDefinitionException, DifferentStreamDefinitionAlreadyDefinedException,
+            InterruptedException, DataEndpointAgentConfigurationException, DataEndpointException,
+            DataEndpointAuthenticationException, DataEndpointConfigurationException {
 
         KeyStoreUtil.setTrustStoreParams();
 
@@ -73,5 +78,5 @@ public class PhoneRetailAgent {
 
         Thread.sleep(3000);
         dataPublisher.stop();
-    }
+    }*/
 }
