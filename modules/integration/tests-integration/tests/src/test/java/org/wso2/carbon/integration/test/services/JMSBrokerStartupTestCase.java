@@ -17,26 +17,26 @@
 */
 package org.wso2.carbon.integration.test.services;
 
-import org.testng.Assert;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
-import org.wso2.carbon.automation.engine.context.AutomationContext;
-import org.wso2.carbon.automation.engine.context.TestUserMode;
-import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
-import org.wso2.carbon.automation.extensions.servers.jmsserver.client.JMSQueueMessageConsumer;
-import org.wso2.carbon.automation.extensions.servers.jmsserver.client.JMSQueueMessageProducer;
-import org.wso2.carbon.automation.extensions.servers.jmsserver.client.JMSTopicMessageConsumer;
-import org.wso2.carbon.automation.extensions.servers.jmsserver.client.JMSTopicMessagePublisher;
-import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.JMSBrokerController;
-import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config.JMSBrokerConfiguration;
-import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config.JMSBrokerConfigurationProvider;
-import org.wso2.carbon.integration.common.utils.mgt.ServerConfigurationManager;
-
-import java.io.File;
+//import org.testng.Assert;
+//import org.testng.annotations.AfterTest;
+//import org.testng.annotations.BeforeTest;
+//import org.testng.annotations.Test;
+//import org.wso2.carbon.automation.engine.context.AutomationContext;
+//import org.wso2.carbon.automation.engine.context.TestUserMode;
+//import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
+//import org.wso2.carbon.automation.extensions.servers.jmsserver.client.JMSQueueMessageConsumer;
+//import org.wso2.carbon.automation.extensions.servers.jmsserver.client.JMSQueueMessageProducer;
+//import org.wso2.carbon.automation.extensions.servers.jmsserver.client.JMSTopicMessageConsumer;
+//import org.wso2.carbon.automation.extensions.servers.jmsserver.client.JMSTopicMessagePublisher;
+//import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.JMSBrokerController;
+//import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config.JMSBrokerConfiguration;
+//import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config.JMSBrokerConfigurationProvider;
+//import org.wso2.carbon.integration.common.utils.mgt.ServerConfigurationManager;
+//
+//import java.io.File;
 
 public class JMSBrokerStartupTestCase {
-    private final String ACTIVEMQ_CORE = "activemq-core-5.7.0.jar";
+/*    private final String ACTIVEMQ_CORE = "activemq-core-5.7.0.jar";
     private final String GERONIMO_J2EE_MANAGEMENT = "geronimo-j2ee-management_1.1_spec-1.0.1.jar";
     private JMSBrokerController activeMqBroker;
     private ServerConfigurationManager serverManager = null;
@@ -258,6 +258,6 @@ public class JMSBrokerStartupTestCase {
 
     private JMSBrokerConfiguration getJMSBrokerConfiguration() {
         return JMSBrokerConfigurationProvider.getInstance().getBrokerConfiguration();
-    }
+    }*/
 }
 

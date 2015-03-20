@@ -17,40 +17,41 @@
 */
 package org.wso2.carbon.integration.test.patches;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
-import org.wso2.carbon.automation.engine.context.TestUserMode;
-import org.wso2.carbon.automation.extensions.servers.jmsserver.client.JMSTopicMessageConsumer;
-import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.JMSBrokerController;
-import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config.JMSBrokerConfiguration;
-import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config.JMSBrokerConfigurationProvider;
-import org.wso2.carbon.databridge.agent.thrift.DataPublisher;
-import org.wso2.carbon.databridge.agent.thrift.exception.AgentException;
-import org.wso2.carbon.databridge.commons.exception.AuthenticationException;
-import org.wso2.carbon.databridge.commons.exception.DifferentStreamDefinitionAlreadyDefinedException;
-import org.wso2.carbon.databridge.commons.exception.MalformedStreamDefinitionException;
-import org.wso2.carbon.databridge.commons.exception.NoStreamDefinitionExistException;
-import org.wso2.carbon.databridge.commons.exception.StreamDefinitionException;
-import org.wso2.carbon.databridge.commons.exception.TransportException;
-import org.wso2.carbon.databridge.core.exception.DataBridgeException;
-import org.wso2.carbon.event.builder.stub.types.EventBuilderConfigurationDto;
-import org.wso2.carbon.event.builder.stub.types.EventInputPropertyConfigurationDto;
-import org.wso2.carbon.event.formatter.stub.types.PropertyDto;
-import org.wso2.carbon.event.input.adaptor.manager.stub.types.InputEventAdaptorPropertyDto;
-import org.wso2.carbon.event.output.adaptor.manager.stub.types.OutputEventAdaptorPropertyDto;
-import org.wso2.carbon.event.processor.stub.types.ExecutionPlanConfigurationDto;
-import org.wso2.carbon.event.processor.stub.types.SiddhiConfigurationDto;
-import org.wso2.carbon.event.processor.stub.types.StreamConfigurationDto;
-import org.wso2.carbon.event.stream.stub.types.EventStreamAttributeDto;
-import org.wso2.carbon.event.stream.stub.types.EventStreamDefinitionDto;
-import org.wso2.carbon.integration.common.utils.mgt.ServerConfigurationManager;
-import org.wso2.carbon.integration.test.client.KeyStoreUtil;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
+//import org.testng.Assert;
+//import org.testng.annotations.AfterClass;
+//import org.testng.annotations.BeforeClass;
+//import org.testng.annotations.Test;
+//import org.wso2.carbon.automation.engine.context.TestUserMode;
+//import org.wso2.carbon.automation.extensions.servers.jmsserver.client.JMSTopicMessageConsumer;
+//import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.JMSBrokerController;
+//import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config.JMSBrokerConfiguration;
+//import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config.JMSBrokerConfigurationProvider;
+//import org.wso2.carbon.databridge.agent.thrift.DataPublisher;
+//import org.wso2.carbon.databridge.agent.thrift.exception.AgentException;
+//import org.wso2.carbon.databridge.commons.exception.AuthenticationException;
+//import org.wso2.carbon.databridge.commons.exception.DifferentStreamDefinitionAlreadyDefinedException;
+//import org.wso2.carbon.databridge.commons.exception.MalformedStreamDefinitionException;
+//import org.wso2.carbon.databridge.commons.exception.NoStreamDefinitionExistException;
+//import org.wso2.carbon.databridge.commons.exception.StreamDefinitionException;
+//import org.wso2.carbon.databridge.commons.exception.TransportException;
+//import org.wso2.carbon.databridge.core.exception.DataBridgeException;
+//import org.wso2.carbon.event.builder.stub.types.EventBuilderConfigurationDto;
+//import org.wso2.carbon.event.builder.stub.types.EventInputPropertyConfigurationDto;
+//import org.wso2.carbon.event.formatter.stub.types.PropertyDto;
+//import org.wso2.carbon.event.input.adaptor.manager.stub.types.InputEventAdaptorPropertyDto;
+//import org.wso2.carbon.event.output.adaptor.manager.stub.types.OutputEventAdaptorPropertyDto;
+//import org.wso2.carbon.event.processor.stub.types.ExecutionPlanConfigurationDto;
+//import org.wso2.carbon.event.processor.stub.types.SiddhiConfigurationDto;
+//import org.wso2.carbon.event.processor.stub.types.StreamConfigurationDto;
+//import org.wso2.carbon.event.stream.stub.types.EventStreamAttributeDto;
+//import org.wso2.carbon.event.stream.stub.types.EventStreamDefinitionDto;
+//import org.wso2.carbon.integration.common.utils.mgt.ServerConfigurationManager;
+//import org.wso2.carbon.integration.test.client.KeyStoreUtil;
+//import org.wso2.cep.integration.common.utils.ConfigurationUtil;
+
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
-import org.wso2.cep.integration.common.utils.ConfigurationUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -59,7 +60,7 @@ import java.net.URISyntaxException;
 import java.rmi.RemoteException;
 
 public class CEP883TestCase extends CEPIntegrationTest {
-
+/*
     private static final Log log = LogFactory.getLog(CEP883TestCase.class);
     private final String ACTIVEMQ_CORE = "activemq-core-5.7.0.jar";
     private final String GERONIMO_J2EE_MANAGEMENT = "geronimo-j2ee-management_1.1_spec-1.0.1.jar";
@@ -161,7 +162,7 @@ public class CEP883TestCase extends CEPIntegrationTest {
         eventStreamDefinitionDto.setDescription("");
         eventStreamDefinitionDto.setNickName("");
 
-        eventStreamManagerAdminServiceClient.addEventStream(eventStreamDefinitionDto);
+        eventStreamManagerAdminServiceClient.addEventStreamAsDTO(eventStreamDefinitionDto);
 
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), streamStartCount + 1);
 
@@ -191,7 +192,7 @@ public class CEP883TestCase extends CEPIntegrationTest {
         eventStreamDefinitionDto.setPayloadData(payloadEventStreamAttributeDtos2);
         eventStreamDefinitionDto.setDescription("");
         eventStreamDefinitionDto.setNickName("");
-        eventStreamManagerAdminServiceClient.addEventStream(eventStreamDefinitionDto);
+        eventStreamManagerAdminServiceClient.addEventStreamAsDTO(eventStreamDefinitionDto);
 
         eventStreamDefinitionDto = new EventStreamDefinitionDto();
         eventStreamDefinitionDto.setName("statisticsStream");
@@ -201,7 +202,7 @@ public class CEP883TestCase extends CEPIntegrationTest {
         eventStreamDefinitionDto.setPayloadData(payloadEventStreamAttributeDtos2);
         eventStreamDefinitionDto.setDescription("");
         eventStreamDefinitionDto.setNickName("");
-        eventStreamManagerAdminServiceClient.addEventStream(eventStreamDefinitionDto);
+        eventStreamManagerAdminServiceClient.addEventStreamAsDTO(eventStreamDefinitionDto);
 
 
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), streamStartCount + 3);
@@ -449,6 +450,6 @@ public class CEP883TestCase extends CEPIntegrationTest {
 
         }
         super.cleanup();
-    }
+    }*/
 
 }
