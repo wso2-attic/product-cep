@@ -24,7 +24,7 @@
         <artifactId>cep-samples-consumers</artifactId>
         <version>4.0.0-SNAPSHOT</version>
     </parent>
-    <artifactId>axsi2-log-service</artifactId>
+    <artifactId>axis2-log-service</artifactId>
     <name>WSO2 CEP - Consumer - Log Service</name>
 
 

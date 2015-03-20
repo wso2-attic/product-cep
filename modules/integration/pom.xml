@@ -35,8 +35,8 @@
         <module>tests-common/ui-pages</module>
         <module>tests-common/integration-test-utils</module>
         <module>tests-common/test-artifacts</module>
-        <module>tests-integration/tests</module>
-        <module>tests-ui-integration/tests-ui</module>
+        <!--<module>tests-integration/tests</module>-->
+        <!--<module>tests-ui-integration/tests-ui</module>-->
     </modules>
 
 </project>

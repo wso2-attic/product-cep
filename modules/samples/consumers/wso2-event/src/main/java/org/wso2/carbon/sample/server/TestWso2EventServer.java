@@ -21,27 +21,31 @@ import org.apache.log4j.Logger;
 import org.wso2.carbon.databridge.commons.Credentials;
 import org.wso2.carbon.databridge.commons.Event;
 import org.wso2.carbon.databridge.commons.StreamDefinition;
-import org.wso2.carbon.databridge.commons.thrift.utils.HostAddressFinder;
 import org.wso2.carbon.databridge.core.AgentCallback;
 import org.wso2.carbon.databridge.core.DataBridge;
 import org.wso2.carbon.databridge.core.Utils.AgentSession;
+import org.wso2.carbon.databridge.core.definitionstore.AbstractStreamDefinitionStore;
 import org.wso2.carbon.databridge.core.definitionstore.InMemoryStreamDefinitionStore;
 import org.wso2.carbon.databridge.core.exception.DataBridgeException;
+import org.wso2.carbon.databridge.core.exception.StreamDefinitionStoreException;
 import org.wso2.carbon.databridge.core.internal.authentication.AuthenticationHandler;
+import org.wso2.carbon.databridge.receiver.binary.BinaryDataReceiver;
+import org.wso2.carbon.databridge.receiver.binary.conf.BinaryDataReceiverConfiguration;
 import org.wso2.carbon.databridge.receiver.thrift.ThriftDataReceiver;
 import org.wso2.carbon.user.api.UserStoreException;
 
-import java.net.SocketException;
 import java.util.List;
 
 public class TestWso2EventServer {
     Logger log = Logger.getLogger(TestWso2EventServer.class);
     ThriftDataReceiver thriftDataReceiver;
+    BinaryDataReceiver binaryDataReceiver;
+    AbstractStreamDefinitionStore streamDefinitionStore = new InMemoryStreamDefinitionStore();
     static final TestWso2EventServer testServer = new TestWso2EventServer();
 
 
-    public static void main(String[] args) throws DataBridgeException {
-        testServer.start(args[0],Integer.parseInt(args[1]));
+    public static void main(String[] args) throws DataBridgeException, StreamDefinitionStoreException {
+        testServer.start(args[0], Integer.parseInt(args[1]), args[2],args[3]);
         synchronized (testServer) {
             try {
                 testServer.wait();
@@ -53,8 +57,8 @@ public class TestWso2EventServer {
     }
 
 
-    public void start(String host,int receiverPort) throws DataBridgeException {
-        KeyStoreUtil.setKeyStoreParams();
+    public void start(String host, int receiverPort, String protocol, String sampleNumber) throws DataBridgeException, StreamDefinitionStoreException {
+        WSO2EventServerUtil.setKeyStoreParams();
         DataBridge databridge = new DataBridge(new AuthenticationHandler() {
             @Override
             public boolean authenticate(String userName,
@@ -87,15 +91,13 @@ public class TestWso2EventServer {
             public void setThreadLocalContext(AgentSession agentSession) {
                 //To change body of implemented methods use File | Settings | File Templates.
             }
-        }, new InMemoryStreamDefinitionStore());
+        }, streamDefinitionStore, WSO2EventServerUtil.getDataBridgeConfigPath());
 
-
-        thriftDataReceiver = new ThriftDataReceiver(receiverPort, databridge);
-
+        for (StreamDefinition streamDefinition : WSO2EventServerUtil.loadStreamDefinitions(sampleNumber)) {
+            streamDefinitionStore.saveStreamDefinitionToStore(streamDefinition, -1234);
+        }
 
         databridge.subscribe(new AgentCallback() {
-            int totalSize = 0;
-
 
             public void definedStream(StreamDefinition streamDefinition,
                                       int tenantID) {
@@ -103,10 +105,9 @@ public class TestWso2EventServer {
             }
 
             @Override
-            public void removeStream(StreamDefinition streamDefinition,int tenantID) {
+            public void removeStream(StreamDefinition streamDefinition, int tenantID) {
                 //To change body of implemented methods use File | Settings | File Templates.
             }
-
 
             @Override
             public void receive(List<Event> eventList, Credentials credentials) {
@@ -117,19 +118,25 @@ public class TestWso2EventServer {
         });
 
 
-        try {
-            String address = HostAddressFinder.findAddress(host);
-            log.info("Test Server starting on " + address);
-            thriftDataReceiver.start(address);
-            log.info("Test Server Started");
-        } catch (SocketException e) {
-            log.error("Test Server not started !", e);
+        log.info("Test Server starting on " + host);
+        if (protocol.equalsIgnoreCase("binary")) {
+
+            binaryDataReceiver = new BinaryDataReceiver(new BinaryDataReceiverConfiguration(receiverPort + 100, receiverPort), databridge);
+        } else {
+            thriftDataReceiver = new ThriftDataReceiver(receiverPort, databridge);
         }
+        thriftDataReceiver.start(host);
+        log.info("Test Server Started");
     }
 
 
     public void stop() {
-        thriftDataReceiver.stop();
+        if (thriftDataReceiver != null) {
+            thriftDataReceiver.stop();
+        }
+        if (binaryDataReceiver != null) {
+            binaryDataReceiver.stop();
+        }
         log.info("Test Server Stopped");
     }
 }

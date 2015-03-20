@@ -25,8 +25,10 @@
     <property name="temp.dir" value="temp"/>
     <property name="class.dir" value="${temp.dir}/classes"/>
 
-    <property name="host" value="localhost"/>
+    <property name="protocol" value="thrift"/>
+    <property name="host" value="0.0.0.0"/>
     <property name="port" value="7661"/>
+    <property name="sn" value=""/>
 
     <path id="javac.classpath">
         <pathelement path="${class.dir}"/>
@@ -74,12 +76,14 @@
     </target>
 
     <target name="run" depends="compile">
-        <echo>To configure host, port and events use -Dhost=xxxx -Dport=xxx -Devents=xx</echo>
+        <echo>To configure host, port and events use -Dhost=xxxx -Dport=xxx -Dprotocol=thrift/binary -Dsn=sampleNumber</echo>
         <echo>Sending to : http://${host}:${port}</echo>
         <java classname="org.wso2.carbon.sample.server.TestWso2EventServer"
               classpathref="javac.classpath" fork="true">
             <arg value="${host}"/>
             <arg value="${port}"/>
+            <arg value="${protocol}"/>
+            <arg value="${sn}"/>
         </java>
     </target>
 

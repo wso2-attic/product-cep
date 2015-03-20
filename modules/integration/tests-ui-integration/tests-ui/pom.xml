@@ -8,9 +8,9 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
+    <name>WSO2 CEP - UI Integration Test Module</name>
     <artifactId>org.wso2.cep.ui.integration.test</artifactId>
     <packaging>jar</packaging>
-    <name>org.wso2.cep.ui.integration.test</name>
 
     <build>
         <plugins>
