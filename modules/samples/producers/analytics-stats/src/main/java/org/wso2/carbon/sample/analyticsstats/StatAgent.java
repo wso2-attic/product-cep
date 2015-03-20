@@ -17,11 +17,14 @@
 */
 package org.wso2.carbon.sample.analyticsstats;
 
-import org.wso2.carbon.databridge.agent.thrift.DataPublisher;
-import org.wso2.carbon.databridge.agent.thrift.exception.AgentException;
-import org.wso2.carbon.databridge.commons.AttributeType;
-import org.wso2.carbon.databridge.commons.StreamDefinition;
+import org.wso2.carbon.databridge.agent.AgentHolder;
+import org.wso2.carbon.databridge.agent.DataPublisher;
+import org.wso2.carbon.databridge.agent.exception.DataEndpointAgentConfigurationException;
+import org.wso2.carbon.databridge.agent.exception.DataEndpointAuthenticationException;
+import org.wso2.carbon.databridge.agent.exception.DataEndpointConfigurationException;
+import org.wso2.carbon.databridge.agent.exception.DataEndpointException;
 import org.wso2.carbon.databridge.commons.exception.*;
+import org.wso2.carbon.databridge.commons.utils.DataBridgeCommonsUtils;
 
 import javax.security.sasl.AuthenticationException;
 import java.net.MalformedURLException;
@@ -94,15 +97,16 @@ public class StatAgent {
 
 
     public static void main(String[] args)
-            throws AgentException, MalformedStreamDefinitionException,
+            throws MalformedStreamDefinitionException,
             StreamDefinitionException, DifferentStreamDefinitionAlreadyDefinedException,
             MalformedURLException,
             AuthenticationException, NoStreamDefinitionExistException,
             org.wso2.carbon.databridge.commons.exception.AuthenticationException,
-            TransportException, SocketException {
+            TransportException, SocketException, DataEndpointAuthenticationException, DataEndpointAgentConfigurationException, DataEndpointException, DataEndpointConfigurationException {
         System.out.println("Starting Statistics Agent");
 
-        KeyStoreUtil.setTrustStoreParams();
+        DataPublisherUtil.setTrustStoreParams();
+        AgentHolder.setConfigPath(DataPublisherUtil.getAgentConfigPath());
 
         String host = args[0];
         String port = args[1];
@@ -114,33 +118,33 @@ public class StatAgent {
         DataPublisher dataPublisher = new DataPublisher("tcp://" + host + ":" + port, username, password);
 
 
-        StreamDefinition streamDefinition = new StreamDefinition(STREAM_NAME1, VERSION1);
-        streamDefinition.addMetaData("ipAdd", AttributeType.STRING);
-        streamDefinition.addMetaData("index", AttributeType.LONG);
-        streamDefinition.addMetaData("timestamp", AttributeType.LONG);
-        streamDefinition.addMetaData("nanoTime", AttributeType.LONG);
-        streamDefinition.addPayloadData("userID", AttributeType.STRING);
-        streamDefinition.addPayloadData("searchTerms", AttributeType.STRING);
-        String streamId = dataPublisher.defineStream(streamDefinition);
+//        StreamDefinition streamDefinition = new StreamDefinition(STREAM_NAME1, VERSION1);
+//        streamDefinition.addMetaData("ipAdd", AttributeType.STRING);
+//        streamDefinition.addMetaData("index", AttributeType.LONG);
+//        streamDefinition.addMetaData("timestamp", AttributeType.LONG);
+//        streamDefinition.addMetaData("nanoTime", AttributeType.LONG);
+//        streamDefinition.addPayloadData("userID", AttributeType.STRING);
+//        streamDefinition.addPayloadData("searchTerms", AttributeType.STRING);
+//        String streamId = dataPublisher.defineStream(streamDefinition);
 
-
+        String streamId = DataBridgeCommonsUtils.generateStreamId(STREAM_NAME1, VERSION1);
         //Publish event for a valid stream
-        if (!streamId.isEmpty()) {
-            System.out.println("Stream ID: " + streamId);
+//        if (!streamId.isEmpty()) {
+        System.out.println("Stream ID: " + streamId);
 
-            while (sentEventCount < events) {
-                dataPublisher.publish(streamId, getMeta(), null, getPayload());
-                sentEventCount++;
-                System.out.println("Events published : " + sentEventCount);
-            }
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                //ignore
-            }
-
-            dataPublisher.stop();
+        while (sentEventCount < events) {
+            dataPublisher.publish(streamId, getMeta(), null, getPayload());
+            sentEventCount++;
+            System.out.println("Events published : " + sentEventCount);
         }
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            //ignore
+        }
+
+        dataPublisher.shutdownWithAgent();
+//        }
     }
 
 

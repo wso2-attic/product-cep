@@ -18,14 +18,15 @@
 package org.wso2.carbon.sample.kpidefinition;
 
 import org.apache.log4j.Logger;
-import org.wso2.carbon.databridge.agent.thrift.DataPublisher;
-import org.wso2.carbon.databridge.agent.thrift.exception.AgentException;
+import org.wso2.carbon.databridge.agent.AgentHolder;
+import org.wso2.carbon.databridge.agent.DataPublisher;
+import org.wso2.carbon.databridge.agent.exception.DataEndpointAgentConfigurationException;
+import org.wso2.carbon.databridge.agent.exception.DataEndpointAuthenticationException;
+import org.wso2.carbon.databridge.agent.exception.DataEndpointConfigurationException;
+import org.wso2.carbon.databridge.agent.exception.DataEndpointException;
 import org.wso2.carbon.databridge.commons.Event;
-import org.wso2.carbon.databridge.commons.exception.DifferentStreamDefinitionAlreadyDefinedException;
-import org.wso2.carbon.databridge.commons.exception.MalformedStreamDefinitionException;
-import org.wso2.carbon.databridge.commons.exception.NoStreamDefinitionExistException;
-import org.wso2.carbon.databridge.commons.exception.StreamDefinitionException;
-import org.wso2.carbon.databridge.commons.exception.TransportException;
+import org.wso2.carbon.databridge.commons.exception.*;
+import org.wso2.carbon.databridge.commons.utils.DataBridgeCommonsUtils;
 
 import javax.security.sasl.AuthenticationException;
 import java.net.MalformedURLException;
@@ -43,18 +44,20 @@ public class KPIAgent {
     public static final int[] price = {50000, 55000, 90000, 80000, 70000};
 
 
-    public static void main(String[] args) throws AgentException,
-                                                  MalformedStreamDefinitionException,
-                                                  StreamDefinitionException,
-                                                  DifferentStreamDefinitionAlreadyDefinedException,
-                                                  MalformedURLException,
-                                                  AuthenticationException,
-                                                  NoStreamDefinitionExistException,
-                                                  TransportException, SocketException,
-                                                  org.wso2.carbon.databridge.commons.exception.AuthenticationException {
+    public static void main(String[] args) throws MalformedStreamDefinitionException,
+            StreamDefinitionException,
+            DifferentStreamDefinitionAlreadyDefinedException,
+            MalformedURLException,
+            AuthenticationException,
+            NoStreamDefinitionExistException,
+            TransportException, SocketException,
+            org.wso2.carbon.databridge.commons.exception.AuthenticationException, DataEndpointException, DataEndpointConfigurationException, DataEndpointAgentConfigurationException, DataEndpointAuthenticationException {
         System.out.println("Starting Phone Retail Shop KPI Agent");
 
-        KeyStoreUtil.setTrustStoreParams();
+        DataPublisherUtil.setTrustStoreParams();
+
+        AgentHolder.setConfigPath(DataPublisherUtil.getAgentConfigPath());
+
 
         String host = args[0];
         String port = args[1];
@@ -67,30 +70,30 @@ public class KPIAgent {
 
         DataPublisher dataPublisher = new DataPublisher("tcp://" + host + ":" + port, username, password);
 
-        String streamId = null;
+        String streamId = DataBridgeCommonsUtils.generateStreamId(PHONE_RETAIL_STREAM,VERSION);
 
-        try {
-            streamId = dataPublisher.findStream(PHONE_RETAIL_STREAM, VERSION);
-            System.out.println("Stream already defined");
-
-        } catch (NoStreamDefinitionExistException e) {
-            //Define event stream
-            streamId = dataPublisher.defineStream("{" +
-                                                  "  'name':'" + PHONE_RETAIL_STREAM + "'," +
-                                                  "  'version':'" + VERSION + "'," +
-                                                  "  'nickName': 'Phone_Retail_Shop'," +
-                                                  "  'description': 'Phone Sales'," +
-                                                  "  'metaData':[" +
-                                                  "          {'name':'clientType','type':'STRING'}" +
-                                                  "  ]," +
-                                                  "  'payloadData':[" +
-                                                  "          {'name':'brand','type':'STRING'}," +
-                                                  "          {'name':'quantity','type':'INT'}," +
-                                                  "          {'name':'total','type':'INT'}," +
-                                                  "          {'name':'user','type':'STRING'}" +
-                                                  "  ]" +
-                                                  "}");
-        }
+//        try {
+//            streamId = dataPublisher.findStream(PHONE_RETAIL_STREAM, VERSION);
+//            System.out.println("Stream already defined");
+//
+//        } catch (NoStreamDefinitionExistException e) {
+//            //Define event stream
+//            streamId = dataPublisher.defineStream("{" +
+//                    "  'name':'" + PHONE_RETAIL_STREAM + "'," +
+//                    "  'version':'" + VERSION + "'," +
+//                    "  'nickName': 'Phone_Retail_Shop'," +
+//                    "  'description': 'Phone Sales'," +
+//                    "  'metaData':[" +
+//                    "          {'name':'clientType','type':'STRING'}" +
+//                    "  ]," +
+//                    "  'payloadData':[" +
+//                    "          {'name':'brand','type':'STRING'}," +
+//                    "          {'name':'quantity','type':'INT'}," +
+//                    "          {'name':'total','type':'INT'}," +
+//                    "          {'name':'user','type':'STRING'}" +
+//                    "  ]" +
+//                    "}");
+//        }
 
 
         //Publish event for a valid stream
@@ -106,14 +109,14 @@ public class KPIAgent {
             } catch (InterruptedException e) {
             }
 
-            dataPublisher.stop();
+            dataPublisher.shutdownWithAgent();
         }
     }
 
-    private static void publishEvents(DataPublisher dataPublisher, String streamId, int i) throws AgentException {
+    private static void publishEvents(DataPublisher dataPublisher, String streamId, int i)  {
         int quantity = getRandomQuantity();
         Event eventOne = new Event(streamId, System.currentTimeMillis(), new Object[]{"external"}, null,
-                                   new Object[]{getRandomProduct(), quantity, quantity * getRandomPrice(), getRandomUser()});
+                new Object[]{getRandomProduct(), quantity, quantity * getRandomPrice(), getRandomUser()});
         dataPublisher.publish(eventOne);
     }
 

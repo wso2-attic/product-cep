@@ -18,14 +18,15 @@
 package org.wso2.carbon.sample.mediatorstats;
 
 import org.apache.log4j.Logger;
-import org.wso2.carbon.databridge.agent.thrift.DataPublisher;
-import org.wso2.carbon.databridge.agent.thrift.exception.AgentException;
+import org.wso2.carbon.databridge.agent.AgentHolder;
+import org.wso2.carbon.databridge.agent.DataPublisher;
+import org.wso2.carbon.databridge.agent.exception.DataEndpointAgentConfigurationException;
+import org.wso2.carbon.databridge.agent.exception.DataEndpointAuthenticationException;
+import org.wso2.carbon.databridge.agent.exception.DataEndpointConfigurationException;
+import org.wso2.carbon.databridge.agent.exception.DataEndpointException;
 import org.wso2.carbon.databridge.commons.Event;
-import org.wso2.carbon.databridge.commons.exception.DifferentStreamDefinitionAlreadyDefinedException;
-import org.wso2.carbon.databridge.commons.exception.MalformedStreamDefinitionException;
-import org.wso2.carbon.databridge.commons.exception.NoStreamDefinitionExistException;
-import org.wso2.carbon.databridge.commons.exception.StreamDefinitionException;
-import org.wso2.carbon.databridge.commons.exception.TransportException;
+import org.wso2.carbon.databridge.commons.exception.*;
+import org.wso2.carbon.databridge.commons.utils.DataBridgeCommonsUtils;
 
 import javax.security.sasl.AuthenticationException;
 import java.net.MalformedURLException;
@@ -62,19 +63,20 @@ public class MediatorStatAgent {
         timestamps = timeStampList.toArray(new Long[timeStampList.size()]);
     }
 
-    public static void main(String[] args) throws AgentException,
-            MalformedStreamDefinitionException,
+    public static void main(String[] args) throws MalformedStreamDefinitionException,
             StreamDefinitionException,
             DifferentStreamDefinitionAlreadyDefinedException,
             MalformedURLException,
             AuthenticationException,
             NoStreamDefinitionExistException,
             TransportException, SocketException,
-            org.wso2.carbon.databridge.commons.exception.AuthenticationException {
+            org.wso2.carbon.databridge.commons.exception.AuthenticationException, DataEndpointAuthenticationException, DataEndpointAgentConfigurationException, DataEndpointException, DataEndpointConfigurationException {
 
         System.out.println("Starting Mediator Statistic Sample");
 
-        KeyStoreUtil.setTrustStoreParams();
+        DataPublisherUtil.setTrustStoreParams();
+
+        AgentHolder.setConfigPath(DataPublisherUtil.getAgentConfigPath());
 
         String host = args[0];
         String port = args[1];
@@ -85,34 +87,34 @@ public class MediatorStatAgent {
         //create data publisher
 
         DataPublisher dataPublisher = new DataPublisher("tcp://" + host + ":" + port, username, password);
-        String streamId = null;
+        String streamId = DataBridgeCommonsUtils.generateStreamId(MEDIATOR_STATISTICS_STREAM,VERSION);
 
-        try {
-            streamId = dataPublisher.findStream(MEDIATOR_STATISTICS_STREAM, VERSION);
-            System.out.println("Stream already defined");
-
-        } catch (NoStreamDefinitionExistException e) {
-            streamId = dataPublisher.defineStream("{" +
-                    "  'name':'" + MEDIATOR_STATISTICS_STREAM + "'," +
-                    "  'version':'" + VERSION + "'," +
-                    "  'nickName': 'MediationStatsDataAgent'," +
-                    "  'description': 'A sample for Mediator Statistics'," +
-                    "  'metaData':[" +
-                    "          {'name':'host','type':'STRING'}" +
-                    "  ]," +
-                    "  'payloadData':[" +
-                    "          {'name':'direction','type':'STRING'}," +
-                    "          {'name':'timestamp','type':'LONG'}," +
-                    "          {'name':'resource_id','type':'STRING'}," +
-                    "          {'name':'stats_type','type':'STRING'}," +
-                    "          {'name':'max_processing_time','type':'LONG'}," +
-                    "          {'name':'avg_processing_time','type':'DOUBLE'}," +
-                    "          {'name':'min_processing_time','type':'LONG'}," +
-                    "          {'name':'fault_count','type':'INT'}," +
-                    "          {'name':'count','type':'INT'}" +
-                    "  ]" +
-                    "}");
-        }
+//        try {
+//            streamId = dataPublisher.findStream(MEDIATOR_STATISTICS_STREAM, VERSION);
+//            System.out.println("Stream already defined");
+//
+//        } catch (NoStreamDefinitionExistException e) {
+//            streamId = dataPublisher.defineStream("{" +
+//                    "  'name':'" + MEDIATOR_STATISTICS_STREAM + "'," +
+//                    "  'version':'" + VERSION + "'," +
+//                    "  'nickName': 'MediationStatsDataAgent'," +
+//                    "  'description': 'A sample for Mediator Statistics'," +
+//                    "  'metaData':[" +
+//                    "          {'name':'host','type':'STRING'}" +
+//                    "  ]," +
+//                    "  'payloadData':[" +
+//                    "          {'name':'direction','type':'STRING'}," +
+//                    "          {'name':'timestamp','type':'LONG'}," +
+//                    "          {'name':'resource_id','type':'STRING'}," +
+//                    "          {'name':'stats_type','type':'STRING'}," +
+//                    "          {'name':'max_processing_time','type':'LONG'}," +
+//                    "          {'name':'avg_processing_time','type':'DOUBLE'}," +
+//                    "          {'name':'min_processing_time','type':'LONG'}," +
+//                    "          {'name':'fault_count','type':'INT'}," +
+//                    "          {'name':'count','type':'INT'}" +
+//                    "  ]" +
+//                    "}");
+//        }
 
 
         //Publish event for a valid stream
@@ -135,11 +137,11 @@ public class MediatorStatAgent {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
             }
-            dataPublisher.stop();
+            dataPublisher.shutdownWithAgent();
         }
     }
 
-    private static void publishEvents(DataPublisher dataPublisher, String streamId) throws AgentException {
+    private static void publishEvents(DataPublisher dataPublisher, String streamId){
         Event eventOne = new Event(streamId, System.currentTimeMillis(), getMetadata(), null, getPayloadData());
         dataPublisher.publish(eventOne);
     }

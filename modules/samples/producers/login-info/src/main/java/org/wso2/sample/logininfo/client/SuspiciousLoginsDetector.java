@@ -17,15 +17,21 @@
 */
 package org.wso2.sample.logininfo.client;
 
-import org.wso2.carbon.databridge.agent.thrift.DataPublisher;
-import org.wso2.carbon.databridge.agent.thrift.exception.AgentException;
+import org.wso2.carbon.databridge.agent.AgentHolder;
+import org.wso2.carbon.databridge.agent.DataPublisher;
+import org.wso2.carbon.databridge.agent.exception.DataEndpointAgentConfigurationException;
+import org.wso2.carbon.databridge.agent.exception.DataEndpointAuthenticationException;
+import org.wso2.carbon.databridge.agent.exception.DataEndpointConfigurationException;
+import org.wso2.carbon.databridge.agent.exception.DataEndpointException;
 import org.wso2.carbon.databridge.commons.Event;
 import org.wso2.carbon.databridge.commons.exception.*;
+import org.wso2.carbon.databridge.commons.utils.DataBridgeCommonsUtils;
 
 import javax.security.sasl.AuthenticationException;
 import java.net.MalformedURLException;
 import java.net.SocketException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Random;
 
 public class SuspiciousLoginsDetector {
 
@@ -44,15 +50,17 @@ public class SuspiciousLoginsDetector {
 
 
     public static void main(String[] args)
-            throws AgentException, MalformedStreamDefinitionException,
+            throws MalformedStreamDefinitionException,
             StreamDefinitionException, DifferentStreamDefinitionAlreadyDefinedException,
             MalformedURLException,
             AuthenticationException, NoStreamDefinitionExistException,
             org.wso2.carbon.databridge.commons.exception.AuthenticationException,
-            TransportException, SocketException {
+            TransportException, SocketException, DataEndpointAuthenticationException, DataEndpointAgentConfigurationException, DataEndpointException, DataEndpointConfigurationException {
         System.out.println("Starting Login info Agent");
 
-        KeyStoreUtil.setTrustStoreParams();
+        DataPublisherUtil.setTrustStoreParams();
+
+        AgentHolder.setConfigPath(DataPublisherUtil.getAgentConfigPath());
 
         String host = args[0];
         String port = args[1];
@@ -63,27 +71,27 @@ public class SuspiciousLoginsDetector {
         //create data publisher
         DataPublisher dataPublisher = new DataPublisher("tcp://" + host + ":" + port, username, password);
 
-        String streamId1 = null;
-
-        try {
-            streamId1 = dataPublisher.findStream(STREAM_NAME1, VERSION1);
-            System.out.println("Stream already defined");
-
-        } catch (NoStreamDefinitionExistException e) {
-            System.out.println("Stream doesn't exist. Creating a new stream.");
-
-            streamId1 = dataPublisher.defineStream("{" +
-                    "  'name':'" + STREAM_NAME1 + "'," +
-                    "  'version':'" + VERSION1 + "'," +
-                    "  'nickName': 'Statistics'," +
-                    "  'description': 'login analyzer'," +
-                    "  'payloadData':[" +
-                    "          {'name':'user_name','type':'STRING'}," +
-                    "          {'name':'ip_address','type':'STRING'}," +
-                    "          {'name':'browser','type':'STRING'}" +
-                    "  ]" +
-                    "}");
-        }
+        String streamId1 = DataBridgeCommonsUtils.generateStreamId(STREAM_NAME1,VERSION1);
+//
+//        try {
+//            streamId1 = dataPublisher.findStream(STREAM_NAME1, VERSION1);
+//            System.out.println("Stream already defined");
+//
+//        } catch (NoStreamDefinitionExistException e) {
+//            System.out.println("Stream doesn't exist. Creating a new stream.");
+//
+//            streamId1 = dataPublisher.defineStream("{" +
+//                    "  'name':'" + STREAM_NAME1 + "'," +
+//                    "  'version':'" + VERSION1 + "'," +
+//                    "  'nickName': 'Statistics'," +
+//                    "  'description': 'login analyzer'," +
+//                    "  'payloadData':[" +
+//                    "          {'name':'user_name','type':'STRING'}," +
+//                    "          {'name':'ip_address','type':'STRING'}," +
+//                    "          {'name':'browser','type':'STRING'}" +
+//                    "  ]" +
+//                    "}");
+//        }
 
         //Publish event for a valid stream
         if (!streamId1.isEmpty()) {
@@ -98,12 +106,12 @@ public class SuspiciousLoginsDetector {
             } catch (InterruptedException e) {
                 //ignore
             }
-            dataPublisher.stop();
+            dataPublisher.shutdownWithAgent();
         }
     }
 
     private static void publishEvents(DataPublisher dataPublisher, String streamId, int eventLimit, int index)
-            throws AgentException {
+             {
 
         Random rand = new Random();
 

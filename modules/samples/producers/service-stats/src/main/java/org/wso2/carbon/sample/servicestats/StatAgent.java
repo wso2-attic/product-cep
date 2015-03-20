@@ -17,8 +17,12 @@
 */
 package org.wso2.carbon.sample.servicestats;
 
-import org.wso2.carbon.databridge.agent.thrift.DataPublisher;
-import org.wso2.carbon.databridge.agent.thrift.exception.AgentException;
+import org.wso2.carbon.databridge.agent.AgentHolder;
+import org.wso2.carbon.databridge.agent.DataPublisher;
+import org.wso2.carbon.databridge.agent.exception.DataEndpointAgentConfigurationException;
+import org.wso2.carbon.databridge.agent.exception.DataEndpointAuthenticationException;
+import org.wso2.carbon.databridge.agent.exception.DataEndpointConfigurationException;
+import org.wso2.carbon.databridge.agent.exception.DataEndpointException;
 import org.wso2.carbon.databridge.commons.Event;
 import org.wso2.carbon.databridge.commons.exception.*;
 
@@ -132,15 +136,17 @@ public class StatAgent {
     }
 
     public static void main(String[] args)
-            throws AgentException, MalformedStreamDefinitionException,
-                   StreamDefinitionException, DifferentStreamDefinitionAlreadyDefinedException,
-                   MalformedURLException,
-                   AuthenticationException, NoStreamDefinitionExistException,
-                   org.wso2.carbon.databridge.commons.exception.AuthenticationException,
-                   TransportException, SocketException {
+            throws MalformedStreamDefinitionException,
+            StreamDefinitionException, DifferentStreamDefinitionAlreadyDefinedException,
+            MalformedURLException,
+            AuthenticationException, NoStreamDefinitionExistException,
+            org.wso2.carbon.databridge.commons.exception.AuthenticationException,
+            TransportException, SocketException, DataEndpointAuthenticationException, DataEndpointAgentConfigurationException, DataEndpointException, DataEndpointConfigurationException {
         System.out.println("Starting Statistics Agent");
 
-        KeyStoreUtil.setTrustStoreParams();
+        DataPublisherUtil.setTrustStoreParams();
+
+        AgentHolder.setConfigPath(DataPublisherUtil.getAgentConfigPath());
 
         String host = args[0];
         String port = args[1];
@@ -154,35 +160,35 @@ public class StatAgent {
         String streamId1 = null;
 
 
-        try {
-            streamId1 = dataPublisher.findStream(STREAM_NAME1, VERSION1);
-            System.out.println("Stream already defined");
-
-        } catch (NoStreamDefinitionExistException e) {
-            streamId1 = dataPublisher.defineStream("{" +
-                                                   "  'name':'" + STREAM_NAME1 + "'," +
-                                                   "  'version':'" + VERSION1 + "'," +
-                                                   "  'nickName': 'Statistics'," +
-                                                   "  'description': 'Service statistics'," +
-                                                   "  'metaData':[" +
-                                                   "          {'name':'request_url','type':'STRING'}," +
-                                                   "          {'name':'remote_address','type':'STRING'}," +
-                                                   "          {'name':'content_type','type':'STRING'}," +
-                                                   "          {'name':'user_agent','type':'STRING'}," +
-                                                   "          {'name':'host','type':'STRING'}," +
-                                                   "          {'name':'referer','type':'STRING'}" +
-                                                   "  ]," +
-                                                   "  'payloadData':[" +
-                                                   "          {'name':'service_name','type':'STRING'}," +
-                                                   "          {'name':'operation_name','type':'STRING'}," +
-                                                   "          {'name':'timestamp','type':'LONG'}," +
-                                                   "          {'name':'response_time','type':'LONG'}," +
-                                                   "          {'name':'request_count','type':'INT'}," +
-                                                   "          {'name':'response_count','type':'INT'}," +
-                                                   "          {'name':'fault_count','type':'INT'}" +
-                                                   "  ]" +
-                                                   "}");
-        }
+//        try {
+//            streamId1 = dataPublisher.findStream(STREAM_NAME1, VERSION1);
+//            System.out.println("Stream already defined");
+//
+//        } catch (NoStreamDefinitionExistException e) {
+//            streamId1 = dataPublisher.defineStream("{" +
+//                                                   "  'name':'" + STREAM_NAME1 + "'," +
+//                                                   "  'version':'" + VERSION1 + "'," +
+//                                                   "  'nickName': 'Statistics'," +
+//                                                   "  'description': 'Service statistics'," +
+//                                                   "  'metaData':[" +
+//                                                   "          {'name':'request_url','type':'STRING'}," +
+//                                                   "          {'name':'remote_address','type':'STRING'}," +
+//                                                   "          {'name':'content_type','type':'STRING'}," +
+//                                                   "          {'name':'user_agent','type':'STRING'}," +
+//                                                   "          {'name':'host','type':'STRING'}," +
+//                                                   "          {'name':'referer','type':'STRING'}" +
+//                                                   "  ]," +
+//                                                   "  'payloadData':[" +
+//                                                   "          {'name':'service_name','type':'STRING'}," +
+//                                                   "          {'name':'operation_name','type':'STRING'}," +
+//                                                   "          {'name':'timestamp','type':'LONG'}," +
+//                                                   "          {'name':'response_time','type':'LONG'}," +
+//                                                   "          {'name':'request_count','type':'INT'}," +
+//                                                   "          {'name':'response_count','type':'INT'}," +
+//                                                   "          {'name':'fault_count','type':'INT'}" +
+//                                                   "  ]" +
+//                                                   "}");
+//        }
 
         //Publish event for a valid stream
         if (!streamId1.isEmpty()) {
@@ -198,12 +204,12 @@ public class StatAgent {
                 //ignore
             }
 
-            dataPublisher.stop();
+            dataPublisher.shutdown();
         }
     }
 
     private static void publishEvents(DataPublisher dataPublisher, String streamId, int eventLimit)
-            throws AgentException {
+             {
 
         Random rand = new Random();
 

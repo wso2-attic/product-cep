@@ -17,11 +17,13 @@
 */
 package org.wso2.carbon.sample.stockquote;
 
-import org.wso2.carbon.databridge.agent.thrift.DataPublisher;
-import org.wso2.carbon.databridge.agent.thrift.exception.AgentException;
-import org.wso2.carbon.databridge.commons.AttributeType;
-import org.wso2.carbon.databridge.commons.StreamDefinition;
+import org.wso2.carbon.databridge.agent.DataPublisher;
+import org.wso2.carbon.databridge.agent.exception.DataEndpointAgentConfigurationException;
+import org.wso2.carbon.databridge.agent.exception.DataEndpointAuthenticationException;
+import org.wso2.carbon.databridge.agent.exception.DataEndpointConfigurationException;
+import org.wso2.carbon.databridge.agent.exception.DataEndpointException;
 import org.wso2.carbon.databridge.commons.exception.*;
+import org.wso2.carbon.databridge.commons.utils.DataBridgeCommonsUtils;
 
 import javax.security.sasl.AuthenticationException;
 import java.net.MalformedURLException;
@@ -59,15 +61,15 @@ public class StockQuoteAgent {
 
 
     public static void main(String[] args)
-            throws AgentException, MalformedStreamDefinitionException,
+            throws MalformedStreamDefinitionException,
             StreamDefinitionException, DifferentStreamDefinitionAlreadyDefinedException,
             MalformedURLException,
             AuthenticationException, NoStreamDefinitionExistException,
             org.wso2.carbon.databridge.commons.exception.AuthenticationException,
-            TransportException, SocketException {
+            TransportException, SocketException, DataEndpointAuthenticationException, DataEndpointAgentConfigurationException, DataEndpointException, DataEndpointConfigurationException {
         System.out.println("Starting Statistics Agent");
         System.out.println("Starting Statistics Agent");
-        KeyStoreUtil.setTrustStoreParams();
+        DataPublisherUtil.setTrustStoreParams();
 
         host = args[0];
         port = args[1];
@@ -80,10 +82,11 @@ public class StockQuoteAgent {
         DataPublisher dataPublisher = new DataPublisher("tcp://" + host + ":" + port, username, password);
 
 
-        StreamDefinition streamDefinition = new StreamDefinition(STREAM_NAME1, VERSION1);
-        streamDefinition.addPayloadData("price", AttributeType.INT);
-        streamDefinition.addPayloadData("symbol", AttributeType.STRING);
-        String streamId = dataPublisher.defineStream(streamDefinition);
+//        StreamDefinition streamDefinition = new StreamDefinition(STREAM_NAME1, VERSION1);
+//        streamDefinition.addPayloadData("price", AttributeType.INT);
+//        streamDefinition.addPayloadData("symbol", AttributeType.STRING);
+//        String streamId = dataPublisher.defineStream(streamDefinition);
+        String streamId = DataBridgeCommonsUtils.generateStreamId(STREAM_NAME1, VERSION1);
 
 
         //Publish event for a valid stream
@@ -101,7 +104,7 @@ public class StockQuoteAgent {
                 //ignore
             }
 
-            dataPublisher.stop();
+            dataPublisher.shutdownWithAgent();
         }
     }
 

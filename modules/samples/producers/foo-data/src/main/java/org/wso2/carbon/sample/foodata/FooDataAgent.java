@@ -18,8 +18,12 @@
 package org.wso2.carbon.sample.foodata;
 
 import org.apache.log4j.Logger;
-import org.wso2.carbon.databridge.agent.thrift.DataPublisher;
-import org.wso2.carbon.databridge.agent.thrift.exception.AgentException;
+import org.wso2.carbon.databridge.agent.AgentHolder;
+import org.wso2.carbon.databridge.agent.DataPublisher;
+import org.wso2.carbon.databridge.agent.exception.DataEndpointAgentConfigurationException;
+import org.wso2.carbon.databridge.agent.exception.DataEndpointAuthenticationException;
+import org.wso2.carbon.databridge.agent.exception.DataEndpointConfigurationException;
+import org.wso2.carbon.databridge.agent.exception.DataEndpointException;
 import org.wso2.carbon.databridge.commons.Event;
 import org.wso2.carbon.databridge.commons.exception.*;
 
@@ -38,7 +42,7 @@ public class FooDataAgent {
     private static final String TYPE = "TYPE";
     private static final String[] HOST = {"127.0.0.1", "127.0.0.2", "127.0.0.3", "127.0.0.4"};
 
-    public static void main(String[] args) throws AgentException,
+    public static void main(String[] args) throws
             MalformedStreamDefinitionException,
             StreamDefinitionException,
             DifferentStreamDefinitionAlreadyDefinedException,
@@ -46,11 +50,14 @@ public class FooDataAgent {
             AuthenticationException,
             NoStreamDefinitionExistException,
             TransportException, SocketException,
-            org.wso2.carbon.databridge.commons.exception.AuthenticationException {
+            org.wso2.carbon.databridge.commons.exception.AuthenticationException, DataEndpointException, DataEndpointConfigurationException, DataEndpointAgentConfigurationException, DataEndpointAuthenticationException {
 
         System.out.println("Starting Foo Data Sample");
 
-        KeyStoreUtil.setTrustStoreParams();
+        DataPublisherUtil.setTrustStoreParams();
+
+        AgentHolder.setConfigPath(DataPublisherUtil.getAgentConfigPath());
+
 
         String mode = args[0];
         String host1 = args[1];
@@ -103,31 +110,31 @@ public class FooDataAgent {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
         }
-        dataPublisher1.stop();
-        dataPublisher2.stop();
+        dataPublisher1.shutdown();
+        dataPublisher2.shutdownWithAgent();
     }
 
 
-    private static DataPublisher createDataPublisher(String host1, String port1, String username, String password) throws MalformedURLException, AgentException, org.wso2.carbon.databridge.commons.exception.AuthenticationException, TransportException, MalformedStreamDefinitionException, StreamDefinitionException, DifferentStreamDefinitionAlreadyDefinedException {
+    private static DataPublisher createDataPublisher(String host1, String port1, String username, String password) throws MalformedURLException, org.wso2.carbon.databridge.commons.exception.AuthenticationException, TransportException, MalformedStreamDefinitionException, StreamDefinitionException, DifferentStreamDefinitionAlreadyDefinedException, DataEndpointAuthenticationException, DataEndpointAgentConfigurationException, DataEndpointException, DataEndpointConfigurationException {
         DataPublisher dataPublisher = new DataPublisher("tcp://" + host1 + ":" + port1, username, password);
-        String streamId = dataPublisher.defineStream("{" +
-                "  'name':'" + FOO_DATA_STREAM + "'," +
-                "  'version':'" + VERSION + "'," +
-                "  'metaData':[" +
-                "          {'name':'host','type':'STRING'}" +
-                "  ]," +
-                "  'payloadData':[" +
-                "          {'name':'data','type':'STRING'}," +
-                "          {'name':'type','type':'STRING'}," +
-                "          {'name':'timestamp','type':'LONG'}" +
-                "  ]" +
-                "}");
+//        String streamId = dataPublisher.defineStream("{" +
+//                "  'name':'" + FOO_DATA_STREAM + "'," +
+//                "  'version':'" + VERSION + "'," +
+//                "  'metaData':[" +
+//                "          {'name':'host','type':'STRING'}" +
+//                "  ]," +
+//                "  'payloadData':[" +
+//                "          {'name':'data','type':'STRING'}," +
+//                "          {'name':'type','type':'STRING'}," +
+//                "          {'name':'timestamp','type':'LONG'}" +
+//                "  ]" +
+//                "}");
 
-        System.out.println("Stream ID: " + streamId);
+//        System.out.println("Stream ID: " + streamId);
         return dataPublisher;
     }
 
-    private static Event createEvent() throws AgentException {
+    private static Event createEvent()  {
         return new Event(FOO_DATA_STREAM + ":" + VERSION, System.currentTimeMillis(), getMetadata(), null, getPayloadData());
     }
 

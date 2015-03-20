@@ -15,24 +15,29 @@
 * specific language governing permissions and limitations
 * under the License.
 */
-package org.wso2.carbon.sample.kpidefinition;
+package org.wso2.carbon.sample.servicestats;
+
 import java.io.File;
 
-public class KeyStoreUtil {
+public class DataPublisherUtil {
 
-    static  File filePath = new File("../../../repository/resources/security");
+    static File filePath = new File(".." + File.separator + ".." + File.separator + ".." + File.separator + "repository" + File.separator + "resources" + File.separator + "security");
 
     public static void setTrustStoreParams() {
         String trustStore = filePath.getAbsolutePath();
-        System.setProperty("javax.net.ssl.trustStore", trustStore + "/client-truststore.jks");
+        System.setProperty("javax.net.ssl.trustStore", trustStore + "" + File.separator + "client-truststore.jks");
         System.setProperty("javax.net.ssl.trustStorePassword", "wso2carbon");
 
     }
 
     public static void setKeyStoreParams() {
         String keyStore = filePath.getAbsolutePath();
-        System.setProperty("Security.KeyStore.Location", keyStore + "/wso2carbon.jks");
+        System.setProperty("Security.KeyStore.Location", keyStore + "" + File.separator + "wso2carbon.jks");
         System.setProperty("Security.KeyStore.Password", "wso2carbon");
 
+    }
+
+    public static String getAgentConfigPath() {
+        return ".." + File.separator + ".." + File.separator + ".." + File.separator + "repository" + File.separator + "conf" + File.separator + "data-bridge" + File.separator + "data-agent-config.xml";
     }
 }

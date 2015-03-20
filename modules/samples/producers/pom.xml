@@ -39,7 +39,7 @@
         <module>httpd-logs</module>
         <module>kpi-definition</module>
         <module>mediation-stats</module>
-        <module>performance-test</module>
+        <!--<module>performance-test</module>-->
         <module>purchase-info</module>
         <module>pizza-shop</module>
         <module>twitter-feed</module>

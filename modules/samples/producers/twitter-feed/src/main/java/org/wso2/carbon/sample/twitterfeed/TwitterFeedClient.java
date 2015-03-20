@@ -17,11 +17,14 @@
 */
 package org.wso2.carbon.sample.twitterfeed;
 
-import org.wso2.carbon.databridge.agent.thrift.DataPublisher;
-import org.wso2.carbon.databridge.agent.thrift.exception.AgentException;
-import org.wso2.carbon.databridge.commons.AttributeType;
-import org.wso2.carbon.databridge.commons.StreamDefinition;
+import org.wso2.carbon.databridge.agent.AgentHolder;
+import org.wso2.carbon.databridge.agent.DataPublisher;
+import org.wso2.carbon.databridge.agent.exception.DataEndpointAgentConfigurationException;
+import org.wso2.carbon.databridge.agent.exception.DataEndpointAuthenticationException;
+import org.wso2.carbon.databridge.agent.exception.DataEndpointConfigurationException;
+import org.wso2.carbon.databridge.agent.exception.DataEndpointException;
 import org.wso2.carbon.databridge.commons.exception.*;
+import org.wso2.carbon.databridge.commons.utils.DataBridgeCommonsUtils;
 
 import java.net.MalformedURLException;
 
@@ -30,12 +33,15 @@ public class TwitterFeedClient {
     private static final int MAX_ITERATIONS = 1;
 
     public static void main(String[] args)
-            throws AgentException, MalformedURLException,
+            throws MalformedURLException,
             AuthenticationException, TransportException, MalformedStreamDefinitionException,
             StreamDefinitionException, DifferentStreamDefinitionAlreadyDefinedException,
-            InterruptedException {
+            InterruptedException, DataEndpointAuthenticationException, DataEndpointAgentConfigurationException, DataEndpointException, DataEndpointConfigurationException {
 
-        KeyStoreUtil.setTrustStoreParams();
+        DataPublisherUtil.setTrustStoreParams();
+
+        AgentHolder.setConfigPath(DataPublisherUtil.getAgentConfigPath());
+
         //according to the convention the authentication port will be 7611+100= 7711 and its host will be the same
         String host = args[0];
         String port = args[1];
@@ -46,15 +52,15 @@ public class TwitterFeedClient {
 
         DataPublisher dataPublisher = new DataPublisher("tcp://" + host + ":" + port, username, password);
 
-        String streamId;
-        try {
-            streamId = dataPublisher.findStream("twitterFeed", "1.0.0");
-        } catch (NoStreamDefinitionExistException e) {
-            StreamDefinition streamDefinition = new StreamDefinition("twitterFeed", "1.0.0");
-            streamDefinition.addPayloadData("company", AttributeType.STRING);
-            streamDefinition.addPayloadData("wordCount", AttributeType.INT);
-            streamId = dataPublisher.defineStream(streamDefinition);
-        }
+        String streamId= DataBridgeCommonsUtils.generateStreamId("twitterFeed", "1.0.0");
+//        try {
+//            streamId = dataPublisher.findStream("twitterFeed", "1.0.0");
+//        } catch (NoStreamDefinitionExistException e) {
+//            StreamDefinition streamDefinition = new StreamDefinition("twitterFeed", "1.0.0");
+//            streamDefinition.addPayloadData("company", AttributeType.STRING);
+//            streamDefinition.addPayloadData("wordCount", AttributeType.INT);
+//            streamId = dataPublisher.defineStream(streamDefinition);
+//        }
         Thread.sleep(1000);
 
         for (int i = 0; i < MAX_ITERATIONS; i++) {
@@ -84,6 +90,6 @@ public class TwitterFeedClient {
             Thread.sleep(3000);
         }
 
-        dataPublisher.stop();
+        dataPublisher.shutdownWithAgent();
     }
 }
