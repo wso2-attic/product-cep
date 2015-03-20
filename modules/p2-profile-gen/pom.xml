@@ -241,10 +241,6 @@
                                     org.wso2.carbon.event-processing:org.wso2.carbon.event.processing.application.deployer.feature:${carbon.event-processing.version}
                                 </featureArtifactDef>
 
-                                <!--cep adapters-->
-                                <featureArtifactDef>
-                                    org.wso2.carbon.event-processing:org.wso2.carbon.event.output.adapter.email.server.feature:${carbon.event-processing.version}
-                                </featureArtifactDef>
 
                                 <!-- cep ui features -->
                                 <featureArtifactDef>
@@ -475,11 +471,6 @@
                                     <version>${carbon.event-processing.version}</version>
                                 </feature>
 
-                                <!--cep adapters-->
-                                <feature>
-                                    <id>org.wso2.carbon.event.output.adapter.email.server.feature.group</id>
-                                    <version>${carbon.event-processing.version}</version>
-                                </feature>
 
                                 <!-- cep ui features -->
                                 <feature>
