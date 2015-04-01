@@ -23,6 +23,10 @@ import org.apache.axis2.client.ServiceClient;
 import org.wso2.appserver.integration.common.clients.*;
 import org.wso2.carbon.event.stream.stub.types.EventStreamAttributeDto;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.rmi.RemoteException;
 
 public class ConfigurationUtil {
@@ -126,6 +130,13 @@ public class ConfigurationUtil {
 
     public void removeActiveEventProcessor() throws RemoteException {
         eventProcessorAdminServiceClient.removeActiveExecutionPlan("TestExecutionPlan1");
+    }
+
+    public static String readFile(String path, Charset encoding)
+            throws IOException{
+        byte[] encoded = new byte[0];
+        encoded = Files.readAllBytes(Paths.get(path));
+        return new String(encoded, encoding);
     }
 
     /*

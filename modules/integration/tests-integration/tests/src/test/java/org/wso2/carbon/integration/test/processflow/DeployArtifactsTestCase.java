@@ -74,8 +74,8 @@ public class DeployArtifactsTestCase extends CEPIntegrationTest{
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), ++eventStreamCount);
 
         log.info("=======================Adding an execution plan ======================= ");
-        String executionPlanConfig = getXMLArtifactConfiguration("DeployArtifactsTestCase", "testPlan.xml");
-        eventProcessorAdminServiceClient.addExecutionPlan(executionPlanConfig);
+        String executionPlan = getExecutionPlanFromFile("DeployArtifactsTestCase", "testPlan.siddhiql");
+        eventProcessorAdminServiceClient.addExecutionPlan(executionPlan);
         Assert.assertEquals(eventProcessorAdminServiceClient.getExecutionPlanConfigurationCount(), ++executionPlanCount);
 
         Thread.sleep(1000);
@@ -93,7 +93,7 @@ public class DeployArtifactsTestCase extends CEPIntegrationTest{
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), eventPublisherCount - 1);
         eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("PizzaOrder.xml");
         eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("PizzaDeliveryNofication.xml");
-        eventProcessorAdminServiceClient.removeInactiveExecutionPlan("testPlan.xml");
+        eventProcessorAdminServiceClient.removeInactiveExecutionPlan("testPlan.siddhiql");
         Assert.assertEquals(eventProcessorAdminServiceClient.getExecutionPlanConfigurationCount(), executionPlanCount - 1);
     }
 

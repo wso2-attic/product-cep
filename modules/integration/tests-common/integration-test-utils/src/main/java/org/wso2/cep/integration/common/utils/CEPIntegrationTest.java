@@ -36,6 +36,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.regex.Matcher;
 
 public abstract class CEPIntegrationTest {
@@ -112,6 +113,20 @@ public abstract class CEPIntegrationTest {
         relativeFilePath = relativeFilePath.replaceAll("[\\\\/]", Matcher.quoteReplacement(File.separator));
         JSONParser jsonParser = new JSONParser();
         return jsonParser.parse(new FileReader(relativeFilePath)).toString();
+    }
+
+    /**
+     * Returns the execution plan, read from the given file path.
+     * @param testCaseFolderName testCaseFolderName Name of the folder created under /artifacts/CEP for the particular test case.
+     * @param executionPlanFileName Execution plan file name, relative to the test artifacts folder.
+     * @return execution plan as a string.
+     * @throws Exception
+     */
+    protected String getExecutionPlanFromFile(String testCaseFolderName, String executionPlanFileName)
+            throws Exception {
+        String relativeFilePath = getTestArtifactLocation() + "/artifacts/CEP/"+testCaseFolderName+"/"+executionPlanFileName;
+        relativeFilePath = relativeFilePath.replaceAll("[\\\\/]", Matcher.quoteReplacement(File.separator));
+        return ConfigurationUtil.readFile(relativeFilePath, StandardCharsets.UTF_8) ;
     }
 
     public OMElement loadClasspathResourceXML(String path) throws FileNotFoundException, XMLStreamException {
