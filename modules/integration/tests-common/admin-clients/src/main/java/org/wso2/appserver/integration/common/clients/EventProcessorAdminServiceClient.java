@@ -82,20 +82,10 @@ public class EventProcessorAdminServiceClient {
         }
     }
 
-    public void addExecutionPlan(ExecutionPlanConfigurationDto executionPlanConfigurationDto)
+    public void addExecutionPlan(String executionPlan)
             throws RemoteException {
         try {
-            eventProcessorAdminServiceStub.deployExecutionPlanConfiguration(executionPlanConfigurationDto);
-        } catch (RemoteException e) {
-            log.error("RemoteException", e);
-            throw new RemoteException();
-        }
-    }
-
-    public void addExecutionPlan(String executionPlanConfigurationXml)
-            throws RemoteException {
-        try {
-            eventProcessorAdminServiceStub.deployExecutionPlanConfigurationFromConfigXml(executionPlanConfigurationXml);
+            eventProcessorAdminServiceStub.deployExecutionPlan(executionPlan);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
             throw new RemoteException(e.getMessage(),e);
@@ -105,7 +95,7 @@ public class EventProcessorAdminServiceClient {
     public void removeActiveExecutionPlan(String planName)
             throws RemoteException {
         try {
-            eventProcessorAdminServiceStub.undeployActiveExecutionPlanConfiguration(planName);
+            eventProcessorAdminServiceStub.undeployActiveExecutionPlan(planName);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
             throw new RemoteException();
@@ -115,17 +105,7 @@ public class EventProcessorAdminServiceClient {
     public void removeInactiveExecutionPlan(String filePath)
             throws RemoteException {
         try {
-            eventProcessorAdminServiceStub.undeployInactiveExecutionPlanConfiguration(filePath);
-        } catch (RemoteException e) {
-            log.error("RemoteException", e);
-            throw new RemoteException();
-        }
-    }
-
-    public ExecutionPlanConfigurationDto getExecutionPlan(String executionPlanName)
-            throws RemoteException {
-        try {
-            return eventProcessorAdminServiceStub.getActiveExecutionPlanConfiguration(executionPlanName);
+            eventProcessorAdminServiceStub.undeployInactiveExecutionPlan(filePath);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
             throw new RemoteException();
