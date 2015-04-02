@@ -36,7 +36,6 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.util.regex.Matcher;
 
 public abstract class CEPIntegrationTest {
@@ -126,7 +125,7 @@ public abstract class CEPIntegrationTest {
             throws Exception {
         String relativeFilePath = getTestArtifactLocation() + "/artifacts/CEP/"+testCaseFolderName+"/"+executionPlanFileName;
         relativeFilePath = relativeFilePath.replaceAll("[\\\\/]", Matcher.quoteReplacement(File.separator));
-        return ConfigurationUtil.readFile(relativeFilePath, StandardCharsets.UTF_8) ;
+        return ConfigurationUtil.readFile(relativeFilePath) ;
     }
 
     public OMElement loadClasspathResourceXML(String path) throws FileNotFoundException, XMLStreamException {
