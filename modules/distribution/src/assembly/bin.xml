@@ -557,7 +557,19 @@
             <fileMode>644</fileMode>
         </file>
 
+        <!-- Including rdbms configuration file for event simulator -->
+       <file>
+           <source>
+               ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/cep/rdbms-configuration.xml
+           </source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/cep
+            </outputDirectory>
+            <filtered>true</filtered>
+        </file>
+
+
     </files>
+
 
     <!-- Adding rampart mar -->
     <dependencySets>
