@@ -556,6 +556,7 @@
             <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
+
         <!-- Including rdbms configuration file for event simulator -->
        <file>
            <source>
@@ -568,7 +569,6 @@
 
 
     </files>
-
 
     <!-- Adding rampart mar -->
     <dependencySets>
