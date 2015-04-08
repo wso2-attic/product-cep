@@ -242,7 +242,7 @@
                                     org.wso2.carbon.event-processing:org.wso2.carbon.event.simulator.feature:${carbon.event-processing.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
-                                    org.wso2.carbon.event-processing:org.wso2.carbon.event.processing.application.deployer.feature:${carbon.event-processing.version}
+                                    org.wso2.carbon.analytics-common:org.wso2.carbon.event.application.deployer.feature:${carbon.analytics-common.version}
                                 </featureArtifactDef>
 
 
@@ -476,8 +476,8 @@
                                     <version>${carbon.event-processing.version}</version>
                                 </feature>
                                 <feature>
-                                    <id>org.wso2.carbon.event.processing.application.deployer.feature.group</id>
-                                    <version>${carbon.event-processing.version}</version>
+                                    <id>org.wso2.carbon.event.application.deployer.feature.group</id>
+                                    <version>${carbon.analytics-common.version}</version>
                                 </feature>
 
 
