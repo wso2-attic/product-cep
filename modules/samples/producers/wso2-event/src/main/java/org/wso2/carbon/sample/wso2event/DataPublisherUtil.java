@@ -1,21 +1,18 @@
 /*
-*  Copyright (c) 2005-2014, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
-*
-*  WSO2 Inc. licenses this file to you under the Apache License,
-*  Version 2.0 (the "License"); you may not use this file except
-*  in compliance with the License.
-*  You may obtain a copy of the License at
-*
-*    http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing,
-* software distributed under the License is distributed on an
-* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-* KIND, either express or implied.  See the License for the
-* specific language governing permissions and limitations
-* under the License.
-*/
-package org.wso2.carbon.sample.server;
+ * Copyright (c) 2005 - 2014, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy
+ * of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed
+ * under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+ * CONDITIONS OF ANY KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
+package org.wso2.carbon.sample.wso2event;
 
 import org.apache.log4j.Logger;
 import org.wso2.carbon.databridge.commons.StreamDefinition;
@@ -23,48 +20,63 @@ import org.wso2.carbon.databridge.commons.exception.MalformedStreamDefinitionExc
 import org.wso2.carbon.databridge.commons.utils.EventDefinitionConverterUtils;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-public class WSO2EventServerUtil {
-    private static Logger log = Logger.getLogger(TestWso2EventServer.class);
+public class DataPublisherUtil {
+
+    private static Logger log = Logger.getLogger(DataPublisherUtil.class);
 
     static File securityFile = new File(".." + File.separator + ".." + File.separator + ".." + File.separator + "repository" + File.separator + "resources" + File.separator + "security");
     static String configDirectoryPath = ".." + File.separator + ".." + File.separator + ".." + File.separator + "repository" + File.separator + "deployment" + File.separator + "server" + File.separator + "eventstreams";
-    static String sampleDirectoryPath = ".." + File.separator + ".." + File.separator + ".." + File.separator + "wso2cep-4.0.0-SNAPSHOT" + File.separator + "samples" + File.separator + "artifacts" + File.separator + "sampleNumber" + File.separator + "eventstreams";
+    static String sampleDirectoryPath = ".." + File.separator + ".." + File.separator + ".." + File.separator + "samples" + File.separator + "artifacts" + File.separator + "sampleNumber" + File.separator;
+    static String dataAgentConfigPath = ".." + File.separator + ".." + File.separator + ".." + File.separator + "repository" + File.separator + "conf" + File.separator + "data-bridge" + File.separator + "data-agent-config.xml";
 
     public static void setTrustStoreParams() {
         String trustStore = securityFile.getAbsolutePath();
         System.setProperty("javax.net.ssl.trustStore", trustStore + "" + File.separator + "client-truststore.jks");
         System.setProperty("javax.net.ssl.trustStorePassword", "wso2carbon");
-
     }
 
     public static void setKeyStoreParams() {
         String keyStore = securityFile.getAbsolutePath();
         System.setProperty("Security.KeyStore.Location", keyStore + "" + File.separator + "wso2carbon.jks");
         System.setProperty("Security.KeyStore.Password", "wso2carbon");
-
     }
 
-    public static String getDataBridgeConfigPath() {
-        File filePath = new File("src" + File.separator + "test" + File.separator + "resources");
-        if (!filePath.exists()) {
-            filePath = new File("src" + File.separator + "main" + File.separator + "resources");
-        }
-        if (!filePath.exists()) {
-            filePath = new File("test" + File.separator + "resources");
-        }
-        if (!filePath.exists()) {
-            filePath = new File("resources");
-        }
-        if (!filePath.exists()) {
-            filePath = new File("test" + File.separator + "resources");
-        }
-        return filePath.getAbsolutePath() + File.separator + "data-bridge-config.xml";
+    public static String getDataAgentConfigPath() {
+        return new File(dataAgentConfigPath).getAbsolutePath();
     }
 
-    public static List<StreamDefinition> loadStreamDefinitions(String sampleNumber) {
+    public static String getEventFilePath(String sampleNumber, String streamId, String filePath) throws Exception {
+        if (sampleNumber != null && sampleNumber.length() == 0) {
+            sampleNumber = null;
+        }
+
+        if (filePath != null && filePath.length() == 0) {
+            filePath = null;
+        }
+
+        String resultingFilePath;
+        if (filePath != null && sampleNumber == null) {
+            resultingFilePath = filePath;
+        } else if (filePath == null && sampleNumber != null) {
+            resultingFilePath = sampleDirectoryPath.replace("sampleNumber", sampleNumber) + streamId.replaceAll(":", "_").replaceAll("\\.", "_") + ".csv";
+        } else {
+            throw new Exception("In sampleNumber:'" + sampleNumber + "' and filePath:'" + filePath + "' one must be null and other not null");
+        }
+        File file = new File(resultingFilePath);
+        if (!file.isFile()) {
+            throw new Exception("'" + resultingFilePath + "' is not a file");
+
+        }
+        if (!file.exists()) {
+            throw new Exception("file '" + resultingFilePath + "' does not exist");
+        }
+        return resultingFilePath;
+    }
+
+    public static Map<String, StreamDefinition> loadStreamDefinitions(String sampleNumber) {
         String directoryPath;
         if (sampleNumber.length() != 0) {
             directoryPath = sampleDirectoryPath.replace("sampleNumber", sampleNumber);
@@ -72,7 +84,7 @@ public class WSO2EventServerUtil {
             directoryPath = configDirectoryPath;
         }
         File directory = new File(directoryPath);
-        List<StreamDefinition> streamDefinitions = new ArrayList<StreamDefinition>();
+        Map<String, StreamDefinition> streamDefinitions = new HashMap<String, StreamDefinition>();
         if (!directory.exists()) {
             log.error("Cannot load stream definitions from " + directory.getAbsolutePath() + " directory not exist");
             return streamDefinitions;
@@ -97,7 +109,7 @@ public class WSO2EventServerUtil {
                             stringBuilder.append(line).append("\n");
                         }
                         StreamDefinition streamDefinition = EventDefinitionConverterUtils.convertFromJson(stringBuilder.toString().trim());
-                        streamDefinitions.add(streamDefinition);
+                        streamDefinitions.put(streamDefinition.getStreamId(), streamDefinition);
                     } catch (FileNotFoundException e) {
                         log.error("Error in reading file " + fileEntry.getName(), e);
                     } catch (IOException e) {
@@ -120,6 +132,5 @@ public class WSO2EventServerUtil {
         return streamDefinitions;
 
     }
-
 
 }

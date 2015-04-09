@@ -41,11 +41,13 @@
             <include name="slf4j.api_*.jar"/>
             <include name="json_*.jar"/>
             <include name="org.wso2.carbon.databridge.commons.thrift_*.jar"/>
+            <include name="org.wso2.carbon.databridge.commons.binary_*.jar"/>
             <include name="org.wso2.carbon.user.core_*.jar"/>
             <include name="org.wso2.carbon.user.api_*.jar"/>
             <include name="org.wso2.carbon.databridge.commons_*.jar"/>
             <include name="org.wso2.carbon.databridge.core_*.jar"/>
             <include name="org.wso2.carbon.databridge.receiver.thrift_*.jar"/>
+            <include name="org.wso2.carbon.databridge.receiver.binary_*.jar"/>
             <include name="org.wso2.carbon.base_*.jar"/>
             <include name="org.wso2.carbon.identity.authentication_*.jar"/>
         </fileset>
@@ -77,7 +79,6 @@
 
     <target name="run" depends="compile">
         <echo>To configure host, port and events use -Dhost=xxxx -Dport=xxx -Dprotocol=thrift/binary -Dsn=sampleNumber</echo>
-        <echo>Sending to : http://${host}:${port}</echo>
         <java classname="org.wso2.carbon.sample.server.TestWso2EventServer"
               classpathref="javac.classpath" fork="true">
             <arg value="${host}"/>

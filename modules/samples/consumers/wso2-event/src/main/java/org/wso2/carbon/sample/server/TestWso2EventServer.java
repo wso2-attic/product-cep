@@ -95,6 +95,7 @@ public class TestWso2EventServer {
 
         for (StreamDefinition streamDefinition : WSO2EventServerUtil.loadStreamDefinitions(sampleNumber)) {
             streamDefinitionStore.saveStreamDefinitionToStore(streamDefinition, -1234);
+            log.info("StreamDefinition of '"+streamDefinition.getStreamId()+"' added to store");
         }
 
         databridge.subscribe(new AgentCallback() {
@@ -117,10 +118,7 @@ public class TestWso2EventServer {
 
         });
 
-
-        log.info("Test Server starting on " + host);
         if (protocol.equalsIgnoreCase("binary")) {
-
             binaryDataReceiver = new BinaryDataReceiver(new BinaryDataReceiverConfiguration(receiverPort + 100, receiverPort), databridge);
         } else {
             thriftDataReceiver = new ThriftDataReceiver(receiverPort, databridge);
