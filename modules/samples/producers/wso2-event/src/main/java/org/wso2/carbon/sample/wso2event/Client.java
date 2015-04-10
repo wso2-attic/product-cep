@@ -59,7 +59,7 @@ public class Client {
             if (streamDefinition == null) {
                 throw new Exception("StreamDefinition not available for stream " + streamId);
             } else {
-                log.info("StreamDefinition used :"+streamDefinition);
+                log.info("StreamDefinition used :" + streamDefinition);
             }
 
             filePath = DataPublisherUtil.getEventFilePath(sampleNumber, streamId, filePath);
@@ -79,9 +79,9 @@ public class Client {
 
     private static void publishEvents(DataPublisher dataPublisher, StreamDefinition streamDefinition, String filePath, int events, int delay) {
 
-        int metaSize = streamDefinition.getMetaData().size();
-        int correlationSize = streamDefinition.getCorrelationData().size();
-        int payloadSize = streamDefinition.getPayloadData().size();
+        int metaSize = streamDefinition.getMetaData() == null ? 0 : streamDefinition.getMetaData().size();
+        int correlationSize = streamDefinition.getCorrelationData() == null ? 0 : streamDefinition.getCorrelationData().size();
+        int payloadSize = streamDefinition.getPayloadData() == null ? 0 : streamDefinition.getPayloadData().size();
 
         BufferedReader bufferedReader = null;
         try {
@@ -98,6 +98,7 @@ public class Client {
                         meta[i] = convertData(data[i], attribute);
                     }
                 }
+
                 Object[] correlation = null;
                 if (correlationSize > 0) {
                     correlation = new Object[correlationSize];
@@ -107,6 +108,7 @@ public class Client {
                         correlation[i] = convertData(data[metaSize + i], attribute);
                     }
                 }
+
                 Object[] payload = null;
                 if (payloadSize > 0) {
                     payload = new Object[payloadSize];
