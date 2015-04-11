@@ -108,31 +108,13 @@
             </dependency>
 
             <!--Carbon-event-processing-->
-            <dependency>
-                <groupId>org.wso2.carbon.event-processing</groupId>
-                <artifactId>org.wso2.carbon.event.receiver.stub</artifactId>
-                <version>${carbon.event-processing.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.carbon.event-processing</groupId>
-                <artifactId>org.wso2.carbon.event.publisher.stub</artifactId>
-                <version>${carbon.event-processing.version}</version>
-            </dependency>
+
             <dependency>
                 <groupId>org.wso2.carbon.event-processing</groupId>
                 <artifactId>org.wso2.carbon.event.processor.stub</artifactId>
                 <version>${carbon.event-processing.version}</version>
             </dependency>
-            <dependency>
-                <groupId>org.wso2.carbon.event-processing</groupId>
-                <artifactId>org.wso2.carbon.event.tracer.stub</artifactId>
-                <version>${carbon.event-processing.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.carbon.event-processing</groupId>
-                <artifactId>org.wso2.carbon.event.statistics.stub</artifactId>
-                <version>${carbon.event-processing.version}</version>
-            </dependency>
+
 
             <!--Carbon kernel-->
             <dependency>
@@ -264,7 +246,26 @@
                 <artifactId>org.wso2.carbon.event.stream.stub</artifactId>
                 <version>${carbon.analytics-common.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>org.wso2.carbon.analytics-common</groupId>
+                <artifactId>org.wso2.carbon.event.receiver.stub</artifactId>
+                <version>${carbon.analytics-common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.analytics-common</groupId>
+                <artifactId>org.wso2.carbon.event.publisher.stub</artifactId>
+                <version>${carbon.analytics-common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.analytics-common</groupId>
+                <artifactId>org.wso2.carbon.event.tracer.stub</artifactId>
+                <version>${carbon.analytics-common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.analytics-common</groupId>
+                <artifactId>org.wso2.carbon.event.statistics.stub</artifactId>
+                <version>${carbon.analytics-common.version}</version>
+            </dependency>
 
             <!--Third party-->
             <dependency>
