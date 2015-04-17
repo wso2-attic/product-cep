@@ -1,5 +1,5 @@
 /*
-*  Copyright (c) 2005-2014, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+*  Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
 *
 *  WSO2 Inc. licenses this file to you under the Apache License,
 *  Version 2.0 (the "License"); you may not use this file except
@@ -17,43 +17,60 @@
 */
 package org.wso2.carbon.integration.test.client;
 
+import org.apache.log4j.Logger;
 import org.testng.Assert;
+import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
 import org.wso2.carbon.databridge.commons.Credentials;
 import org.wso2.carbon.databridge.commons.Event;
 import org.wso2.carbon.databridge.commons.StreamDefinition;
-import org.wso2.carbon.databridge.commons.thrift.utils.HostAddressFinder;
+import org.wso2.carbon.databridge.commons.exception.MalformedStreamDefinitionException;
+import org.wso2.carbon.databridge.commons.utils.EventDefinitionConverterUtils;
 import org.wso2.carbon.databridge.core.AgentCallback;
 import org.wso2.carbon.databridge.core.DataBridge;
 import org.wso2.carbon.databridge.core.Utils.AgentSession;
+import org.wso2.carbon.databridge.core.definitionstore.AbstractStreamDefinitionStore;
 import org.wso2.carbon.databridge.core.definitionstore.InMemoryStreamDefinitionStore;
 import org.wso2.carbon.databridge.core.exception.DataBridgeException;
+import org.wso2.carbon.databridge.core.exception.StreamDefinitionStoreException;
 import org.wso2.carbon.databridge.core.internal.authentication.AuthenticationHandler;
 import org.wso2.carbon.databridge.receiver.thrift.ThriftDataReceiver;
 import org.wso2.carbon.user.api.UserStoreException;
 
-import java.net.SocketException;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.regex.Matcher;
 
-public class TestAgentServer {
-//public class TestAgentServer implements Runnable {
-/*
-//    private Logger log = Logger.getLogger(TestAgentServer.class);
+public class TestAgentServer implements Runnable {
+    private Logger log = Logger.getLogger(TestAgentServer.class);
     private ThriftDataReceiver thriftDataReceiver;
     private boolean eventReceived = false;
     private AtomicLong msgCount = new AtomicLong(0);
+    private final String FILE_STREAM_DEFINTIONS_EXT = ".json";
 
-    public void startServer() throws DataBridgeException {
+    AbstractStreamDefinitionStore streamDefinitionStore = new InMemoryStreamDefinitionStore();
+    String testCaseResourceFolderName;
+
+    public TestAgentServer(String testCaseResourceFolderName){
+        this.testCaseResourceFolderName = testCaseResourceFolderName;
+    }
+    public void startServer() throws DataBridgeException, StreamDefinitionStoreException {
         msgCount.set(0);
         start(7661);
     }
 
-    public void start(int receiverPort) throws DataBridgeException {
+    public void start(int receiverPort) throws DataBridgeException,StreamDefinitionStoreException {
         KeyStoreUtil.setKeyStoreParams();
         DataBridge databridge = new DataBridge(new AuthenticationHandler() {
             @Override
             public boolean authenticate(String userName,
-                                        String password) {
+                    String password) {
                 return true;// allays authenticate to true
             }
 
@@ -77,8 +94,13 @@ public class TestAgentServer {
 
             }
 
-        }, new InMemoryStreamDefinitionStore());
+        }, streamDefinitionStore, getResourceFilePath("TestAgentServer","data-bridge-config.xml"));
         thriftDataReceiver = new ThriftDataReceiver(receiverPort, databridge);
+
+        for (StreamDefinition streamDefinition : loadStreamDefinitions()) {
+            streamDefinitionStore.saveStreamDefinitionToStore(streamDefinition, -1234);
+            log.info("StreamDefinition of '"+streamDefinition.getStreamId()+"' added to store");
+        }
 
         databridge.subscribe(new AgentCallback() {
 
@@ -94,21 +116,16 @@ public class TestAgentServer {
 
             @Override
             public void receive(List<Event> eventList, Credentials credentials) {
-                System.out.println("eventListSize=" + eventList.size() + " eventList " + eventList + " for username " + credentials.getUsername());
+                System.out.println("eventListSize=" + eventList.size() + " eventList " + eventList + " for username "
+                        + credentials.getUsername());
                 eventReceived = true;
                 msgCount.addAndGet(eventList.size());
             }
 
         });
+        thriftDataReceiver.start("0.0.0.0");
+        System.out.println("Test Server Started");
 
-        try {
-            String address = HostAddressFinder.findAddress("localhost");
-            System.out.println("Test Server starting on " + address);
-            thriftDataReceiver.start(address);
-            System.out.println("Test Server Started");
-        } catch (SocketException e) {
-            System.out.println("Test Server not started !"+ e);
-        }
     }
 
     public void stop() {
@@ -123,10 +140,86 @@ public class TestAgentServer {
             startServer();
         } catch (DataBridgeException e) {
             e.printStackTrace();
+        } catch (StreamDefinitionStoreException e) {
+            e.printStackTrace();
         }
     }
 
     public long getMsgCount() {
         return msgCount.get();
-    }*/
+    }
+
+    public List<StreamDefinition> loadStreamDefinitions() {
+        String relativeFilePath = FrameworkPathUtil.getSystemResourceLocation() + "/artifacts/CEP/"+ testCaseResourceFolderName;
+        String directoryPath = relativeFilePath.replaceAll("[\\\\/]", Matcher.quoteReplacement(File.separator));
+
+        GenericExtFilter filter = new GenericExtFilter(FILE_STREAM_DEFINTIONS_EXT);
+        File directory = new File(directoryPath);
+        List<StreamDefinition> streamDefinitions = new ArrayList<StreamDefinition>();
+        if (!directory.exists()) {
+            log.error("Cannot load stream definitions from " + directory.getAbsolutePath() + " directory not exist");
+            return streamDefinitions;
+        }
+        if (!directory.isDirectory()) {
+            log.error("Cannot load stream definitions from " + directory.getAbsolutePath() + " not a directory");
+            return streamDefinitions;
+        }
+
+        // list out all the file name and filter by the extension
+        String[] listStreamDefinitionFiles = directory.list(filter);
+
+        if(listStreamDefinitionFiles != null){
+            for (final String fileEntry : listStreamDefinitionFiles) {
+
+                BufferedReader bufferedReader = null;
+                StringBuilder stringBuilder = new StringBuilder();
+                String fullPathToStreamDefinitionFile = directoryPath + "/"+ fileEntry;
+
+                try {
+                    bufferedReader = new BufferedReader(new FileReader(fullPathToStreamDefinitionFile));
+                    String line;
+                    while ((line = bufferedReader.readLine()) != null) {
+                        stringBuilder.append(line).append("\n");
+                    }
+                    StreamDefinition streamDefinition = EventDefinitionConverterUtils
+                            .convertFromJson(stringBuilder.toString().trim());
+                    streamDefinitions.add(streamDefinition);
+                } catch (FileNotFoundException e) {
+                    log.error("Error in reading file " + fullPathToStreamDefinitionFile, e);
+                } catch (IOException e) {
+                    log.error("Error in reading file " + fullPathToStreamDefinitionFile, e);
+                } catch (MalformedStreamDefinitionException e) {
+                    log.error("Error in converting Stream definition " + e.getMessage(), e);
+                } finally {
+                    try {
+                        if (bufferedReader != null) {
+                            bufferedReader.close();
+                        }
+                    } catch (IOException e) {
+                        log.error("Error occurred when reading the file : " + e.getMessage(), e);
+                    }
+                }
+            }
+        }
+        return streamDefinitions;
+    }
+
+    public String getResourceFilePath(String testCaseFolderName, String resourceFileName) {
+        String relativeFilePath = FrameworkPathUtil.getSystemResourceLocation() + "/artifacts/CEP/"+ testCaseFolderName +"/"+ resourceFileName;
+        return relativeFilePath.replaceAll("[\\\\/]", Matcher.quoteReplacement(File.separator));
+    }
+
+    // inner class, generic extension filter
+    public class GenericExtFilter implements FilenameFilter {
+
+        private String ext;
+
+        public GenericExtFilter(String ext) {
+            this.ext = ext;
+        }
+
+        public boolean accept(File dir, String name) {
+            return (name.endsWith(ext));
+        }
+    }
 }
