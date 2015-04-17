@@ -53,16 +53,19 @@ public class TestAgentServer implements Runnable {
     private boolean eventReceived = false;
     private AtomicLong msgCount = new AtomicLong(0);
     private final String FILE_STREAM_DEFINTIONS_EXT = ".json";
+    private String testCaseResourceFolderName;
+    private int listeningPort;
 
     AbstractStreamDefinitionStore streamDefinitionStore = new InMemoryStreamDefinitionStore();
-    String testCaseResourceFolderName;
 
-    public TestAgentServer(String testCaseResourceFolderName){
+
+    public TestAgentServer(String testCaseResourceFolderName,int listeningPort){
         this.testCaseResourceFolderName = testCaseResourceFolderName;
+        this.listeningPort = listeningPort;
     }
     public void startServer() throws DataBridgeException, StreamDefinitionStoreException {
         msgCount.set(0);
-        start(7661);
+        start(listeningPort);
     }
 
     public void start(int receiverPort) throws DataBridgeException,StreamDefinitionStoreException {
