@@ -1,0 +1,34 @@
+{
+    "name": "org.wso2.sample.pizza.order",
+    "version": "1.0.0",
+    "nickName": "",
+    "description": "",
+    "correlationData": [
+        {
+            "name": "OrderNo",
+            "type": "INT"
+        }
+    ],
+    "payloadData": [
+        {
+            "name": "Type",
+            "type": "STRING"
+        },
+        {
+            "name": "Size",
+            "type": "STRING"
+        },
+        {
+            "name": "Quantity",
+            "type": "INT"
+        },
+        {
+            "name": "Contact",
+            "type": "STRING"
+        },
+        {
+            "name": "Address",
+            "type": "STRING"
+        }
+    ]
+}
