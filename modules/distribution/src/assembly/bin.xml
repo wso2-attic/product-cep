@@ -150,44 +150,12 @@
         <!--</excludes>-->
         <!--</fileSet>-->
 
-        <!--creating an empty input event adaptors directory-->
-        <fileSet>
-            <directory>.</directory>
-            <outputDirectory>
-                ${pom.artifactId}-${pom.version}/repository/deployment/server/inputeventadaptors
-            </outputDirectory>
-            <excludes>
-                <exclude>**/*</exclude>
-            </excludes>
-        </fileSet>
 
-        <!--creating an empty output event adaptors directory-->
+        <!--creating an empty domain template directory-->
         <fileSet>
             <directory>.</directory>
             <outputDirectory>
-                ${pom.artifactId}-${pom.version}/repository/deployment/server/outputeventadaptors
-            </outputDirectory>
-            <excludes>
-                <exclude>**/*</exclude>
-            </excludes>
-        </fileSet>
-
-        <!--creating an empty event builders directory-->
-        <fileSet>
-            <directory>.</directory>
-            <outputDirectory>
-                ${pom.artifactId}-${pom.version}/repository/deployment/server/eventbuilders
-            </outputDirectory>
-            <excludes>
-                <exclude>**/*</exclude>
-            </excludes>
-        </fileSet>
-
-        <!--creating an empty event formatters directory-->
-        <fileSet>
-            <directory>.</directory>
-            <outputDirectory>
-                ${pom.artifactId}-${pom.version}/repository/deployment/server/eventformatters
+                ${pom.artifactId}-${pom.version}/repository/conf/cep/domain-template
             </outputDirectory>
             <excludes>
                 <exclude>**/*</exclude>
