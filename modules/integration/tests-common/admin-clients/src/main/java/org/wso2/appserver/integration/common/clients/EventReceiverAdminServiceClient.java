@@ -102,10 +102,11 @@ public class EventReceiverAdminServiceClient {
                                                   EventMappingPropertyDto[] correlationData,
                                                   EventMappingPropertyDto[] payloadData,
                                                   BasicInputAdapterPropertyDto[] inputPropertyConfiguration,
-                                                  boolean mappingEnabled)
+                                                  boolean mappingEnabled,
+                                                  String fromStreamNameWithVersion)
             throws RemoteException {
         try {
-            eventReceiverAdminServiceStub.deployWso2EventReceiverConfiguration(eventReceiverName, streamNameWithVersion, eventAdapterType, metaData, correlationData, payloadData, inputPropertyConfiguration, mappingEnabled);
+            eventReceiverAdminServiceStub.deployWso2EventReceiverConfiguration(eventReceiverName, streamNameWithVersion, eventAdapterType, metaData, correlationData, payloadData, inputPropertyConfiguration, mappingEnabled, fromStreamNameWithVersion);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
             throw new RemoteException();
