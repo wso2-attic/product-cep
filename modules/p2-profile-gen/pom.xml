@@ -98,19 +98,19 @@
                             <publishArtifactRepository>true</publishArtifactRepository>
                             <featureArtifacts>
 
-                                <featureArtifactDef>
-                                    org.jaggeryjs:org.jaggeryjs.feature:${jaggery.version}
-                                </featureArtifactDef>
+                                <!--<featureArtifactDef>-->
+                                    <!--org.jaggeryjs:org.jaggeryjs.feature:${jaggery.version}-->
+                                <!--</featureArtifactDef>-->
 
-                                <featureArtifactDef>
-                                    org.jaggeryjs.modules:carbon.feature:${jaggery.modules.version}
-                                </featureArtifactDef>
-                                <featureArtifactDef>
-                                    org.jaggeryjs.modules:process.feature:${jaggery.modules.version}
-                                </featureArtifactDef>
-                                <featureArtifactDef>
-                                    org.jaggeryjs.modules:ws.feature:${jaggery.modules.version}
-                                </featureArtifactDef>
+                                <!--<featureArtifactDef>-->
+                                    <!--org.jaggeryjs.modules:carbon.feature:${jaggery.modules.version}-->
+                                <!--</featureArtifactDef>-->
+                                <!--<featureArtifactDef>-->
+                                    <!--org.jaggeryjs.modules:process.feature:${jaggery.modules.version}-->
+                                <!--</featureArtifactDef>-->
+                                <!--<featureArtifactDef>-->
+                                    <!--org.jaggeryjs.modules:ws.feature:${jaggery.modules.version}-->
+                                <!--</featureArtifactDef>-->
 
                                 <featureArtifactDef>
                                     org.wso2.carbon.deployment:org.wso2.carbon.webapp.mgt.server.feature:${carbon.deployment.version}
@@ -218,22 +218,22 @@
                                     <!--org.wso2.carbon.event-processing:org.wso2.carbon.event.output.adapter.feature:${carbon.event-processing.version}-->
                                 <!--</featureArtifactDef>-->
                                 <featureArtifactDef>
-                                    org.wso2.carbon.event-processing:org.wso2.carbon.event.receiver.feature:${carbon.event-processing.version}
+                                    org.wso2.carbon.analytics-common:org.wso2.carbon.event.receiver.feature:${carbon.analytics-common.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
-                                    org.wso2.carbon.event-processing:org.wso2.carbon.event.publisher.feature:${carbon.event-processing.version}
+                                    org.wso2.carbon.analytics-common:org.wso2.carbon.event.publisher.feature:${carbon.analytics-common.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
                                     org.wso2.carbon.event-processing:org.wso2.carbon.event.processor.feature:${carbon.event-processing.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
-                                    org.wso2.carbon.event-processing:org.wso2.carbon.event.tracer.feature:${carbon.event-processing.version}
+                                    org.wso2.carbon.analytics-common:org.wso2.carbon.event.tracer.feature:${carbon.analytics-common.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
                                     org.wso2.carbon.event-processing:org.wso2.carbon.event.flow.feature:${carbon.event-processing.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
-                                    org.wso2.carbon.event-processing:org.wso2.carbon.event.statistics.feature:${carbon.event-processing.version}
+                                    org.wso2.carbon.analytics-common:org.wso2.carbon.event.statistics.feature:${carbon.analytics-common.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
                                     org.wso2.carbon.analytics-common:org.wso2.carbon.event.stream.feature:${carbon.analytics-common.version}
@@ -242,7 +242,7 @@
                                     org.wso2.carbon.event-processing:org.wso2.carbon.event.simulator.feature:${carbon.event-processing.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
-                                    org.wso2.carbon.event-processing:org.wso2.carbon.event.processing.application.deployer.feature:${carbon.event-processing.version}
+                                    org.wso2.carbon.analytics-common:org.wso2.carbon.event.application.deployer.feature:${carbon.analytics-common.version}
                                 </featureArtifactDef>
 
 
@@ -288,23 +288,23 @@
                             </destination>
                             <deleteOldProfileFiles>true</deleteOldProfileFiles>
                             <features>
-                                <feature>
-                                    <id>org.jaggeryjs.feature.group</id>
-                                    <version>${jaggery.version}</version>
-                                </feature>
+                                <!--<feature>-->
+                                    <!--<id>org.jaggeryjs.feature.group</id>-->
+                                    <!--<version>${jaggery.version}</version>-->
+                                <!--</feature>-->
 
-                                <feature>
-                                    <id>org.jaggeryjs.modules.carbon.feature.group</id>
-                                    <version>${jaggery.modules.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.jaggeryjs.modules.process.feature.group</id>
-                                    <version>${jaggery.modules.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.jaggeryjs.modules.ws.feature.group</id>
-                                    <version>${jaggery.modules.version}</version>
-                                </feature>
+                                <!--<feature>-->
+                                    <!--<id>org.jaggeryjs.modules.carbon.feature.group</id>-->
+                                    <!--<version>${jaggery.modules.version}</version>-->
+                                <!--</feature>-->
+                                <!--<feature>-->
+                                    <!--<id>org.jaggeryjs.modules.process.feature.group</id>-->
+                                    <!--<version>${jaggery.modules.version}</version>-->
+                                <!--</feature>-->
+                                <!--<feature>-->
+                                    <!--<id>org.jaggeryjs.modules.ws.feature.group</id>-->
+                                    <!--<version>${jaggery.modules.version}</version>-->
+                                <!--</feature>-->
 
                                 <feature>
                                     <id>org.wso2.carbon.webapp.mgt.server.feature.group</id>
@@ -445,11 +445,11 @@
                                 <!--</feature>-->
                                 <feature>
                                     <id>org.wso2.carbon.event.receiver.feature.group</id>
-                                    <version>${carbon.event-processing.version}</version>
+                                    <version>${carbon.analytics-common.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.event.publisher.feature.group</id>
-                                    <version>${carbon.event-processing.version}</version>
+                                    <version>${carbon.analytics-common.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.event.processor.feature.group</id>
@@ -457,7 +457,7 @@
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.event.tracer.feature.group</id>
-                                    <version>${carbon.event-processing.version}</version>
+                                    <version>${carbon.analytics-common.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.event.flow.feature.group</id>
@@ -465,7 +465,7 @@
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.event.statistics.feature.group</id>
-                                    <version>${carbon.event-processing.version}</version>
+                                    <version>${carbon.analytics-common.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.event.stream.feature.group</id>
@@ -476,8 +476,8 @@
                                     <version>${carbon.event-processing.version}</version>
                                 </feature>
                                 <feature>
-                                    <id>org.wso2.carbon.event.processing.application.deployer.feature.group</id>
-                                    <version>${carbon.event-processing.version}</version>
+                                    <id>org.wso2.carbon.event.application.deployer.feature.group</id>
+                                    <version>${carbon.analytics-common.version}</version>
                                 </feature>
 
 

@@ -23,7 +23,10 @@ import org.apache.axiom.om.impl.builder.StAXOMBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.simple.parser.JSONParser;
-import org.wso2.appserver.integration.common.clients.*;
+import org.wso2.appserver.integration.common.clients.EventProcessorAdminServiceClient;
+import org.wso2.appserver.integration.common.clients.EventPublisherAdminServiceClient;
+import org.wso2.appserver.integration.common.clients.EventReceiverAdminServiceClient;
+import org.wso2.appserver.integration.common.clients.EventStreamManagerAdminServiceClient;
 import org.wso2.carbon.automation.engine.context.AutomationContext;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
@@ -112,6 +115,20 @@ public abstract class CEPIntegrationTest {
         relativeFilePath = relativeFilePath.replaceAll("[\\\\/]", Matcher.quoteReplacement(File.separator));
         JSONParser jsonParser = new JSONParser();
         return jsonParser.parse(new FileReader(relativeFilePath)).toString();
+    }
+
+    /**
+     * Returns the execution plan, read from the given file path.
+     * @param testCaseFolderName testCaseFolderName Name of the folder created under /artifacts/CEP for the particular test case.
+     * @param executionPlanFileName Execution plan file name, relative to the test artifacts folder.
+     * @return execution plan as a string.
+     * @throws Exception
+     */
+    protected String getExecutionPlanFromFile(String testCaseFolderName, String executionPlanFileName)
+            throws Exception {
+        String relativeFilePath = getTestArtifactLocation() + "/artifacts/CEP/"+testCaseFolderName+"/"+executionPlanFileName;
+        relativeFilePath = relativeFilePath.replaceAll("[\\\\/]", Matcher.quoteReplacement(File.separator));
+        return ConfigurationUtil.readFile(relativeFilePath) ;
     }
 
     public OMElement loadClasspathResourceXML(String path) throws FileNotFoundException, XMLStreamException {

@@ -29,7 +29,7 @@ import org.wso2.carbon.databridge.core.definitionstore.InMemoryStreamDefinitionS
 import org.wso2.carbon.databridge.core.exception.DataBridgeException;
 import org.wso2.carbon.databridge.core.exception.StreamDefinitionStoreException;
 import org.wso2.carbon.databridge.core.internal.authentication.AuthenticationHandler;
-import org.wso2.carbon.databridge.receiver.binary.BinaryDataReceiver;
+import org.wso2.carbon.databridge.receiver.binary.internal.BinaryDataReceiver;
 import org.wso2.carbon.databridge.receiver.binary.conf.BinaryDataReceiverConfiguration;
 import org.wso2.carbon.databridge.receiver.thrift.ThriftDataReceiver;
 import org.wso2.carbon.user.api.UserStoreException;
@@ -95,6 +95,7 @@ public class TestWso2EventServer {
 
         for (StreamDefinition streamDefinition : WSO2EventServerUtil.loadStreamDefinitions(sampleNumber)) {
             streamDefinitionStore.saveStreamDefinitionToStore(streamDefinition, -1234);
+            log.info("StreamDefinition of '"+streamDefinition.getStreamId()+"' added to store");
         }
 
         databridge.subscribe(new AgentCallback() {
@@ -117,10 +118,7 @@ public class TestWso2EventServer {
 
         });
 
-
-        log.info("Test Server starting on " + host);
         if (protocol.equalsIgnoreCase("binary")) {
-
             binaryDataReceiver = new BinaryDataReceiver(new BinaryDataReceiverConfiguration(receiverPort + 100, receiverPort), databridge);
         } else {
             thriftDataReceiver = new ThriftDataReceiver(receiverPort, databridge);

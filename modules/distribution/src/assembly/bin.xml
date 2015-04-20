@@ -266,6 +266,7 @@
             <includes>
                 <include>inputwebsocket.war</include>
                 <include>outputwebsocket.war</include>
+                <include>outputui.war</include>
             </includes>
         </fileSet>
 
@@ -372,17 +373,23 @@
         </file>
 
         <file>
-            <source>repository/conf/input-event-adapters.xml</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/
+            <source>
+                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/output-event-adapters.xml
+            </source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf
             </outputDirectory>
             <filtered>true</filtered>
+            <fileMode>644</fileMode>
         </file>
 
         <file>
-            <source>repository/conf/output-event-adapters.xml</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/
+            <source>
+                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/input-event-adapters.xml
+            </source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf
             </outputDirectory>
             <filtered>true</filtered>
+            <fileMode>644</fileMode>
         </file>
 
         <!-- copying event broker config file -->
@@ -556,6 +563,17 @@
             <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
+
+        <!-- Including rdbms configuration file for event simulator -->
+       <file>
+           <source>
+               ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/cep/rdbms-configuration.xml
+           </source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/cep
+            </outputDirectory>
+            <filtered>true</filtered>
+        </file>
+
 
     </files>
 

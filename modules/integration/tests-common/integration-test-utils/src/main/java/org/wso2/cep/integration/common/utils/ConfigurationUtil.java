@@ -20,9 +20,15 @@ package org.wso2.cep.integration.common.utils;
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.client.Options;
 import org.apache.axis2.client.ServiceClient;
-import org.wso2.appserver.integration.common.clients.*;
+import org.wso2.appserver.integration.common.clients.EventProcessorAdminServiceClient;
+import org.wso2.appserver.integration.common.clients.EventPublisherAdminServiceClient;
+import org.wso2.appserver.integration.common.clients.EventReceiverAdminServiceClient;
+import org.wso2.appserver.integration.common.clients.EventStreamManagerAdminServiceClient;
 import org.wso2.carbon.event.stream.stub.types.EventStreamAttributeDto;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.rmi.RemoteException;
 
 public class ConfigurationUtil {
@@ -126,6 +132,23 @@ public class ConfigurationUtil {
 
     public void removeActiveEventProcessor() throws RemoteException {
         eventProcessorAdminServiceClient.removeActiveExecutionPlan("TestExecutionPlan1");
+    }
+
+    public static String readFile(String path) throws IOException {
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new FileReader(path));
+            StringBuilder sb = new StringBuilder();
+            String line = br.readLine();
+
+            while (line != null) {
+                sb.append(line + "\n");
+                line = br.readLine();
+            }
+            return sb.toString();
+        } finally {
+            br.close();
+        }
     }
 
     /*

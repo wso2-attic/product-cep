@@ -25,9 +25,6 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
-import org.wso2.carbon.event.processor.stub.types.ExecutionPlanConfigurationDto;
-import org.wso2.carbon.event.processor.stub.types.SiddhiConfigurationDto;
-import org.wso2.carbon.event.processor.stub.types.StreamConfigurationDto;
 import org.wso2.carbon.event.publisher.stub.types.BasicOutputAdapterPropertyDto;
 import org.wso2.carbon.event.receiver.stub.types.BasicInputAdapterPropertyDto;
 import org.wso2.carbon.event.receiver.stub.types.EventMappingPropertyDto;
@@ -159,30 +156,10 @@ public class DeployArtifactsViaAPITestCase extends CEPIntegrationTest {
 
 
         log.info("=======================Adding an execution plan ======================= ");
+        //The only way too add an execution plan is by sending the execution plan as a string (not using a DTO).
 
-        ExecutionPlanConfigurationDto executionPlanConfigurationDto = new ExecutionPlanConfigurationDto();
-        executionPlanConfigurationDto.setName("testPlan");
-        StreamConfigurationDto inStream = new StreamConfigurationDto();
-        inStream.setSiddhiStreamName("pizzaStream");
-        inStream.setStreamId("org.wso2.sample.pizza.order:1.0.0");
-
-        executionPlanConfigurationDto.setImportedStreams(new StreamConfigurationDto[]{inStream});
-
-        SiddhiConfigurationDto siddhiPersistenceConfigDto = new SiddhiConfigurationDto();
-        siddhiPersistenceConfigDto.setKey("siddhi.persistence.snapshot.time.interval.minutes");
-        siddhiPersistenceConfigDto.setValue("0");
-        executionPlanConfigurationDto.addSiddhiConfigurations(siddhiPersistenceConfigDto);
-
-        executionPlanConfigurationDto.setQueryExpressions("from pizzaStream\n" +
-                "select *\n" +
-                "insert into outStream; ");
-
-        StreamConfigurationDto outStream = new StreamConfigurationDto();
-        outStream.setSiddhiStreamName("outStream");
-        outStream.setStreamId("outStream:1.0.0");
-        executionPlanConfigurationDto.setExportedStreams(new StreamConfigurationDto[]{outStream});
-
-        eventProcessorAdminServiceClient.addExecutionPlan(executionPlanConfigurationDto);
+        String executionPlan = getExecutionPlanFromFile("DeployArtifactsTestCase", "testPlan.siddhiql");
+        eventProcessorAdminServiceClient.addExecutionPlan(executionPlan);
 
         Thread.sleep(1000);
         Assert.assertEquals(eventProcessorAdminServiceClient.getExecutionPlanConfigurationCount(), ++executionPlanCount);
