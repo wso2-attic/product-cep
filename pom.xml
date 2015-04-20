@@ -435,6 +435,55 @@
         </pluginRepository>
     </pluginRepositories>
 
+    <repositories>
+        <repository>
+            <id>wso2-nexus</id>
+            <name>WSO2 internal Repository</name>
+            <url>http://maven.wso2.org/nexus/content/groups/wso2-public/</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+                <checksumPolicy>ignore</checksumPolicy>
+            </releases>
+        </repository>
+
+        <repository>
+            <id>wso2.releases</id>
+            <name>WSO2 internal Repository</name>
+            <url>http://maven.wso2.org/nexus/content/repositories/releases/</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+                <checksumPolicy>ignore</checksumPolicy>
+            </releases>
+        </repository>
+
+        <repository>
+            <id>wso2.staging</id>
+            <name>WSO2 staging Repository</name>
+            <url>http://maven.wso2.org/nexus/content/repositories/orgwso2carbonregistry-019/</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+                <checksumPolicy>ignore</checksumPolicy>
+            </releases>
+        </repository>
+
+        <repository>
+            <id>wso2.snapshots</id>
+            <name>Apache Snapshot Repository</name>
+            <url>http://maven.wso2.org/nexus/content/repositories/snapshots/</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+
+    </repositories>
+
     <scm>
         <url>https://github.com/wso2/product-cep.git</url>
         <developerConnection>scm:git:https://github.com/wso2/product-cep.git</developerConnection>
@@ -582,23 +631,23 @@
 
     <properties>
         <!--CEP versions-->
-        <jaggery.version>0.9.1-SNAPSHOT</jaggery.version>
-        <jaggery.modules.version>1.2.0</jaggery.modules.version>
-        <carbon.deployment.version>4.3.2-SNAPSHOT</carbon.deployment.version>
-        <carbon.commons.version>4.3.6-SNAPSHOT</carbon.commons.version>
+        <!--<jaggery.version>0.9.1-SNAPSHOT</jaggery.version>-->
+        <!--<jaggery.modules.version>1.2.0</jaggery.modules.version>-->
+        <carbon.deployment.version>4.4.0</carbon.deployment.version>
+        <carbon.commons.version>4.4.0</carbon.commons.version>
         <carbon.analytics-common.version>1.0.0-SNAPSHOT</carbon.analytics-common.version>
-        <carbon.identity.version>4.3.4-SNAPSHOT</carbon.identity.version>
-        <carbon.registry.version>4.3.2-SNAPSHOT</carbon.registry.version>
+        <carbon.identity.version>4.4.0</carbon.identity.version>
+        <carbon.registry.version>4.4.1</carbon.registry.version>
         <!--<carbon.storagemgt.version>4.3.1-SNAPSHOT</carbon.storagemgt.version>-->
-        <carbon.multitenancy.version>4.3.5-SNAPSHOT</carbon.multitenancy.version>
-        <carbon.governance.version>4.3.0</carbon.governance.version>
+        <carbon.multitenancy.version>4.4.0</carbon.multitenancy.version>
+        <carbon.governance.version>4.4.0</carbon.governance.version>
 
         <!--<siddhi.version>3.</siddhi.version>-->
         <cep.version>4.0.0-SNAPSHOT</cep.version>
         <carbon.event-processing.version>2.0.4-SNAPSHOT</carbon.event-processing.version>
 
         <!-- Carbon kernel version-->
-        <carbon.kernel.version>4.4.0-SNAPSHOT</carbon.kernel.version>
+        <carbon.kernel.version>4.4.0</carbon.kernel.version>
         <!--<carbon.kernel.imp.pkg.version>[4.3.0, 4.4.0)</carbon.kernel.imp.pkg.version>-->
         <!--<carbon.kernel.registry.imp.pkg.version>[1.0.1, 2.0.0)</carbon.kernel.registry.imp.pkg.version>-->
         <carbon.p2.plugin.version>1.5.3</carbon.p2.plugin.version>
