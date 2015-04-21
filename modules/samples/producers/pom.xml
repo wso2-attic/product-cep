@@ -51,6 +51,7 @@
         <module>sensor-stats</module>
         <module>analytics-stats</module>
         <module>stock-quote-wso2-event</module>
+        <module>http-client</module>
     </modules>
 
 </project>
