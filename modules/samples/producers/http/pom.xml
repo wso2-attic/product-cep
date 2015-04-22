@@ -27,5 +27,24 @@
 
     <artifactId>http-client</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.ws.commons.axiom.wso2</groupId>
+            <artifactId>axiom</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents.wso2</groupId>
+            <artifactId>httpclient</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents.wso2</groupId>
+            <artifactId>httpcore</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.log4j.wso2</groupId>
+            <artifactId>log4j</artifactId>
+        </dependency>
+    </dependencies>
+
 
 </project>
