@@ -29,7 +29,6 @@
     <version>4.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-
     <modelVersion>4.0.0</modelVersion>
 
     <modules>
@@ -38,6 +37,7 @@
         <module>axis2-log-service</module>
         <module>generic-log-service</module>
         <module>dashboard-service</module>
+        <module>object-detection-service</module>
     </modules>
 
 </project>

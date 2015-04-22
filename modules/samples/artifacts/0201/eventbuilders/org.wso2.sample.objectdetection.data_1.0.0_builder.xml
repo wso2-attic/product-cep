@@ -16,5 +16,15 @@
 ~ specific language governing permissions and limitations
 ~ under the License.
 -->
-<inputEventAdaptor name="DefaultWSO2EventInputAdaptor"
-  statistics="disable" trace="enable" type="wso2event" xmlns="http://wso2.org/carbon/eventadaptormanager"/>
+
+<eventBuilder name="org.wso2.sample.objectdetection.data_1.0.0_builder"
+	statistics="disable" trace="disable" xmlns="http://wso2.org/carbon/eventbuilder">
+	<from eventAdaptorName="DefaultWSO2EventInputAdaptor"
+		eventAdaptorType="wso2event">
+		<property name="stream">org.wso2.sample.objectdetection.data
+		</property>
+		<property name="version">1.0.0</property>
+	</from>
+	<mapping customMapping="disable" type="wso2event" />
+	<to streamName="org.wso2.sample.objectdetection.data" version="1.0.0" />
+</eventBuilder>

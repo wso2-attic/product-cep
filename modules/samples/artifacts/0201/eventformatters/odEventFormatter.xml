@@ -16,5 +16,11 @@
 ~ specific language governing permissions and limitations
 ~ under the License.
 -->
-<inputEventAdaptor name="DefaultWSO2EventInputAdaptor"
-  statistics="disable" trace="enable" type="wso2event" xmlns="http://wso2.org/carbon/eventadaptormanager"/>
+<eventFormatter name="odEventFormatter" statistics="disable"
+  trace="disable" xmlns="http://wso2.org/carbon/eventformatter">
+  <from streamName="org.wso2.sample.objectdetection.output" version="1.0.0"/>
+  <mapping customMapping="disable" type="json"/>
+  <to eventAdaptorName="odHTTPOuput" eventAdaptorType="http">
+    <property name="http.url">http://localhost:9765/objectdetection/imageshow</property>
+  </to>
+</eventFormatter>

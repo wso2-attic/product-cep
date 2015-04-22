@@ -16,5 +16,5 @@
 ~ specific language governing permissions and limitations
 ~ under the License.
 -->
-<inputEventAdaptor name="DefaultWSO2EventInputAdaptor"
-  statistics="disable" trace="enable" type="wso2event" xmlns="http://wso2.org/carbon/eventadaptormanager"/>
+<outputEventAdaptor name="odHTTPOuput" statistics="disable"
+trace="disable" type="http" xmlns="http://wso2.org/carbon/eventadaptormanager"/>
