@@ -64,7 +64,6 @@
 
     <target name="run" depends="compile">
         <echo> Configure -Durl=xxxx and ( -DfilePath=xxxx or -Dsn='sample number') optionally use -Dusername=xxxx -Dpassword=xxxx </echo>
-        <echo>test build file</echo>
         <java classname="${main-class}"
               classpathref="javac.classpath" fork="true">
             <arg value="${url}"/>
