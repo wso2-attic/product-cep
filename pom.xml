@@ -108,13 +108,11 @@
             </dependency>
 
             <!--Carbon-event-processing-->
-
             <dependency>
                 <groupId>org.wso2.carbon.event-processing</groupId>
                 <artifactId>org.wso2.carbon.event.processor.stub</artifactId>
                 <version>${carbon.event-processing.version}</version>
             </dependency>
-
 
             <!--Carbon kernel-->
             <dependency>
@@ -502,45 +500,6 @@
                 <version>2.4</version>
             </plugin>
         </plugins>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.felix</groupId>
-                    <artifactId>maven-scr-plugin</artifactId>
-                    <version>1.7.2</version>
-                    <executions>
-                        <execution>
-                            <id>generate-scr-scrdescriptor</id>
-                            <goals>
-                                <goal>scr</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.felix</groupId>
-                    <artifactId>maven-bundle-plugin</artifactId>
-                    <version>2.3.5</version>
-                    <extensions>true</extensions>
-                    <configuration>
-                        <obrRepository>NONE</obrRepository>
-                        <!--<instructions>
-                          <_include>-osgi.bnd</_include>
-                        </instructions>-->
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-antrun-plugin</artifactId>
-                    <version>1.1</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>build-helper-maven-plugin</artifactId>
-                    <version>1.7</version>
-                </plugin>
-            </plugins>
-        </pluginManagement>
     </build>
     <profiles>
         <profile>

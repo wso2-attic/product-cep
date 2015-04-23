@@ -98,19 +98,19 @@
                             <publishArtifactRepository>true</publishArtifactRepository>
                             <featureArtifacts>
 
-                                <featureArtifactDef>
-                                    org.jaggeryjs:org.jaggeryjs.feature:${jaggery.version}
-                                </featureArtifactDef>
+                                <!--<featureArtifactDef>-->
+                                    <!--org.jaggeryjs:org.jaggeryjs.feature:${jaggery.version}-->
+                                <!--</featureArtifactDef>-->
 
-                                <featureArtifactDef>
-                                    org.jaggeryjs.modules:carbon.feature:${jaggery.modules.version}
-                                </featureArtifactDef>
-                                <featureArtifactDef>
-                                    org.jaggeryjs.modules:process.feature:${jaggery.modules.version}
-                                </featureArtifactDef>
-                                <featureArtifactDef>
-                                    org.jaggeryjs.modules:ws.feature:${jaggery.modules.version}
-                                </featureArtifactDef>
+                                <!--<featureArtifactDef>-->
+                                    <!--org.jaggeryjs.modules:carbon.feature:${jaggery.modules.version}-->
+                                <!--</featureArtifactDef>-->
+                                <!--<featureArtifactDef>-->
+                                    <!--org.jaggeryjs.modules:process.feature:${jaggery.modules.version}-->
+                                <!--</featureArtifactDef>-->
+                                <!--<featureArtifactDef>-->
+                                    <!--org.jaggeryjs.modules:ws.feature:${jaggery.modules.version}-->
+                                <!--</featureArtifactDef>-->
 
                                 <featureArtifactDef>
                                     org.wso2.carbon.deployment:org.wso2.carbon.webapp.mgt.server.feature:${carbon.deployment.version}
@@ -121,9 +121,9 @@
                                 <featureArtifactDef>
                                     org.wso2.carbon.deployment:org.wso2.carbon.module.mgt.server.feature:${carbon.deployment.version}
                                 </featureArtifactDef>
-                                <!--<featureArtifactDef>-->
-                                    <!--org.wso2.carbon.deployment:org.wso2.carbon.as.runtimes.cxf.feature:${carbon.deployment.version}-->
-                                <!--</featureArtifactDef>-->
+                                <featureArtifactDef>
+                                    org.wso2.carbon.deployment:org.wso2.carbon.as.runtimes.cxf.feature:${carbon.deployment.version}
+                                </featureArtifactDef>
 
                                 <featureArtifactDef>
                                     org.wso2.carbon.multitenancy:org.wso2.carbon.tenant.common.feature:${carbon.multitenancy.version}
@@ -244,6 +244,9 @@
                                 <featureArtifactDef>
                                     org.wso2.carbon.analytics-common:org.wso2.carbon.event.application.deployer.feature:${carbon.analytics-common.version}
                                 </featureArtifactDef>
+                                <featureArtifactDef>
+                                    org.wso2.carbon.event-processing:org.wso2.carbon.event.execution.manager.feature:${carbon.event-processing.version}
+                                </featureArtifactDef>
 
 
                                 <!-- cep ui features -->
@@ -288,23 +291,23 @@
                             </destination>
                             <deleteOldProfileFiles>true</deleteOldProfileFiles>
                             <features>
-                                <feature>
-                                    <id>org.jaggeryjs.feature.group</id>
-                                    <version>${jaggery.version}</version>
-                                </feature>
+                                <!--<feature>-->
+                                    <!--<id>org.jaggeryjs.feature.group</id>-->
+                                    <!--<version>${jaggery.version}</version>-->
+                                <!--</feature>-->
 
-                                <feature>
-                                    <id>org.jaggeryjs.modules.carbon.feature.group</id>
-                                    <version>${jaggery.modules.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.jaggeryjs.modules.process.feature.group</id>
-                                    <version>${jaggery.modules.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.jaggeryjs.modules.ws.feature.group</id>
-                                    <version>${jaggery.modules.version}</version>
-                                </feature>
+                                <!--<feature>-->
+                                    <!--<id>org.jaggeryjs.modules.carbon.feature.group</id>-->
+                                    <!--<version>${jaggery.modules.version}</version>-->
+                                <!--</feature>-->
+                                <!--<feature>-->
+                                    <!--<id>org.jaggeryjs.modules.process.feature.group</id>-->
+                                    <!--<version>${jaggery.modules.version}</version>-->
+                                <!--</feature>-->
+                                <!--<feature>-->
+                                    <!--<id>org.jaggeryjs.modules.ws.feature.group</id>-->
+                                    <!--<version>${jaggery.modules.version}</version>-->
+                                <!--</feature>-->
 
                                 <feature>
                                     <id>org.wso2.carbon.webapp.mgt.server.feature.group</id>
@@ -318,10 +321,10 @@
                                     <id>org.wso2.carbon.module.mgt.server.feature.group</id>
                                     <version>${carbon.deployment.version}</version>
                                 </feature>
-                                <!--<feature>-->
-                                    <!--<id>org.wso2.carbon.as.runtimes.cxf.feature.group</id>-->
-                                    <!--<version>${carbon.deployment.version}</version>-->
-                                <!--</feature>-->
+                                <feature>
+                                    <id>org.wso2.carbon.as.runtimes.cxf.feature.group</id>
+                                    <version>${carbon.deployment.version}</version>
+                                </feature>
 
                                 <feature>
                                     <id>org.wso2.carbon.tenant.common.feature.group</id>
@@ -479,7 +482,10 @@
                                     <id>org.wso2.carbon.event.application.deployer.feature.group</id>
                                     <version>${carbon.analytics-common.version}</version>
                                 </feature>
-
+                                <feature>
+                                    <id>org.wso2.carbon.event.execution.manager.feature.group</id>
+                                    <version>${carbon.event-processing.version}</version>
+                                </feature>
 
                                 <!-- cep ui features -->
                                 <feature>
