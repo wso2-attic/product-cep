@@ -35,6 +35,8 @@
     <modules>
         <module>wso2-event</module>
         <module>http</module>
+        <module>jms-client</module>
+
         <!--<module>stock-quote</module>-->
         <!--<module>service-stats</module>-->
         <!--<module>activity-monitoring</module>-->

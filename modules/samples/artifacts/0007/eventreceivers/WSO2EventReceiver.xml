@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventReceiver name="WSO2EventReceiver" statistics="disable"
+    trace="disable" xmlns="http://wso2.org/carbon/eventreceiver">
+    <from eventAdapterType="wso2event"/>
+    <mapping customMapping="disable" type="wso2event"/>
+    <to streamName="org.wso2.sample.service.data" version="1.0.0"/>
+</eventReceiver>
