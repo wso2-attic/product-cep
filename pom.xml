@@ -588,7 +588,7 @@
         <jaggery.modules.version>1.2.0</jaggery.modules.version>
         <carbon.deployment.version>4.4.0</carbon.deployment.version>
         <carbon.commons.version>4.4.0</carbon.commons.version>
-        <carbon.analytics-common.version>1.0.0</carbon.analytics-common.version>
+        <carbon.analytics-common.version>1.0.1-SNAPSHOT</carbon.analytics-common.version>
         <carbon.identity.version>4.4.0</carbon.identity.version>
         <carbon.registry.version>4.4.1</carbon.registry.version>
         <!--<carbon.storagemgt.version>4.3.1-SNAPSHOT</carbon.storagemgt.version>-->
