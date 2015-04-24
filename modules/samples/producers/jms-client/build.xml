@@ -1,0 +1,87 @@
+<!--
+  ~ Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License"); you may not
+  ~ use this file except in compliance with the License. You may obtain a copy
+  ~ of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software distributed
+  ~ under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+  ~ CONDITIONS OF ANY KIND, either express or implied.  See the License for the
+  ~ specific language governing permissions and limitations under the License.
+  -->
+<project default="run">
+
+    <property name="carbon.home" value="../../.."/>
+    <property name="src.dir" value="src/main/java"/>
+    <property name="resources.dir" value="src/main/resources"/>
+    <property name="temp.dir" value="temp"/>
+    <property name="class.dir" value="${temp.dir}/classes"/>
+    <property name="main-class" value="org.wso2.carbon.sample.wso2event.Client"/>
+    <property name="lib.dir" value="../../lib"/>
+
+
+    <property name="sn" value=""/>
+    <property name="topic" value=""/>
+    <property name="format" value=""/>
+    <property name="filePath" value=""/>
+    <property name="streamId" value=""/>
+
+    <path id="javac.classpath">
+        <pathelement path="${class.dir}"/>
+        <fileset dir="${carbon.home}/repository/components/plugins/">
+            <include name="org.wso2.carbon.logging_*.jar"/>
+            <include name="commons-pool_*.jar"/>
+            <include name="com.google.gson_*.jar"/>
+            <include name="httpclient_*.jar"/>
+            <include name="libthrift_*.jar"/>
+            <include name="slf4j.log4j12_*.jar"/>
+            <include name="slf4j.api_*.jar"/>
+            <include name="json_*.jar"/>
+            <include name="disruptor_*.jar"/>
+            <include name="org.wso2.carbon.databridge.agent_*.jar"/>
+            <include name="org.wso2.carbon.databridge.commons.thrift_*.jar"/>
+            <include name="org.wso2.carbon.databridge.commons.binary_*.jar"/>
+            <include name="org.wso2.carbon.databridge.commons_*.jar"/>
+        </fileset>
+        <fileset dir="${lib.dir}"/>
+
+    </path>
+
+    <target name="clean">
+        <delete dir="${class.dir}" quiet="true"/>
+        <delete dir="${temp.dir}"/>
+    </target>
+
+    <target name="init">
+        <mkdir dir="${temp.dir}"/>
+        <mkdir dir="${class.dir}"/>
+    </target>
+
+    <target name="compile" depends="init">
+        <javac srcdir="${src.dir}" destdir="${class.dir}">
+            <include name="*/**"/>
+            <classpath refid="javac.classpath"/>
+        </javac>
+        <copy todir="${class.dir}" overwrite="true">
+            <fileset dir="${resources.dir}">
+                <include name="*.properties"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="run" depends="compile">
+        <echo>Configure -Dtopic=xxxx and ( -Dsn='sample number' or -DfilePath=xxxx ) optionally use -Dprotocol='thrift/binary' -Dhost=xxxx -Dport=xxxx -Dusername=xxxx -Dpassword=xxxx  -Devents=xx -Ddelay='delay between events in ms' </echo>
+        <java classname="${main-class}"
+              classpathref="javac.classpath" fork="true">
+            <arg value="${sn}"/>
+            <arg value="${topic}"/>
+            <arg value="${format}"/>
+            <arg value="${filePath}"/>
+            <arg value="${streamId}"/>
+        </java>
+    </target>
+
+</project>
