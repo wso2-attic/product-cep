@@ -34,23 +34,26 @@
 
     <modules>
         <module>wso2-event</module>
-        <module>stock-quote</module>
-        <module>service-stats</module>
-        <module>activity-monitoring</module>
-        <module>httpd-logs</module>
-        <module>kpi-definition</module>
-        <module>mediation-stats</module>
+        <module>http</module>
+        <module>jms-client</module>
+
+        <!--<module>stock-quote</module>-->
+        <!--<module>service-stats</module>-->
+        <!--<module>activity-monitoring</module>-->
+        <!--<module>httpd-logs</module>-->
+        <!--<module>kpi-definition</module>-->
+        <!--<module>mediation-stats</module>-->
         <!--<module>performance-test</module>-->
-        <module>purchase-info</module>
-        <module>pizza-shop</module>
-        <module>twitter-feed</module>
-        <module>flight-stats</module>
-        <module>login-info</module>
-        <module>atm-transaction-stats</module>
-        <module>foo-data</module>
-        <module>sensor-stats</module>
-        <module>analytics-stats</module>
-        <module>stock-quote-wso2-event</module>
+        <!--<module>purchase-info</module>-->
+        <!--<module>pizza-shop</module>-->
+        <!--<module>twitter-feed</module>-->
+        <!--<module>flight-stats</module>-->
+        <!--<module>login-info</module>-->
+        <!--<module>atm-transaction-stats</module>-->
+        <!--<module>foo-data</module>-->
+        <!--<module>sensor-stats</module>-->
+        <!--<module>analytics-stats</module>-->
+        <!--<module>stock-quote-wso2-event</module>-->
     </modules>
 
 </project>
