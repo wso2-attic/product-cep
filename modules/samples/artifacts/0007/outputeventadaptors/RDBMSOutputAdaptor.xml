@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<outputEventAdaptor name="RDBMSOutputAdaptor" statistics="disable"
-  trace="disable" type="rdbms" xmlns="http://wso2.org/carbon/eventadaptormanager">
-  <property name="datasource.name">h2_db</property>
-</outputEventAdaptor>

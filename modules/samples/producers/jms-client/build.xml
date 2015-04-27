@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright (c) 2005 - 2014, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~ Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License"); you may not
   ~ use this file except in compliance with the License. You may obtain a copy
@@ -20,18 +20,14 @@
     <property name="temp.dir" value="temp"/>
     <property name="class.dir" value="${temp.dir}/classes"/>
     <property name="main-class" value="org.wso2.carbon.sample.wso2event.Client"/>
+    <property name="lib.dir" value="../../lib"/>
 
-    <property name="protocol" value="thrift"/>
-    <property name="host" value="localhost"/>
-    <property name="port" value="7611"/>
-    <property name="username" value="admin"/>
-    <property name="password" value="admin"/>
-    <property name="events" value="100"/>
-    <property name="delay" value="1000"/>
 
-    <property name="streamId" value=""/>
     <property name="sn" value=""/>
+    <property name="topic" value=""/>
+    <property name="format" value=""/>
     <property name="filePath" value=""/>
+    <property name="streamId" value=""/>
 
     <path id="javac.classpath">
         <pathelement path="${class.dir}"/>
@@ -50,6 +46,8 @@
             <include name="org.wso2.carbon.databridge.commons.binary_*.jar"/>
             <include name="org.wso2.carbon.databridge.commons_*.jar"/>
         </fileset>
+        <fileset dir="${lib.dir}"/>
+
     </path>
 
     <target name="clean">
@@ -75,19 +73,14 @@
     </target>
 
     <target name="run" depends="compile">
-        <echo>Configure -DstreamId=xxxx:x.x.x and ( -Dsn='sample number' or -DfilePath=xxxx ) optionally use -Dprotocol='thrift/binary' -Dhost=xxxx -Dport=xxxx -Dusername=xxxx -Dpassword=xxxx  -Devents=xx -Ddelay='delay between events in ms' </echo>
+        <echo>Configure -Dtopic=xxxx and ( -Dsn='sample number' or -DfilePath=xxxx ) optionally use -Dprotocol='thrift/binary' -Dhost=xxxx -Dport=xxxx -Dusername=xxxx -Dpassword=xxxx  -Devents=xx -Ddelay='delay between events in ms' </echo>
         <java classname="${main-class}"
               classpathref="javac.classpath" fork="true">
-            <arg value="${protocol}"/>
-            <arg value="${host}"/>
-            <arg value="${port}"/>
-            <arg value="${username}"/>
-            <arg value="${password}"/>
-            <arg value="${streamId}"/>
             <arg value="${sn}"/>
+            <arg value="${topic}"/>
+            <arg value="${format}"/>
             <arg value="${filePath}"/>
-            <arg value="${events}"/>
-            <arg value="${delay}"/>
+            <arg value="${streamId}"/>
         </java>
     </target>
 
