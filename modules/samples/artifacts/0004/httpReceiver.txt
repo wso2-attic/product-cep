@@ -1,0 +1,38 @@
+<temperature:SensorStream xmlns:temperature="http://samples.wso2.org">
+    <temperature:sensor>
+        <temperature:timestamp>19900813115534</temperature:timestamp>
+        <temperature:powerSaved>true</temperature:powerSaved>
+        <temperature:id>502</temperature:id>
+        <temperature:name>temperature</temperature:name>
+        <temperature:long>4.504343</temperature:long>
+        <temperature:lat>1.23434</temperature:lat>
+        <temperature:humidity>6.6</temperature:humidity>
+        <temperature:temp>20.44345</temperature:temp>
+    </temperature:sensor>
+</temperature:SensorStream>
+*****
+<temperature:SensorStream xmlns:temperature="http://samples.wso2.org">
+    <temperature:sensor>
+        <temperature:timestamp>19900813115534</temperature:timestamp>
+        <temperature:powerSaved>true</temperature:powerSaved>
+        <temperature:id>501</temperature:id>
+        <temperature:name>temperature</temperature:name>
+        <temperature:long>4.504343</temperature:long>
+        <temperature:lat>1.23434</temperature:lat>
+        <temperature:humidity>6.6</temperature:humidity>
+        <temperature:temp>20.44345</temperature:temp>
+    </temperature:sensor>
+</temperature:SensorStream>
+*****
+<temperature:SensorStream xmlns:temperature="http://samples.wso2.org">
+    <temperature:sensor>
+        <temperature:timestamp>19900813115534</temperature:timestamp>
+        <temperature:powerSaved>true</temperature:powerSaved>
+        <temperature:id>503</temperature:id>
+        <temperature:name>temperature</temperature:name>
+        <temperature:long>4.504343</temperature:long>
+        <temperature:lat>1.23434</temperature:lat>
+        <temperature:humidity>6.6</temperature:humidity>
+        <temperature:temp>20.44345</temperature:temp>
+    </temperature:sensor>
+</temperature:SensorStream>

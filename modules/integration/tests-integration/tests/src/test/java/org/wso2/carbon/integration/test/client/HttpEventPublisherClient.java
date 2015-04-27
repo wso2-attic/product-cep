@@ -14,47 +14,40 @@
  * limitations under the License.
  */
 
-package org.wso2.carbon.sample.http;
+package org.wso2.carbon.integration.test.client;
 
+import org.apache.axiom.om.util.Base64;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.SystemDefaultHttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.axiom.om.util.Base64;
 import org.apache.log4j.Logger;
+import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
 
 /**
- * Http client reads a text file with multiple xml messages and post it to the given url.
+ * HttpEventPublisherClient client reads a text file with multiple xml messages and post it to the given url.
  */
-public class Http {
-	private static Logger log = Logger.getLogger(Http.class);
+public class HttpEventPublisherClient {
+	private static Logger log = Logger.getLogger(HttpEventPublisherClient.class);
 	private static List<String> messagesList = new ArrayList<String>();
 	private static BufferedReader bufferedReader = null;
 	private static StringBuffer message = new StringBuffer("");
 	private static final String asterixLine = "*****";
 
-	public static void main(String args[]) {
+	public static void publish(String url, String username, String password, String testCaseFolderName, String dataFileName) {
 
-		System.out.println("Starting WSO2 Http Client");
-		HttpUtil.setTrustStoreParams();
-		String url = args[0];
-		String username = args[1];
-		String password = args[2];
-		String sampleNumber = args[3];
-		String filePath = args[4];
+		System.out.println("Starting WSO2 HttpEventPublisherClient Client");
+		KeyStoreUtil.setTrustStoreParams();
 
 		HttpClient httpClient = new SystemDefaultHttpClient();
 		try {
 			HttpPost method = new HttpPost(url);
-			filePath = HttpUtil.getMessageFilePath(sampleNumber, filePath, url);
-			readMsg(filePath);
+			readMsg(getTestDataFileLocation(testCaseFolderName, dataFileName));
 
 			for (String message : messagesList) {
 				StringEntity entity = new StringEntity(message);
@@ -118,6 +111,20 @@ public class Http {
 			method.setHeader("Authorization",
 			                 "Basic " + Base64.encode((username + ":" + password).getBytes()));
 		}
+	}
+
+	/**
+	 * File path will be created for the file to be read with respect to the arguments passed. If sample number given file path will be created accordingly
+	 *
+	 * @param testCaseFolderName     Text file to be read
+	 * @param dataFileName Number of the http sample
+	 */
+	public static String getTestDataFileLocation(String testCaseFolderName, String dataFileName) throws Exception {
+		String relativeFilePath =
+				FrameworkPathUtil.getSystemResourceLocation() + "/artifacts/CEP/" + testCaseFolderName + "/"
+						+ dataFileName;
+		relativeFilePath = relativeFilePath.replaceAll("[\\\\/]", Matcher.quoteReplacement(File.separator));
+		return relativeFilePath;
 	}
 
 }

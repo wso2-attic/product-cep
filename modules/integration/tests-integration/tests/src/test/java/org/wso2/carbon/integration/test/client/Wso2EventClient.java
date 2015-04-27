@@ -68,11 +68,11 @@ public class Wso2EventClient {
 
     }
 
-    public static String getTestDataFileLocation(String testCaseFolderName, String dataFimeName) {
+    public static String getTestDataFileLocation(String testCaseFolderName, String dataFileName) {
 
         String relativeFilePath =
                 FrameworkPathUtil.getSystemResourceLocation() + "/artifacts/CEP/" + testCaseFolderName + "/"
-                        + dataFimeName;
+                        + dataFileName;
         relativeFilePath = relativeFilePath.replaceAll("[\\\\/]", Matcher.quoteReplacement(File.separator));
         return relativeFilePath;
     }

@@ -28,8 +28,8 @@ public class HttpUtil {
 			File.separator + "resources" + File.separator + "security");
 	static String sampleFilPath =
 			".." + File.separator + ".." + File.separator + ".." + File.separator + "samples" +
-			File.separator + "artifacts" + File.separator + "sampleNumber" + File.separator +
-			"http.txt";
+			File.separator + "artifacts" + File.separator + "sampleNumber" + File.separator;
+	static String fileExtension = ".txt";
 
 	public static void setTrustStoreParams() {
 		String trustStore = securityFile.getAbsolutePath();
@@ -44,7 +44,7 @@ public class HttpUtil {
 	 * @param filePath     Text file to be read
 	 * @param sampleNumber Number of the http sample
 	 */
-	public static String getMessageFilePath(String sampleNumber, String filePath) throws Exception {
+	public static String getMessageFilePath(String sampleNumber, String filePath, String url) throws Exception {
 		if (sampleNumber != null && sampleNumber.length() == 0) {
 			sampleNumber = null;
 		}
@@ -57,7 +57,8 @@ public class HttpUtil {
 		if (filePath != null && sampleNumber == null) {
 			resultingFilePath = filePath;
 		} else if (filePath == null && sampleNumber != null) {
-			resultingFilePath = sampleFilPath.replace("sampleNumber", sampleNumber);
+			String urlSplitter[] = url.split("/");
+			resultingFilePath = sampleFilPath.replace("sampleNumber", sampleNumber)+urlSplitter[urlSplitter.length-1]+fileExtension;
 		} else {
 			throw new Exception("In sampleNumber:'" + sampleNumber + "' and filePath:'" + filePath +
 			                    "' either one should be null");
