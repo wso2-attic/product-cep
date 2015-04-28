@@ -26,14 +26,6 @@ public class KeyStoreUtil {
     static File filePath = new File(FrameworkPathUtil.getCarbonHome() + File.separator +
                                      "repository" + File.separator + "resources" + File.separator + "security");
 
-    static File securityFile = new File(
-            ".." + File.separator + ".." + File.separator + ".." + File.separator + "repository" +
-                    File.separator + "resources" + File.separator + "security");
-    static String sampleFilPath =
-            ".." + File.separator + ".." + File.separator + ".." + File.separator + "samples" +
-                    File.separator + "artifacts" + File.separator + "sampleNumber" + File.separator;
-    static String fileExtension = ".txt";
-
     public static void setTrustStoreParams() {
         String trustStore = filePath.getAbsolutePath();
         System.setProperty("javax.net.ssl.trustStore", trustStore + "/client-truststore.jks");
