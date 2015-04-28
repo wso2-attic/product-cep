@@ -1,5 +1,5 @@
 This sample uses 
-EventReceiver:  JSON/http with default mapping
+EventReceiver:  Text/http with default mapping
 EventPublisher: logger
 
 Producers:     http
