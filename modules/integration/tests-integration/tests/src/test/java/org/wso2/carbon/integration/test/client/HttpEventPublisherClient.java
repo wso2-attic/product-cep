@@ -30,25 +30,18 @@ import java.util.List;
 import java.util.regex.Matcher;
 
 /**
- * HttpEventPublisherClient client reads a text file with multiple xml messages and post it to the given url.
+ * HttpEventPublisherClient client reads a text file with multiple events in different formats and post it to the given url.
  */
 public class HttpEventPublisherClient {
 	private static Logger log = Logger.getLogger(HttpEventPublisherClient.class);
-	private static List<String> messagesList = new ArrayList<String>();
-	private static BufferedReader bufferedReader = null;
-	private static StringBuffer message = new StringBuffer("");
-	private static final String asterixLine = "*****";
 
 	public static void publish(String url, String username, String password, String testCaseFolderName, String dataFileName) {
-
-		System.out.println("Starting WSO2 HttpEventPublisherClient Client");
+		System.out.println("Starting WSO2 HttpEventPublisher Client");
 		KeyStoreUtil.setTrustStoreParams();
-
 		HttpClient httpClient = new SystemDefaultHttpClient();
 		try {
 			HttpPost method = new HttpPost(url);
-			readMsg(getTestDataFileLocation(testCaseFolderName, dataFileName));
-
+			List<String> messagesList = readMsg(getTestDataFileLocation(testCaseFolderName, dataFileName));
 			for (String message : messagesList) {
 				StringEntity entity = new StringEntity(message);
 				System.out.println("Sending message:");
@@ -63,19 +56,21 @@ public class HttpEventPublisherClient {
 			Thread.sleep(500); // Waiting time for the message to be sent
 
 		} catch (Throwable t) {
-			log.error("Error when sending the meessages", t);
+			log.error("Error when sending the messages", t);
 		}
 	}
 
 	/**
-	 * Xml messages will be read from the given filepath and stored in the array list (messagesList)
+	 * Messages will be read from the given filepath and an ArrayList will be returned (messagesList)
 	 *
 	 * @param filePath Text file to be read
 	 */
-	private static void readMsg(String filePath) {
-
+	private static List<String> readMsg(String filePath) {
+		List<String> messagesList = new ArrayList<String>();
+		BufferedReader bufferedReader = null;
+		StringBuffer message = new StringBuffer("");
+		final String asterixLine = "*****";
 		try {
-
 			String line;
 			bufferedReader = new BufferedReader(new FileReader(filePath));
 			while ((line = bufferedReader.readLine()) != null) {
@@ -89,7 +84,6 @@ public class HttpEventPublisherClient {
 			if (!"".equals(message.toString().trim())) {
 				messagesList.add(message.toString());
 			}
-
 		} catch (FileNotFoundException e) {
 			log.error("Error in reading file " + filePath, e);
 		} catch (IOException e) {
@@ -103,7 +97,7 @@ public class HttpEventPublisherClient {
 				log.error("Error occurred when closing the file : " + e.getMessage(), e);
 			}
 		}
-
+		return messagesList;
 	}
 
 	private static void processAuthentication(HttpPost method, String username, String password) {
@@ -114,14 +108,14 @@ public class HttpEventPublisherClient {
 	}
 
 	/**
-	 * File path will be created for the file to be read with respect to the arguments passed. If sample number given file path will be created accordingly
+	 * File path will be created for the file to be read with respect to the artifact folder and file name
 	 *
-	 * @param testCaseFolderName     Text file to be read
-	 * @param dataFileName Number of the http sample
+	 * @param testCaseFolderName     Artifact folder name
+	 * @param dataFileName           Text file to be read
 	 */
 	public static String getTestDataFileLocation(String testCaseFolderName, String dataFileName) throws Exception {
 		String relativeFilePath =
-				FrameworkPathUtil.getSystemResourceLocation() + "/artifacts/CEP/" + testCaseFolderName + "/"
+				FrameworkPathUtil.getSystemResourceLocation() + "/artifacts/CEP/" + testCaseFolderName + File.separator
 						+ dataFileName;
 		relativeFilePath = relativeFilePath.replaceAll("[\\\\/]", Matcher.quoteReplacement(File.separator));
 		return relativeFilePath;

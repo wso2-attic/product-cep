@@ -56,19 +56,21 @@ public class TestAgentServer implements Runnable {
     private String testCaseResourceFolderName;
     private int listeningPort;
     private List<Event> preservedEventList = null;
+    private boolean isPreservingEvents;
 
     AbstractStreamDefinitionStore streamDefinitionStore = new InMemoryStreamDefinitionStore();
 
 
-    public TestAgentServer(String testCaseResourceFolderName,int listeningPort){
+    public TestAgentServer(String testCaseResourceFolderName,int listeningPort, boolean isPreservingEvents){
         this.testCaseResourceFolderName = testCaseResourceFolderName;
         this.listeningPort = listeningPort;
+        this.isPreservingEvents = isPreservingEvents;
     }
     public void startServer() throws DataBridgeException, StreamDefinitionStoreException {
         msgCount.set(0);
-        start(listeningPort, true);
+        start(listeningPort);
     }
-    public void start(int receiverPort, final boolean isPreservingEvents) throws DataBridgeException,StreamDefinitionStoreException {
+    public void start(int receiverPort) throws DataBridgeException,StreamDefinitionStoreException {
         KeyStoreUtil.setKeyStoreParams();
         DataBridge databridge = new DataBridge(new AuthenticationHandler() {
             @Override
@@ -124,8 +126,10 @@ public class TestAgentServer implements Runnable {
                 eventReceived = true;
                 msgCount.addAndGet(eventList.size());
                 if (isPreservingEvents){
-                    preservedEventList = new ArrayList<Event>();
-                    preservedEventList = eventList;
+                    if(preservedEventList==null){
+                        preservedEventList = new ArrayList<>();
+                    }
+                    preservedEventList.addAll(eventList);
                 }
             }
 
