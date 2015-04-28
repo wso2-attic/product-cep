@@ -73,7 +73,7 @@ public class Wso2EventTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         // The data-bridge receiver
-        TestAgentServer agentServer = new TestAgentServer("Wso2EventTestCase",7661);
+        TestAgentServer agentServer = new TestAgentServer("Wso2EventTestCase",7661, false);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventReceiver name="httpReceiver"
+    statistics="disable" trace="disable" xmlns="http://wso2.org/carbon/eventreceiver">
+    <from eventAdapterType="http"/>
+    <mapping customMapping="disable" type="xml"/>
+    <to streamName="org.wso2.event.statistics.stream" version="1.0.0"/>
+</eventReceiver>

@@ -1,0 +1,44 @@
+{
+   "sensorData": {
+
+           "timestamp": 19900813115534,
+           "powerSaved": false,
+           "id": 501,
+           "name": temperature,
+           "long": 90.34344,
+           "lat": 20.44345,
+           "humidity": 2.3,
+           "temp": 20.44345
+       }
+   }
+}
+*****
+{
+   "sensorData": {
+
+           "timestamp": 19900813115534,
+           "powerSaved": false,
+           "id": 502,
+           "name": temperature,
+           "long": 90.34344,
+           "lat": 20.44345,
+           "humidity": 2.3,
+           "temp": 20.44345
+       }
+   }
+}
+*****
+{
+   "sensorData": {
+
+           "timestamp": 19900813115534,
+           "powerSaved": false,
+           "id": 503,
+           "name": temperature,
+           "long": 90.34344,
+           "lat": 20.44345,
+           "humidity": 2.3,
+           "temp": 20.44345
+       }
+   }
+}

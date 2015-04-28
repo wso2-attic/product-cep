@@ -1,10 +1,6 @@
 This sample uses 
-InputEventAdaptor:  jms
-EventBuilder:       json
-EventFormatter:     map
-OutputEventAdaptor: jms
+EventReceiver:  JSON/http with custom mapping
+EventPublisher: logger
 
-Producers:     stock-quote [Topic: AllStockQuotes]
-Consumers:     jms [Topic: BasicStockQuotes]
-
-For running JMS samples, please refer http://docs.wso2.org/display/CEP310/Setting+up+CEP+samples
+Producers:     http
+Consumers:     -

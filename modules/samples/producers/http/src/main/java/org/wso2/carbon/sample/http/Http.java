@@ -53,7 +53,7 @@ public class Http {
 		HttpClient httpClient = new SystemDefaultHttpClient();
 		try {
 			HttpPost method = new HttpPost(url);
-			filePath = HttpUtil.getMessageFilePath(sampleNumber, filePath);
+			filePath = HttpUtil.getMessageFilePath(sampleNumber, filePath, url);
 			readMsg(filePath);
 
 			for (String message : messagesList) {
