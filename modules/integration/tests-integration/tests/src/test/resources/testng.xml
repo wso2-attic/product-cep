@@ -43,6 +43,7 @@
             <!--<class name="org.wso2.carbon.integration.test.processflow.PassThroughWithWso2Event"/>-->
             <!--<class name="org.wso2.carbon.integration.test.processflow.MQTTXMLMessageTestCase"/>-->
             <!--<class name="org.wso2.carbon.integration.test.storm.StormTestCase"/>-->
+            <class name="org.wso2.carbon.integration.test.execution.manager.ExecutionManagerTestCase"/>
         </classes>
 
     </test>

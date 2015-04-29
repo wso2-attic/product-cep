@@ -20,10 +20,7 @@ package org.wso2.cep.integration.common.utils;
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.client.Options;
 import org.apache.axis2.client.ServiceClient;
-import org.wso2.appserver.integration.common.clients.EventProcessorAdminServiceClient;
-import org.wso2.appserver.integration.common.clients.EventPublisherAdminServiceClient;
-import org.wso2.appserver.integration.common.clients.EventReceiverAdminServiceClient;
-import org.wso2.appserver.integration.common.clients.EventStreamManagerAdminServiceClient;
+import org.wso2.appserver.integration.common.clients.*;
 import org.wso2.carbon.event.stream.stub.types.EventStreamAttributeDto;
 
 import java.io.BufferedReader;
@@ -38,6 +35,7 @@ public class ConfigurationUtil {
     private EventStreamManagerAdminServiceClient eventStreamManagerAdminServiceClient;
     private EventReceiverAdminServiceClient eventReceiverAdminServiceClient;
     private EventPublisherAdminServiceClient eventPublisherAdminServiceClient;
+    private ExecutionManagerAdminServiceClient executionManagerAdminServiceClient;
 
     private ConfigurationUtil() {
     }
@@ -78,6 +76,15 @@ public class ConfigurationUtil {
 
         initEventProcessorAdminServiceClient(backendURL, loggedInSessionCookie);
         return eventProcessorAdminServiceClient;
+    }
+
+    public ExecutionManagerAdminServiceClient getExecutionManagerAdminServiceClient(
+            String backendURL,
+            String loggedInSessionCookie)
+            throws AxisFault {
+
+        initExecutionManagerAdminServiceClient(backendURL, loggedInSessionCookie);
+        return executionManagerAdminServiceClient;
     }
 
     private void initEventProcessorAdminServiceClient(String backendURL,
@@ -123,7 +130,17 @@ public class ConfigurationUtil {
         options.setProperty(org.apache.axis2.transport.http.HTTPConstants.COOKIE_STRING, loggedInSessionCookie);
     }
 
-    public static EventStreamAttributeDto createEventStreamAttributeDto(String fieldName, String dataType){
+    private void initExecutionManagerAdminServiceClient(String backendURL,
+                                                        String loggedInSessionCookie)
+            throws AxisFault {
+        executionManagerAdminServiceClient = new ExecutionManagerAdminServiceClient(backendURL, loggedInSessionCookie);
+        ServiceClient client = executionManagerAdminServiceClient._getServiceClient();
+        Options options = client.getOptions();
+        options.setManageSession(true);
+        options.setProperty(org.apache.axis2.transport.http.HTTPConstants.COOKIE_STRING, loggedInSessionCookie);
+    }
+
+    public static EventStreamAttributeDto createEventStreamAttributeDto(String fieldName, String dataType) {
         EventStreamAttributeDto eventStreamAttribute = new EventStreamAttributeDto();
         eventStreamAttribute.setAttributeName(fieldName);
         eventStreamAttribute.setAttributeType(dataType);
