@@ -1,0 +1,11 @@
+meta:19900813115534,false,100,temperature
+correlation:20.44345,5.443435
+8.9,1.23434
+*****
+meta:19900813115534,false,101,temperature
+correlation:20.44345,5.443435
+8.9,1.23434
+*****
+meta:19900813115534,false,103,temperature
+correlation:20.44345,5.443435
+8.9,1.23434

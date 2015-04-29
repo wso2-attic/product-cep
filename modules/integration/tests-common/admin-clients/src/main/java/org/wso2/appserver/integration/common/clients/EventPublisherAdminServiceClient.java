@@ -87,10 +87,11 @@ public class EventPublisherAdminServiceClient {
                                                    EventMappingPropertyDto[] correlationData,
                                                    EventMappingPropertyDto[] payloadData,
                                                    BasicOutputAdapterPropertyDto[] outputPropertyConfiguration,
-                                                   boolean mappingEnabled)
+                                                   boolean mappingEnabled,
+                                                   String toStreamNameWithVersion)
             throws RemoteException {
         try {
-            eventPublisherAdminServiceStub.deployWSO2EventPublisherConfiguration(eventPublisherName, streamNameWithVersion, eventAdapterType, metaData, correlationData, payloadData, outputPropertyConfiguration, mappingEnabled);
+            eventPublisherAdminServiceStub.deployWSO2EventPublisherConfiguration(eventPublisherName, streamNameWithVersion, eventAdapterType, metaData, correlationData, payloadData, outputPropertyConfiguration, mappingEnabled, toStreamNameWithVersion);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
             throw new RemoteException();

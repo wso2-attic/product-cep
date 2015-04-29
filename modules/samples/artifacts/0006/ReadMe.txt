@@ -1,8 +1,6 @@
 This sample uses 
-InputEventAdaptor:  wso2event
-EventBuilder:           wso2event
-EventFormatter:         wso2event
-OutputEventAdaptor: wso2event
+EventReceiver:  Text/http with custom mapping
+EventPublisher: logger
 
-Producers:     service-stats
-Consumers:     wso2-event
+Producers:     http
+Consumers:     -

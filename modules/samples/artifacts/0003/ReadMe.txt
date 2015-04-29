@@ -1,10 +1,6 @@
 This sample uses 
-InputEventAdaptor:  jms
-EventBuilder:           map
-EventFormatter:         xml
-OutputEventAdaptor: ws-event-local
+EventReceiver:  XML/http with default mapping
+EventPublisher: logger
 
-Producers:     purchase-info
-Consumers:     log-service
-
-For running JMS samples, please refer http://docs.wso2.org/display/CEP310/Setting+up+CEP+samples
+Producers:     http
+Consumers:     -

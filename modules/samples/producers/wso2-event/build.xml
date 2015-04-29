@@ -53,7 +53,6 @@
     </path>
 
     <target name="clean">
-        <!--<delete dir="target" quiet="true"/>-->
         <delete dir="${class.dir}" quiet="true"/>
         <delete dir="${temp.dir}"/>
     </target>
@@ -79,8 +78,6 @@
         <echo>Configure -DstreamId=xxxx:x.x.x and ( -Dsn='sample number' or -DfilePath=xxxx ) optionally use -Dprotocol='thrift/binary' -Dhost=xxxx -Dport=xxxx -Dusername=xxxx -Dpassword=xxxx  -Devents=xx -Ddelay='delay between events in ms' </echo>
         <java classname="${main-class}"
               classpathref="javac.classpath" fork="true">
-            <jvmarg value="-Xdebug" />
-            <jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005" />
             <arg value="${protocol}"/>
             <arg value="${host}"/>
             <arg value="${port}"/>
