@@ -55,7 +55,7 @@ public class ExecutionManagerTestCase extends CEPIntegrationTest {
         FileUtils.copyFileToDirectory(newFile, new File(serverManager.getCarbonHome() + File.separator
                 + "repository" + File.separator + "conf" + File.separator + "cep" + File.separator
                 + "domain-template" + File.separator));
-        serverManager.restartGracefully();
+        serverManager.restartForcefully();
 
 
         String loggedInSessionCookie = getSessionCookie();
@@ -66,18 +66,19 @@ public class ExecutionManagerTestCase extends CEPIntegrationTest {
         executionManagerAdminServiceClient = configurationUtil
                 .getExecutionManagerAdminServiceClient(backendURL, loggedInSessionCookie);
 
-
     }
 
 
     @Test(groups = {"wso2.cep"}, description = "Testing the adding a configuration for a domain template")
     public void addTemplateConfigurationTestScenario1() throws Exception {
 
-        TemplateDomainDTO domain = executionManagerAdminServiceClient.getAllDomains()[0];
+        TemplateDomainDTO[] domains = executionManagerAdminServiceClient.getAllDomains();
 
-        if (domain == null) {
+        if (domains == null) {
             Assert.fail("Domain is not loaded");
         } else {
+
+            TemplateDomainDTO testDomain = domains[0];
 
             log.info("==================Testing the adding a configuration for a domain template==================== ");
             eventStreamCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
@@ -88,12 +89,12 @@ public class ExecutionManagerTestCase extends CEPIntegrationTest {
             TemplateConfigurationDTO configuration = new TemplateConfigurationDTO();
 
             configuration.setName("TestConfig");
-            configuration.setFrom(domain.getName());
-            configuration.setType(domain.getTemplateDTOs()[0].getName());
+            configuration.setFrom(testDomain.getName());
+            configuration.setType(testDomain.getTemplateDTOs()[0].getName());
             configuration.setDescription("This is a test description");
 
 
-            for (ParameterDTO parameterDTO : domain.getTemplateDTOs()[0].getParameterDTOs()) {
+            for (ParameterDTO parameterDTO : testDomain.getTemplateDTOs()[0].getParameterDTOs()) {
                 ParameterDTOE parameterDTOE = new ParameterDTOE();
                 parameterDTOE.setName(parameterDTO.getName());
 
@@ -114,7 +115,7 @@ public class ExecutionManagerTestCase extends CEPIntegrationTest {
             eventStreamCount = eventStreamCount + 2;
             Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), eventStreamCount);
             //Number of configurations should be incremented by one
-            Assert.assertEquals(executionManagerAdminServiceClient.getConfigurationsCount(domain.getName()),
+            Assert.assertEquals(executionManagerAdminServiceClient.getConfigurationsCount(testDomain.getName()),
                     ++configurationCount);
             log.info("=======================Edit a configuration====================");
             configuration.setDescription("Description edited");
@@ -123,7 +124,7 @@ public class ExecutionManagerTestCase extends CEPIntegrationTest {
             Assert.assertEquals(eventProcessorAdminServiceClient.getExecutionPlanConfigurationCount(),
                     executionPlanCount);
             Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), eventStreamCount);
-            Assert.assertEquals(executionManagerAdminServiceClient.getConfigurationsCount(domain.getName()),
+            Assert.assertEquals(executionManagerAdminServiceClient.getConfigurationsCount(testDomain.getName()),
                     configurationCount);
 
 
@@ -134,7 +135,7 @@ public class ExecutionManagerTestCase extends CEPIntegrationTest {
                     --executionPlanCount);
             Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), eventStreamCount);
             //When configuration is deleted the configuration count should be decremented by one
-            Assert.assertEquals(executionManagerAdminServiceClient.getConfigurationsCount(domain.getName()),
+            Assert.assertEquals(executionManagerAdminServiceClient.getConfigurationsCount(testDomain.getName()),
                     --configurationCount);
         }
 
