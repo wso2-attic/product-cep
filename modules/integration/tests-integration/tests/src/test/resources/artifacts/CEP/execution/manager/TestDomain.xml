@@ -16,7 +16,7 @@
 ~ specific language governing permissions and limitations
 ~ under the License.
 -->
-<templateDomain name="TemperatureAnalysis">
+<templateDomain name="TestDomain">
     <description>Temperature Analysis Description</description>
     <templates>
         <template name="Template1">
@@ -32,12 +32,12 @@
                 /* define streams and write query here ... */
 
                 @Import('inStream:1.0.0')
-                define stream inStream (x int);
+                define stream inStream (testParameter int);
 
                 @Export('outStream:1.0.0')
-                define stream outStream (x int);
+                define stream outStream (testParameter int);
 
-                from inStream[x < $maxVal and $maxVal > 2]
+                from inStream[testParameter < $maxVal and $maxVal > 2]
                 select *
                 insert into outStream;
                  ]]>
@@ -63,12 +63,12 @@
                 /* define streams and write query here ... */
 
                 @Import('inStream:1.0.0')
-                define stream inStream (x int);
+                define stream inStream (testParameter int);
 
                 @Export('outStream:1.0.0')
-                define stream outStream (x int);
+                define stream outStream (testParameter int);
 
-                from inStream[x < $maxVal and $maxVal > 2]
+                from inStream[testParameter < $maxVal and $maxVal > 2]
                 select *
                 insert into outStream;
                  ]]>
@@ -93,12 +93,12 @@
                 /* define streams and write query here ... */
 
                 @Import('inStream:1.0.0')
-                define stream inStream (x int);
+                define stream inStream (testParameter int);
 
                 @Export('outStream:1.0.0')
-                define stream outStream (x int);
+                define stream outStream (testParameter int);
 
-                from inStream[x < $maxVal and $maxVal > 2]
+                from inStream[testParameter < $maxVal and $maxVal > 2]
                 select *
                 insert into outStream;
                  ]]>
@@ -121,7 +121,7 @@
             "description": "",
             "metaData": [
             {
-            "name": "x",
+            "name": "testParameter",
             "type": "INT"
             }
             ]
@@ -135,7 +135,7 @@
             "description": "",
             "metaData": [
             {
-            "name": "x",
+            "name": "testParameter",
             "type": "INT"
             }
             ]
