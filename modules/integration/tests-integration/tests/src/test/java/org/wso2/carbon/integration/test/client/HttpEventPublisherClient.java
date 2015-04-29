@@ -52,6 +52,7 @@ public class HttpEventPublisherClient {
 					processAuthentication(method, username, password);
 				}
 				httpClient.execute(method).getEntity().getContent().close();
+				Thread.sleep(1000);
 			}
 			Thread.sleep(500); // Waiting time for the message to be sent
 
