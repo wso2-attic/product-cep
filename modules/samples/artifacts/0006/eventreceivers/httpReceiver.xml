@@ -3,7 +3,7 @@
     <from eventAdapterType="http"/>
     <mapping customMapping="enable" type="text">
         <property>
-            <from regex="[^,^:][199](\d+)[^,]"/>
+            <from regex="([^,^:][199]\d+[^,])"/>
             <to name="meta_timestamp" type="long"/>
         </property>
         <property>
