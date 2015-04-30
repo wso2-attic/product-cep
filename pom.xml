@@ -15,7 +15,8 @@
 ~ specific language governing permissions and limitations
 ~ under the License.
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <parent>
         <groupId>org.wso2</groupId>
@@ -113,6 +114,13 @@
                 <artifactId>org.wso2.carbon.event.processor.stub</artifactId>
                 <version>${carbon.event-processing.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.event-processing</groupId>
+                <artifactId>org.wso2.carbon.event.execution.manager.stub</artifactId>
+                <version>${carbon.event-processing.version}</version>
+            </dependency>
+
+
 
             <!--Carbon kernel-->
             <dependency>
@@ -264,7 +272,6 @@
                 <artifactId>org.wso2.carbon.event.statistics.stub</artifactId>
                 <version>${carbon.analytics-common.version}</version>
             </dependency>
-
             <!--Third party-->
             <dependency>
                 <groupId>org.eclipse.equinox</groupId>
@@ -593,7 +600,7 @@
         <carbon.registry.version>4.4.1</carbon.registry.version>
         <!--<carbon.storagemgt.version>4.3.1-SNAPSHOT</carbon.storagemgt.version>-->
         <carbon.multitenancy.version>4.4.0</carbon.multitenancy.version>
-        <carbon.governance.version>4.4.0</carbon.governance.version>
+        <carbon.governance.version>4.4.1</carbon.governance.version>
 
         <!--<siddhi.version>3.</siddhi.version>-->
         <cep.version>4.0.0-SNAPSHOT</cep.version>

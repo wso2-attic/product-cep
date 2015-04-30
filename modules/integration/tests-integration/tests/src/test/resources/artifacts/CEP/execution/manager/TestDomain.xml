@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+~ Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+~
+~ WSO2 Inc. licenses this file to you under the Apache License,
+~ Version 2.0 (the "License"); you may not use this file except
+~ in compliance with the License.
+~ You may obtain a copy of the License at
+~
+~    http://www.apache.org/licenses/LICENSE-2.0
+~
+~ Unless required by applicable law or agreed to in writing,
+~ software distributed under the License is distributed on an
+~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+~ KIND, either express or implied.  See the License for the
+~ specific language governing permissions and limitations
+~ under the License.
+-->
+<templateDomain name="TestDomain">
+    <description>Temperature Analysis Description</description>
+    <templates>
+        <template name="Template1">
+            <description>This is template 1</description>
+            <executionPlan>
+                <![CDATA[
+                /* Enter a unique ExecutionPlan */
+                @Plan:name('testPlan')
+
+                /* Enter a unique description for ExecutionPlan */
+                -- @Plan:description('ExecutionPlan')
+
+                /* define streams and write query here ... */
+
+                @Import('inStream:1.0.0')
+                define stream inStream (testParameter int);
+
+                @Export('outStream:1.0.0')
+                define stream outStream (testParameter int);
+
+                from inStream[testParameter < $maxVal and $maxVal > 2]
+                select *
+                insert into outStream;
+                 ]]>
+            </executionPlan>
+            <parameters>
+                <parameter name="maxVal" type="int">
+                    <displayName>Testing Parameter</displayName>
+                    <description>This is a testing parameter</description>
+                    <defaultValue>75</defaultValue>
+                </parameter>
+            </parameters>
+        </template>
+        <template name="Template2">
+            <description>This is template 2</description>
+            <executionPlan>
+                <![CDATA[
+                /* Enter a unique ExecutionPlan */
+                -- @Plan:name('testPlan')
+
+                /* Enter a unique description for ExecutionPlan */
+                -- @Plan:description('ExecutionPlan')
+
+                /* define streams and write query here ... */
+
+                @Import('inStream:1.0.0')
+                define stream inStream (testParameter int);
+
+                @Export('outStream:1.0.0')
+                define stream outStream (testParameter int);
+
+                from inStream[testParameter < $maxVal and $maxVal > 2]
+                select *
+                insert into outStream;
+                 ]]>
+            </executionPlan>
+            <parameters>
+                <parameter name="maxVal" type="int">
+                    <displayName>Testing Parameter</displayName>
+                    <description>This is a testing parameter</description>
+                    <defaultValue>75</defaultValue>
+                </parameter>
+            </parameters>
+        </template>
+        <template name="Template3">
+            <description>This is template 3</description>
+            <executionPlan>
+                <![CDATA[
+                /* Enter a unique ExecutionPlan */
+
+                /* Enter a unique description for ExecutionPlan */
+                -- @Plan:description('ExecutionPlan')
+
+                /* define streams and write query here ... */
+
+                @Import('inStream:1.0.0')
+                define stream inStream (testParameter int);
+
+                @Export('outStream:1.0.0')
+                define stream outStream (testParameter int);
+
+                from inStream[testParameter < $maxVal and $maxVal > 2]
+                select *
+                insert into outStream;
+                 ]]>
+            </executionPlan>
+            <parameters>
+                <parameter name="maxVal" type="int">
+                    <displayName>Testing Parameter</displayName>
+                    <description>This is a testing parameter</description>
+                    <defaultValue>75</defaultValue>
+                </parameter>
+            </parameters>
+        </template>
+    </templates>
+    <streams>
+        <stream>
+            {
+            "name": "inStream",
+            "version": "1.0.0",
+            "nickName": "",
+            "description": "",
+            "metaData": [
+            {
+            "name": "testParameter",
+            "type": "INT"
+            }
+            ]
+            }
+        </stream>
+        <stream>
+            {
+            "name": "outStream",
+            "version": "1.0.0",
+            "nickName": "",
+            "description": "",
+            "metaData": [
+            {
+            "name": "testParameter",
+            "type": "INT"
+            }
+            ]
+            }
+        </stream>
+    </streams>
+</templateDomain>
