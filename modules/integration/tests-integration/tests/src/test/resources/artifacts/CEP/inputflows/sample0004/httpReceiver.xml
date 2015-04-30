@@ -8,7 +8,7 @@
         </property>
         <property>
             <from xpath="/temperature:SensorStream/temperature:sensor/temperature:powerSaved"/>
-            <to name="meta_isPowerSaverEnabled" type="boolean"/>
+            <to name="meta_isPowerSaverEnabled" type="bool"/>
         </property>
         <property>
             <from xpath="/temperature:SensorStream/temperature:sensor/temperature:id"/>
