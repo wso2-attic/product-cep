@@ -8,7 +8,7 @@
         </property>
         <property>
             <from regex="(false|true)"/>
-            <to name="meta_isPowerSaverEnabled" type="boolean"/>
+            <to name="meta_isPowerSaverEnabled" type="bool"/>
         </property>
         <property>
             <from regex="(100|101|103)"/>

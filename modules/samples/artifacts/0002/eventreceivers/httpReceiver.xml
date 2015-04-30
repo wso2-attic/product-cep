@@ -8,7 +8,7 @@
         </property>
         <property>
             <from jsonPath="$.sensorData.powerSaved"/>
-            <to default="false" name="meta_isPowerSaverEnabled" type="boolean"/>
+            <to default="false" name="meta_isPowerSaverEnabled" type="bool"/>
         </property>
         <property>
             <from jsonPath="$.sensorData.id"/>
