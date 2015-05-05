@@ -162,6 +162,8 @@
             </excludes>
         </fileSet>
 
+
+
         <!--creating an empty execution plans directory-->
         <fileSet>
             <directory>.</directory>
@@ -540,6 +542,15 @@
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/cep
             </outputDirectory>
             <filtered>true</filtered>
+        </file>
+
+        <!--Copying sample domain template file -->
+        <file>
+            <source>
+                repository/conf/domain-template/temperature-analysis.xml
+            </source>
+
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/cep/domain-template</outputDirectory>
         </file>
 
 
