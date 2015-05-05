@@ -17,28 +17,35 @@
 ~ under the License.
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>org.wso2.cep</groupId>
-        <artifactId>cep-samples-parent</artifactId>
+        <artifactId>cep-samples-consumers</artifactId>
         <version>4.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>cep-samples-consumers</artifactId>
-    <name>WSO2 CEP - Sample Consumers</name>
-    <version>4.0.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
+    <artifactId>mqtt-consumer</artifactId>
+    <name>MQTT Consumer</name>
 
 
-    <modelVersion>4.0.0</modelVersion>
+    <dependencies>
+        <dependency>
+            <groupId>org.eclipse.paho</groupId>
+            <artifactId>mqtt-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.log4j.wso2</groupId>
+            <artifactId>log4j</artifactId>
+        </dependency>
+    </dependencies>
 
-    <modules>
-        <module>wso2-event</module>
-        <module>jms</module>
-        <module>mqtt</module>
-        <module>axis2-log-service</module>
-        <module>generic-log-service</module>
-        <module>dashboard-service</module>
-    </modules>
+    <repositories>
+        <repository>
+            <id>spring-milestones</id>
+            <url>http://repo.springsource.org/libs-milestone/</url>
+        </repository>
+    </repositories>
+
 
 </project>
