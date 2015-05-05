@@ -48,8 +48,6 @@ public class MQTTClient {
             sampleNumber = args[3];
         }
 
-        System.out.println(url + topic + filePath + sampleNumber);
-
         System.out.println("Starting MQTT Client");
         MqttConnectOptions connOpt = new MqttConnectOptions();
         connOpt.setCleanSession(true);

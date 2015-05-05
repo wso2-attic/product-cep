@@ -286,7 +286,12 @@
             </dependency>
             <dependency>
                 <groupId>org.apache.activemq</groupId>
-                <artifactId>activemq-core</artifactId>
+                <artifactId>activemq-broker</artifactId>
+                <version>${activemq.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>activemq-client</artifactId>
                 <version>${activemq.version}</version>
             </dependency>
             <dependency>
@@ -631,7 +636,7 @@
         <operadriver.version>0.8.1</operadriver.version>
         <selenium.version>2.40.0</selenium.version>
         <testng.version>6.8</testng.version>
-        <activemq.version>5.7.0</activemq.version>
+        <activemq.version>5.9.1</activemq.version>
         <geronimo.j2ee.version>1.0.1</geronimo.j2ee.version>
         <geronimo.jms.version>1.1.1</geronimo.jms.version>
         <paho.mqtt.version>0.4.0</paho.mqtt.version>
