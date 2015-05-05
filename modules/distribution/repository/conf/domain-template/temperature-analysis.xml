@@ -20,7 +20,7 @@
     <description>Temperature Analysis Description</description>
     <templates>
         <template name="Template1">
-            <description>This templates checks maximum room temperature</description>
+            <description>To check maximum room temperature of all rooms</description>
             <executionPlan>
                 <![CDATA[
                 /* Enter a unique ExecutionPlan */
@@ -52,7 +52,7 @@
         </template>
 
         <template name="Template2">
-            <description>This templates checks maximum room temperature and room can be specified</description>
+            <description>To check maximum room temperature of specified room</description>
             <executionPlan>
                 <![CDATA[
                 /* Enter a unique ExecutionPlan */
@@ -93,7 +93,7 @@
 
 
         <template name="Template3">
-            <description>This templates process average room temperature within given time window</description>
+            <description>To check average room temperature within specified time window of all rooms</description>
             <executionPlan>
                 <![CDATA[
                 /* Enter a unique ExecutionPlan */
