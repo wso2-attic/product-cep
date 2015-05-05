@@ -254,6 +254,15 @@
             <outputDirectory>${pom.artifactId}-${pom.version}/client-lib</outputDirectory>
         </fileSet>
 
+        <!-- Dashboard -->
+        <fileSet>
+            <directory>repository/resources/designer</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/designer</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>target/shindig</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/webapps/shindig</outputDirectory>
+        </fileSet>
     </fileSets>
 
     <files>
@@ -542,6 +551,15 @@
             <filtered>true</filtered>
         </file>
 
+        <!--dashboard-->
+        <file>
+            <source>
+                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/cep/rdbms-configuration.xml
+            </source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/cep
+            </outputDirectory>
+            <filtered>true</filtered>
+        </file>
 
     </files>
 
