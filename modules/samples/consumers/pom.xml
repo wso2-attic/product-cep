@@ -35,6 +35,7 @@
     <modules>
         <module>wso2-event</module>
         <module>jms</module>
+        <module>mqtt</module>
         <module>axis2-log-service</module>
         <module>generic-log-service</module>
         <module>dashboard-service</module>
