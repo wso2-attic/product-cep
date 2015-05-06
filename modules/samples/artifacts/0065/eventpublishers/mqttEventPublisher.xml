@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventPublisher name="mqttEventPublisher" statistics="disable"
+  trace="disable" xmlns="http://wso2.org/carbon/eventpublisher">
+  <from streamName="org.wso2.event.sensor.stream" version="1.0.0"/>
+  <mapping customMapping="disable" type="json"/>
+  <to eventAdapterType="mqtt">
+    <property name="topic">sensordata</property>
+    <property name="qos">1</property>
+    <property name="url">tcp://localhost:1883</property>
+    <property name="clientId">CEP-Publisher-Sensor</property>
+    <property name="cleanSession">true</property>
+  </to>
+</eventPublisher>
