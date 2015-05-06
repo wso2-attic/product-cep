@@ -18,9 +18,9 @@
 
 <project default="run">
 
-    <property name="cep.home" value="../../.."/>
+    <property name="carbon.home" value="../../.."/>
+    <property name="lib.dir" value="../../lib"/>
     <property name="src.dir" value="src/main/java"/>
-    <!--<property name="lib.dir" value="lib"/>-->
     <property name="resources.dir" value="src/main/resources"/>
     <property name="temp.dir" value="temp"/>
     <property name="class.dir" value="${temp.dir}/classes"/>
@@ -67,7 +67,7 @@
 
     <target name="run" depends="compile">
         <echo> Configure -Durl=xxxx -Dtopic=xxxx </echo>
-        <java classname="${main-class}"
+        <java classname="${main.class}"
               classpathref="javac.classpath" fork="true">
             <arg value="${url}"/>
             <arg value="${topic}"/>
