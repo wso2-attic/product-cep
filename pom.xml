@@ -119,7 +119,11 @@
                 <artifactId>org.wso2.carbon.event.execution.manager.stub</artifactId>
                 <version>${carbon.event-processing.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>org.wso2.carbon.event-processing</groupId>
+                <artifactId>org.wso2.carbon.event.simulator.stub</artifactId>
+                <version>${carbon.event-processing.version}</version>
+            </dependency>
 
 
             <!--Carbon kernel-->
