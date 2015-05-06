@@ -35,5 +35,5 @@
             <to name="sensorValue" type="double"/>
         </property>
     </mapping>
-    <to streamName="org.wso2.event.statistics.stream" version="1.0.0"/>
+    <to streamName="org.wso2.event.sensor.stream" version="1.0.0"/>
 </eventReceiver>
