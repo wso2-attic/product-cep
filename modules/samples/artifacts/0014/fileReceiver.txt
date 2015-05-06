@@ -1,0 +1,1 @@
+timestamp:19900813115534,isPowerSaverEnabled:false,sensorId:103,sensorName:temperature,longitude:20.44345,latitude:5.443435,humidity:8.9,sensorValue:1.23434
