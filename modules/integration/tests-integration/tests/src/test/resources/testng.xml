@@ -40,6 +40,7 @@
             <class name="org.wso2.carbon.integration.test.processflow.DeployArtifactsTestCase"/>
             <class name="org.wso2.carbon.integration.test.processflow.Wso2EventTestCase"/>
             <class name="org.wso2.carbon.integration.test.inputflow.HttpTestCase"/>
+            <class name="org.wso2.carbon.integration.test.outputflow.LoggerTestCase"/>
             <!--<class name="org.wso2.carbon.integration.test.processflow.PassThroughWithWso2Event"/>-->
             <!--<class name="org.wso2.carbon.integration.test.processflow.MQTTXMLMessageTestCase"/>-->
             <!--<class name="org.wso2.carbon.integration.test.storm.StormTestCase"/>-->

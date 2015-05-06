@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventPublisher name="logger" statistics="disable" trace="disable" xmlns="http://wso2.org/carbon/eventpublisher">
+  <from streamName="org.wso2.event.sensor.stream" version="1.0.0"/>
+  <mapping customMapping="enable" type="xml">
+    <inline>
+      <SensorData xmlns="">
+        <equipmentRelatedData>
+          <timestamp>{{meta_timestamp}}</timestamp>
+          <isPowerSaverEnabled>{{meta_isPowerSaverEnabled}}</isPowerSaverEnabled>
+          <sensorId>{{meta_sensorId}}</sensorId>
+          <sensorName>{{meta_sensorName}}</sensorName>
+        </equipmentRelatedData>
+        <locationData>
+          <longitude>{{correlation_longitude}}</longitude>
+          <latitude>{{correlation_latitude}}</latitude>
+        </locationData>
+        <sensorData>
+          <humidity>{{humidity}}</humidity>
+          <sensorValue>{{sensorValue}}</sensorValue>
+        </sensorData>
+      </SensorData>
+    </inline>
+  </mapping>
+  <to eventAdapterType="logger">
+    <property name="uniqueId">xmlMappingLogger</property>
+  </to>
+</eventPublisher>
