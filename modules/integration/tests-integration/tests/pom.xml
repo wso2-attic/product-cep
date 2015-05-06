@@ -108,7 +108,7 @@
                             </outputDirectory>
                             <includeTypes>jar</includeTypes>
                             <includeArtifactIds>
-                                activemq-core,geronimo-j2ee-management_1.1_spec
+                                activemq-broker,activemq-client,geronimo-j2ee-management_1.1_spec
                             </includeArtifactIds>
                             <excludeTransitive>true</excludeTransitive>
                         </configuration>
@@ -342,7 +342,7 @@
 
         <dependency>
             <groupId>org.apache.activemq</groupId>
-            <artifactId>activemq-core</artifactId>
+            <artifactId>activemq-broker</artifactId>
             <exclusions>
                 <exclusion>
                     <artifactId>slf4j-api</artifactId>
@@ -350,6 +350,18 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-client</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>slf4j-api</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
         <dependency>
             <groupId>org.apache.geronimo.specs</groupId>
             <artifactId>geronimo-j2ee-management_1.1_spec</artifactId>
