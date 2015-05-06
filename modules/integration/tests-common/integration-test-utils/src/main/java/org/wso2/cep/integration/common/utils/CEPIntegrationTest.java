@@ -50,6 +50,7 @@ public abstract class CEPIntegrationTest {
     protected EventPublisherAdminServiceClient eventPublisherAdminServiceClient;
 
     protected ExecutionManagerAdminServiceClient executionManagerAdminServiceClient;
+    protected EventSimulatorAdminServiceClient eventSimulatorAdminServiceClient;
 
     protected void init() throws Exception {
         init(TestUserMode.SUPER_TENANT_ADMIN);
