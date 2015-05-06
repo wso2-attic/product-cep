@@ -31,7 +31,7 @@ public class WSO2EventServerUtil {
 
     static File securityFile = new File(".." + File.separator + ".." + File.separator + ".." + File.separator + "repository" + File.separator + "resources" + File.separator + "security");
     static String configDirectoryPath = ".." + File.separator + ".." + File.separator + ".." + File.separator + "repository" + File.separator + "deployment" + File.separator + "server" + File.separator + "eventstreams";
-    static String sampleDirectoryPath = ".." + File.separator + ".." + File.separator + ".." + File.separator + "wso2cep-4.0.0-SNAPSHOT" + File.separator + "samples" + File.separator + "artifacts" + File.separator + "sampleNumber" + File.separator + "eventstreams";
+    static String sampleDirectoryPath = ".." + File.separator + ".." + File.separator + ".." + File.separator + "samples" + File.separator + "artifacts" + File.separator + "sampleNumber" + File.separator + "eventstreams";
 
     public static void setTrustStoreParams() {
         String trustStore = securityFile.getAbsolutePath();
