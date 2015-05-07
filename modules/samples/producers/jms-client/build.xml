@@ -19,7 +19,7 @@
     <property name="resources.dir" value="src/main/resources"/>
     <property name="temp.dir" value="temp"/>
     <property name="class.dir" value="${temp.dir}/classes"/>
-    <property name="main-class" value="org.wso2.carbon.sample.wso2event.Client"/>
+    <property name="main-class" value="org.wso2.carbon.sample.jmsclient.JMSClient"/>
     <property name="lib.dir" value="../../lib"/>
 
 

@@ -36,8 +36,7 @@ public class JMSClientUtil {
 
     static String configDirectoryPath = ".." + File.separator + ".." + File.separator + ".." + File.separator + "repository" + File.separator + "deployment" + File.separator + "server" + File.separator + "eventstreams";
 
-
-    public static String getEventFilePath(String sampleNumber, String topic, String filePath) throws Exception {
+    public static String getEventFilePath(String sampleNumber, String format, String filePath) throws Exception {
         if (sampleNumber != null && sampleNumber.length() == 0) {
             sampleNumber = null;
         }
@@ -50,7 +49,12 @@ public class JMSClientUtil {
         if (filePath != null && sampleNumber == null) {
             resultingFilePath = filePath;
         } else if (filePath == null && sampleNumber != null) {
-            resultingFilePath = sampleDirectoryPath.replace("sampleNumber", sampleNumber) + topic.replaceAll(":", "_").replaceAll("\\.", "_") + ".csv";
+            if(format.equalsIgnoreCase("csv")){
+                resultingFilePath = sampleDirectoryPath.replace("sampleNumber", sampleNumber)+ "jmsReceiver.csv";
+            }else{
+                resultingFilePath = sampleDirectoryPath.replace("sampleNumber", sampleNumber)+ "jmsReceiver.txt";
+            }
+            //resultingFilePath = sampleDirectoryPath.replace("sampleNumber", sampleNumber); // + topic.replaceAll(":", "_").replaceAll("\\.", "_") + ".csv";
         } else {
             throw new Exception("In sampleNumber:'" + sampleNumber + "' and filePath:'" + filePath + "' one must be null and other not null");
         }
@@ -64,7 +68,49 @@ public class JMSClientUtil {
         return resultingFilePath;
     }
 
-    public static String readFile(String filePath) {
+    /**
+     * Xml messages will be read from the given filepath and stored in the array list (messagesList)
+     *
+     * @param filePath Text file to be read
+     */
+    public static List<String> readFile(String filePath) {
+        BufferedReader bufferedReader = null;
+        StringBuffer message = new StringBuffer("");
+        final String asterixLine = "*****";
+        List<String> messagesList = new ArrayList<String>();
+        try {
+
+            String line;
+            bufferedReader = new BufferedReader(new FileReader(filePath));
+            while ((line = bufferedReader.readLine()) != null) {
+                if ((line.equals(asterixLine.trim()) && !"".equals(message.toString().trim()))) {
+                    messagesList.add(message.toString());
+                    message = new StringBuffer("");
+                } else {
+                    message = message.append(String.format("\n%s", line));
+                }
+            }
+            if (!"".equals(message.toString().trim())) {
+                messagesList.add(message.toString());
+            }
+
+        } catch (FileNotFoundException e) {
+            log.error("Error in reading file " + filePath, e);
+        } catch (IOException e) {
+            log.error("Error in reading file " + filePath, e);
+        } finally {
+            try {
+                if (bufferedReader != null) {
+                    bufferedReader.close();
+                }
+            } catch (IOException e) {
+                log.error("Error occurred when closing the file : " + e.getMessage(), e);
+            }
+        }
+        return messagesList;
+    }
+
+    public static String readCSVFile(String filePath) {
         BufferedReader bufferedReader = null;
         StringBuilder builder = new StringBuilder("");
         try {
@@ -105,7 +151,7 @@ public class JMSClientUtil {
     public static Map<String, StreamDefinition> loadStreamDefinitions(String sampleNumber) {
         String directoryPath;
         if (sampleNumber.length() != 0) {
-            directoryPath = sampleDirectoryPath.replace("sampleNumber", sampleNumber);
+            directoryPath = sampleDirectoryPath.replace("sampleNumber", sampleNumber)+ "eventstreams";
         } else {
             directoryPath = configDirectoryPath;
         }
@@ -124,8 +170,6 @@ public class JMSClientUtil {
         if (defFiles != null) {
             for (final File fileEntry : defFiles) {
                 if (!fileEntry.isDirectory()) {
-
-
                     BufferedReader bufferedReader = null;
                     StringBuilder stringBuilder = new StringBuilder();
                     try {
