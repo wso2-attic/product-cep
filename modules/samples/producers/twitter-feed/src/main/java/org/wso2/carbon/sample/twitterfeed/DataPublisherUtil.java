@@ -18,7 +18,7 @@ import java.io.File;
 
 public class DataPublisherUtil {
 
-    static File filePath = new File("src/main" + File.separator + ".." + File.separator + ".." + File.separator + "repository" + File.separator + "resources" + File.separator + "security");
+    static File filePath = new File(".." + File.separator + ".." + File.separator + ".." + File.separator + "repository" + File.separator + "resources" + File.separator + "security");
 
     public static void setTrustStoreParams() {
         String trustStore = filePath.getAbsolutePath();
@@ -35,6 +35,6 @@ public class DataPublisherUtil {
     }
 
     public static String getAgentConfigPath() {
-        return "src/main" + File.separator + ".." + File.separator + ".." + File.separator + "repository" + File.separator + "conf" + File.separator + "data-bridge" + File.separator + "data-agent-config.xml";
+        return ".." + File.separator + ".." + File.separator + ".." + File.separator + "repository" + File.separator + "conf" + File.separator + "data-bridge" + File.separator + "data-agent-config.xml";
     }
 }

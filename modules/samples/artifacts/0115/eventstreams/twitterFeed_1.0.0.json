@@ -1,0 +1,14 @@
+{
+  "name": "twitterFeed",
+  "version": "1.0.0",
+  "payloadData": [
+    {
+      "name": "company",
+      "type": "STRING"
+    },
+    {
+      "name": "wordCount",
+      "type": "INT"
+    }
+  ]
+}
