@@ -26,6 +26,7 @@
     </parent>
 
     <artifactId>generic-log-service</artifactId>
+    <name>WSO2 CEP - Consumer - Generic Log Service</name>
     <packaging>war</packaging>
 
     <repositories>

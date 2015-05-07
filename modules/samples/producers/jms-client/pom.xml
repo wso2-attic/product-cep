@@ -24,6 +24,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>jms-client</artifactId>
+    <name>WSO2 CEP - Publisher - JMS Client</name>
 
     <dependencies>
         <dependency>
