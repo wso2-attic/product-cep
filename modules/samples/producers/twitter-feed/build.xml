@@ -40,9 +40,10 @@
             <include name="libthrift_*.jar"/>
             <include name="slf4j.log4j12_*.jar"/>
             <include name="slf4j.api_*.jar"/>
-            <include name="org.wso2.carbon.databridge.agent.thrift_*.jar"/>
+            <include name="org.wso2.carbon.databridge.agent_*.jar"/>
             <include name="org.wso2.carbon.databridge.commons.thrift_*.jar"/>
             <include name="org.wso2.carbon.databridge.commons_*.jar"/>
+            <include name="disruptor_*.jar"/>
         </fileset>
     </path>
 
