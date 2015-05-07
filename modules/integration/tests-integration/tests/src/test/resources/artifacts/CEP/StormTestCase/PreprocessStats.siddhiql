@@ -1,0 +1,41 @@
+/* Enter a unique ExecutionPlan */
+@Plan:name('PreprocessStats')
+
+/* Enter a unique description for ExecutionPlan */
+-- @Plan:description('Pre-processes analytics statistics for efficiency')
+
+/* define streams/tables and write queries here ... */
+
+@Import('analytics_Statistics:1.3.0')
+define stream analyticsStats (meta_ipAdd string, meta_index long, meta_timestamp long, meta_nanoTime long, userID string, searchTerms string);
+
+@Import('stock_quote:1.3.0')
+define stream stockQuote (price int, symbol string);
+
+@Export('fortuneCompanyStream:1.0.0')
+define stream fortuneCompanyStream (price int, symbol string, count long);
+
+ from analyticsStats[searchTerms=="IBM" or searchTerms=="WSO2" or searchTerms=="MSFT" or searchTerms=="ORACLE"]
+select userID, searchTerms as symbol
+insert into filteredStatStream;
+
+ from stockQuote[price>100]
+select price, symbol
+insert into highStockQuote;
+
+ from highStockQuote#window.length(10) as h join filteredStatStream#window.length(10) as f
+on h.symbol==f.symbol
+select h.price as price, h.symbol as symbol, f.userID as userid
+insert into joinStream;
+
+
+ from joinStream#window.length(5)
+select price, symbol, count(userid) as count
+group by userid
+insert into countedStream;
+
+
+from countedStream[count>2]
+select price, symbol, count
+insert into fortuneCompanyStream;
+

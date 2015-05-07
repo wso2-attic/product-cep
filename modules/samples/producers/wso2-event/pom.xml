@@ -25,7 +25,6 @@
     <artifactId>wso2-event-client</artifactId>
     <name>WSO2 CEP - Producer - WSO2 Event Client</name>
 
-
     <dependencies>
         <dependency>
             <groupId>org.wso2.carbon.analytics-common</groupId>

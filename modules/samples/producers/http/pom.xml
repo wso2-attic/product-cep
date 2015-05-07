@@ -26,6 +26,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>http-client</artifactId>
+    <name>WSO2 CEP - Publisher - HTTP Client</name>
 
     <dependencies>
         <dependency>
