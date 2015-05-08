@@ -18,24 +18,22 @@
  */
 package org.wso2.carbon.integration.test.client;
 
-//import org.wso2.carbon.databridge.agent.DataPublisher;
-//import org.wso2.carbon.databridge.agent.exception.DataEndpointAgentConfigurationException;
-//import org.wso2.carbon.databridge.agent.exception.DataEndpointAuthenticationException;
-//import org.wso2.carbon.databridge.agent.exception.DataEndpointConfigurationException;
-//import org.wso2.carbon.databridge.agent.exception.DataEndpointException;
-//import org.wso2.carbon.databridge.agent.thrift.exception.AgentException;
-//import org.wso2.carbon.databridge.commons.AttributeType;
-//import org.wso2.carbon.databridge.commons.StreamDefinition;
-//import org.wso2.carbon.databridge.commons.exception.*;
-//
-//import javax.security.sasl.AuthenticationException;
-//import java.net.MalformedURLException;
-//import java.net.SocketException;
-//import java.util.ArrayList;
-//import java.util.Collections;
-//import java.util.List;
+import org.wso2.carbon.databridge.agent.DataPublisher;
+import org.wso2.carbon.databridge.agent.exception.DataEndpointAgentConfigurationException;
+import org.wso2.carbon.databridge.agent.exception.DataEndpointAuthenticationException;
+import org.wso2.carbon.databridge.agent.exception.DataEndpointConfigurationException;
+import org.wso2.carbon.databridge.agent.exception.DataEndpointException;
+import org.wso2.carbon.databridge.commons.exception.*;
+import org.wso2.carbon.databridge.commons.utils.DataBridgeCommonsUtils;
 
-public class StockQuoteClient {/*
+import javax.security.sasl.AuthenticationException;
+import java.net.MalformedURLException;
+import java.net.SocketException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class StockQuoteClient {
     private static long sentEventCount = 0;
     public static final String STREAM_NAME1 = "stock_quote";
     public static final String VERSION1 = "1.3.0";
@@ -57,7 +55,7 @@ public class StockQuoteClient {/*
 
 
     public static void publish(String host, String port, String username, String password, int events)
-            throws AgentException, MalformedStreamDefinitionException,
+            throws MalformedStreamDefinitionException,
             StreamDefinitionException, DifferentStreamDefinitionAlreadyDefinedException,
             MalformedURLException,
             AuthenticationException, NoStreamDefinitionExistException,
@@ -70,11 +68,7 @@ public class StockQuoteClient {/*
         //create data publisher
         DataPublisher dataPublisher = new DataPublisher("tcp://" + host + ":" + port, username, password);
 
-        StreamDefinition streamDefinition = new StreamDefinition(STREAM_NAME1, VERSION1);
-        streamDefinition.addPayloadData("price", AttributeType.INT);
-        streamDefinition.addPayloadData("symbol", AttributeType.STRING);
-        String streamId = dataPublisher.defineStream(streamDefinition);
-
+        String streamId = DataBridgeCommonsUtils.generateStreamId(STREAM_NAME1, VERSION1);
 
         //Publish event for a valid stream
         if (!streamId.isEmpty()) {
@@ -91,7 +85,7 @@ public class StockQuoteClient {/*
                 //ignore
             }
 
-            dataPublisher.stop();
+            dataPublisher.shutdown();
         }
     }
 
@@ -100,5 +94,5 @@ public class StockQuoteClient {/*
         int symbolIndex = Math.round((float) Math.random() * 3);
         int priceIndex = Math.round((float) Math.random() * 4);
         return new Object[]{PRICES.get(priceIndex), SYMBOL.get(symbolIndex)};
-    }*/
+    }
 }
