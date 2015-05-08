@@ -36,7 +36,7 @@ public class JMSClientUtil {
 
     static String configDirectoryPath = ".." + File.separator + ".." + File.separator + ".." + File.separator + "repository" + File.separator + "deployment" + File.separator + "server" + File.separator + "eventstreams";
 
-    public static String getEventFilePath(String sampleNumber, String format, String filePath) throws Exception {
+    public static String getEventFilePath(String sampleNumber, String format, String topic, String filePath) throws Exception {
         if (sampleNumber != null && sampleNumber.length() == 0) {
             sampleNumber = null;
         }
@@ -50,9 +50,9 @@ public class JMSClientUtil {
             resultingFilePath = filePath;
         } else if (filePath == null && sampleNumber != null) {
             if(format.equalsIgnoreCase("csv")){
-                resultingFilePath = sampleDirectoryPath.replace("sampleNumber", sampleNumber)+ "jmsReceiver.csv";
+                resultingFilePath = sampleDirectoryPath.replace("sampleNumber", sampleNumber)+ topic + ".csv";
             }else{
-                resultingFilePath = sampleDirectoryPath.replace("sampleNumber", sampleNumber)+ "jmsReceiver.txt";
+                resultingFilePath = sampleDirectoryPath.replace("sampleNumber", sampleNumber)+ topic + ".txt";
             }
             //resultingFilePath = sampleDirectoryPath.replace("sampleNumber", sampleNumber); // + topic.replaceAll(":", "_").replaceAll("\\.", "_") + ".csv";
         } else {

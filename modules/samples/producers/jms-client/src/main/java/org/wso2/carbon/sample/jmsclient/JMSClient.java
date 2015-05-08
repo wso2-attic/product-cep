@@ -39,6 +39,7 @@ public class JMSClient {
         String format = args[2];
         String filePath = args[3];
         String streamId = args[4];
+        String broker = args[5];
 
 //        String sampleNumber = "0013";// = args[0];
 //        String topicName = "topicJMS";// = args[1];
@@ -50,6 +51,9 @@ public class JMSClient {
         if (format == null || "map".equals(format)) {
             format = "csv";
         }
+        if (broker == null || broker.equalsIgnoreCase("")) {
+            broker = "activemq";
+        }
 
         //JMSClient publisher = new JMSClient();
 
@@ -58,36 +62,42 @@ public class JMSClient {
             streamDefinition = JMSClientUtil.loadStreamDefinitions(sampleNumber).get(streamId);
         }
         try {
-            filePath = JMSClientUtil.getEventFilePath(sampleNumber, format, filePath);
+            filePath = JMSClientUtil.getEventFilePath(sampleNumber, format, topicName, filePath);
             TopicConnection topicConnection = null;
-            try {
-                topicConnection = topicConnectionFactory.createTopicConnection();
-                topicConnection.start();
-            } catch (JMSException e) {
-                log.error("Can not create topic connection." + e);
-                return;
-            }
-
-            try {
-                Session session = topicConnection.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
-                Topic topic  = session.createTopic(topicName);
-                MessageProducer producer  = session.createProducer(topic);
-
-                if(format.equalsIgnoreCase("csv")){
-                    String fileContent = JMSClientUtil.readCSVFile(filePath);
-                    log.info("Sending Map messages on '" + topicName + "' topic");
-                    publishMapMessage(producer, session, fileContent, streamDefinition);
-                }else{
-                    List<String> messagesList = JMSClientUtil.readFile(filePath);
-                    log.info("Sending  " + format + " messages on '" + topicName + "' topic");
-                    publishTextMessage(producer, session, messagesList);
+            if(broker.equalsIgnoreCase("activemq")){
+                try {
+                    topicConnection = topicConnectionFactory.createTopicConnection();
+                    topicConnection.start();
+                } catch (JMSException e) {
+                    log.error("Can not create topic connection." + e);
+                    return;
                 }
-                producer.close();
-                session.close();
-                topicConnection.stop();
-            }catch (JMSException e) {
-                log.error("Can not subscribe." + e);
+                try {
+                    Session session = topicConnection.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
+                    Topic topic  = session.createTopic(topicName);
+                    MessageProducer producer  = session.createProducer(topic);
+
+                    if(format.equalsIgnoreCase("csv")){
+                        String fileContent = JMSClientUtil.readCSVFile(filePath);
+                        log.info("Sending Map messages on '" + topicName + "' topic");
+                        publishMapMessage(producer, session, fileContent, streamDefinition);
+                    }else{
+                        List<String> messagesList = JMSClientUtil.readFile(filePath);
+                        log.info("Sending  " + format + " messages on '" + topicName + "' topic");
+                        publishTextMessage(producer, session, messagesList);
+                    }
+                    producer.close();
+                    session.close();
+                    topicConnection.stop();
+
+                }catch (JMSException e) {
+                    log.error("Can not subscribe." + e);
+                }
+            }else if (broker.equalsIgnoreCase("mb")){
+                JMSMBClient topicPublisher = new JMSMBClient();
+                topicPublisher.publishMessage(format, filePath, topicName, streamDefinition);
             }
+
         } catch (Exception e) {
             log.error("logging error" + e.getMessage());
         }
