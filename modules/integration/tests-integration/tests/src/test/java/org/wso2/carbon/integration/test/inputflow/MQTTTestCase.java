@@ -94,22 +94,22 @@ public class MQTTTestCase extends CEPIntegrationTest {
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("inputflows/sample0013", "org.wso2.event.sensor.stream_1.0.0.json");
+        String streamDefinitionAsString = getJSONArtifactConfiguration("inputflows/sample0016", "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
         //Add MQTT JSON EventReceiver without mapping
-        String eventReceiverConfig = getXMLArtifactConfiguration("inputflows/sample0013", "mqttEventReceiver.xml");
+        String eventReceiverConfig = getXMLArtifactConfiguration("inputflows/sample0016", "mqttEventReceiver.xml");
         eventReceiverAdminServiceClient.addEventReceiverConfiguration(eventReceiverConfig);
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
 
         //Add Wso2event EventPublisher
-        String eventPublisherConfig2 = getXMLArtifactConfiguration("inputflows/sample0013", "wso2EventPublisher.xml");
+        String eventPublisherConfig2 = getXMLArtifactConfiguration("inputflows/sample0016", "wso2EventPublisher.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig2);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         // The data-bridge receiver
-        TestAgentServer agentServer = new TestAgentServer("inputflows/sample0013", 7661, true);
+        TestAgentServer agentServer = new TestAgentServer("inputflows/sample0016", 7661, true);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start
