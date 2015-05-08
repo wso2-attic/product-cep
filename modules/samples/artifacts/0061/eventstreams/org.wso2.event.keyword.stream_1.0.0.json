@@ -1,0 +1,30 @@
+{
+  "name": "org.wso2.event.keyword.stream",
+  "version": "1.0.0",
+  "nickName": "CCKeywordStream",
+  "description": "Keywords for the transaction",
+  "metaData": [
+    {
+      "name": "timestamp",
+      "type": "LONG"
+    }
+  ],
+  "payloadData": [
+    {
+      "name": "vendor_category",
+      "type": "STRING"
+    },
+    {
+      "name": "country",
+      "type": "STRING"
+    },
+    {
+      "name": "transaction_category",
+      "type": "STRING"
+    },
+    {
+      "name": "transaction_time",
+      "type": "LONG"
+    }
+  ]
+}

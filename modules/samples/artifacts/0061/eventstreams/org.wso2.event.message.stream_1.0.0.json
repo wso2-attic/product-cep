@@ -1,0 +1,30 @@
+{
+  "name": "org.wso2.event.message.stream",
+  "version": "1.0.0",
+  "nickName": "CCMessageStream",
+  "description": "Details of transaction owner",
+  "metaData": [
+    {
+      "name": "timestamp",
+      "type": "LONG"
+    }
+  ],
+  "payloadData": [
+    {
+      "name": "card_holder_name",
+      "type": "STRING"
+    },
+    {
+      "name": "amount",
+      "type": "DOUBLE"
+    },
+    {
+      "name": "vendor",
+      "type": "STRING"
+    },
+    {
+      "name": "transaction_time",
+      "type": "LONG"
+    }
+  ]
+}

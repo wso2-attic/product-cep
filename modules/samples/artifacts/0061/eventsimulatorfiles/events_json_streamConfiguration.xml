@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="UTF-8"?><streamConfiguration type="csv"><file>events_json.csv</file><streamID>org.wso2.event.keyword.stream:1.0.0</streamID><separateChar>,</separateChar></streamConfiguration>
