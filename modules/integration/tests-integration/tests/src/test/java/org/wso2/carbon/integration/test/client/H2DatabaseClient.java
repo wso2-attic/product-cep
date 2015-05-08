@@ -50,10 +50,8 @@ public class H2DatabaseClient {
             if (resultSet.next()) {
                 return resultSet.getInt("totalRowCount");
             }
-
-
         } catch (SQLException e) {
-            log.error("Error while deleting the event", e);
+            log.error("Error while retrieving the table information", e);
         } finally {
             clearConnections(stmt, con);
         }

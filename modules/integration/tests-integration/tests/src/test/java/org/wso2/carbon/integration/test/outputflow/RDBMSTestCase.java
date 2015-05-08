@@ -87,19 +87,20 @@ public class RDBMSTestCase extends CEPIntegrationTest {
         eventDto3.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
         eventDto3.setAttributeValues(new String[]{"199008131245", "false", "103", "temperature", "23.45656", "7.12324", "100.34", "23.4545"});
 
-        int initialCount = H2DatabaseClient.getTableEntryCount("sensordata");
-
         eventSimulatorAdminServiceClient.sendEvent(eventDto);
         Thread.sleep(1000);
+        int initialCount1 = H2DatabaseClient.getTableEntryCount("sensordata");
         eventSimulatorAdminServiceClient.sendEvent(eventDto2);
         Thread.sleep(1000);
+        int initialCount2 = H2DatabaseClient.getTableEntryCount("sensordata");
+        Assert.assertEquals(initialCount2, initialCount1 + 1, "Events are not reached the H2 database");
         eventSimulatorAdminServiceClient.sendEvent(eventDto3);
-
         Thread.sleep(3000);
 
         int latestCount = H2DatabaseClient.getTableEntryCount("sensordata");
+        Assert.assertEquals(latestCount, initialCount2 + 1, "Events are not reached the H2 database");
 
-        Assert.assertEquals(latestCount, (initialCount + 3), "Event are not reached the H2 database");
+        Thread.sleep(2000);
 
         eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
         eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("rdbmsEventPublisher.xml");
