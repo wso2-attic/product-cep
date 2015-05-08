@@ -29,6 +29,7 @@ import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.event.simulator.stub.types.EventDto;
 import org.wso2.carbon.integration.common.admin.client.NDataSourceAdminServiceClient;
 import org.wso2.carbon.integration.test.client.H2DatabaseClient;
+import org.wso2.carbon.integration.test.client.util.BasicDataSource;
 import org.wso2.carbon.ndatasource.ui.stub.core.services.xsd.WSDataSourceMetaInfo;
 import org.wso2.carbon.ndatasource.ui.stub.core.services.xsd.WSDataSourceMetaInfo_WSDataSourceDefinition;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
@@ -55,10 +56,8 @@ public class RDBMSTestCase extends CEPIntegrationTest {
 
         NDataSourceAdminServiceClient dataSourceAdminService =
                 new NDataSourceAdminServiceClient(backendURL, loggedInSessionCookie);
-//        WSDataSourceMetaInfo wsDataSourceMetaInfo = new WSDataSourceMetaInfo();
-//        wsDataSourceMetaInfo.se
-//
-//        dataSourceAdminService.addDataSource();
+        WSDataSourceMetaInfo dataSourceInfo = getDataSourceInformation("WSO2CEP_DB");
+        dataSourceAdminService.addDataSource(dataSourceInfo);
     }
 
     @Test(groups = {"wso2.cep"}, description = "Testing RDBMS Adapter")
@@ -100,7 +99,7 @@ public class RDBMSTestCase extends CEPIntegrationTest {
 
         int latestCount = H2DatabaseClient.getTableEntryCount("sensordata");
 
-        Assert.assertEquals(latestCount, initialCount + 1, "Event are not reached the H2 database");
+        Assert.assertEquals(latestCount, (initialCount + 3), "Event are not reached the H2 database");
 
         eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
         eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("rdbmsEventPublisher.xml");
@@ -113,28 +112,29 @@ public class RDBMSTestCase extends CEPIntegrationTest {
         super.cleanup();
     }
 
-//    private WSDataSourceMetaInfo getDataSourceInformation(String dataSourceName)
-//            throws XMLStreamException {
-//        WSDataSourceMetaInfo dataSourceInfo = new WSDataSourceMetaInfo();
-//
-//        dataSourceInfo.setName(dataSourceName);
-//
-//        WSDataSourceMetaInfo_WSDataSourceDefinition dataSourceDefinition = new WSDataSourceMetaInfo_WSDataSourceDefinition();
-//
-//        dataSourceDefinition.setType("RDBMS");
-//        OMElement dsConfig = AXIOMUtil.stringToOM("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
-//                "<configuration>\n" +
-//                "<driverClassName>" + sqlDataSource.getDriver() + "</driverClassName>\n" +
-//                "<url>" + sqlDataSource.getJdbcUrl() + "</url>\n" +
-//                "<username>" + sqlDataSource.getDatabaseUser() + "</username>\n" +
-//                "<password encrypted=\"true\">" + sqlDataSource.getDatabasePassword() + "</password>\n" +
-//                "</configuration>");
-//
-//
-//        dataSourceDefinition.setDsXMLConfiguration(dsConfig.toString());
-//
-//        dataSourceInfo.setDefinition(dataSourceDefinition);
-//
-//        return dataSourceInfo;
-//    }
+    private WSDataSourceMetaInfo getDataSourceInformation(String dataSourceName)
+            throws XMLStreamException {
+        WSDataSourceMetaInfo dataSourceInfo = new WSDataSourceMetaInfo();
+
+        dataSourceInfo.setName(dataSourceName);
+
+        WSDataSourceMetaInfo_WSDataSourceDefinition dataSourceDefinition = new WSDataSourceMetaInfo_WSDataSourceDefinition();
+
+        dataSourceDefinition.setType("RDBMS");
+        OMElement dsConfig = AXIOMUtil.stringToOM("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
+                "<configuration>\n" +
+                "<driverClassName>" + BasicDataSource.H2_DRIVER_CLASS + "</driverClassName>\n" +
+                "<url>" + BasicDataSource.H2_CONNECTION_URL + "</url>\n" +
+                "<username>" + BasicDataSource.H2USERNAME + "</username>\n" +
+                "<password encrypted=\"true\">" + BasicDataSource.H2PASSWORD + "</password>\n" +
+                "</configuration>");
+
+
+        dataSourceDefinition.setDsXMLConfiguration(dsConfig.toString());
+
+        dataSourceInfo.setDefinition(dataSourceDefinition);
+
+        return dataSourceInfo;
+    }
+
 }
