@@ -1,0 +1,45 @@
+{
+    "name": "org.wso2.event.sensor.stream.map",
+    "version": "1.0.0",
+    "nickName": "",
+    "description": "Sensor Stream which will be mapped",
+    "metaData": [
+        {
+            "name": "time",
+            "type": "LONG"
+        },
+        {
+            "name": "isPowerSaving",
+            "type": "BOOL"
+        },
+        {
+            "name": "id",
+            "type": "INT"
+        },
+        {
+            "name": "name",
+            "type": "STRING"
+        }
+    ],
+    "correlationData": [
+        {
+            "name": "longitude",
+            "type": "DOUBLE"
+        },
+        {
+            "name": "latitude",
+            "type": "DOUBLE"
+        }
+    ],
+    "payloadData": [
+        {
+            "name": "humidityLevel",
+            "type": "FLOAT"
+        },
+        {
+            "name": "sensorReading",
+            "type": "DOUBLE"
+        }
+    ]
+}
+					                                    		
