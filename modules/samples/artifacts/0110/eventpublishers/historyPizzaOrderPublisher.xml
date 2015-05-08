@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventPublisher name="historyPizzaOrderPublisher" statistics="disable"
+  trace="disable" xmlns="http://wso2.org/carbon/eventpublisher">
+  <from streamName="org.wso2.sample.pizza.stream.previousOrders" version="1.0.0"/>
+  <mapping customMapping="enable" type="text">
+    <inline>Customer Name : {{customerName}}
+Total Previous Orders : {{noOfPreviousOrders}}
+Last Ordered Time : {{lastOrderedTime}}</inline>
+  </mapping>
+  <to eventAdapterType="logger">
+    <property name="uniqueId">Previous Pizza Orders</property>
+  </to>
+</eventPublisher>

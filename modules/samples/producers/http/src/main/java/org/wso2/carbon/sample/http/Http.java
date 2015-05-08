@@ -70,7 +70,7 @@ public class Http {
 			Thread.sleep(500); // Waiting time for the message to be sent
 
 		} catch (Throwable t) {
-			log.error("Error when sending the meessages", t);
+			log.error("Error when sending the messages", t);
 		}
 	}
 

@@ -1,0 +1,20 @@
+{
+  "name": "fortuneCompanyStream",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "payloadData": [
+    {
+      "name": "price",
+      "type": "INT"
+    },
+    {
+      "name": "symbol",
+      "type": "STRING"
+    },
+    {
+      "name": "count",
+      "type": "LONG"
+    }
+  ]
+}

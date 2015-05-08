@@ -60,7 +60,7 @@ public class HttpTestCase extends CEPIntegrationTest {
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("inputflows/sample0001","org.wso2.event.statistics.stream_1.0.0.json");
+        String streamDefinitionAsString = getJSONArtifactConfiguration("inputflows/sample0001","org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
@@ -70,8 +70,8 @@ public class HttpTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
 
         //Add Wso2event EventPublisher
-        String eventPublisherConfig2 = getXMLArtifactConfiguration("inputflows/sample0001", "wso2EventPublisher.xml");
-        eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig2);
+        String eventPublisherConfig = getXMLArtifactConfiguration("inputflows/sample0001", "wso2EventPublisher.xml");
+        eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         // The data-bridge receiver
@@ -87,7 +87,7 @@ public class HttpTestCase extends CEPIntegrationTest {
         //wait while all stats are published
         Thread.sleep(30000);
 
-        eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.statistics.stream", "1.0.0");
+        eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
         eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("httpReceiver.xml");
         eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("wso2EventPublisher.xml");
 
@@ -95,19 +95,19 @@ public class HttpTestCase extends CEPIntegrationTest {
 
         List<Event> eventList = new ArrayList<>();
         Event event = new Event();
-        event.setStreamId("org.wso2.event.statistics.stream:1.0.0");
+        event.setStreamId("org.wso2.event.sensor.stream:1.0.0");
         event.setMetaData(new Object[]{4354643l, false, 701, "temperature"});
         event.setCorrelationData(new Object[]{4.504343, 20.44345});
         event.setPayloadData(new Object[]{2.3f, 4.504343});
         eventList.add(event);
         Event event2 = new Event();
-        event2.setStreamId("org.wso2.event.statistics.stream:1.0.0");
+        event2.setStreamId("org.wso2.event.sensor.stream:1.0.0");
         event2.setMetaData(new Object[]{4354643l, false, 702, "temperature"});
         event2.setCorrelationData(new Object[]{4.504343, 20.44345});
         event2.setPayloadData(new Object[]{2.3f, 4.504343});
         eventList.add(event2);
         Event event3 = new Event();
-        event3.setStreamId("org.wso2.event.statistics.stream:1.0.0");
+        event3.setStreamId("org.wso2.event.sensor.stream:1.0.0");
         event3.setMetaData(new Object[]{4354643l, false, 703, "temperature"});
         event3.setCorrelationData(new Object[]{4.504343, 20.44345});
         event3.setPayloadData(new Object[]{2.3f, 4.504343});
@@ -135,7 +135,7 @@ public class HttpTestCase extends CEPIntegrationTest {
 
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("inputflows/sample0002","org.wso2.event.statistics.stream_1.0.0.json");
+        String streamDefinitionAsString = getJSONArtifactConfiguration("inputflows/sample0002","org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
@@ -145,8 +145,8 @@ public class HttpTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
 
         //Add Wso2event EventPublisher
-        String eventPublisherConfig2 = getXMLArtifactConfiguration("inputflows/sample0002", "wso2EventPublisher.xml");
-        eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig2);
+        String eventPublisherConfig = getXMLArtifactConfiguration("inputflows/sample0002", "wso2EventPublisher.xml");
+        eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         // The data-bridge receiver
@@ -162,7 +162,7 @@ public class HttpTestCase extends CEPIntegrationTest {
         //wait while all stats are published
         Thread.sleep(5000);
 
-        eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.statistics.stream", "1.0.0");
+        eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
         eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("httpReceiver.xml");
         eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("wso2EventPublisher.xml");
 
@@ -170,19 +170,19 @@ public class HttpTestCase extends CEPIntegrationTest {
 
         List<Event> eventList = new ArrayList<>();
         Event event = new Event();
-        event.setStreamId("org.wso2.event.statistics.stream:1.0.0");
+        event.setStreamId("org.wso2.event.sensor.stream:1.0.0");
         event.setMetaData(new Object[]{19900813115534l, false, 501, "temperature"});
         event.setCorrelationData(new Object[]{90.34344, 20.44345});
         event.setPayloadData(new Object[]{2.3f, 20.44345});
         eventList.add(event);
         Event event2 = new Event();
-        event2.setStreamId("org.wso2.event.statistics.stream:1.0.0");
+        event2.setStreamId("org.wso2.event.sensor.stream:1.0.0");
         event2.setMetaData(new Object[]{19900813115534l, false, 502, "temperature"});
         event2.setCorrelationData(new Object[]{90.34344, 20.44345});
         event2.setPayloadData(new Object[]{2.3f, 20.44345});
         eventList.add(event2);
         Event event3 = new Event();
-        event3.setStreamId("org.wso2.event.statistics.stream:1.0.0");
+        event3.setStreamId("org.wso2.event.sensor.stream:1.0.0");
         event3.setMetaData(new Object[]{19900813115534l, false, 503, "temperature"});
         event3.setCorrelationData(new Object[]{90.34344, 20.44345});
         event3.setPayloadData(new Object[]{2.3f, 20.44345});
@@ -210,7 +210,7 @@ public class HttpTestCase extends CEPIntegrationTest {
 
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("inputflows/sample0003","org.wso2.event.statistics.stream_1.0.0.json");
+        String streamDefinitionAsString = getJSONArtifactConfiguration("inputflows/sample0003","org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
@@ -220,8 +220,8 @@ public class HttpTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
 
         //Add Wso2event EventPublisher
-        String eventPublisherConfig2 = getXMLArtifactConfiguration("inputflows/sample0003", "wso2EventPublisher.xml");
-        eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig2);
+        String eventPublisherConfig = getXMLArtifactConfiguration("inputflows/sample0003", "wso2EventPublisher.xml");
+        eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         // The data-bridge receiver
@@ -237,7 +237,7 @@ public class HttpTestCase extends CEPIntegrationTest {
         //wait while all stats are published
         Thread.sleep(5000);
 
-        eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.statistics.stream", "1.0.0");
+        eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
         eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("httpReceiver.xml");
         eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("wso2EventPublisher.xml");
 
@@ -245,19 +245,19 @@ public class HttpTestCase extends CEPIntegrationTest {
 
         List<Event> eventList = new ArrayList<>();
         Event event = new Event();
-        event.setStreamId("org.wso2.event.statistics.stream:1.0.0");
+        event.setStreamId("org.wso2.event.sensor.stream:1.0.0");
         event.setMetaData(new Object[]{199008131245l, true, 401, "temperature"});
         event.setCorrelationData(new Object[]{4.504343, 1.23434});
         event.setPayloadData(new Object[]{6.6f, 20.44345});
         eventList.add(event);
         Event event2 = new Event();
-        event2.setStreamId("org.wso2.event.statistics.stream:1.0.0");
+        event2.setStreamId("org.wso2.event.sensor.stream:1.0.0");
         event2.setMetaData(new Object[]{199008131245l, true, 402, "temperature"});
         event2.setCorrelationData(new Object[]{4.504343, 1.23434});
         event2.setPayloadData(new Object[]{6.6f, 20.44345});
         eventList.add(event2);
         Event event3 = new Event();
-        event3.setStreamId("org.wso2.event.statistics.stream:1.0.0");
+        event3.setStreamId("org.wso2.event.sensor.stream:1.0.0");
         event3.setMetaData(new Object[]{199008131245l, true, 403, "temperature"});
         event3.setCorrelationData(new Object[]{4.504343, 1.23434});
         event3.setPayloadData(new Object[]{6.6f, 20.44345});
@@ -284,7 +284,7 @@ public class HttpTestCase extends CEPIntegrationTest {
 
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("inputflows/sample0004","org.wso2.event.statistics.stream_1.0.0.json");
+        String streamDefinitionAsString = getJSONArtifactConfiguration("inputflows/sample0004","org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
@@ -294,8 +294,8 @@ public class HttpTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
 
         //Add Wso2event EventPublisher
-        String eventPublisherConfig2 = getXMLArtifactConfiguration("inputflows/sample0004", "wso2EventPublisher.xml");
-        eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig2);
+        String eventPublisherConfig = getXMLArtifactConfiguration("inputflows/sample0004", "wso2EventPublisher.xml");
+        eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         // The data-bridge receiver
@@ -313,25 +313,25 @@ public class HttpTestCase extends CEPIntegrationTest {
 
         List<Event> eventList = new ArrayList<>();
         Event event = new Event();
-        event.setStreamId("org.wso2.event.statistics.stream:1.0.0");
+        event.setStreamId("org.wso2.event.sensor.stream:1.0.0");
         event.setMetaData(new Object[]{19900813115534l, true, 502, "temperature"});
         event.setCorrelationData(new Object[]{4.504343, 1.23434});
         event.setPayloadData(new Object[]{6.6f, 20.44345});
         eventList.add(event);
         Event event2 = new Event();
-        event2.setStreamId("org.wso2.event.statistics.stream:1.0.0");
+        event2.setStreamId("org.wso2.event.sensor.stream:1.0.0");
         event2.setMetaData(new Object[]{19900813115534l, true, 501, "temperature"});
         event2.setCorrelationData(new Object[]{4.504343, 1.23434});
         event2.setPayloadData(new Object[]{6.6f, 20.44345});
         eventList.add(event2);
         Event event3 = new Event();
-        event3.setStreamId("org.wso2.event.statistics.stream:1.0.0");
+        event3.setStreamId("org.wso2.event.sensor.stream:1.0.0");
         event3.setMetaData(new Object[]{19900813115534l, true, 503, "temperature"});
         event3.setCorrelationData(new Object[]{4.504343, 1.23434});
         event3.setPayloadData(new Object[]{6.6f, 20.44345});
         eventList.add(event3);
 
-        eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.statistics.stream", "1.0.0");
+        eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
         eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("httpReceiver.xml");
         eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("wso2EventPublisher.xml");
 
@@ -358,7 +358,7 @@ public class HttpTestCase extends CEPIntegrationTest {
 
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("inputflows/sample0005","org.wso2.event.statistics.stream_1.0.0.json");
+        String streamDefinitionAsString = getJSONArtifactConfiguration("inputflows/sample0005","org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
@@ -368,8 +368,8 @@ public class HttpTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
 
         //Add Wso2event EventPublisher
-        String eventPublisherConfig2 = getXMLArtifactConfiguration("inputflows/sample0005", "wso2EventPublisher.xml");
-        eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig2);
+        String eventPublisherConfig = getXMLArtifactConfiguration("inputflows/sample0005", "wso2EventPublisher.xml");
+        eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         // The data-bridge receiver
@@ -385,7 +385,7 @@ public class HttpTestCase extends CEPIntegrationTest {
         //wait while all stats are published
         Thread.sleep(5000);
 
-        eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.statistics.stream", "1.0.0");
+        eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
         eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("httpReceiver.xml");
         eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("wso2EventPublisher.xml");
 
@@ -393,19 +393,19 @@ public class HttpTestCase extends CEPIntegrationTest {
 
         List<Event> eventList = new ArrayList<>();
         Event event = new Event();
-        event.setStreamId("org.wso2.event.statistics.stream:1.0.0");
+        event.setStreamId("org.wso2.event.sensor.stream:1.0.0");
         event.setMetaData(new Object[]{19900813115534l, false, 100, "temperature"});
         event.setCorrelationData(new Object[]{20.44345, 5.443435});
         event.setPayloadData(new Object[]{8.9f, 1.23434});
         eventList.add(event);
         Event event2 = new Event();
-        event2.setStreamId("org.wso2.event.statistics.stream:1.0.0");
+        event2.setStreamId("org.wso2.event.sensor.stream:1.0.0");
         event2.setMetaData(new Object[]{19900813115534l, false, 101, "temperature"});
         event2.setCorrelationData(new Object[]{20.44345, 5.443435});
         event2.setPayloadData(new Object[]{8.9f, 1.23434});
         eventList.add(event2);
         Event event3 = new Event();
-        event3.setStreamId("org.wso2.event.statistics.stream:1.0.0");
+        event3.setStreamId("org.wso2.event.sensor.stream:1.0.0");
         event3.setMetaData(new Object[]{19900813115534l, false, 102, "temperature"});
         event3.setCorrelationData(new Object[]{20.44345, 5.443435});
         event3.setPayloadData(new Object[]{8.9f, 1.23434});
@@ -432,7 +432,7 @@ public class HttpTestCase extends CEPIntegrationTest {
 
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("inputflows/sample0006","org.wso2.event.statistics.stream_1.0.0.json");
+        String streamDefinitionAsString = getJSONArtifactConfiguration("inputflows/sample0006","org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
@@ -442,8 +442,8 @@ public class HttpTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
 
         //Add Wso2event EventPublisher
-        String eventPublisherConfig2 = getXMLArtifactConfiguration("inputflows/sample0006", "wso2EventPublisher.xml");
-        eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig2);
+        String eventPublisherConfig = getXMLArtifactConfiguration("inputflows/sample0006", "wso2EventPublisher.xml");
+        eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         // The data-bridge receiver
@@ -459,7 +459,7 @@ public class HttpTestCase extends CEPIntegrationTest {
         //wait while all stats are published
         Thread.sleep(5000);
 
-        eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.statistics.stream", "1.0.0");
+        eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
         eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("httpReceiver.xml");
         eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("wso2EventPublisher.xml");
 
@@ -467,19 +467,19 @@ public class HttpTestCase extends CEPIntegrationTest {
 
         List<Event> eventList = new ArrayList<>();
         Event event = new Event();
-        event.setStreamId("org.wso2.event.statistics.stream:1.0.0");
+        event.setStreamId("org.wso2.event.sensor.stream:1.0.0");
         event.setMetaData(new Object[]{19900813115534l, false, 100, "temperature"});
         event.setCorrelationData(new Object[]{20.44345, 5.443435});
         event.setPayloadData(new Object[]{8.9f, 1.23434});
         eventList.add(event);
         Event event2 = new Event();
-        event2.setStreamId("org.wso2.event.statistics.stream:1.0.0");
+        event2.setStreamId("org.wso2.event.sensor.stream:1.0.0");
         event2.setMetaData(new Object[]{19900813115534l, false, 101, "temperature"});
         event2.setCorrelationData(new Object[]{20.44345, 5.443435});
         event2.setPayloadData(new Object[]{8.9f, 1.23434});
         eventList.add(event2);
         Event event3 = new Event();
-        event3.setStreamId("org.wso2.event.statistics.stream:1.0.0");
+        event3.setStreamId("org.wso2.event.sensor.stream:1.0.0");
         event3.setMetaData(new Object[]{19900813115534l, false, 103, "temperature"});
         event3.setCorrelationData(new Object[]{20.44345, 5.443435});
         event3.setPayloadData(new Object[]{8.9f, 1.23434});

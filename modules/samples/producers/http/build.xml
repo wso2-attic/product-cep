@@ -35,7 +35,24 @@
     <path id="javac.classpath">
         <pathelement path="${class.dir}"/>
         <fileset dir="${lib.dir}"/>
-        <fileset dir="${carbon.home}/repository/components/plugins/"/>
+        <fileset dir="${cep.home}/repository/components/plugins/">
+            <include name="org.wso2.carbon.logging_*.jar"/>
+            <include name="commons-pool_*.jar"/>
+            <include name="httpclient_*.jar"/>
+            <include name="httpcore_*.jar"/>
+            <include name="commons-httpclient_*.jar"/>
+            <include name="commons-codec_*.jar"/>
+            <include name="slf4j.log4j12_*.jar"/>
+            <include name="slf4j.api_*.jar"/>
+            <include name="axis2_*.jar"/>
+            <include name="axiom_*.jar"/>
+            <include name="wsdl4j_*.jar"/>
+            <include name="XmlSchema_*.jar"/>
+            <include name="neethi_*.jar"/>
+            <include name="org.wso2.securevault_*.jar"/>
+            <include name="com.google.gson_*.jar"/>
+            <include name="libthrift_*.jar"/>
+        </fileset>
     </path>
 
 

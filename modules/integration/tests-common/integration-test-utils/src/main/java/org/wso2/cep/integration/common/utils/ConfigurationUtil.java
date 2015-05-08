@@ -36,6 +36,7 @@ public class ConfigurationUtil {
     private EventReceiverAdminServiceClient eventReceiverAdminServiceClient;
     private EventPublisherAdminServiceClient eventPublisherAdminServiceClient;
     private ExecutionManagerAdminServiceClient executionManagerAdminServiceClient;
+    private EventSimulatorAdminServiceClient eventSimulatorAdminServiceClient;
 
     private ConfigurationUtil() {
     }
@@ -85,6 +86,13 @@ public class ConfigurationUtil {
 
         initExecutionManagerAdminServiceClient(backendURL, loggedInSessionCookie);
         return executionManagerAdminServiceClient;
+    }
+
+    public EventSimulatorAdminServiceClient getEventSimulatorAdminServiceClient(
+            String backendURL,
+            String loggedInSessionCookie) throws AxisFault {
+        initEventSimulatorAdminServiceClient(backendURL, loggedInSessionCookie);
+        return eventSimulatorAdminServiceClient;
     }
 
     private void initEventProcessorAdminServiceClient(String backendURL,
@@ -140,6 +148,16 @@ public class ConfigurationUtil {
         options.setProperty(org.apache.axis2.transport.http.HTTPConstants.COOKIE_STRING, loggedInSessionCookie);
     }
 
+    private void initEventSimulatorAdminServiceClient(
+            String backendURL,
+            String loggedInSessionCookie)
+            throws AxisFault {
+        eventSimulatorAdminServiceClient = new EventSimulatorAdminServiceClient(backendURL, loggedInSessionCookie);
+        ServiceClient client = eventSimulatorAdminServiceClient._getServiceClient();
+        Options options = client.getOptions();
+        options.setManageSession(true);
+        options.setProperty(org.apache.axis2.transport.http.HTTPConstants.COOKIE_STRING, loggedInSessionCookie);
+    }
     public static EventStreamAttributeDto createEventStreamAttributeDto(String fieldName, String dataType) {
         EventStreamAttributeDto eventStreamAttribute = new EventStreamAttributeDto();
         eventStreamAttribute.setAttributeName(fieldName);
