@@ -7,3 +7,4 @@ Follow the below steps for the deployement.
 3. Main -> Carbon Applications -> Add .
 4. Upload the SampleCApp0115.car.
 5. Wait for few seconds and use the deployables deployed.
+6. If the cApp is available in the cApp list, go and check the artifacts are also available in their lists.
