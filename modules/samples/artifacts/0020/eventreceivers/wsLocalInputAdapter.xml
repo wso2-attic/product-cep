@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventReceiver name="wsLocalInputAdapter" statistics="disable"
+    trace="disable" xmlns="http://wso2.org/carbon/eventreceiver">
+    <from eventAdapterType="websocket-local"/>
+    <mapping customMapping="disable" type="json"/>
+    <to streamName="org.wso2.event.sensor.stream" version="1.0.0"/>
+</eventReceiver>
