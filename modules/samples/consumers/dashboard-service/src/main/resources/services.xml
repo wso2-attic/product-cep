@@ -13,6 +13,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
+
 <service name="DashboardService" scope="application" >
     <messageReceivers>
         <!--<messageReceiver mep="http://www.w3.org/ns/wsdl/in-only"-->

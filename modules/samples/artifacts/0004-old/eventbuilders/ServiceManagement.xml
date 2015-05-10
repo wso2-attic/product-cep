@@ -13,6 +13,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
+
 <eventBuilder xmlns="http://wso2.org/carbon/eventbuilder" name="ServiceManagement" statistics="disable" trace="enable">
     <from eventAdaptorName="EmailEventAdaptor" eventAdaptorType="email">
         <property name="email.in.subject">ServiceManagement</property>

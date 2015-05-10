@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 function loginPreCheck() {
     var userName = document.getElementById("txtUserName").value;
     var errorMsgEle = document.getElementById("errorMsg");

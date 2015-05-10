@@ -15,6 +15,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
+
 <eventPublisher name="PizzaDeliveryNofication" statistics="disable"
                 trace="disable" xmlns="http://wso2.org/carbon/eventpublisher">
     <from streamName="org.wso2.sample.pizza.order" version="1.0.0"/>

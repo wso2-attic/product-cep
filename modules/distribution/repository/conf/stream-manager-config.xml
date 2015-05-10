@@ -13,6 +13,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
+
 <streamManagerConfiguration xmlns="http://wso2.org/carbon/streammanager">
 
     <!--<streamDefinition name="stream1" version="1.0.0">

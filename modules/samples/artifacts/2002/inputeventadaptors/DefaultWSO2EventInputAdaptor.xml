@@ -14,6 +14,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
+
 <!--
      This adaptor is used by default to send WSO2 events to the CEP server.
      DO NOT DELETE this file since this file is needed when event builder/event formatter 
