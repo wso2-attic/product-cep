@@ -1,0 +1,48 @@
+{
+  "name": "org.wso2.event.transaction.stream",
+  "version": "1.0.0",
+  "nickName": "CCTransactionEvents",
+  "description": "Credit card transaction details",
+  "metaData": [
+    {
+      "name": "timestamp",
+      "type": "LONG"
+    },
+    {
+      "name": "hashcode",
+      "type": "INT"
+    }
+  ],
+  "correlationData": [
+    {
+      "name": "card_manufacterer_id",
+      "type": "LONG"
+    }
+  ],
+  "payloadData": [
+    {
+      "name": "vendor",
+      "type": "STRING"
+    },
+    {
+      "name": "amount",
+      "type": "DOUBLE"
+    },
+    {
+      "name": "description",
+      "type": "STRING"
+    },
+    {
+      "name": "country_code",
+      "type": "STRING"
+    },
+    {
+      "name": "location",
+      "type": "STRING"
+    },
+    {
+      "name": "card_no",
+      "type": "STRING"
+    }
+  ]
+}
