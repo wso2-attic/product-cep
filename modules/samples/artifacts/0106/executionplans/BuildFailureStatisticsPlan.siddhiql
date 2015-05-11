@@ -1,0 +1,15 @@
+/* Enter a unique ExecutionPlan */
+@Plan:name('BuildFailureStatisticsPlan')
+
+/* Enter a unique description for ExecutionPlan */
+-- @Plan:description('ExecutionPlan')
+
+/* define streams/tables and write queries here ... */
+
+@Import('org.wso2.sample.build.statisticsStream:1.0.0')
+define stream buildStatisticsStream (timeStamp long, project string, message string, isBuildFailed bool, productTeam string, lastCommitter string);
+
+from buildStatisticsStream[isBuildFailed == true]#window.cron("0 1 * * * ? ")
+select project, productTeam, lastCommitter, count(timeStamp) as totalBuildFailures
+group by project
+insert into buildFailureStream;
