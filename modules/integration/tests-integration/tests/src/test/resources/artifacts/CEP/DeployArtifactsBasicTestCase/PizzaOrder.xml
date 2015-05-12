@@ -17,9 +17,7 @@
   -->
 
 <eventReceiver name="PizzaOrder" statistics="disable" trace="disable" xmlns="http://wso2.org/carbon/eventreceiver">
-    <from eventAdapterType="http">
-        <property name="topic">PizzaOrder</property>
-    </from>
+    <from eventAdapterType="http"/>
     <mapping customMapping="enable" type="xml">
         <xpathDefinition namespace="http://samples.wso2.org/" prefix="mypizza"/>
         <property>
