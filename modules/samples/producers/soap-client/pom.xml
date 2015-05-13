@@ -26,20 +26,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>soap-client</artifactId>
-    <name>WSO2 CEP - Publisher - HTTP Client</name>
+    <name>WSO2 CEP - Publisher - SOAP Client</name>
 
     <dependencies>
         <dependency>
             <groupId>org.wso2.carbon.analytics-common</groupId>
             <artifactId>org.wso2.carbon.databridge.agent</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.wso2.carbon.analytics-common</groupId>
-            <artifactId>org.wso2.carbon.databridge.commons</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.wso2.carbon.analytics-common</groupId>
-            <artifactId>org.wso2.carbon.databridge.commons.thrift</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.log4j.wso2</groupId>

@@ -70,13 +70,13 @@ public class Soap {
                     log.info("Message sent");
 
                 } catch (XMLStreamException e) {
-                    e.printStackTrace();
+                    log.error("Error occurred when sending message " + message.toString(), e);
                 } catch (AxisFault axisFault) {
-                    axisFault.printStackTrace();
+                    log.error("Error occurred when sending message " + message.toString(), axisFault);
                 }
             }
         } catch (Throwable t) {
-            t.printStackTrace();
+            log.error("Error occurred when connecting to endpoint " + url, t);
         }
     }
 
