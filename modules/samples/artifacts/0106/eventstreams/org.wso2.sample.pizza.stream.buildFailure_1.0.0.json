@@ -1,0 +1,24 @@
+{
+  "name": "org.wso2.sample.pizza.stream.buildFailure",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "payloadData": [
+    {
+      "name": "project",
+      "type": "STRING"
+    },
+    {
+      "name": "productTeam",
+      "type": "STRING"
+    },
+    {
+      "name": "lastCommitter",
+      "type": "STRING"
+    },
+    {
+      "name": "totalBuildFailures",
+      "type": "LONG"
+    }
+  ]
+}

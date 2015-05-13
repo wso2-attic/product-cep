@@ -1,20 +1,19 @@
 /*
-*  Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
-*
-*  WSO2 Inc. licenses this file to you under the Apache License,
-*  Version 2.0 (the "License"); you may not use this file except
-*  in compliance with the License.
-*  You may obtain a copy of the License at
-*
-*    http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing,
-* software distributed under the License is distributed on an
-* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-* KIND, either express or implied.  See the License for the
-* specific language governing permissions and limitations
-* under the License.
-*/
+ * Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.wso2.carbon.integration.test.outputflow;
 
 import org.apache.axiom.om.OMElement;
@@ -29,6 +28,7 @@ import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.event.simulator.stub.types.EventDto;
 import org.wso2.carbon.integration.common.admin.client.NDataSourceAdminServiceClient;
 import org.wso2.carbon.integration.test.client.H2DatabaseClient;
+import org.wso2.carbon.integration.test.client.util.BasicDataSource;
 import org.wso2.carbon.ndatasource.ui.stub.core.services.xsd.WSDataSourceMetaInfo;
 import org.wso2.carbon.ndatasource.ui.stub.core.services.xsd.WSDataSourceMetaInfo_WSDataSourceDefinition;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
@@ -55,10 +55,8 @@ public class RDBMSTestCase extends CEPIntegrationTest {
 
         NDataSourceAdminServiceClient dataSourceAdminService =
                 new NDataSourceAdminServiceClient(backendURL, loggedInSessionCookie);
-//        WSDataSourceMetaInfo wsDataSourceMetaInfo = new WSDataSourceMetaInfo();
-//        wsDataSourceMetaInfo.se
-//
-//        dataSourceAdminService.addDataSource();
+        WSDataSourceMetaInfo dataSourceInfo = getDataSourceInformation("WSO2CEP_DB");
+        dataSourceAdminService.addDataSource(dataSourceInfo);
     }
 
     @Test(groups = {"wso2.cep"}, description = "Testing RDBMS Adapter")
@@ -88,19 +86,20 @@ public class RDBMSTestCase extends CEPIntegrationTest {
         eventDto3.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
         eventDto3.setAttributeValues(new String[]{"199008131245", "false", "103", "temperature", "23.45656", "7.12324", "100.34", "23.4545"});
 
-        int initialCount = H2DatabaseClient.getTableEntryCount("sensordata");
-
         eventSimulatorAdminServiceClient.sendEvent(eventDto);
         Thread.sleep(1000);
+        int initialCount1 = H2DatabaseClient.getTableEntryCount("sensordata");
         eventSimulatorAdminServiceClient.sendEvent(eventDto2);
         Thread.sleep(1000);
+        int initialCount2 = H2DatabaseClient.getTableEntryCount("sensordata");
+        Assert.assertEquals(initialCount2, initialCount1 + 1, "Events are not reached the H2 database");
         eventSimulatorAdminServiceClient.sendEvent(eventDto3);
-
         Thread.sleep(3000);
 
         int latestCount = H2DatabaseClient.getTableEntryCount("sensordata");
+        Assert.assertEquals(latestCount, initialCount2 + 1, "Events are not reached the H2 database");
 
-        Assert.assertEquals(latestCount, initialCount + 1, "Event are not reached the H2 database");
+        Thread.sleep(2000);
 
         eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
         eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("rdbmsEventPublisher.xml");
@@ -113,28 +112,29 @@ public class RDBMSTestCase extends CEPIntegrationTest {
         super.cleanup();
     }
 
-//    private WSDataSourceMetaInfo getDataSourceInformation(String dataSourceName)
-//            throws XMLStreamException {
-//        WSDataSourceMetaInfo dataSourceInfo = new WSDataSourceMetaInfo();
-//
-//        dataSourceInfo.setName(dataSourceName);
-//
-//        WSDataSourceMetaInfo_WSDataSourceDefinition dataSourceDefinition = new WSDataSourceMetaInfo_WSDataSourceDefinition();
-//
-//        dataSourceDefinition.setType("RDBMS");
-//        OMElement dsConfig = AXIOMUtil.stringToOM("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
-//                "<configuration>\n" +
-//                "<driverClassName>" + sqlDataSource.getDriver() + "</driverClassName>\n" +
-//                "<url>" + sqlDataSource.getJdbcUrl() + "</url>\n" +
-//                "<username>" + sqlDataSource.getDatabaseUser() + "</username>\n" +
-//                "<password encrypted=\"true\">" + sqlDataSource.getDatabasePassword() + "</password>\n" +
-//                "</configuration>");
-//
-//
-//        dataSourceDefinition.setDsXMLConfiguration(dsConfig.toString());
-//
-//        dataSourceInfo.setDefinition(dataSourceDefinition);
-//
-//        return dataSourceInfo;
-//    }
+    private WSDataSourceMetaInfo getDataSourceInformation(String dataSourceName)
+            throws XMLStreamException {
+        WSDataSourceMetaInfo dataSourceInfo = new WSDataSourceMetaInfo();
+
+        dataSourceInfo.setName(dataSourceName);
+
+        WSDataSourceMetaInfo_WSDataSourceDefinition dataSourceDefinition = new WSDataSourceMetaInfo_WSDataSourceDefinition();
+
+        dataSourceDefinition.setType("RDBMS");
+        OMElement dsConfig = AXIOMUtil.stringToOM("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
+                "<configuration>\n" +
+                "<driverClassName>" + BasicDataSource.H2_DRIVER_CLASS + "</driverClassName>\n" +
+                "<url>" + BasicDataSource.H2_CONNECTION_URL + "</url>\n" +
+                "<username>" + BasicDataSource.H2USERNAME + "</username>\n" +
+                "<password encrypted=\"true\">" + BasicDataSource.H2PASSWORD + "</password>\n" +
+                "</configuration>");
+
+
+        dataSourceDefinition.setDsXMLConfiguration(dsConfig.toString());
+
+        dataSourceInfo.setDefinition(dataSourceDefinition);
+
+        return dataSourceInfo;
+    }
+
 }

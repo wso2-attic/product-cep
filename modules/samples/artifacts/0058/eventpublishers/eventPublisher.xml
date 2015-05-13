@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<eventPublisher name="eventPublisher" statistics="disable"
+                trace="disable" xmlns="http://wso2.org/carbon/eventpublisher">
+    <from streamName="org.wso2.event.sensor.stream" version="1.0.0"/>
+    <mapping customMapping="enable" type="wso2event">
+        <to streamName="org.wso2.event.sensor.stream.map" version="1.0.0"/>
+        <metaData>
+            <property>
+                <from name="meta_timestamp"/>
+                <to name="time" type="long"/>
+            </property>
+            <property>
+                <from name="meta_isPowerSaverEnabled"/>
+                <to name="isPowerSaving" type="bool"/>
+            </property>
+            <property>
+                <from name="meta_sensorId"/>
+                <to name="id" type="int"/>
+            </property>
+            <property>
+                <from name="meta_sensorName"/>
+                <to name="name" type="string"/>
+            </property>
+        </metaData>
+        <correlationData>
+            <property>
+                <from name="correlation_longitude"/>
+                <to name="longitude" type="double"/>
+            </property>
+            <property>
+                <from name="correlation_latitude"/>
+                <to name="latitude" type="double"/>
+            </property>
+        </correlationData>
+        <payloadData>
+            <property>
+                <from name="humidity"/>
+                <to name="humidityLevel" type="float"/>
+            </property>
+            <property>
+                <from name="sensorValue"/>
+                <to name="sensorReading" type="double"/>
+            </property>
+        </payloadData>
+    </mapping>
+    <to eventAdapterType="wso2event">
+        <property name="username">admin</property>
+        <property name="protocol">thrift</property>
+        <property name="publishingMode">blocking</property>
+        <property name="receiverURL">tcp://localhost:7661</property>
+        <property encrypted="true" name="password">
+            kuv2MubUUveMyv6GeHrXr9il59ajJIqUI4eoYHcgGKf/BBFOWn96NTjJQI+wYbWjKW6r79S7L7ZzgYeWx7DlGbff5X3pBN2Gh9yV0BHP1E93QtFqR7uTWi141Tr7V7ZwScwNqJbiNoV+vyLbsqKJE7T3nP8Ih9Y6omygbcLcHzg=
+        </property>
+    </to>
+</eventPublisher>
