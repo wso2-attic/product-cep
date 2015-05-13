@@ -1,5 +1,5 @@
 /*
-*  Copyright (c) 2005-2014, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+*  Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
 *
 *  WSO2 Inc. licenses this file to you under the Apache License,
 *  Version 2.0 (the "License"); you may not use this file except
@@ -18,25 +18,31 @@
 package org.wso2.carbon.sample.jmsclient;
 
 import org.apache.log4j.Logger;
-import org.wso2.carbon.databridge.commons.Attribute;
-import org.wso2.carbon.databridge.commons.StreamDefinition;
-import org.wso2.carbon.databridge.commons.exception.MalformedStreamDefinitionException;
-import org.wso2.carbon.databridge.commons.utils.EventDefinitionConverterUtils;
 
+import javax.jms.*;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class JMSClientUtil {
     private static Logger log = Logger.getLogger(JMSClientUtil.class);
 
-    static String sampleDirectoryPath = ".." + File.separator + ".." + File.separator + ".." + File.separator + "samples" + File.separator + "artifacts" + File.separator + "sampleNumber" + File.separator;
+    static String sampleDirectoryPath = ".." + File.separator + ".." + File.separator + ".." + File.separator +
+            "samples" + File.separator + "artifacts" + File.separator + "sampleNumber" + File.separator;
 
-    static String configDirectoryPath = ".." + File.separator + ".." + File.separator + ".." + File.separator + "repository" + File.separator + "deployment" + File.separator + "server" + File.separator + "eventstreams";
-
-    public static String getEventFilePath(String sampleNumber, String format, String topic, String filePath) throws Exception {
+    /**
+     * This method will construct the directory path of the data file
+     *
+     * @param sampleNumber  Number of the sample which is running currently
+     * @param format        Format of the file (ex: csv, txt)
+     * @param topic         topic of the message to be sent (the data file should be named with the topic)
+     * @param filePath      file path if a sample if not running
+     *
+     */
+    public static String getEventFilePath(String sampleNumber, String format, String topic, String filePath)
+            throws Exception {
         if (sampleNumber != null && sampleNumber.length() == 0) {
             sampleNumber = null;
         }
@@ -54,9 +60,9 @@ public class JMSClientUtil {
             }else{
                 resultingFilePath = sampleDirectoryPath.replace("sampleNumber", sampleNumber)+ topic + ".txt";
             }
-            //resultingFilePath = sampleDirectoryPath.replace("sampleNumber", sampleNumber); // + topic.replaceAll(":", "_").replaceAll("\\.", "_") + ".csv";
         } else {
-            throw new Exception("In sampleNumber:'" + sampleNumber + "' and filePath:'" + filePath + "' one must be null and other not null");
+            throw new Exception("In sampleNumber:'" + sampleNumber + "' and filePath:'" + filePath
+                    + "' one must be null and other not null");
         }
         File file = new File(resultingFilePath);
         if (!file.isFile()) {
@@ -69,9 +75,10 @@ public class JMSClientUtil {
     }
 
     /**
-     * Xml messages will be read from the given filepath and stored in the array list (messagesList)
+     * Messages will be read from the given filepath and stored in the array list (messagesList)
      *
      * @param filePath Text file to be read
+     *
      */
     public static List<String> readFile(String filePath) {
         BufferedReader bufferedReader = null;
@@ -110,150 +117,74 @@ public class JMSClientUtil {
         return messagesList;
     }
 
-    public static String readCSVFile(String filePath) {
-        BufferedReader bufferedReader = null;
-        StringBuilder builder = new StringBuilder("");
-        try {
-            bufferedReader = new BufferedReader(new FileReader(filePath));
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                builder.append(line).append("\n");
-            }
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
-        return builder.toString();
-    }
-
-    public static List<Map<String, Object>> convertToMap(String fileContent) throws IOException {
-        List<Map<String, Object>> mapList = new ArrayList<Map<String, Object>>();
-        BufferedReader bufferedReader = null;
-        try {
-            for (String line : fileContent.split("\n")) {
-                String[] data = line.split(",");
-                Map<String, Object> dataMap = new HashMap<String, Object>();
-                for (String entry : data) {
-                    String[] keyValue = entry.trim().split(":");
-                    if (keyValue.length == 2) {
-                        dataMap.put(keyValue[0].trim(), keyValue[1].trim());
-                    } else {
-                        System.out.println("Wrong entry found:" + entry);
-                    }
-                }
-                mapList.add(dataMap);
-            }
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
-        return mapList;
-    }
-
-    public static Map<String, StreamDefinition> loadStreamDefinitions(String sampleNumber) {
-        String directoryPath;
-        if (sampleNumber.length() != 0) {
-            directoryPath = sampleDirectoryPath.replace("sampleNumber", sampleNumber)+ "eventstreams";
-        } else {
-            directoryPath = configDirectoryPath;
-        }
-        File directory = new File(directoryPath);
-        Map<String, StreamDefinition> streamDefinitions = new HashMap<String, StreamDefinition>();
-        if (!directory.exists()) {
-            log.error("Cannot load stream definitions from " + directory.getAbsolutePath() + " directory not exist");
-            return streamDefinitions;
-        }
-        if (!directory.isDirectory()) {
-            log.error("Cannot load stream definitions from " + directory.getAbsolutePath() + " not a directory");
-            return streamDefinitions;
-        }
-        File[] defFiles = directory.listFiles();
-
-        if (defFiles != null) {
-            for (final File fileEntry : defFiles) {
-                if (!fileEntry.isDirectory()) {
-                    BufferedReader bufferedReader = null;
-                    StringBuilder stringBuilder = new StringBuilder();
-                    try {
-                        bufferedReader = new BufferedReader(new FileReader(fileEntry));
-                        String line;
-                        while ((line = bufferedReader.readLine()) != null) {
-                            stringBuilder.append(line).append("\n");
-                        }
-                        StreamDefinition streamDefinition = EventDefinitionConverterUtils.convertFromJson(stringBuilder.toString().trim());
-                        streamDefinitions.put(streamDefinition.getStreamId(), streamDefinition);
-                    } catch (FileNotFoundException e) {
-                        log.error("Error in reading file " + fileEntry.getName(), e);
-                    } catch (IOException e) {
-                        log.error("Error in reading file " + fileEntry.getName(), e);
-                    } catch (MalformedStreamDefinitionException e) {
-                        log.error("Error in converting Stream definition " + e.getMessage(), e);
-                    } finally {
-                        try {
-                            if (bufferedReader != null) {
-                                bufferedReader.close();
-                            }
-                        } catch (IOException e) {
-                            log.error("Error occurred when reading the file : " + e.getMessage(), e);
-                        }
+    /**
+     * Each message will be divided into groups and create the map message
+     *
+     * @param producer                  Used for sending messages to a destination
+     * @param session                   Used to produce the messages to be sent
+     * @param messagesList              List of messages to be sent
+     *                                  individual message event data should be in
+     *                                  "attributeName(attributeType):attributeValue" format
+     * @param sessionAutoAcknowledge    Auto acknowledgement of the client's receipt of the sent message which was set
+     *                                  to the session
+     *
+     */
+    public static void publishMapMessage(MessageProducer producer, Session session, List<String> messagesList,
+                                         boolean sessionAutoAcknowledge)
+            throws IOException, JMSException {
+        String regexPattern = "(.*)\\((.*)\\):(.*)";
+        Pattern pattern = Pattern.compile(regexPattern);
+        for(String message: messagesList){
+            MapMessage mapMessage = session.createMapMessage();
+            for (String line : message.split("\\n")) {
+                if(line!=null && !line.equalsIgnoreCase("")){
+                    Matcher matcher = pattern.matcher(line);
+                    if(matcher.find()){
+                        mapMessage.setObject(matcher.group(1), parseAttributeValue(matcher.group(2), matcher.group(3)));
                     }
                 }
             }
-        }
-
-        return streamDefinitions;
-
-    }
-
-    public static List<Map<String, Object>> convertFileToMap(StreamDefinition streamDefinition, String fileContent) {
-
-        List<Map<String, Object>> eventList = new ArrayList<Map<String, Object>>();
-        try {
-            for (String line : fileContent.split("\n")) {
-                String[] data = line.split(",");
-                Map<String, Object> dataMap = new HashMap<String, Object>();
-
-                int i = 0;
-                if (streamDefinition.getMetaData() != null) {
-                    for (Attribute at : streamDefinition.getMetaData()) {
-                        dataMap.put(at.getName(), parseAttributeValue(at, data[i]));
-                        i++;
-                    }
-                }
-
-                if (streamDefinition.getCorrelationData() != null) {
-                    for (Attribute at : streamDefinition.getCorrelationData()) {
-                        dataMap.put(at.getName(), parseAttributeValue(at, data[i]));
-                        i++;
-                    }
-                }
-
-                if (streamDefinition.getPayloadData() != null) {
-                    for (Attribute at : streamDefinition.getPayloadData()) {
-                        dataMap.put(at.getName(), parseAttributeValue(at, data[i]));
-                        i++;
-                    }
-                }
-                eventList.add(dataMap);
+            producer.send(mapMessage);
+            if(!sessionAutoAcknowledge){
+                session.commit();
             }
-
-        } catch (Exception e) {
-            log.error(e.getMessage());
         }
-        return eventList;
-
     }
 
-    private static Object parseAttributeValue(Attribute at, String value) {
+    /**
+     * Each message will be divided into groups and create the map message
+     *
+     * @param producer     Used for sending messages to a destination
+     * @param session      Used to produce the messages to be sent
+     * @param messagesList List of messages to be sent
+     * @param sessionAutoAcknowledge Auto acknowledgement of the client's receipt of the sent message which was set
+     *                               to the session
+     *
+     */
+    public static void publishTextMessage(MessageProducer producer, Session session, List<String> messagesList,
+                                          boolean sessionAutoAcknowledge)
+            throws JMSException {
+        for(String message: messagesList){
+            TextMessage jmsMessage = session.createTextMessage();
+            jmsMessage.setText(message);
+            producer.send(jmsMessage);
+            if(!sessionAutoAcknowledge){
+                session.commit();
+            }
+        }
+    }
 
-        switch (at.getType()) {
-            case BOOL:
+    private static Object parseAttributeValue(String type, String value) {
+        switch (type){
+            case "bool":
                 return Boolean.parseBoolean(value);
-            case INT:
+            case "int":
                 return Integer.parseInt(value);
-            case LONG:
+            case "long":
                 return Long.parseLong(value);
-            case FLOAT:
+            case "float":
                 return Float.parseFloat(value);
-            case DOUBLE:
+            case "double":
                 return Double.parseDouble(value);
         }
         return value;

@@ -1,5 +1,5 @@
 This sample uses 
-EventReceiver:  Map, Text/JMS with default mapping
+EventReceiver:  JSON,Text,XML/JMS with default mapping
 EventPublisher: logger
 
 Producers:     jms
