@@ -1,0 +1,32 @@
+{
+  "name": "org.wso2.sample.build.statisticsStream",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "Information related to build",
+  "payloadData": [
+    {
+      "name": "timeStamp",
+      "type": "LONG"
+    },
+    {
+      "name": "project",
+      "type": "STRING"
+    },
+    {
+      "name": "message",
+      "type": "STRING"
+    },
+    {
+      "name": "isBuildFailed",
+      "type": "BOOL"
+    },
+    {
+      "name": "productTeam",
+      "type": "STRING"
+    },
+    {
+      "name": "lastCommitter",
+      "type": "STRING"
+    }
+  ]
+}

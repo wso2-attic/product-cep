@@ -1,0 +1,38 @@
+<events>
+    <event>
+        <payloadData>
+            <timeStamp>4354643</timeStamp>
+            <project>Carbon Analytics</project>
+            <message>Build failed in Jenkins: carbon-analytics-common #453</message>
+            <isBuildFailed>true</isBuildFailed>
+            <productTeam>CEP</productTeam>
+            <lastCommitter>Suho</lastCommitter>
+        </payloadData>
+    </event>
+</events>
+*****
+<events>
+    <event>
+        <payloadData>
+            <timeStamp>545455</timeStamp>
+            <project>ESB Mediation</project>
+            <message>Build Succeeded #457</message>
+            <isBuildFailed>false</isBuildFailed>
+            <productTeam>ESB</productTeam>
+            <lastCommitter>Kasun</lastCommitter>
+        </payloadData>
+    </event>
+</events>
+*****
+<events>
+    <event>
+        <payloadData>
+            <timeStamp>6352643</timeStamp>
+            <project>Carbon Mediation</project>
+            <message>Build failed in Jenkins: carbon-mediation #448</message>
+            <isBuildFailed>true</isBuildFailed>
+            <productTeam>Carbon</productTeam>
+            <lastCommitter>Sameera</lastCommitter>
+        </payloadData>
+    </event>
+</events>

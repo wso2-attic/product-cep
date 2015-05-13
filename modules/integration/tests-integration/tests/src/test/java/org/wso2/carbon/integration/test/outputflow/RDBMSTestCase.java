@@ -1,20 +1,19 @@
 /*
-*  Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
-*
-*  WSO2 Inc. licenses this file to you under the Apache License,
-*  Version 2.0 (the "License"); you may not use this file except
-*  in compliance with the License.
-*  You may obtain a copy of the License at
-*
-*    http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing,
-* software distributed under the License is distributed on an
-* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-* KIND, either express or implied.  See the License for the
-* specific language governing permissions and limitations
-* under the License.
-*/
+ * Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.wso2.carbon.integration.test.outputflow;
 
 import org.apache.axiom.om.OMElement;
@@ -87,19 +86,20 @@ public class RDBMSTestCase extends CEPIntegrationTest {
         eventDto3.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
         eventDto3.setAttributeValues(new String[]{"199008131245", "false", "103", "temperature", "23.45656", "7.12324", "100.34", "23.4545"});
 
-        int initialCount = H2DatabaseClient.getTableEntryCount("sensordata");
-
         eventSimulatorAdminServiceClient.sendEvent(eventDto);
         Thread.sleep(1000);
+        int initialCount1 = H2DatabaseClient.getTableEntryCount("sensordata");
         eventSimulatorAdminServiceClient.sendEvent(eventDto2);
         Thread.sleep(1000);
+        int initialCount2 = H2DatabaseClient.getTableEntryCount("sensordata");
+        Assert.assertEquals(initialCount2, initialCount1 + 1, "Events are not reached the H2 database");
         eventSimulatorAdminServiceClient.sendEvent(eventDto3);
-
         Thread.sleep(3000);
 
         int latestCount = H2DatabaseClient.getTableEntryCount("sensordata");
+        Assert.assertEquals(latestCount, initialCount2 + 1, "Events are not reached the H2 database");
 
-        Assert.assertEquals(latestCount, (initialCount + 3), "Event are not reached the H2 database");
+        Thread.sleep(2000);
 
         eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
         eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("rdbmsEventPublisher.xml");
