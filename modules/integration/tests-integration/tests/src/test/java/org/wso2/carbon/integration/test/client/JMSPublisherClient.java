@@ -58,7 +58,7 @@ public class JMSPublisherClient {
 
         try {
             String filePath = getTestDataFileLocation(testCaseFolderName, dataFileName);
-            properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("jndi.properties"));
+            properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("activemq.properties"));
             Context context = new InitialContext(properties);
             TopicConnectionFactory connFactory = (TopicConnectionFactory) context.lookup("ConnectionFactory");
             TopicConnection topicConnection = connFactory.createTopicConnection();

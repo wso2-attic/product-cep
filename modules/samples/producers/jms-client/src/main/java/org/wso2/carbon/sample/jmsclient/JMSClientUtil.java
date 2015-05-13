@@ -125,12 +125,9 @@ public class JMSClientUtil {
      * @param messagesList              List of messages to be sent
      *                                  individual message event data should be in
      *                                  "attributeName(attributeType):attributeValue" format
-     * @param sessionAutoAcknowledge    Auto acknowledgement of the client's receipt of the sent message which was set
-     *                                  to the session
      *
      */
-    public static void publishMapMessage(MessageProducer producer, Session session, List<String> messagesList,
-                                         boolean sessionAutoAcknowledge)
+    public static void publishMapMessage(MessageProducer producer, Session session, List<String> messagesList)
             throws IOException, JMSException {
         String regexPattern = "(.*)\\((.*)\\):(.*)";
         Pattern pattern = Pattern.compile(regexPattern);
@@ -145,9 +142,6 @@ public class JMSClientUtil {
                 }
             }
             producer.send(mapMessage);
-            if(!sessionAutoAcknowledge){
-                session.commit();
-            }
         }
     }
 
@@ -157,20 +151,14 @@ public class JMSClientUtil {
      * @param producer     Used for sending messages to a destination
      * @param session      Used to produce the messages to be sent
      * @param messagesList List of messages to be sent
-     * @param sessionAutoAcknowledge Auto acknowledgement of the client's receipt of the sent message which was set
-     *                               to the session
      *
      */
-    public static void publishTextMessage(MessageProducer producer, Session session, List<String> messagesList,
-                                          boolean sessionAutoAcknowledge)
+    public static void publishTextMessage(MessageProducer producer, Session session, List<String> messagesList)
             throws JMSException {
         for(String message: messagesList){
             TextMessage jmsMessage = session.createTextMessage();
             jmsMessage.setText(message);
             producer.send(jmsMessage);
-            if(!sessionAutoAcknowledge){
-                session.commit();
-            }
         }
     }
 

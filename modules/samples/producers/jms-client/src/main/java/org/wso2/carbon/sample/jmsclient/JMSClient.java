@@ -57,9 +57,8 @@ public class JMSClient {
             Session session = null;
 
             Properties properties = new Properties();
-            boolean sessionAutoAcknowledge = true;
             if(broker.equalsIgnoreCase("activemq")){
-                properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("jndi.properties"));
+                properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("activemq.properties"));
                 Context context = new InitialContext(properties);
                 TopicConnectionFactory connFactory = (TopicConnectionFactory) context.lookup("ConnectionFactory");
                 topicConnection = connFactory.createTopicConnection();
@@ -78,8 +77,7 @@ public class JMSClient {
                 TopicConnectionFactory connFactory = (TopicConnectionFactory) context.lookup("qpidConnectionFactory");
                 topicConnection = connFactory.createTopicConnection();
                 topicConnection.start();
-                session = topicConnection.createSession(true, Session.SESSION_TRANSACTED);
-                sessionAutoAcknowledge = false;
+                session = topicConnection.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
             }else{
                 log.info("Please enter a valid JMS message broker. (ex: activemq, mb, qpid");
             }
@@ -92,11 +90,11 @@ public class JMSClient {
                 try {
                     if(format.equalsIgnoreCase("csv")){
                         log.info("Sending Map messages on '" + topicName + "' topic");
-                        JMSClientUtil.publishMapMessage(producer, session, messagesList, sessionAutoAcknowledge);
+                        JMSClientUtil.publishMapMessage(producer, session, messagesList);
 
                     }else{
                         log.info("Sending  " + format + " messages on '" + topicName + "' topic");
-                        JMSClientUtil.publishTextMessage(producer, session, messagesList, sessionAutoAcknowledge);
+                        JMSClientUtil.publishTextMessage(producer, session, messagesList);
                     }
                     producer.close();
                     session.close();
