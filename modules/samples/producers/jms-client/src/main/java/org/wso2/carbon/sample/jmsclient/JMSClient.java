@@ -65,7 +65,7 @@ public class JMSClient {
                 topicConnection.start();
                 session = topicConnection.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
             }else if(broker.equalsIgnoreCase("mb")){
-                properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("mbJms.properties"));
+                properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("mb.properties"));
                 Context context = new InitialContext(properties);
                 TopicConnectionFactory connFactory = (TopicConnectionFactory) context.lookup("qpidConnectionFactory");
                 topicConnection = connFactory.createTopicConnection();
