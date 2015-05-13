@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.wso2.carbon.sample.http;
+package org.wso2.carbon.sample.soap;
 
 
 import org.apache.axiom.om.OMElement;
@@ -46,19 +46,12 @@ public class Soap {
 
     public static void main(String[] args) {
 
-
         String url = args[0];
         String sampleNumber = args[1];
         String filePath = args[2];
 
-        System.out.println("Starting WSO2 Soap Client");
-
-        long totalEventCount = 2000000L;
-        if (args.length >= 1) {
-            totalEventCount = Long.valueOf(args[0]);
-        }
-
-        ServiceClient serviceClient = null;
+        log.info("Starting WSO2 Soap Client");
+        ServiceClient serviceClient;
         try {
             serviceClient = new ServiceClient();
             Options options = new Options();
@@ -66,29 +59,16 @@ public class Soap {
             serviceClient.setOptions(options);
 
             if (serviceClient != null) {
-
-
-                filePath = SoapUtil.getMessageFilePath(sampleNumber, filePath);
+                filePath = SoapUtil.getMessageFilePath(sampleNumber, filePath, url);
                 readMsg(filePath);
-
-
                 OMElement omElement1;
 
                 try {
                     System.out.println("Starting sending of events...");
-                    long startTime = System.nanoTime();
-                    for (int i = 0; i < totalEventCount; i++) {
-                        omElement1 = AXIOMUtil.stringToOM(message.toString());
-                        serviceClient.fireAndForget(omElement1);
-                        if ((i + 1) % 100 == 0) {
-                            long elapsedTime = System.nanoTime() - startTime;
-                            double timeInSec = elapsedTime / 1000000000D;
-                            double throughputPerSec = (i + 1) * 3 / timeInSec;
-                            System.out.println("Sent " + (i + 1) * 3 + " events in " + timeInSec
-                                    + " seconds with total throughput of " + throughputPerSec + " events per second.");
-                        }
-                    }
-                    Thread.sleep(500); // We need to wait some time for the message to be sent
+                    omElement1 = AXIOMUtil.stringToOM(message.toString());
+                    serviceClient.fireAndForget(omElement1);
+                    log.info("Message sent");
+
                 } catch (XMLStreamException e) {
                     e.printStackTrace();
                 } catch (AxisFault axisFault) {
@@ -98,7 +78,6 @@ public class Soap {
         } catch (Throwable t) {
             t.printStackTrace();
         }
-
     }
 
     /**
