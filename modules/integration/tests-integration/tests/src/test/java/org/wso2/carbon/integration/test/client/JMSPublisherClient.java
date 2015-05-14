@@ -80,9 +80,9 @@ public class JMSPublisherClient {
                     publishTextMessage(producer, session, messagesList);
                 }
             } catch (IOException e) {
-                log.error("Error when reading the data file." + e.getMessage());
+                log.error("Error when reading the data file." + e.getMessage(), e);
             } catch (JMSException e) {
-                log.error("Can not subscribe." + e.getMessage());
+                log.error("Can not subscribe." + e.getMessage(), e);
             } finally{
                 producer.close();
                 session.close();
