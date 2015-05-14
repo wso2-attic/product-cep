@@ -35,9 +35,22 @@
         </dependency>
 
         <dependency>
+            <groupId>org.wso2.andes.wso2</groupId>
+            <artifactId>andes-client</artifactId>
+            <version>0.13.wso2v3</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.wso2.carbon.analytics-common</groupId>
             <artifactId>org.wso2.carbon.databridge.commons</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.qpid</groupId>
+            <artifactId>qpid-client</artifactId>
+            <version>0.32</version>
+        </dependency>
+
     </dependencies>
 
 
