@@ -96,18 +96,18 @@ public class JMSClient {
                         log.info("Sending  " + format + " messages on '" + topicName + "' topic");
                         JMSClientUtil.publishTextMessage(producer, session, messagesList);
                     }
+                } catch (JMSException e) {
+                    log.error("Can not subscribe." + e.getMessage(), e);
+                } catch (IOException e){
+                    log.error("Error when reading the data file." + e.getMessage(), e);
+                }finally{
                     producer.close();
                     session.close();
                     topicConnection.stop();
-
-                } catch (JMSException e) {
-                    log.error("Can not subscribe." + e.getMessage());
-                } catch (IOException e){
-                    log.error("Error when reading the data file." + e.getMessage());
                 }
             }
         } catch (Exception e) {
-            log.error("logging error" + e.getMessage());
+            log.error("Error when publishing message" + e.getMessage(), e);
         }
         log.info("All Order Messages sent");
     }

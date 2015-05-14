@@ -54,41 +54,44 @@ public class JMSPublisherClient {
             format = "csv";
         }
 
-        Properties properties = new Properties();
+        try{
+            Properties properties = new Properties();
 
-        try {
             String filePath = getTestDataFileLocation(testCaseFolderName, dataFileName);
             properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("activemq.properties"));
             Context context = new InitialContext(properties);
             TopicConnectionFactory connFactory = (TopicConnectionFactory) context.lookup("ConnectionFactory");
             TopicConnection topicConnection = connFactory.createTopicConnection();
             topicConnection.start();
-            Session session = topicConnection.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
+            Session session  = topicConnection.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
 
             Topic topic  = session.createTopic(topicName);
             MessageProducer producer  = session.createProducer(topic);
 
             List<String> messagesList = readFile(filePath);
+            try {
 
-            if(format.equalsIgnoreCase("csv")){
-                log.info("Sending Map messages on '" + topicName + "' topic");
-                publishMapMessage(producer, session, messagesList);
+                if(format.equalsIgnoreCase("csv")){
+                    log.info("Sending Map messages on '" + topicName + "' topic");
+                    publishMapMessage(producer, session, messagesList);
 
-            }else{
-                log.info("Sending  " + format + " messages on '" + topicName + "' topic");
-                publishTextMessage(producer, session, messagesList);
+                }else{
+                    log.info("Sending  " + format + " messages on '" + topicName + "' topic");
+                    publishTextMessage(producer, session, messagesList);
+                }
+            } catch (IOException e) {
+                log.error("Error when reading the data file." + e.getMessage());
+            } catch (JMSException e) {
+                log.error("Can not subscribe." + e.getMessage());
+            } finally{
+                producer.close();
+                session.close();
+                topicConnection.stop();
             }
-            producer.close();
-            session.close();
-            topicConnection.stop();
-
-        } catch (IOException e) {
-            log.error("Error when reading the data file." + e.getMessage());
-        } catch (JMSException e) {
-            log.error("Can not subscribe." + e.getMessage());
-        }  catch (Exception e) {
-            log.error("Error when constructing test data file path. " + e.getMessage());
+        }catch(Exception e){
+            log.error("Error when publishing messages" + e.getMessage(), e);
         }
+
         log.info("All Order Messages sent");
     }
 
@@ -157,7 +160,7 @@ public class JMSPublisherClient {
      * @param dataFileName          data file name with the extension to be read
      *
      */
-    private static String getTestDataFileLocation(String testCaseFolderName, String dataFileName) throws Exception {
+    private static String getTestDataFileLocation(String testCaseFolderName, String dataFileName){
         String relativeFilePath =
                 FrameworkPathUtil.getSystemResourceLocation() + "/artifacts/CEP/" + testCaseFolderName + File.separator
                         + dataFileName;
