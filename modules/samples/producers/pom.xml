@@ -37,6 +37,8 @@
         <module>jms-client</module>
         <module>mqtt-client</module>
         <module>kafka</module>
+        <module>soap-client</module>
+
         <!--<module>stock-quote</module>-->
         <!--<module>service-stats</module>-->
         <!--<module>activity-monitoring</module>-->
