@@ -1,0 +1,60 @@
+/* Enter a unique ExecutionPlan */
+@Plan:name('geo_proximity_alert')
+
+/* Enter a unique description for ExecutionPlan */
+-- @Plan:description('ExecutionPlan')
+
+/* define streams/tables and write queries here ... */
+
+@Import('standardSpatialEvents:1.0.0')
+define stream dataIn (id string, latitude double, longitude double, timeStamp long, type string, speed float, heading float, eventId string );
+
+@Export('processedSpatialEvents:1.0.0')
+define stream dataOut ( id string, latitude double, longitude double, timeStamp long, type string, speed float, heading float, eventId string, state string, information string );
+
+@IndexBy('uniqueId')
+define table ProximityTable(uniqueId string, timeStamp long);
+
+from dataIn#geodashboard:subscribe()#geo:proximity(id,longitude,latitude, $proximityDistance)
+select id, latitude, longitude, timeStamp, type, speed, heading, eventId,inCloseProximity,proximityWith,str:strcmp(id,proximityWith) as comparedValue
+insert into initialStream;
+
+from initialStream[comparedValue < 1] 
+select id, latitude, longitude, timeStamp, type, speed, heading, eventId,inCloseProximity,proximityWith,str:concat(proximityWith,'~',id) as uniqueId
+insert into innerStreamOne;
+
+from initialStream[comparedValue >= 0] 
+select id, latitude, longitude, timeStamp, type, speed, heading, eventId,inCloseProximity,proximityWith,str:concat(id,'~',proximityWith) as uniqueId
+insert into innerStreamOne;
+
+from innerStreamOne[innerStreamOne.inCloseProximity == true AND not(ProximityTable.uniqueId == innerStreamOne.uniqueId in ProximityTable)]
+select innerStreamOne.uniqueId, innerStreamOne.timeStamp
+insert into ProximityTable;
+
+from innerStreamOne[innerStreamOne.inCloseProximity == false]
+delete ProximityTable on ProximityTable.uniqueId==innerStreamOne.uniqueId;
+
+from innerStreamOne[inCloseProximity == false]
+select id , latitude, longitude,timeStamp, type, speed, heading ,eventId ,"false"  as isProximity
+insert into dataOutStream;
+
+from innerStreamOne[innerStreamOne.inCloseProximity == true]#window.length(0) join ProximityTable
+on innerStreamOne.uniqueId == ProximityTable.uniqueId
+select innerStreamOne.id , innerStreamOne.latitude, innerStreamOne.longitude,innerStreamOne.timeStamp, innerStreamOne.type, innerStreamOne.speed, innerStreamOne.heading ,innerStreamOne.eventId ,innerStreamOne.inCloseProximity, ProximityTable.timeStamp as storedTime
+insert into innerStreamTwo;
+
+from innerStreamTwo[(timeStamp - storedTime) >= $proximityTime]
+select id , latitude, longitude,timeStamp, type, speed, heading ,eventId ,"true"  as isProximity
+insert into dataOutStream;
+
+from innerStreamTwo[(timeStamp - storedTime) < $proximityTime]
+select id , latitude, longitude,timeStamp, type, speed, heading ,eventId ,"false"  as isProximity
+insert into dataOutStream;
+
+from dataOutStream[isProximity == 'true']
+select id ,latitude, longitude,timeStamp, type, speed, heading ,eventId ,"WARNING" as state,"true"  as information
+insert into dataOut;
+
+from dataOutStream[isProximity == 'false']
+select id , latitude, longitude,timeStamp, type, speed, heading ,eventId ,"NORMAL" as state,""  as information
+insert into dataOut;
