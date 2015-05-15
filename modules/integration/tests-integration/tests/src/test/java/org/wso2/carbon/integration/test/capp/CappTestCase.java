@@ -21,6 +21,7 @@ public class CappTestCase extends CEPIntegrationTest {
     private static final Log log = LogFactory.getLog(CappTestCase.class);
     private ServerConfigurationManager serverManager = null;
     protected final String cAppFileName = "TestCAPP.car";
+    protected final String cAppFailureFileName = "TestCAPPFailure.car";
 
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
@@ -43,24 +44,68 @@ public class CappTestCase extends CEPIntegrationTest {
         int startEPCount  = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
         int startEPCCount = eventProcessorAdminServiceClient.getAllActiveExecutionPlanConfigurationCount();
 
-        try {
-            String carFilePath = FrameworkPathUtil.getSystemResourceLocation() +
-                    "artifacts" + File.separator + "CEP" + File.separator + "car"
-                    + File.separator;
+        String carFilePath = FrameworkPathUtil.getSystemResourceLocation() +
+                "artifacts" + File.separator + "CEP" + File.separator + "car"
+                + File.separator;
 
-            String webAppDirectoryPath = FrameworkPathUtil.getCarbonHome() + File.separator
-                    + "repository" + File.separator + "deployment" + File.separator + "server"
-                    + File.separator + "carbonapps" + File.separator;
-            FileManager.copyResourceToFileSystem(carFilePath + cAppFileName, webAppDirectoryPath, cAppFileName);
-            Thread.sleep(20000);
+        String cAppDirectoryPath = FrameworkPathUtil.getCarbonHome() + File.separator
+                + "repository" + File.separator + "deployment" + File.separator + "server"
+                + File.separator + "carbonapps" + File.separator;
+        try {
+            FileManager.copyResourceToFileSystem(carFilePath + cAppFileName, cAppDirectoryPath, cAppFileName);
         }  catch (Exception e) {
             throw new RemoteException("Exception caught when deploying the car file into CEP server", e);
         }
+        log.info("deploying cApp...");
+        Thread.sleep(20000);
 
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 2);
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
         Assert.assertEquals(eventProcessorAdminServiceClient.getAllActiveExecutionPlanConfigurationCount(), startEPCCount + 1);
+
+        try {
+            FileManager.deleteFile(cAppDirectoryPath + cAppFileName);
+        } catch (Exception e) {
+            throw new RemoteException("Exception caught when deleting the car file from CEP server", e);
+        }
+        log.info("undeploying cApp...");
+        Thread.sleep(20000);
+
+        Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount );
+        Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount);
+        Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount);
+        Assert.assertEquals(eventProcessorAdminServiceClient.getAllActiveExecutionPlanConfigurationCount(), startEPCCount);
+
+    }
+
+    @Test(groups = {"wso2.cep"} ,description = "Test car file failure deployment")
+    public void testFailureCAppDeployment() throws Exception {
+
+        int startESCount  = eventStreamManagerAdminServiceClient.getEventStreamCount();
+        int startERCount  = eventReceiverAdminServiceClient.getActiveEventReceiverCount();
+        int startEPCount  = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
+        int startEPCCount = eventProcessorAdminServiceClient.getAllActiveExecutionPlanConfigurationCount();
+
+        String carFilePath = FrameworkPathUtil.getSystemResourceLocation() +
+                "artifacts" + File.separator + "CEP" + File.separator + "car"
+                + File.separator;
+
+        String cAppDirectoryPath = FrameworkPathUtil.getCarbonHome() + File.separator
+                + "repository" + File.separator + "deployment" + File.separator + "server"
+                + File.separator + "carbonapps" + File.separator;
+        try {
+            FileManager.copyResourceToFileSystem(carFilePath + cAppFailureFileName, cAppDirectoryPath, cAppFailureFileName);
+        }  catch (Exception e) {
+            throw new RemoteException("Exception caught when deploying the car file into CEP server", e);
+        }
+
+        Thread.sleep(20000);
+
+        Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount);
+        Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount);
+        Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount);
+        Assert.assertEquals(eventProcessorAdminServiceClient.getAllActiveExecutionPlanConfigurationCount(), startEPCCount);
     }
 
     @AfterClass(alwaysRun = true)
