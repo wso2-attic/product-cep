@@ -1,7 +1,7 @@
 This sample uses
 
 EventReceiver:  -
-EventPublisher: jms/Map, XML with default mapping
+EventPublisher: jms/JSON, Map with custom mapping
 
 Producers:      event-simulator
 Consumers:      -
