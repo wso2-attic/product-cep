@@ -13,55 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.wso2.carbon.sample.consumer;
 
-import javax.jms.Destination;
-import javax.jms.JMSException;
-import javax.jms.MapMessage;
-import javax.jms.Message;
-import javax.jms.MessageConsumer;
-import javax.jms.Session;
-import javax.jms.TextMessage;
-import javax.jms.TopicConnection;
-import javax.jms.TopicConnectionFactory;
-import javax.naming.NamingException;
+
+import org.apache.log4j.Logger;
+
+import javax.jms.*;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
-public class JMSTopicMessageConsumer implements Runnable {
-    private static TopicConnectionFactory topicConnectionFactory = null;
-    private String topicName = "";
-    private boolean active = true;
+public class TopicConsumer implements Runnable {
 
-    JMSTopicMessageConsumer(String topicName) {
+    private TopicConnectionFactory topicConnectionFactory;
+    private String topicName;
+    private boolean active = true;
+    private static Logger log = Logger.getLogger(TopicConsumer.class);
+
+    public TopicConsumer(TopicConnectionFactory topicConnectionFactory, String topicName){
+        this.topicConnectionFactory = topicConnectionFactory;
         this.topicName = topicName;
     }
-
-    public static void main(String[] args)
-            throws InterruptedException, NamingException {
-
-//        Properties initialContextProperties = new Properties();
-//        initialContextProperties.put("java.naming.factory.initial", "org.apache.activemq.jndi.ActiveMQInitialContextFactory");
-//        initContext = new InitialContext(initialContextProperties);
-
-        topicConnectionFactory = JNDIContext.getInstance().getTopicConnectionFactory();
-
-        String topicName = args[0];
-        JMSTopicMessageConsumer consumerTopic = new JMSTopicMessageConsumer(topicName);
-        Thread consumerThread = new Thread(consumerTopic);
-        System.out.println("Starting consumerTopic thread...");
-        consumerThread.start();
-        Thread.sleep(5*60000);
-        System.out.println("Shutting down consumerTopic...");
-        consumerTopic.shutdown();
-    }
-
-    public void shutdown() {
-        active = false;
-    }
-
     public void run() {
         // create topic connection
         TopicConnection topicConnection = null;
@@ -69,7 +41,7 @@ public class JMSTopicMessageConsumer implements Runnable {
             topicConnection = topicConnectionFactory.createTopicConnection();
             topicConnection.start();
         } catch (JMSException e) {
-            System.out.println("Can not create topic connection." + e);
+            log.error("Can not create topic connection." + e.getMessage());
             return;
         }
         Session session = null;
@@ -105,5 +77,8 @@ public class JMSTopicMessageConsumer implements Runnable {
         } catch (JMSException e) {
             System.out.println("Can not subscribe." + e);
         }
+    }
+    public void shutdown() {
+        active = false;
     }
 }
