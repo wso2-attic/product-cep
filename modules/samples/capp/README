@@ -1,0 +1,10 @@
+A car file is the recommended and easier deployment of the deployable artifacts of WSO2 products. A car file can contain many deployable artifacts together for a single work flow or many work flows, and in one single click, the all the artifacts get deployed in a relavent order getting rid of the users headache on the deployement. The SampleCApp0115.car is created using sample 0115 (../artifacts/0115/) and the manual deployment of that sample can be automated using this one single file.
+
+Follow the below steps for the deployement.
+
+1. Unzip and start a CEP Product (4.0.0 or later).
+2. Goto management console.
+3. Main -> Carbon Applications -> Add .
+4. Upload the SampleCApp0115.car.
+5. Wait for few seconds and use the deployables deployed.
+6. If the cApp is available in the cApp list, go and check the artifacts are also available in their lists.
