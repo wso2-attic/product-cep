@@ -145,8 +145,8 @@ public class DeployArtifactsViaAPITestCase extends CEPIntegrationTest {
         EventMappingPropertyDto[] mappings = new EventMappingPropertyDto[]{mapping0,mapping1,mapping2,mapping3,mapping4,mapping5};
 
         BasicInputAdapterPropertyDto propertyDTO1 = new BasicInputAdapterPropertyDto();
-        propertyDTO1.setKey("topic");
-        propertyDTO1.setValue("PizzaOrder");
+        propertyDTO1.setKey("transports");
+        propertyDTO1.setValue("all");
         BasicInputAdapterPropertyDto[] propertyDTOArray = new BasicInputAdapterPropertyDto[]{propertyDTO1};
 
         eventReceiverAdminServiceClient.addXmlEventReceiverConfiguration("PizzaOrder","org.wso2.sample.pizza.order:1.0.0","http","",namespaces,mappings,propertyDTOArray,true);
