@@ -106,6 +106,14 @@ public class CappTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount);
         Assert.assertEquals(eventProcessorAdminServiceClient.getAllActiveExecutionPlanConfigurationCount(), startEPCCount);
+
+        try {
+            FileManager.deleteFile(cAppDirectoryPath + cAppFailureFileName);
+        } catch (Exception e) {
+            throw new RemoteException("Exception caught when deleting the car file from CEP server", e);
+        }
+
+        Thread.sleep(20000);
     }
 
     @AfterClass(alwaysRun = true)
