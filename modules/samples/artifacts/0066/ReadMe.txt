@@ -1,6 +1,6 @@
 This sample uses 
 EventReceiver:  -
-EventPublisher: email
+EventPublisher: mqtt
 
 Producers:     event simulator
-Consumers:     -
+Consumers:     mqtt consumer

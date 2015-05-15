@@ -1,6 +1,6 @@
 This sample uses 
 EventReceiver:  -
-EventPublisher: email
+EventPublisher: soap
 
 Producers:     event simulator
-Consumers:     -
+Consumers:     axis2-log-service

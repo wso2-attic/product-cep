@@ -1,6 +1,6 @@
 This sample uses 
 EventReceiver:  -
-EventPublisher: mqtt
+EventPublisher: sms
 
 Producers:     event simulator
-Consumers:     mqtt consumer
+Consumers:     -

@@ -2,7 +2,7 @@
   "name": "org.wso2.event.sensor.stream",
   "version": "1.0.0",
   "nickName": "",
-  "description": "Sensor Stream Information",
+  "description": "Statistics Stream",
   "metaData": [
     {
       "name": "timestamp",

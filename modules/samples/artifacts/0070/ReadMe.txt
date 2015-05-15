@@ -1,7 +1,7 @@
 This sample uses
 
 EventReceiver:  -
-EventPublisher: uiPublisher
+EventPublisher: websocket-local/JSON with default mapping
 
 Producers:      event-simulator
-Consumers:      web-app :outputuitest
+Consumers:      -

@@ -1,6 +1,6 @@
 This sample uses 
 EventReceiver:  -
-EventPublisher: email
+EventPublisher: cassandra
 
 Producers:     event simulator
-Consumers:     -
+Consumers:     external cassandra cluster
