@@ -255,8 +255,8 @@
 
         <!-- Dashboard -->
         <fileSet>
-            <directory>repository/resources/designer</directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/designer</outputDirectory>
+            <directory>repository/resources/portal</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/portal</outputDirectory>
         </fileSet>
         <fileSet>
             <directory>target/shindig</directory>
