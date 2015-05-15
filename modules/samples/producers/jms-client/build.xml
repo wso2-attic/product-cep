@@ -66,7 +66,7 @@
     </target>
 
     <target name="run" depends="compile">
-        <echo>Configure -Dtopic=xxxx -Dformat=xxxx(csv, text, json, xml) -Dbroker=xxxx(activemq, mb, qpid), (-Dsn='sample number' or -DfilePath=xxxx)</echo>
+        <echo>Configure -DtopicName=xxxx -Dformat=xxxx(csv, text, json, xml) -Dbroker=xxxx(activemq, mb, qpid), (-Dsn='sample number' or -DfilePath=xxxx)</echo>
         <java classname="${main-class}"
               classpathref="javac.classpath" fork="true">
             <arg value="${sn}"/>

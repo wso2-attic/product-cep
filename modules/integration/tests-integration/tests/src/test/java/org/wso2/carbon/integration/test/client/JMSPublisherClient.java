@@ -87,6 +87,7 @@ public class JMSPublisherClient {
                 producer.close();
                 session.close();
                 topicConnection.stop();
+                topicConnection.close();
             }
         }catch(Exception e){
             log.error("Error when publishing messages" + e.getMessage(), e);
