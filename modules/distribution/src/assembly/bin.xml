@@ -45,6 +45,7 @@
                 <exclude>**/FastMovingStockQuoteReceiver.aar</exclude>
                 <exclude>**/log4j.properties</exclude>
                 <exclude>**/bin/ciphertool.bat</exclude>
+                <exclude>**/conf/datasources/master-datasources.xml</exclude>
             </excludes>
         </fileSet>
 
@@ -568,6 +569,16 @@
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/cep/domain-template</outputDirectory>
             <filtered>true</filtered>
         </file>
+
+        <!--Copying master-datasources.xml file -->
+        <file>
+            <source>repository/conf/datasources/master-datasources.xml</source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/datasources
+            </outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+
     </files>
 
     <!-- Adding rampart mar -->
