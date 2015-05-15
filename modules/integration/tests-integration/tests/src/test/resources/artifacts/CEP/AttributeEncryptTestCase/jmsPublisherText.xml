@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventPublisher name="jmsPublisherText" statistics="disable"
+                trace="disable" xmlns="http://wso2.org/carbon/eventpublisher">
+    <from streamName="org.wso2.event.sensor.stream" version="1.0.0"/>
+    <mapping customMapping="disable" type="text"/>
+    <to eventAdapterType="jms">
+        <property name="java.naming.factory.initial">org.wso2.andes.jndi.PropertiesFileInitialContextFactory</property>
+        <property name="java.naming.provider.url">repository/conf/jndi.properties</property>
+        <property name="transport.jms.UserName">admin</property>
+        <property name="transport.jms.Password">admin</property>
+        <property name="transport.jms.DestinationType">topic</property>
+        <property name="transport.jms.Destination">topicMap</property>
+        <property name="transport.jms.ConnectionFactoryJNDIName">TopicConnectionFactory</property>
+    </to>
+</eventPublisher>
