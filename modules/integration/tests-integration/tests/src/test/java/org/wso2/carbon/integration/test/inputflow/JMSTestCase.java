@@ -29,7 +29,6 @@ import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config
 import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config.JMSBrokerConfigurationProvider;
 import org.wso2.carbon.databridge.commons.Event;
 import org.wso2.carbon.integration.common.utils.mgt.ServerConfigurationManager;
-import org.wso2.carbon.integration.test.client.HttpEventPublisherClient;
 import org.wso2.carbon.integration.test.client.JMSPublisherClient;
 import org.wso2.carbon.integration.test.client.TestAgentServer;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
@@ -63,7 +62,7 @@ public class JMSTestCase extends CEPIntegrationTest {
         try {
             serverManager = new ServerConfigurationManager(cepServer);
         } catch (MalformedURLException e) {
-            throw new RemoteException("Malformed URL exception thrown when initializing Mqtt broker", e);
+            throw new RemoteException("Malformed URL exception thrown when initializing ActiveMQ broker", e);
         }
 
         setupActiveMQBroker();
@@ -82,12 +81,18 @@ public class JMSTestCase extends CEPIntegrationTest {
 
         String loggedInSessionCookie = getSessionCookie();
 
-        eventReceiverAdminServiceClient = configurationUtil.getEventReceiverAdminServiceClient(backendURL, loggedInSessionCookie);
-        eventStreamManagerAdminServiceClient = configurationUtil.getEventStreamManagerAdminServiceClient(backendURL, loggedInSessionCookie);
-        eventPublisherAdminServiceClient = configurationUtil.getEventPublisherAdminServiceClient(backendURL, loggedInSessionCookie);
+        eventReceiverAdminServiceClient = configurationUtil.getEventReceiverAdminServiceClient(
+                backendURL, loggedInSessionCookie);
+        eventStreamManagerAdminServiceClient = configurationUtil.getEventStreamManagerAdminServiceClient(
+                backendURL, loggedInSessionCookie);
+        eventPublisherAdminServiceClient = configurationUtil.getEventPublisherAdminServiceClient(
+                backendURL, loggedInSessionCookie);
+        Thread.sleep(45000);
+
     }
 
-    @Test(groups = {"wso2.cep"}, description = "Testing activemq jms receiver with Map formatted event with default mapping")
+    @Test(groups = {"wso2.cep"},
+            description = "Testing activemq jms receiver with Map formatted event with default mapping")
     public void jmsMapTestWithDefaultMappingScenario() throws Exception {
         final int messageCount = 3;
 
@@ -115,12 +120,11 @@ public class JMSTestCase extends CEPIntegrationTest {
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start
-        Thread.sleep(10000);
+        Thread.sleep(5000);
 
         JMSPublisherClient.publish("topicMap", "csv", "inputflows/sample0009", "topicMap.csv");
-
         //wait while all stats are published
-        Thread.sleep(30000);
+        Thread.sleep(5000);
 
         eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
         eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("jmsReceiverMap.xml");
@@ -160,7 +164,9 @@ public class JMSTestCase extends CEPIntegrationTest {
         }
     }
 
-    @Test(groups = {"wso2.cep"}, description = "Testing activemq jms receiver with Map formatted event with custom mapping")
+    @Test(groups = {"wso2.cep"},
+            description = "Testing activemq jms receiver with Map formatted event with custom mapping",
+            dependsOnMethods = {"jmsMapTestWithDefaultMappingScenario"})
     public void jmsMapTestWithCustomMappingScenario() throws Exception {
         final int messageCount = 3;
 
@@ -188,12 +194,11 @@ public class JMSTestCase extends CEPIntegrationTest {
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start
-        Thread.sleep(10000);
+        Thread.sleep(5000);
 
         JMSPublisherClient.publish("topicMap", "csv", "inputflows/sample0010", "topicMap.csv");
-
         //wait while all stats are published
-        Thread.sleep(30000);
+        Thread.sleep(5000);
 
         eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
         eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("jmsReceiverMap.xml");
@@ -232,7 +237,9 @@ public class JMSTestCase extends CEPIntegrationTest {
         }
     }
 
-    @Test(groups = {"wso2.cep"}, description = "Testing activemq jms receiver with JSON formatted event with default mapping")
+    @Test(groups = {"wso2.cep"},
+            description = "Testing activemq jms receiver with JSON formatted event with default mapping",
+            dependsOnMethods = {"jmsMapTestWithCustomMappingScenario"})
     public void jmsJSONTestWithDefaultMappingScenario() throws Exception {
         final int messageCount = 8;
 
@@ -265,23 +272,21 @@ public class JMSTestCase extends CEPIntegrationTest {
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
+
         // The data-bridge receiver
         TestAgentServer agentServer = new TestAgentServer("inputflows/sample0011",7661, true);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start
-        Thread.sleep(10000);
+        Thread.sleep(5000);
 
         JMSPublisherClient.publish("topicJSON", "json", "inputflows/sample0011", "topicJSON.txt");
-
         Thread.sleep(5000);
         JMSPublisherClient.publish("topicXML", "xml", "inputflows/sample0011", "topicXML.txt");
-
         Thread.sleep(5000);
         JMSPublisherClient.publish("topicText", "text", "inputflows/sample0011", "topicText.txt");
-
+        Thread.sleep(5000);
         //wait while all stats are published
-        Thread.sleep(30000);
 
         eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
         eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("jmsReceiverJSON.xml");
