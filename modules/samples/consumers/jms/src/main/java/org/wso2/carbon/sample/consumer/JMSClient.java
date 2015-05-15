@@ -58,27 +58,27 @@ public class JMSClient {
                     TopicConnectionFactory topicConnectionFactory = (TopicConnectionFactory) context.lookup("ConnectionFactory");
                     TopicConsumer topicConsumer = new TopicConsumer(topicConnectionFactory, topic);
                     Thread consumerThread = new Thread(topicConsumer);
-                    System.out.println("Starting" + broker + "consumerTopic thread...");
+                    log.info("Starting" + broker + "consumerTopic thread...");
                     consumerThread.start();
                     Thread.sleep(5*600);
-                    System.out.println("Shutting down " + broker + " consumerTopic...");
+                    log.info("Shutting down " + broker + " consumerTopic...");
                     topicConsumer.shutdown();
                 }else{
                     Context context = new InitialContext(properties);
                     QueueConnectionFactory queueConnectionFactory = (QueueConnectionFactory) context.lookup("ConnectionFactory");
                     QueueConsumer queueConsumer = new QueueConsumer(queueConnectionFactory, queue);
                     Thread consumerThread = new Thread(queueConsumer);
-                    System.out.println("Starting" + broker + "consumerQueue thread...");
+                    log.info("Starting" + broker + "consumerQueue thread...");
                     consumerThread.start();
                     Thread.sleep(5*600);
-                    System.out.println("Shutting down " + broker + " consumerQueue...");
+                    log.info("Shutting down " + broker + " consumerQueue...");
                     queueConsumer.shutdown();
                 }
             }
         } catch (IOException e) {
-            log.error("Cannot read properties file from resources. " + e.getMessage());
+            log.error("Cannot read properties file from resources. " + e.getMessage(), e);
         } catch (NamingException e) {
-            log.error("Invalid properties in the properties " + e.getMessage());
+            log.error("Invalid properties in the properties " + e.getMessage(), e);
         }
 
 

@@ -105,7 +105,7 @@ public class JMSConsumerClient implements Runnable{
             topicConnection.stop();
             topicConnection.close();
         } catch (JMSException e) {
-            log.info("Can not subscribe." + e);
+            log.error("Can not subscribe." + e.getMessage(), e);
         }
     }
     public static void shutdown() {

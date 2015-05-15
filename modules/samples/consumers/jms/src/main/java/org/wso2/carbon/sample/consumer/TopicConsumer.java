@@ -41,7 +41,7 @@ public class TopicConsumer implements Runnable {
             topicConnection = topicConnectionFactory.createTopicConnection();
             topicConnection.start();
         } catch (JMSException e) {
-            log.error("Can not create topic connection." + e.getMessage());
+            log.error("Can not create topic connection." + e.getMessage(), e);
             return;
         }
         Session session = null;
@@ -50,7 +50,7 @@ public class TopicConsumer implements Runnable {
             session = topicConnection.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
             Destination destination = session.createTopic(topicName);
             MessageConsumer consumer = session.createConsumer(destination);
-            System.out.println("Listening for messages");
+            log.info("Listening for messages");
             while (active) {
                 Message message = consumer.receive(1000);
                 if (message != null) {
@@ -62,20 +62,20 @@ public class TopicConsumer implements Runnable {
                             String key = (String) enumeration.nextElement();
                             map.put(key, mapMessage.getObject(key));
                         }
-                        System.out.println("Received Map Message : " + map);
+                        log.info("Received Map Message : " + map);
                     } else if(message instanceof TextMessage) {
-                        System.out.println("Received Text Message : " + ((TextMessage)message).getText());
+                        log.info("Received Text Message : " + ((TextMessage) message).getText());
                     } else {
-                        System.out.println("Received message : " + message.toString());
+                        log.info("Received message : " + message.toString());
                     }
                 }
             }
-            System.out.println("Finished listening for messages.");
+            log.info("Finished listening for messages.");
             session.close();
             topicConnection.stop();
             topicConnection.close();
         } catch (JMSException e) {
-            System.out.println("Can not subscribe." + e);
+            log.error("Can not subscribe." + e.getMessage(), e);
         }
     }
     public void shutdown() {
