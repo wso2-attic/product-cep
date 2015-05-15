@@ -1,5 +1,5 @@
 /*
-*  Copyright (c) 2005-2014, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+*  Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
 *
 *  WSO2 Inc. licenses this file to you under the Apache License,
 *  Version 2.0 (the "License"); you may not use this file except
@@ -18,111 +18,97 @@
 package org.wso2.carbon.sample.jmsclient;
 
 import org.apache.log4j.Logger;
-import org.wso2.carbon.databridge.commons.StreamDefinition;
 
 import javax.jms.*;
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
+import java.util.Properties;
 
+/**
+ * JMS client reads a text file or a csv file with multiple messages and publish to a Map or Text message to a broker
+ * (ActiveMQ, WSO2 Message Broker, Qpid Broker)
+ */
 public class JMSClient {
 
     private static Logger log = Logger.getLogger(JMSClient.class);
 
-    private static TopicConnectionFactory topicConnectionFactory = null;
-
     public static void main(String[] args) {
-        topicConnectionFactory = JNDIContext.getInstance().getTopicConnectionFactory();
 
         String sampleNumber = args[0];
-        String topic = args[1];
+        String topicName = args[1];
         String format = args[2];
         String filePath = args[3];
-        String streamId = args[4];
+        String broker = args[4];
 
         if (format == null || "map".equals(format)) {
             format = "csv";
         }
-
-        JMSClient publisher = new JMSClient();
-
-        StreamDefinition streamDefinition = null;
-        if (streamId != null && streamId.length() > 0) {
-            streamDefinition = JMSClientUtil.loadStreamDefinitions(sampleNumber).get(streamId);
+        if (broker == null || broker.equalsIgnoreCase("")) {
+            broker = "activemq";
         }
-        try {
-            filePath = JMSClientUtil.getEventFilePath(sampleNumber, topic, filePath);
-            String fileContent = JMSClientUtil.readFile(filePath + "." + format);
-            publisher.publish(topic, fileContent, format, streamDefinition);
 
+        try {
+
+            filePath = JMSClientUtil.getEventFilePath(sampleNumber, format, topicName, filePath);
+
+            TopicConnection topicConnection = null;
+            Session session = null;
+
+            Properties properties = new Properties();
+            if(broker.equalsIgnoreCase("activemq")){
+                properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("activemq.properties"));
+                Context context = new InitialContext(properties);
+                TopicConnectionFactory connFactory = (TopicConnectionFactory) context.lookup("ConnectionFactory");
+                topicConnection = connFactory.createTopicConnection();
+                topicConnection.start();
+                session = topicConnection.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
+            }else if(broker.equalsIgnoreCase("mb")){
+                properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("mb.properties"));
+                Context context = new InitialContext(properties);
+                TopicConnectionFactory connFactory = (TopicConnectionFactory) context.lookup("qpidConnectionFactory");
+                topicConnection = connFactory.createTopicConnection();
+                topicConnection.start();
+                session = topicConnection.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
+            }else if(broker.equalsIgnoreCase("qpid")){
+                properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("qpid.properties"));
+                Context context = new InitialContext(properties);
+                TopicConnectionFactory connFactory = (TopicConnectionFactory) context.lookup("qpidConnectionFactory");
+                topicConnection = connFactory.createTopicConnection();
+                topicConnection.start();
+                session = topicConnection.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
+            }else{
+                log.info("Please enter a valid JMS message broker. (ex: activemq, mb, qpid");
+            }
+
+            if(session != null){
+                Topic topic  = session.createTopic(topicName);
+                MessageProducer producer  = session.createProducer(topic);
+
+                List<String> messagesList = JMSClientUtil.readFile(filePath);
+                try {
+                    if(format.equalsIgnoreCase("csv")){
+                        log.info("Sending Map messages on '" + topicName + "' topic");
+                        JMSClientUtil.publishMapMessage(producer, session, messagesList);
+
+                    }else{
+                        log.info("Sending  " + format + " messages on '" + topicName + "' topic");
+                        JMSClientUtil.publishTextMessage(producer, session, messagesList);
+                    }
+                } catch (JMSException e) {
+                    log.error("Can not subscribe." + e.getMessage(), e);
+                } catch (IOException e){
+                    log.error("Error when reading the data file." + e.getMessage(), e);
+                }finally{
+                    producer.close();
+                    session.close();
+                    topicConnection.stop();
+                }
+            }
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error("Error when publishing message" + e.getMessage(), e);
         }
         log.info("All Order Messages sent");
     }
-
-    /**
-     * Publish message to given topic
-     */
-    public void publish(String topicName, String fileContent, String format, StreamDefinition streamDefinition) {
-        TopicConnection topicConnection = null;
-        try {
-            topicConnection = topicConnectionFactory.createTopicConnection();
-            topicConnection.start();
-        } catch (JMSException e) {
-            log.error("Can not create topic connection." + e);
-            return;
-        }
-        Session session = null;
-        try {
-            session = topicConnection.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
-            Topic topic = session.createTopic(topicName);
-            MessageProducer producer = session.createProducer(topic);
-
-            if ("csv".equals(format)) {
-                log.info("Sending Map messages on '" + topicName + "' topic");
-                publishMapMessage(producer, session, fileContent, streamDefinition);
-            } else if ("text".equals(format) || "txt".equals(format) || "json".equals(format) || "xml".equals(format)) {
-                log.info("Sending  " + format + " messages on '" + topicName + "' topic");
-                publishTextMessage(producer, session, fileContent);
-            }
-            producer.close();
-            session.close();
-            topicConnection.stop();
-            topicConnection.close();
-        } catch (JMSException e) {
-            log.error("Can not subscribe." + e);
-        } catch (IOException e) {
-            log.error(e);
-        }
-    }
-
-    private static void publishMapMessage(MessageProducer producer, Session session, String messageContent, StreamDefinition streamDefinition) throws IOException, JMSException {
-
-        List<Map<String, Object>> messages;
-        if (streamDefinition == null) {
-            // sending all attributes as string
-            messages = JMSClientUtil.convertToMap(messageContent);
-        } else {
-            // primitive typed attributes based on stream def.
-            messages = JMSClientUtil.convertFileToMap(streamDefinition, messageContent);
-        }
-        for (int i = 0, mapMsgsLength = messages.size(); i < mapMsgsLength; i++) {
-            Map<String, Object> message = messages.get(i);
-            MapMessage mapMessage = session.createMapMessage();
-            for (Map.Entry<String, Object> entry : message.entrySet()) {
-                mapMessage.setObject(entry.getKey(), entry.getValue());
-            }
-            producer.send(mapMessage);
-            log.info("Map Message " + (i + 1) + " sent");
-        }
-    }
-
-    private static void publishTextMessage(MessageProducer producer, Session session, String messageContent) throws JMSException {
-        TextMessage jmsMessage = session.createTextMessage();
-        jmsMessage.setText(messageContent);
-        producer.send(jmsMessage);
-
-    }
-
 }

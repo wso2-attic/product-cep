@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventReceiver name="jmsReceiverMap" statistics="disable" trace="disable" xmlns="http://wso2.org/carbon/eventreceiver">
+    <from eventAdapterType="jms">
+        <property name="java.naming.factory.initial">org.apache.activemq.jndi.ActiveMQInitialContextFactory</property>
+        <property name="receiving.events.duplicated.in.cluster">false</property>
+        <property name="java.naming.provider.url">tcp://localhost:61616</property>
+        <property name="transport.jms.DestinationType">topic</property>
+        <property name="transport.jms.Destination">topicMap</property>
+        <property name="transport.jms.ConnectionFactoryJNDIName">TopicConnectionFactory</property>
+    </from>
+    <mapping customMapping="enable" type="map">
+        <property>
+            <from name="timestamp"/>
+            <to name="meta_timestamp" type="long"/>
+        </property>
+        <property>
+            <from name="powerSaved"/>
+            <to name="meta_isPowerSaverEnabled" type="bool"/>
+        </property>
+        <property>
+            <from name="id"/>
+            <to name="meta_sensorId" type="int"/>
+        </property>
+        <property>
+            <from name="name"/>
+            <to name="meta_sensorName" type="string"/>
+        </property>
+        <property>
+            <from name="long"/>
+            <to name="correlation_longitude" type="double"/>
+        </property>
+        <property>
+            <from name="lat"/>
+            <to name="correlation_latitude" type="double"/>
+        </property>
+        <property>
+            <from name="humidity"/>
+            <to name="humidity" type="float"/>
+        </property>
+        <property>
+            <from name="temp"/>
+            <to name="sensorValue" type="double"/>
+        </property>
+    </mapping>
+    <to streamName="org.wso2.event.sensor.stream" version="1.0.0"/>
+</eventReceiver>

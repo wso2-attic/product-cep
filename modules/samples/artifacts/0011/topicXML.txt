@@ -1,0 +1,37 @@
+<events>
+    <event>
+        <metaData>
+            <timestamp>199008131245</timestamp>
+            <isPowerSaverEnabled>true</isPowerSaverEnabled>
+            <sensorId>801</sensorId>
+            <sensorName>temperature</sensorName>
+        </metaData>
+        <correlationData>
+            <longitude>4.504343</longitude>
+            <latitude>1.23434</latitude>
+        </correlationData>
+        <payloadData>
+            <humidity>6.6</humidity>
+            <sensorValue>20.44345</sensorValue>
+        </payloadData>
+    </event>
+</events>
+*****
+<events>
+    <event>
+        <metaData>
+            <timestamp>199008131245</timestamp>
+            <isPowerSaverEnabled>true</isPowerSaverEnabled>
+            <sensorId>802</sensorId>
+            <sensorName>temperature</sensorName>
+        </metaData>
+        <correlationData>
+            <longitude>4.504343</longitude>
+            <latitude>1.23434</latitude>
+        </correlationData>
+        <payloadData>
+            <humidity>6.6</humidity>
+            <sensorValue>20.44345</sensorValue>
+        </payloadData>
+    </event>
+</events>

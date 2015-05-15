@@ -8,6 +8,7 @@
             <orderedTime>27-04-2015, 3.00</orderedTime>
         </payloadData>
     </event>
+</events>
 *****
 <events>
     <event>
@@ -19,6 +20,7 @@
             <orderedTime>27-04-2015, 4.00</orderedTime>
         </payloadData>
     </event>
+</events>
 *****
 <events>
     <event>
@@ -30,3 +32,4 @@
             <orderedTime>29-04-2015, 4.00</orderedTime>
         </payloadData>
     </event>
+</events>
