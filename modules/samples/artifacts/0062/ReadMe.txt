@@ -1,6 +1,6 @@
 This sample uses 
 EventReceiver:  -
-EventPublisher: soap
+EventPublisher: http
 
 Producers:     event simulator
-Consumers:     axis2-log-service
+Consumers:     generic log service consumer

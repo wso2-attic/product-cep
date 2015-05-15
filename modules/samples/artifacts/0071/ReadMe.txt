@@ -1,6 +1,7 @@
-This sample uses 
-EventReceiver:  -
-EventPublisher: RDBMS
+This sample uses
 
-Producers:     event simulator
-Consumers:     RDBMS (H2)
+EventReceiver:  -
+EventPublisher: uiPublisher
+
+Producers:      event-simulator
+Consumers:      web-app :outputuitest

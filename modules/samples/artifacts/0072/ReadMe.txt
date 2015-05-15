@@ -1,6 +1,6 @@
 This sample uses 
 EventReceiver:  -
-EventPublisher: cassandra
+EventPublisher: RDBMS
 
 Producers:     event simulator
-Consumers:     external cassandra cluster
+Consumers:     RDBMS (H2)

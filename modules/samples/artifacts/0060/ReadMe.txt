@@ -1,7 +1,7 @@
 This sample uses
 
 EventReceiver:  -
-EventPublisher: websocket-local/JSON with default mapping
+EventPublisher: jms/JSON, Map with custom mapping
 
 Producers:      event-simulator
 Consumers:      -

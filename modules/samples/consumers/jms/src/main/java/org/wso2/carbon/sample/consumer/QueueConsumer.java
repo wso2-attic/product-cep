@@ -13,53 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.wso2.carbon.sample.consumer;
-import javax.jms.Destination;
-import javax.jms.JMSException;
-import javax.jms.MapMessage;
-import javax.jms.Message;
-import javax.jms.MessageConsumer;
-import javax.jms.QueueConnection;
-import javax.jms.QueueConnectionFactory;
-import javax.jms.Session;
-import javax.jms.TextMessage;
-import javax.naming.NamingException;
+
+import org.apache.log4j.Logger;
+
+import javax.jms.*;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
-public class JMSQueueMessageConsumer implements Runnable {
-    private static QueueConnectionFactory queueConnectionFactory = null;
-    private String queueName = "";
+public class QueueConsumer implements Runnable {
+
+    private QueueConnectionFactory queueConnectionFactory;
+    private String queueName;
     private boolean active = true;
+    private static Logger log = Logger.getLogger(QueueConsumer.class);
 
-    JMSQueueMessageConsumer(String queueName) {
+    public QueueConsumer(QueueConnectionFactory queueConnectionFactory, String queueName){
+        this.queueConnectionFactory = queueConnectionFactory;
         this.queueName = queueName;
-    }
-
-    public static void main(String[] args)
-            throws InterruptedException, NamingException {
-
-        queueConnectionFactory = JNDIContext.getInstance().getQueueConnectionFactory();
-
-        String queueName = "";
-        if (args.length == 0 || args[0] == null || args[0].trim().equals("")) {
-            queueName = "DelayedFlightStats";
-        } else {
-            queueName = args[0];
-        }
-        JMSQueueMessageConsumer consumer = new JMSQueueMessageConsumer(queueName);
-        Thread consumerThread = new Thread(consumer);
-        System.out.println("Starting consumer thread...");
-        consumerThread.start();
-        Thread.sleep(5 * 60000);
-        System.out.println("Shutting down consumer...");
-        consumer.shutdown();
-    }
-
-    public void shutdown() {
-        active = false;
     }
 
     public void run() {
@@ -69,7 +41,7 @@ public class JMSQueueMessageConsumer implements Runnable {
             queueConnection = queueConnectionFactory.createQueueConnection();
             queueConnection.start();
         } catch (JMSException e) {
-            System.out.println("Can not create queue connection." + e);
+            log.error("Can not create queue connection." + e.getMessage(), e);
             return;
         }
         Session session = null;
@@ -78,7 +50,7 @@ public class JMSQueueMessageConsumer implements Runnable {
             session = queueConnection.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
             Destination destination = session.createQueue(queueName);
             MessageConsumer consumer = session.createConsumer(destination);
-            System.out.println("Listening for messages");
+            log.info("Listening for messages");
             while (active) {
                 Message message = consumer.receive(1000);
                 if (message != null) {
@@ -90,20 +62,24 @@ public class JMSQueueMessageConsumer implements Runnable {
                             String key = (String) enumeration.nextElement();
                             map.put(key, mapMessage.getObject(key));
                         }
-                        System.out.println("Received Map Message : " + map);
+                        log.info("Received Map Message : " + map);
                     } else if (message instanceof TextMessage) {
-                        System.out.println("Received Text Message : " + ((TextMessage) message).getText());
+                        log.info("Received Text Message : " + ((TextMessage) message).getText());
                     } else {
-                        System.out.println("Received message : " + message.toString());
+                        log.info("Received message : " + message.toString());
                     }
                 }
             }
-            System.out.println("Finished listening for messages.");
+            log.info("Finished listening for messages.");
             session.close();
             queueConnection.stop();
             queueConnection.close();
         } catch (JMSException e) {
-            System.out.println("Can not subscribe." + e);
+            log.error("Can not subscribe." + e.getMessage(), e);
         }
     }
+    public void shutdown() {
+        active = false;
+    }
+
 }

@@ -1,6 +1,7 @@
-This sample uses 
-EventReceiver:  -
-EventPublisher: http
+This sample uses
 
-Producers:     event simulator
-Consumers:     generic log service consumer
+EventReceiver:  -
+EventPublisher: jms/Map, XML with default mapping
+
+Producers:      event-simulator
+Consumers:      -

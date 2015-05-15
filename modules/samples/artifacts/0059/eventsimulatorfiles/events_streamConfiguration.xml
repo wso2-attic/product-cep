@@ -15,8 +15,4 @@
   ~ limitations under the License.
   -->
 
-<streamConfiguration type="csv">
-    <file>events.csv</file>
-    <streamID>org.wso2.event.sensor.stream:1.0.0</streamID>
-    <separateChar>,</separateChar>
-</streamConfiguration>
+<streamConfiguration type="csv"><file>events.csv</file><streamID>org.wso2.event.sensor.stream:1.0.0</streamID><separateChar>,</separateChar></streamConfiguration>
