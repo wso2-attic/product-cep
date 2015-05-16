@@ -82,7 +82,7 @@ public class DeployArtifactsTestCase extends CEPIntegrationTest{
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), ++eventPublisherCount);
     }
 
-    @Test(groups = {"wso2.cep"}, description = "Removing artifacts.")
+    @Test(groups = {"wso2.cep"}, description = "Removing artifacts." ,dependsOnMethods = {"addArtifactsTestScenario1"})
     public void removeArtifactsTestScenario() throws Exception {
         eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.sample.pizza.order","1.0.0");
         eventStreamManagerAdminServiceClient.removeEventStream("outStream","1.0.0");
