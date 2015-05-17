@@ -48,7 +48,7 @@
             <!--<class name="org.wso2.carbon.integration.test.storm.StormTestCase"/>-->
             <class name="org.wso2.carbon.integration.test.execution.manager.ExecutionManagerTestCase"/>
             <!--<class name="org.wso2.carbon.integration.test.inputflow.MQTTTestCase"/>-->
-            <!--<class name="org.wso2.carbon.integration.test.capp.CappTestCase"/>-->
+            <class name="org.wso2.carbon.integration.test.capp.CappTestCase"/>
         </classes>
 
     </test>

@@ -20,6 +20,7 @@
   <mapping customMapping="disable" type="json"/>
   <to eventAdapterType="http">
     <property name="http.headers">Content-Type: application/json</property>
+    <property name="http.client.method">HttpPost</property>
     <property name="http.url">http://localhost:9763/GenericLogService/log</property>
   </to>
 </eventPublisher>

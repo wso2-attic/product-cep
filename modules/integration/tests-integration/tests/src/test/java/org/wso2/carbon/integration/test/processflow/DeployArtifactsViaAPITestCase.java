@@ -196,7 +196,12 @@ public class DeployArtifactsViaAPITestCase extends CEPIntegrationTest {
         proxyPort.setKey("http.proxy.port");
         proxyPort.setValue("");
         proxyPort.set_static(false);
-        BasicOutputAdapterPropertyDto[] outputPropertyConfiguration = new BasicOutputAdapterPropertyDto[]{url, username, password, headers, proxyHost, proxyPort};
+        BasicOutputAdapterPropertyDto clientMethod = new BasicOutputAdapterPropertyDto();
+        clientMethod.setKey("http.proxy.port");
+        clientMethod.setValue("");
+        clientMethod.set_static(true);
+
+        BasicOutputAdapterPropertyDto[] outputPropertyConfiguration = new BasicOutputAdapterPropertyDto[]{url, username, password, headers, proxyHost, proxyPort, clientMethod};
 
         eventPublisherAdminServiceClient.addXMLEventPublisherConfiguration("PizzaDeliveryNofication", "outStream:1.0.0", "http",
                 textData, outputPropertyConfiguration, "inline", true);
