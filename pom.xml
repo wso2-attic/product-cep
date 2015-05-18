@@ -645,6 +645,7 @@
         <paho.mqtt.version>0.4.0</paho.mqtt.version>
         <apache.kafka.version>0.8.1</apache.kafka.version>
         <javax.servlet.api.version>2.5</javax.servlet.api.version>
+        <shindig.version>2.5.2</shindig.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.scm.id>my-scm-server</project.scm.id>
