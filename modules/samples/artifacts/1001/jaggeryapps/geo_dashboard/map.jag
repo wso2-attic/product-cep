@@ -868,7 +868,7 @@ var log = new Log();
                   <span class="help-block">Can use this name to locate the execution plan</span>
 
                   <label class="text-primary" for="areaName">Fence name</label>
-                  <input class="form-control" id="areaName" placeholder="Traffic name" type="text">
+                  <input class="form-control" id="areaName" placeholder="Area Name" type="text">
                   <span class="help-block">Name of the selected area(i.e colombo)</span>
               </div>
               <div>

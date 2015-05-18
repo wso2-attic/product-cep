@@ -12,6 +12,11 @@
     z-index: 0;
 }
 
+.uk-notify {
+    z-index: 2147483647 !important;
+
+}
+
 .leaflet-top {
     top: 80px !important;
 }

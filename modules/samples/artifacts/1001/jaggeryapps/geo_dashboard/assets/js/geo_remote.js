@@ -208,21 +208,34 @@ function loadWms() {
 function setSpeedAlert() {
 
     var speedAlertValue = $("#speedAlertValue").val();
-    data = {
-        'parseData': JSON.stringify({'speedAlertValue': speedAlertValue}), // parseKey : parseValue pair , this key pair is replace with the key in the template file
-        'executionPlan': 'speed',
-        'customName': null,
-        'cepAction': 'edit' // TODO: what if setting speed alert for the first time ?? that should be a deployment ? try 'edit' if fails 'deploy' , need to handle at the jaggery back end
-    };
-    $.post('controllers/set_alerts.jag', data, function (response) {
+
+    if(speedAlertValue == null || speedAlertValue === undefined || speedAlertValue == ""){
+        var message = "Speed cannot be empty."
         $.UIkit.notify({
-            message: '<span style="color: dodgerblue">' + response.status + '</span><br>' + response.message,
-            status: (response.status == 'success' ? 'success' : 'danger'),
-            timeout: 3000,
+            message: message,
+            status: 'danger',
+            timeout: ApplicationOptions.constance.NOTIFY_DANGER_TIMEOUT,
             pos: 'top-center'
         });
-        closeAll();
-    }, 'json');
+    } else{
+        data = {
+            'parseData': JSON.stringify({'speedAlertValue': speedAlertValue}), // parseKey : parseValue pair , this key pair is replace with the key in the template file
+            'executionPlan': 'speed',
+            'customName': null,
+            'cepAction': 'edit' // TODO: what if setting speed alert for the first time ?? that should be a deployment ? try 'edit' if fails 'deploy' , need to handle at the jaggery back end
+        };
+        $.post('controllers/set_alerts.jag', data, function (response) {
+            $.UIkit.notify({
+                message: '<span style="color: dodgerblue">' + response.status + '</span><br>' + response.message,
+                status: (response.status == 'success' ? 'success' : 'danger'),
+                timeout: 3000,
+                pos: 'top-center'
+            });
+            closeAll();
+        }, 'json');
+    }
+
+
 }
 var lastToolLeafletId = null;
 
@@ -235,23 +248,42 @@ function setWithinAlert(leafletId) {
     var selectedAreaGeoJson = JSON.stringify(map._layers[leafletId].toGeoJSON().geometry).replace(/"/g, "'");
     var queryName = $("#queryName").val();
     var areaName = $("#areaName").val();
-    var data = {
-        'parseData': JSON.stringify({'geoFenceGeoJSON': selectedAreaGeoJson, 'executionPlanName': createExecutionPlanName(queryName,"WithIn"), 'areaName': areaName}),
-        'executionPlan': 'within',
-        'customName': areaName, // TODO: fix , When template copies there can be two queryName and areaName id elements in the DOM
-        'queryName': queryName,
-        'cepAction': 'deploy'
-    };
-    $.post('controllers/set_alerts.jag', data, function (response) {
+
+    if(queryName == null || queryName === undefined || queryName == ""){
+        var message = "Query Name cannot be empty.";
         $.UIkit.notify({
-            message: '<span style="color: dodgerblue">' + response.status + '</span><br>' + response.message,
-            status: (response.status == 'success' ? 'success' : 'danger'),
-            timeout: 3000,
+            message: message,
+            status: 'danger',
+            timeout: ApplicationOptions.constance.NOTIFY_DANGER_TIMEOUT,
             pos: 'top-center'
         });
-        closeAll();
-        closeTools(leafletId);
-    }, 'json');
+    } else if(areaName == null || areaName === undefined || areaName == ""){
+        var message = "Area Name cannot be empty.";
+        $.UIkit.notify({
+            message: message,
+            status: 'danger',
+            timeout: ApplicationOptions.constance.NOTIFY_DANGER_TIMEOUT,
+            pos: 'top-center'
+        });
+    } else {
+        var data = {
+            'parseData': JSON.stringify({'geoFenceGeoJSON': selectedAreaGeoJson, 'executionPlanName': createExecutionPlanName(queryName,"WithIn"), 'areaName': areaName}),
+            'executionPlan': 'within',
+            'customName': areaName, // TODO: fix , When template copies there can be two queryName and areaName id elements in the DOM
+            'queryName': queryName,
+            'cepAction': 'deploy'
+        };
+        $.post('controllers/set_alerts.jag', data, function (response) {
+            $.UIkit.notify({
+                message: '<span style="color: dodgerblue">' + response.status + '</span><br>' + response.message,
+                status: (response.status == 'success' ? 'success' : 'danger'),
+                timeout: 3000,
+                pos: 'top-center'
+            });
+            closeAll();
+            closeTools(leafletId);
+        }, 'json');
+    }
 }
 
 function setStationeryAlert(leafletId) {
@@ -271,32 +303,69 @@ function setStationeryAlert(leafletId) {
     var stationeryName = $("#areaName").val();
     var fluctuationRadius = $("#fRadius").val();
     var time = $("#time").val();
-    var data = {
-        'parseData': JSON.stringify({'geoFenceGeoJSON': selectedProcessedAreaGeoJson, 'executionPlanName': createExecutionPlanName(queryName,"Stationery"), 'stationeryName': stationeryName , 'stationeryTime': time, 'fluctuationRadius': fluctuationRadius}),
-        'executionPlan': 'stationery',
-        'customName': stationeryName, // TODO: fix , When template copies there can be two queryName and areaName id elements in the DOM
-        'queryName': queryName,
-        'cepAction': 'deploy'
-    };
-    $.post('controllers/set_alerts.jag', data, function (response) {
+
+    if(queryName == null || queryName === undefined || queryName == ""){
+        var message = "Query Name cannot be empty.";
         $.UIkit.notify({
-            message: '<span style="color: dodgerblue">' + response.status + '</span><br>' + response.message,
-            status: (response.status == 'success' ? 'success' : 'danger'),
-            timeout: 3000,
+            message: message,
+            status: 'danger',
+            timeout: ApplicationOptions.constance.NOTIFY_DANGER_TIMEOUT,
             pos: 'top-center'
         });
-        closeAll();
-        closeTools(leafletId);
-    }, 'json');
+    } else if(stationeryName == null || stationeryName === undefined || stationeryName == ""){
+        var message = "Stationery Name cannot be empty.";
+        $.UIkit.notify({
+            message: message,
+            status: 'danger',
+            timeout: ApplicationOptions.constance.NOTIFY_DANGER_TIMEOUT,
+            pos: 'top-center'
+        });
+    } else if(fluctuationRadius == null || fluctuationRadius === undefined || fluctuationRadius == ""){
+        var message = "Fluctuation Radius cannot be empty.";
+        $.UIkit.notify({
+            message: message,
+            status: 'danger',
+            timeout: ApplicationOptions.constance.NOTIFY_DANGER_TIMEOUT,
+            pos: 'top-center'
+        });
+    } else if(time == null || time === undefined || time == ""){
+        var message = "Time cannot be empty.";
+        $.UIkit.notify({
+            message: message,
+            status: 'danger',
+            timeout: ApplicationOptions.constance.NOTIFY_DANGER_TIMEOUT,
+            pos: 'top-center'
+        });
+    } else {
+        var data = {
+            'parseData': JSON.stringify({'geoFenceGeoJSON': selectedProcessedAreaGeoJson, 'executionPlanName': createExecutionPlanName(queryName,"Stationery"), 'stationeryName': stationeryName , 'stationeryTime': time, 'fluctuationRadius': fluctuationRadius}),
+            'executionPlan': 'stationery',
+            'customName': stationeryName, // TODO: fix , When template copies there can be two queryName and areaName id elements in the DOM
+            'queryName': queryName,
+            'cepAction': 'deploy'
+        };
+        $.post('controllers/set_alerts.jag', data, function (response) {
+            $.UIkit.notify({
+                message: '<span style="color: dodgerblue">' + response.status + '</span><br>' + response.message,
+                status: (response.status == 'success' ? 'success' : 'danger'),
+                timeout: 3000,
+                pos: 'top-center'
+            });
+            closeAll();
+            closeTools(leafletId);
+        }, 'json');
+    }
+
+
 }
 
 var toggeled = false;
-function getPrediction(leafletId) {
-    /*
+/*function getPrediction(leafletId) {
+    *//*
      * TODO: replace double quote to single quote because of a conflict when deploying execution plan in CEP
      * this is against JSON standards so has been re-replaced when getting the data from governance registry
      * (look in get_alerts for .replace() method)
-     * */
+     * *//*
     console.log("leafletId: " + leafletId);
     var selectedAreaGeoJson = map._layers[leafletId].toGeoJSON().geometry;
     var d = new Date();
@@ -327,7 +396,7 @@ function getPrediction(leafletId) {
 
 
 
-}
+}*/
 
 
 function setTrafficAlert(leafletId) {
@@ -346,31 +415,48 @@ function setTrafficAlert(leafletId) {
         selectedAreaGeoJson["radius"]=radius;
     }
 
-    console.log("***********");
-
     var selectedProcessedAreaGeoJson = JSON.stringify(selectedAreaGeoJson).replace(/"/g, "'");
 
     var queryName = $("#queryName").val();
     var areaName = $("#areaName").val();
     //var time = $("#time").val();
-    var data = {
-        'parseData': JSON.stringify({'geoFenceGeoJSON': selectedProcessedAreaGeoJson, 'executionPlanName': createExecutionPlanName(queryName,"Traffic"), 'areaName': areaName}),
-        'executionPlan': 'traffic',
-        'customName': areaName, // TODO: fix , When template copies there can be two queryName and areaName id elements in the DOM
-        'queryName': queryName,
-        'cepAction': 'deploy'
-    };
-    console.log(JSON.stringify(data));
-    $.post('controllers/set_alerts.jag', data, function (response) {
+
+    if(queryName == null || queryName === undefined || queryName == ""){
+        var message = "Query Name cannot be empty.";
         $.UIkit.notify({
-            message: '<span style="color: dodgerblue">' + response.status + '</span><br>' + response.message,
-            status: (response.status == 'success' ? 'success' : 'danger'),
-            timeout: 3000,
+            message: message,
+            status: 'danger',
+            timeout: ApplicationOptions.constance.NOTIFY_DANGER_TIMEOUT,
             pos: 'top-center'
         });
-        closeAll();
-        closeTools(leafletId);
-    }, 'json');
+    } else if(areaName == null || areaName === undefined || areaName == ""){
+        var message = "Area Name cannot be empty.";
+        $.UIkit.notify({
+            message: message,
+            status: 'danger',
+            timeout: ApplicationOptions.constance.NOTIFY_DANGER_TIMEOUT,
+            pos: 'top-center'
+        });
+    } else {
+        var data = {
+            'parseData': JSON.stringify({'geoFenceGeoJSON': selectedProcessedAreaGeoJson, 'executionPlanName': createExecutionPlanName(queryName,"Traffic"), 'areaName': areaName}),
+            'executionPlan': 'traffic',
+            'customName': areaName, // TODO: fix , When template copies there can be two queryName and areaName id elements in the DOM
+            'queryName': queryName,
+            'cepAction': 'deploy'
+        };
+        console.log(JSON.stringify(data));
+        $.post('controllers/set_alerts.jag', data, function (response) {
+            $.UIkit.notify({
+                message: '<span style="color: dodgerblue">' + response.status + '</span><br>' + response.message,
+                status: (response.status == 'success' ? 'success' : 'danger'),
+                timeout: 3000,
+                pos: 'top-center'
+            });
+            closeAll();
+            closeTools(leafletId);
+        }, 'json');
+    }
 }
 
 function removeGeoFence(geoFenceElement,id) {
@@ -433,23 +519,45 @@ function getAlertsHistory(objectId) {
 
 
 function setProximityAlert() {
+
     var proximityDistance = $("#proximityDistance").val();
     var proximityTime = $("#proximityTime").val();
-    var data = {
-        'parseData': JSON.stringify({'proximityTime': proximityTime, 'proximityDistance': proximityDistance}),
-        'executionPlan': 'proximity',
-        'customName': null,
-        'cepAction': 'edit'
-    };
-    $.post('controllers/set_alerts.jag', data, function (response) {
+
+    if(proximityDistance == null || proximityDistance === undefined || proximityDistance == ""){
+        var message = "Proximity distance cannot be empty.";
         $.UIkit.notify({
-            message: '<span style="color: dodgerblue">' + response.status + '</span><br>' + response.message,
-            status: (response.status == 'success' ? 'success' : 'danger'),
-            timeout: 3000,
+            message: message,
+            status: 'danger',
+            timeout: ApplicationOptions.constance.NOTIFY_DANGER_TIMEOUT,
             pos: 'top-center'
         });
-        closeAll();
-    }, 'json');
+    } else if(proximityTime == null || proximityTime === undefined || proximityTime == ""){
+        var message = "Proximity Time cannot be empty.";
+        $.UIkit.notify({
+            message: message,
+            status: 'danger',
+            timeout: ApplicationOptions.constance.NOTIFY_DANGER_TIMEOUT,
+            pos: 'top-center'
+        });
+    } else {
+
+        var data = {
+            'parseData': JSON.stringify({'proximityTime': proximityTime, 'proximityDistance': proximityDistance}),
+            'executionPlan': 'proximity',
+            'customName': null,
+            'cepAction': 'edit'
+        };
+        $.post('controllers/set_alerts.jag', data, function (response) {
+            $.UIkit.notify({
+                message: '<span style="color: dodgerblue">' + response.status + '</span><br>' + response.message,
+                status: (response.status == 'success' ? 'success' : 'danger'),
+                timeout: 3000,
+                pos: 'top-center'
+            });
+            closeAll();
+        }, 'json');
+
+    }
 }
 
 // TODO:this is not a remote call , move this to application.js
