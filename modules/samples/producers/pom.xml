@@ -34,10 +34,10 @@
     <modules>
         <module>wso2-event</module>
         <module>http</module>
-        <module>jms-client</module>
-        <module>mqtt-client</module>
+        <module>jms</module>
+        <module>mqtt</module>
         <module>kafka</module>
-        <module>soap-client</module>
+        <module>soap</module>
 
         <!--<module>stock-quote</module>-->
         <!--<module>service-stats</module>-->
