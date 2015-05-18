@@ -56,34 +56,34 @@ public class MQTTClient {
             mqttClient = new MqttClient(url, "SIMPLE-MQTT-PUB");
             mqttClient.connect(connOpt);
 
-        } catch (MqttException e) {
-            log.error("Error while connecting to MQTT server", e);
-        }
+            try {
+                filePath = MQTTClientUtil.getMessageFilePath(sampleNumber, filePath, topic);
+                readMsg(filePath);
 
-        try {
-            filePath = MQTTClientUtil.getMessageFilePath(sampleNumber, filePath, url);
-            readMsg(filePath);
+                for (String message : messagesList) {
+                    System.out.println("Sending message:");
+                    System.out.println(message);
+                    int pubQoS = 1;
+                    MqttMessage mqttMessage = new MqttMessage(message.getBytes());
+                    mqttMessage.setQos(pubQoS);
+                    mqttClient.publish(topic, mqttMessage);
+                }
+                Thread.sleep(500); // Waiting time for the message to be sent
 
-            for (String message : messagesList) {
-                System.out.println("Sending message:");
-                System.out.println(message);
-                int pubQoS = 1;
-                MqttMessage mqttMessage = new MqttMessage(message.getBytes());
-                mqttMessage.setQos(pubQoS);
-                mqttClient.publish(topic, mqttMessage);
-            }
-            Thread.sleep(500); // Waiting time for the message to be sent
-
-        } catch (Throwable t) {
-            log.error("Error when sending the messages", t);
-        } finally {
-            if (mqttClient != null) {
-                try {
-                    mqttClient.disconnect();
-                } catch (MqttException e) {
-                    log.error("Error while disconnecting the MQTT client", e);
+            } catch (Throwable t) {
+                log.error("Error when sending the messages", t);
+            } finally {
+                if (mqttClient != null) {
+                    try {
+                        mqttClient.disconnect();
+                    } catch (MqttException e) {
+                        log.error("Error while disconnecting the MQTT client", e);
+                    }
                 }
             }
+
+        } catch (MqttException e) {
+            log.error("Error while connecting to MQTT server", e);
         }
     }
 

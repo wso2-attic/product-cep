@@ -31,7 +31,7 @@ public class MQTTClientUtil {
      * @param filePath     Text file to be read
      * @param sampleNumber Number of the http sample
      */
-    public static String getMessageFilePath(String sampleNumber, String filePath, String url) throws Exception {
+    public static String getMessageFilePath(String sampleNumber, String filePath, String topic) throws Exception {
         if (sampleNumber != null && sampleNumber.length() == 0) {
             sampleNumber = null;
         }
@@ -44,9 +44,8 @@ public class MQTTClientUtil {
         if (filePath != null && sampleNumber == null) {
             resultingFilePath = filePath;
         } else if (filePath == null && sampleNumber != null) {
-            String urlSplitter[] = url.split("/");
             String fileExtension = ".txt";
-            resultingFilePath = sampleFilPath.replace("sampleNumber", sampleNumber) + urlSplitter[urlSplitter.length - 1] + fileExtension;
+            resultingFilePath = sampleFilPath.replace("sampleNumber", sampleNumber) + topic + fileExtension;
         } else {
             throw new Exception("In sampleNumber:'" + sampleNumber + "' and filePath:'" + filePath +
                     "' either one should be null");
