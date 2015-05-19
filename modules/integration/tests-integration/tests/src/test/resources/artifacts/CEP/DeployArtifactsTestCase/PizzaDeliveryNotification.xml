@@ -16,7 +16,7 @@
   ~ limitations under the License.
   -->
 
-<eventPublisher name="PizzaDeliveryNofication" statistics="disable"
+<eventPublisher name="PizzaDeliveryNotification" statistics="disable"
                 trace="disable" xmlns="http://wso2.org/carbon/eventpublisher">
     <from streamName="org.wso2.sample.pizza.order" version="1.0.0"/>
     <mapping customMapping="enable" type="xml">

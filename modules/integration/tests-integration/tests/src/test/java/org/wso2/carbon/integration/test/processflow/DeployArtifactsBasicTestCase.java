@@ -70,7 +70,7 @@ public class DeployArtifactsBasicTestCase  extends CEPIntegrationTest {
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), ++eventReceiverCount);
 
         //Add HTTP Publisher
-        String eventPublisherConfig = getXMLArtifactConfiguration("DeployArtifactsBasicTestCase", "PizzaDeliveryNofication.xml");
+        String eventPublisherConfig = getXMLArtifactConfiguration("DeployArtifactsBasicTestCase", "PizzaDeliveryNotification.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), ++eventPublisherCount);
 
@@ -89,7 +89,7 @@ public class DeployArtifactsBasicTestCase  extends CEPIntegrationTest {
         eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("PizzaOrder.xml");
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), eventReceiverCount - 1);
 
-        eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("PizzaDeliveryNofication.xml");
+        eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("PizzaDeliveryNotification.xml");
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), eventPublisherCount - 1);
 
         eventProcessorAdminServiceClient.removeInactiveExecutionPlan("testPlan.siddhiql");

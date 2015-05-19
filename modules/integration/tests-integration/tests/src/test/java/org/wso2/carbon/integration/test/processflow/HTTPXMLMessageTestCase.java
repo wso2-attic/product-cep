@@ -83,7 +83,7 @@ public class HTTPXMLMessageTestCase extends CEPIntegrationTest{
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
 
         //Add HTTP Publisher
-        String eventPublisherConfig = getXMLArtifactConfiguration("HTTPXMLMessageTestCase", "PizzaDeliveryNofication.xml");
+        String eventPublisherConfig = getXMLArtifactConfiguration("HTTPXMLMessageTestCase", "PizzaDeliveryNotification.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
@@ -97,7 +97,7 @@ public class HTTPXMLMessageTestCase extends CEPIntegrationTest{
             Assert.fail("Exception: " + e.getMessage());
         }
 
-        eventPublisherAdminServiceClient.removeActiveEventPublisherConfiguration("PizzaDeliveryNofication");
+        eventPublisherAdminServiceClient.removeActiveEventPublisherConfiguration("PizzaDeliveryNotification");
         eventReceiverAdminServiceClient.removeActiveEventReceiverConfiguration("PizzaOrder");
         eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.sample.pizza.order","1.0.0");
     }
