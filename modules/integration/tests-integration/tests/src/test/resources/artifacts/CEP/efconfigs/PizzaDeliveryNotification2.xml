@@ -15,7 +15,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<eventFormatter name="PizzaDeliveryNofication" statistics="disable"
+<eventFormatter name="PizzaDeliveryNotification" statistics="disable"
   trace="enable" xmlns="http://wso2.org/carbon/eventformatter">
   <from streamName="org.wso2.sample.pizza.order" version="1.0.0"/>
   <mapping type="xml" customMapping="enable">

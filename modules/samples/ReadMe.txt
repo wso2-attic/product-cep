@@ -3,7 +3,7 @@ Samples -  WSO2 Complex Event Processor
 
 This sample provides a simple scenario to check the event flow from the publisher to the subscriber through the CEP.
 
-There are basic samples given to try how CEP 3.1.0 works with different event adaptors and mappings..
+There are basic samples given to try how CEP 4.0.0 works with different event adaptors and mappings..
 
 To run the samples...
 
@@ -12,7 +12,7 @@ To run the samples...
     This command will startup the server with the sample configuration files.
     The samples can be found in the <CEP_HOME>/samples/artifacts
 
-2) Here with the CEP 3.1.0 alpha-2 pack, there are 7 samples given...
+2) Here with the CEP 4.0.0 alpha-2 pack, there are 7 samples given...
 
 
 Basic samples are numbered from 0001 to 0099. These samples explain how to configure different types of input/output adaptors and mappings.
@@ -27,7 +27,7 @@ Consumer clients are in samples/consumers/ and producer clients are in samples/p
 Each client can be run through the ant client and any additional options will be printed to the console when running ant.
 
 Here you can traverse through the UI and check the user-friendliness of the UI and check for the new features which
-available in CEP 3.1.0
+available in CEP 4.0.0
 
 
 

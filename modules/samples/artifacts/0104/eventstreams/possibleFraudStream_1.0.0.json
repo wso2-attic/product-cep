@@ -1,0 +1,26 @@
+{
+  "name": "possibleFraudStream",
+  "version": "1.0.0",
+  "payloadData": [
+    {
+      "name": "cardNo",
+      "type": "STRING"
+    },
+    {
+      "name": "cardHolderName",
+      "type": "STRING"
+    },
+    {
+      "name": "amountWithdrawed",
+      "type": "DOUBLE"
+    },
+    {
+      "name": "location",
+      "type": "STRING"
+    },
+    {
+      "name": "cardHolderMobile",
+      "type": "STRING"
+    }
+  ]
+}

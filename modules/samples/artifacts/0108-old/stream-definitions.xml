@@ -18,39 +18,47 @@
 
     <streamDefinition>
 
-    {
-        "name":"org.wso2.sample.login.data",
-        "version":"1.1.0",
+        {
+        "name":"deliveryStream",
+        "version":"1.0.0",
+        "metaData":[
+        {"name":"deliveryNo","type":"STRING"}
+        ],
         "payloadData":[
-        {"name":"user_name","type":"STRING"},
-        {"name":"ip_address","type":"STRING"},
-        {"name":"browser","type":"STRING"}
+        {"name":"orderNo","type":"STRING"},
+        {"name":"areaName","type":"STRING"},
+        {"name":"time","type":"LONG"},
+        {"name":"totalBill","type":"DOUBLE"},
+        {"name":"deliveredBy","type":"STRING"}
         ]
         }
     </streamDefinition>
     <streamDefinition>
 
-    {
-    "name":"org.wso2.sample.login.info",
-    "version":"1.0.0",
-    "payloadData":[
-    {"name":"username","type":"STRING"},
-    {"name":"ipAddress","type":"STRING"},
-    {"name":"browser","type":"STRING"}
-    ]
-    }
-    </streamDefinition>
-    <streamDefinition>
-    {
-        "name":"org.wso2.sample.out.login.alerts",
+     {
+        "name":"orderStream",
         "version":"1.0.0",
         "payloadData":[
-        {"name":"username","type":"STRING"},
-        {"name":"ip1","type":"STRING"},
-        {"name":"ip2","type":"STRING"}
+        {"name":"orderNo","type":"STRING"},
+        {"name":"customerName","type":"STRING"},
+        {"name":"telephoneNo","type":"STRING"},
+        {"name":"orderInfo","type":"STRING"},
+        {"name":"orderedTime","type":"STRING"}
         ]
         }
-    </streamDefinition>
 
+    </streamDefinition>
+    <streamDefinition>
+
+    {
+        "name":"deliveredOrders",
+        "version":"1.0.0",
+        "payloadData":[
+        {"name":"sumOrderId","type":"LONG"},
+        {"name":"customerName","type":"STRING"}
+        ]
+        }
+        
+    </streamDefinition>
 
 </streamDefinitions>

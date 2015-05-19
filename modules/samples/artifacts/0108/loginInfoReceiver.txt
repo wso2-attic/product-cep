@@ -1,0 +1,53 @@
+<events>
+    <event>
+        <payloadData>
+            <username>ann@org1.com</username>
+            <ipAddress>192.168.1.100</ipAddress>
+        </payloadData>
+    </event>
+</events>
+*****
+<events>
+    <event>
+        <payloadData>
+            <username>jeff@wso2.com</username>
+            <ipAddress>192.168.1.23</ipAddress>
+        </payloadData>
+    </event>
+</events>
+*****
+<events>
+    <event>
+        <payloadData>
+            <username>john@org3.com</username>
+            <ipAddress>192.168.1.240</ipAddress>
+        </payloadData>
+    </event>
+</events>
+*****
+<events>
+    <event>
+        <payloadData>
+            <username>gavin@wso2.org</username>
+            <ipAddress>192.168.0.2</ipAddress>
+        </payloadData>
+    </event>
+</events>
+*****
+<events>
+    <event>
+        <payloadData>
+            <username>lang@wso2.o</username>
+            <ipAddress>10.8.8.23</ipAddress>
+        </payloadData>
+    </event>
+</events>
+*****
+<events>
+    <event>
+        <payloadData>
+            <username>sam@org2.com</username>
+            <ipAddress>192.248.8.68</ipAddress>
+        </payloadData>
+    </event>
+</events>
