@@ -9,4 +9,4 @@ Producers:  twitter-feed
 
 Consumers: log-service
 
-For running JMS samples, please refer http://docs.wso2.org/display/CEP310/Setting+up+CEP+samples
+For running JMS samples, please refer http://docs.wso2.org/display/CEP400/Setting+up+CEP+samples

@@ -1,7 +1,7 @@
-Installing  WSO2 Complex Event Processor (CEP) 3.1.0
+Installing  WSO2 Complex Event Processor (CEP) 4.0.0
 ===================================================================
 
-(1) WSO2 Complex Event Processor 3.1.0 can run in standalone mode.
+(1) WSO2 Complex Event Processor 4.0.0 can run in standalone mode.
 
 
 Standalone Mode
@@ -56,7 +56,7 @@ System Requirements
 4. The Management Console requires full Javascript enabling of the Web browser
 
 For more details see
-http://docs.wso2.org/display/CEP310/Installation+Prerequisites
+http://docs.wso2.org/display/CEP400/Installation+Prerequisites
 
 (2) Running Samples
 -------------------
@@ -66,4 +66,4 @@ CEP server can also start with the sample mode (Note : dashboard will not work i
     Example, to run sample 0001: ./wso2cep-samples.sh -sn 0001
 
 CEP samples are available at CARBON_HOME/samples directory.
-The instructions to run sample are given at http://docs.wso2.org/display/CEP310/Samples.
+The instructions to run sample are given at http://docs.wso2.org/display/CEP400/Samples.
