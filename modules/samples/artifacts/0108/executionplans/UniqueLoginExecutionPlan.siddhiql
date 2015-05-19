@@ -1,0 +1,19 @@
+/* Enter a unique ExecutionPlan */
+@Plan:name('UniqueLoginExecutionPlan')
+
+/* Enter a unique description for ExecutionPlan */
+-- @Plan:description('ExecutionPlan')
+
+/* define streams/tables and write queries here ... */
+
+@Import('org.wso2.sample.login.info:1.0.0')
+define stream loginEvents (username string, ipAddress string);
+
+@Export('org.wso2.sample.out.unique.login:1.0.0')
+define stream uniqueIps (ip string);
+
+
+from loginEvents 
+select ipAddress as ip 
+output last every 5 events 
+insert into uniqueIps;
