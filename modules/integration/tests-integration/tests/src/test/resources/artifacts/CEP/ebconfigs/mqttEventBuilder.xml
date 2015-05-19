@@ -19,7 +19,6 @@
     trace="disable" xmlns="http://wso2.org/carbon/eventbuilder">
     <from eventAdaptorName="mqttInputAdaptor" eventAdaptorType="mqtt">
         <property name="topic">sensorData</property>
-        <property name="clientId">cep-mqtt-receiver</property>
     </from>
     <mapping customMapping="disable" type="xml"/>
     <to streamName="org.wso2.sensorStream" version="1.0.0"/>

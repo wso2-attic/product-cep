@@ -20,7 +20,6 @@
     <from eventAdapterType="mqtt">
         <property name="topic">sensordata</property>
         <property name="receiving.events.duplicated.in.cluster">false</property>
-        <property name="clientId">CEP-Subscriber-Sensor</property>
         <property name="url">tcp://localhost:1883</property>
         <property name="cleanSession">true</property>
     </from>
