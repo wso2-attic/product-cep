@@ -1,0 +1,15 @@
+{
+  "name": "org.wso2.sample.stock.quote.basic",
+  "version": "1.0.0",
+  "payloadData": [
+      {
+          "name": "symbol",
+          "type": "STRING"
+      },
+      {
+          "name": "price",
+          "type": "DOUBLE"
+      }
+
+  ]
+}
