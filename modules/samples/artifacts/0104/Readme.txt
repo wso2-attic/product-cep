@@ -1,9 +1,6 @@
 This sample uses
-InputEventAdaptor:  wso2event
-EventBuilder:           wso2event
-EventFormatter:         wso2event
-OutputEventAdaptor: wso2event
+EventReceiver:  soap
+EventPublisher: soap
 
-Producers:  login-info
-
-Consumers: wso2-event
+Producers:     soap-client
+Consumers:     axis2-log-service (axis2 service receiver)

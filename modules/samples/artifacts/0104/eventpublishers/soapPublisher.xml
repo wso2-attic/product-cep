@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventPublisher name="soapPublisher" statistics="disable"
+  trace="disable" xmlns="http://wso2.org/carbon/eventpublisher">
+  <from streamName="possibleFraudStream" version="1.0.0"/>
+  <mapping customMapping="enable" type="xml">
+    <inline>
+      <PossibleFraud xmlns="">
+        <cardHolderName>{{cardHolderName}}</cardHolderName>
+        <cardNo>{{cardNo}}</cardNo>
+        <amountWithdrawed>{{amountWithdrawed}}</amountWithdrawed>
+        <location>{{location}}</location>
+        <cardHolderMobile>{{cardHolderMobile}}</cardHolderMobile>
+      </PossibleFraud>
+    </inline>
+  </mapping>
+  <to eventAdapterType="soap">
+    <property name="url">http://localhost:9763/services/Axis2LogService/log</property>
+  </to>
+</eventPublisher>
