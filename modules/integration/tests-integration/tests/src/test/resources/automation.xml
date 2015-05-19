@@ -29,6 +29,7 @@
         <executionEnvironment>standalone</executionEnvironment>
         <!--
          Change this to true if you want to generate coverage statistics
+         add -XX:-UseSplitVerifier to server startup
         -->
         <coverage>false</coverage>
         <!--

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventPublisher name="uniqueIpPublisher" statistics="disable"
+  trace="disable" xmlns="http://wso2.org/carbon/eventpublisher">
+  <from streamName="org.wso2.sample.out.unique.login" version="1.0.0"/>
+  <mapping customMapping="enable" type="text">
+    <inline>{{ip}}</inline>
+  </mapping>
+  <to eventAdapterType="logger">
+    <property name="uniqueId">Unique IP</property>
+  </to>
+</eventPublisher>

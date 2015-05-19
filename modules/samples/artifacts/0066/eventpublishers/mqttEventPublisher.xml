@@ -23,7 +23,6 @@
     <property name="topic">sensordata</property>
     <property name="qos">1</property>
     <property name="url">tcp://localhost:1883</property>
-    <property name="clientId">CEP-Publisher-Sensor</property>
     <property name="cleanSession">true</property>
   </to>
 </eventPublisher>

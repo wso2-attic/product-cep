@@ -203,7 +203,7 @@ public class DeployArtifactsViaAPITestCase extends CEPIntegrationTest {
 
         BasicOutputAdapterPropertyDto[] outputPropertyConfiguration = new BasicOutputAdapterPropertyDto[]{url, username, password, headers, proxyHost, proxyPort, clientMethod};
 
-        eventPublisherAdminServiceClient.addXMLEventPublisherConfiguration("PizzaDeliveryNofication", "outStream:1.0.0", "http",
+        eventPublisherAdminServiceClient.addXMLEventPublisherConfiguration("PizzaDeliveryNotification", "outStream:1.0.0", "http",
                 textData, outputPropertyConfiguration, "inline", true);
 
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), ++eventPublisherCount);
@@ -215,7 +215,7 @@ public class DeployArtifactsViaAPITestCase extends CEPIntegrationTest {
         eventReceiverAdminServiceClient.removeActiveEventReceiverConfiguration("PizzaOrder");
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), eventReceiverCount - 1);
 
-        eventPublisherAdminServiceClient.removeActiveEventPublisherConfiguration("PizzaDeliveryNofication");
+        eventPublisherAdminServiceClient.removeActiveEventPublisherConfiguration("PizzaDeliveryNotification");
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), eventPublisherCount - 1);
 
         eventProcessorAdminServiceClient.removeActiveExecutionPlan("testPlan");

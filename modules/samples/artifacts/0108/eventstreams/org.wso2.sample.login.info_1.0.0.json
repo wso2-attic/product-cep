@@ -1,0 +1,16 @@
+{
+  "name": "org.wso2.sample.login.info",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "payloadData": [
+    {
+      "name": "username",
+      "type": "STRING"
+    },
+    {
+      "name": "ipAddress",
+      "type": "STRING"
+    }
+  ]
+}

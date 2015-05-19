@@ -1,0 +1,18 @@
+/* Enter a unique ExecutionPlan */
+@Plan:name('StockTrendsExecutionPlan')
+
+/* Enter a unique description for ExecutionPlan */
+-- @Plan:description('ExecutionPlan')
+
+/* define streams/tables and write queries here ... */
+
+@Import('org.wso2.sample.stock.quote.basic:1.0.0')
+define stream stockQuote ( symbol string ,price double);
+
+@Export('org.wso2.sample.output.stock.quote:1.0.0')
+define stream stockQuoteOutput (symbol string, price1 double, price2 double, price3 double);
+
+
+from every e1=stockQuote[price > 20] -> e2=stockQuote[symbol==e1.symbol and price > e1.price] -> e3=stockQuote[symbol==e1.symbol and price > e2.price] 
+select e1.symbol as symbol, e1.price as price1 , e2.price as price2, e3.price as price3 
+insert into stockQuoteOutput ;
