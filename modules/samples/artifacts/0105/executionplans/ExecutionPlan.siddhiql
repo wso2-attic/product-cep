@@ -1,0 +1,31 @@
+/* Enter a unique ExecutionPlan */
+@Plan:name('ExecutionPlan')
+
+/* Enter a unique description for ExecutionPlan */
+-- @Plan:description('ExecutionPlan')
+
+/* define streams/tables and write queries here ... */
+
+@Import('org.wso2.sample.package.arrivals:1.0.0')
+define stream arrivals_stream (trackingId string, customerName string, telephoneNo string, shippingAddress string);
+
+@Import('org.wso2.sample.package.deliveries:1.0.0')
+define stream deliveries_stream (trackingId string, shippingAddress string, time string, receivedBy string, deliveredBy string);
+
+
+@Export('org.wso2.sample.alerts:1.0.0')
+define stream alert_stream (trackingId string, customerName string, telephoneNo string);
+
+from arrivals_stream#window.time(2 minutes)
+select *
+insert expired events into overdue_deliveries_stream;
+
+from every arrivalEvent = arrivals_stream ->
+deliveryEvent = deliveries_stream[arrivalEvent.trackingId == trackingId] 
+    or overdue_delivery = overdue_deliveries_stream[arrivalEvent.trackingId == trackingId]
+select arrivalEvent.trackingId as trackingId, arrivalEvent.customerName as customerName, arrivalEvent.telephoneNo as telephoneNo, deliveryEvent.trackingId as deliveryId 
+insert into filter_stream;
+
+from filter_stream [ isNull(deliveryId)]  
+select trackingId, customerName, telephoneNo
+insert into alert_stream;

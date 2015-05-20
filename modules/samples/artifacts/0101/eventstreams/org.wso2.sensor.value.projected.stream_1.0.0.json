@@ -1,33 +1,21 @@
 {
-  "name": "org.wso2.sensor.in",
+  "name": "org.wso2.sensor.value.projected.stream",
   "version": "1.0.0",
   "nickName": "",
   "description": "",
   "metaData": [
     {
-      "name": "timestamp",
-      "type": "LONG"
-    },
-    {
-      "name": "powerSaver",
-      "type": "BOOL"
-    },
-    {
-      "name": "id",
+      "name": "sensorId",
       "type": "INT"
-    },
-    {
-      "name": "name",
-      "type": "STRING"
     }
   ],
   "correlationData": [
     {
-      "name": "lg",
+      "name": "longitude",
       "type": "DOUBLE"
     },
     {
-      "name": "lt",
+      "name": "latitude",
       "type": "DOUBLE"
     }
   ],

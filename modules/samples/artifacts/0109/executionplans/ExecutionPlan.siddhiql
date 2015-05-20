@@ -1,0 +1,22 @@
+/* Enter a unique ExecutionPlan */
+@Plan:name('ExecutionPlan')
+
+/* Enter a unique description for ExecutionPlan */
+-- @Plan:description('ExecutionPlan')
+
+/* define streams/tables and write queries here ... */
+
+@Import('org.wso2.sample.atm.transactions:1.0.0')
+define stream atm_transactions (meta_timestamp long, cardNumber string, atmCode string, amount double);
+
+@Export('org.wso2.sample.alerts:1.0.0')
+define stream alert_stream (cardNumber string, transactionCount long, totalAmount double);
+
+from atm_transactions#window.externalTime(meta_timestamp, 1 min)
+select cardNumber, count(cardNumber) as transactionCount, sum(amount) as totalAmount 
+group by cardNumber   
+insert current events into transactions_per_card ;			
+				
+from transactions_per_card[transactionCount > 1] 
+select cardNumber, transactionCount, totalAmount 
+insert into alert_stream;
