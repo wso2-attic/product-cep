@@ -1,5 +1,5 @@
 {
-  "name": "org.wso2.sensor.in",
+  "name": "org.wso2.mapped.sensor.data",
   "version": "1.0.0",
   "nickName": "",
   "description": "",
@@ -9,29 +9,26 @@
       "type": "LONG"
     },
     {
-      "name": "powerSaver",
-      "type": "BOOL"
-    },
-    {
       "name": "id",
       "type": "INT"
     },
     {
-      "name": "name",
-      "type": "STRING"
+      "name": "isPowerSavingMode",
+      "type": "BOOL"
     }
   ],
   "correlationData": [
     {
-      "name": "lg",
+      "name": "longitude",
       "type": "DOUBLE"
     },
     {
-      "name": "lt",
+      "name": "latitude",
       "type": "DOUBLE"
     }
   ],
   "payloadData": [
+    
     {
       "name": "humidity",
       "type": "FLOAT"

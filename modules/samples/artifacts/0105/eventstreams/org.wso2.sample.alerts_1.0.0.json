@@ -1,0 +1,20 @@
+{
+  "name": "org.wso2.sample.alerts",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "payloadData": [
+    {
+      "name": "trackingId",
+      "type": "STRING"
+    },
+    {
+      "name": "customerName",
+      "type": "STRING"
+    },
+    {
+      "name": "telephoneNo",
+      "type": "STRING"
+    }
+  ]
+}

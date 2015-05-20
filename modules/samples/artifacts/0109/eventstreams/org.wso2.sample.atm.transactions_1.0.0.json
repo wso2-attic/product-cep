@@ -1,0 +1,26 @@
+{
+  "name": "org.wso2.sample.atm.transactions",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "metaData": [
+    {
+      "name": "timestamp",
+      "type": "LONG"
+    }
+  ],
+  "payloadData": [
+    {
+      "name": "cardNumber",
+      "type": "STRING"
+    },
+    {
+      "name": "atmCode",
+      "type": "STRING"
+    },
+    {
+      "name": "amount",
+      "type": "DOUBLE"
+    }
+  ]
+}

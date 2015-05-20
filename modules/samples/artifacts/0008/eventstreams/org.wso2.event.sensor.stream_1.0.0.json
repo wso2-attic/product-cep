@@ -1,5 +1,5 @@
 {
-  "name": "org.wso2.sensor.in",
+  "name": "org.wso2.event.sensor.stream",
   "version": "1.0.0",
   "nickName": "",
   "description": "",
@@ -9,25 +9,25 @@
       "type": "LONG"
     },
     {
-      "name": "powerSaver",
+      "name": "isPowerSaverEnabled",
       "type": "BOOL"
     },
     {
-      "name": "id",
+      "name": "sensorId",
       "type": "INT"
     },
     {
-      "name": "name",
+      "name": "sensorName",
       "type": "STRING"
     }
   ],
   "correlationData": [
     {
-      "name": "lg",
+      "name": "longitude",
       "type": "DOUBLE"
     },
     {
-      "name": "lt",
+      "name": "latitude",
       "type": "DOUBLE"
     }
   ],
@@ -37,7 +37,7 @@
       "type": "FLOAT"
     },
     {
-      "name": "value",
+      "name": "sensorValue",
       "type": "DOUBLE"
     }
   ]
