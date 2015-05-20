@@ -18,9 +18,10 @@
  */
 
 var db = require("../include/database.jag");
+var configuration = require('../conf/database.json');
 var log = new Log();
 
-var db = new Database("jdbc:h2:repository/database/WSO2_GEO","wso2carbongeo","wso2carbongeo");
+var db = new Database("jdbc:h2:repository/database/WSO2_GEO",configuration.username,configuration.password);
 var objectId = request.getParameter("objectId");
 
 var getHistory = 'SELECT * FROM alerts_history WHERE id = '+objectId+' ORDER BY timeStamp DESC LIMIT 50';
