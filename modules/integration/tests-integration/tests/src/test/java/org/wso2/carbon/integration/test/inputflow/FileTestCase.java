@@ -24,7 +24,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.databridge.commons.Event;
-import org.wso2.carbon.integration.test.client.SOAPEventPublisherClient;
+import org.wso2.carbon.integration.common.utils.mgt.ServerConfigurationManager;
+import org.wso2.carbon.integration.test.client.FilePublisherClient;
 import org.wso2.carbon.integration.test.client.TestAgentServer;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
 
@@ -33,11 +34,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Sending different formatted events to the SOAP Receiver according to the receivers mapping type
+ * Sending different formatted events to the File Receiver according to the receivers mapping type
  */
-public class SOAPTestCase extends CEPIntegrationTest {
+public class FileTestCase extends CEPIntegrationTest {
 
-    private static final Log log = LogFactory.getLog(SOAPTestCase.class);
+    private static final Log log = LogFactory.getLog(FileTestCase.class);
 
     @BeforeClass(alwaysRun = true)
     public void init()
@@ -55,9 +56,20 @@ public class SOAPTestCase extends CEPIntegrationTest {
     }
 
 
-    @Test(groups = {"wso2.cep"}, description = "Testing soap receiver with XML formatted event")
-    public void SOAPXMLTestScenario() throws Exception {
-        String samplePath = "inputflows" + File.separator + "sample0014";
+    @Test(groups = {"wso2.cep"}, description = "Testing File receiver with event")
+    public void FileTestScenario() throws Exception {
+        ServerConfigurationManager serverManager = new ServerConfigurationManager(cepServer);
+        String samplePath = "inputflows" + File.separator + "sample0017";
+        String destinationFilePath = serverManager.getCarbonHome() + File.separator + "repository" + File.separator
+                + "logs" + File.separator + "fileLogs.txt";
+
+        File file = new File(destinationFilePath);
+        //Create new file even if it exists
+        if (file.exists()) {
+            file.delete();
+        }
+        file.createNewFile();
+
         int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
         int startERCount = eventReceiverAdminServiceClient.getActiveEventReceiverCount();
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
@@ -68,9 +80,10 @@ public class SOAPTestCase extends CEPIntegrationTest {
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
-        //Add SOAP JSON EventReceiver without mapping
-        String eventReceiverConfig = getXMLArtifactConfiguration(samplePath, "soapReceiver.xml");
-        eventReceiverAdminServiceClient.addEventReceiverConfiguration(eventReceiverConfig);
+        //Add File EventReceiver without mapping
+        String eventReceiverConfig = getXMLArtifactConfiguration(samplePath, "fileReceiver.xml");
+        eventReceiverAdminServiceClient.addEventReceiverConfiguration(eventReceiverConfig.replace("$testFilePath",
+                destinationFilePath));
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
 
         //Add Wso2event EventPublisher
@@ -83,36 +96,35 @@ public class SOAPTestCase extends CEPIntegrationTest {
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start
-        Thread.sleep(10000);
+        Thread.sleep(2000);
 
-        SOAPEventPublisherClient.publish("http://localhost:9763/services/soapReceiver/receive", samplePath,
-                "soapReceiver.txt");
-
-        //wait while all stats are published
-        Thread.sleep(30000);
+        FilePublisherClient.publish(destinationFilePath, samplePath, "fileReceiver.txt");
+        //File adapter is a poling adapter and it takes 40 seconds to load
+        Thread.sleep(40000);
 
         eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
-        eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("soapReceiver.xml");
+        eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("fileReceiver.xml");
         eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("wso2EventPublisher.xml");
+        file.delete();
 
         Thread.sleep(2000);
 
         List<Event> eventList = new ArrayList<>();
         Event event = new Event();
         event.setStreamId("org.wso2.event.sensor.stream:1.0.0");
-        event.setMetaData(new Object[]{4354643, true, 100, "data1"});
+        event.setMetaData(new Object[]{4354643, true, 100, "temperature"});
         event.setCorrelationData(new Object[]{90.34344, 5.443435});
         event.setPayloadData(new Object[]{8.9f, 20.44345});
         eventList.add(event);
         Event event2 = new Event();
         event2.setStreamId("org.wso2.event.sensor.stream:1.0.0");
-        event2.setMetaData(new Object[]{4354653, false, 101, "data1"});
+        event2.setMetaData(new Object[]{4354653, false, 101, "temperature"});
         event2.setCorrelationData(new Object[]{90.34344, 5.443435});
         event2.setPayloadData(new Object[]{8.9f, 20.44345});
         eventList.add(event2);
         Event event3 = new Event();
         event3.setStreamId("org.wso2.event.sensor.stream:1.0.0");
-        event3.setMetaData(new Object[]{4354343, true, 102, "data1"});
+        event3.setMetaData(new Object[]{4354343, true, 102, "temperature"});
         event3.setCorrelationData(new Object[]{90.34344, 5.443435});
         event3.setPayloadData(new Object[]{8.9f, 20.44345});
         eventList.add(event3);

@@ -41,6 +41,7 @@
             <class name="org.wso2.carbon.integration.test.inputflow.HttpTestCase"/>
             <class name="org.wso2.carbon.integration.test.inputflow.JMSTestCase"/>
             <class name="org.wso2.carbon.integration.test.inputflow.SOAPTestCase"/>
+            <class name="org.wso2.carbon.integration.test.inputflow.FileTestCase"/>
             <class name="org.wso2.carbon.integration.test.outputflow.LoggerTestCase"/>
             <class name="org.wso2.carbon.integration.test.outputflow.RDBMSTestCase"/>
             <class name="org.wso2.carbon.integration.test.outputflow.JMSTestCase"/>
