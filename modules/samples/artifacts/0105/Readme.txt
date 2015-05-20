@@ -1,11 +1,11 @@
-This sample is related to soap event adaptor
+This sample demonstrates how to detect non-occurrences with patterns.
 
-This sample uses
-InputEventAdaptor:      soap
-EventBuilder:           xml
-EventFormatter:         xml
-OutputEventAdaptor:     soap
+Producers: http
+Consumers: http (log service)
 
-Producers:  'Try it' tool in CEP server
+Send package arrival events with:
+ant -Durl=http://localhost:9763/endpoints/packageArrivalsHTTPReceiver -DfilePath=../../artifacts/0105/arrivalEvents.txt
 
-Consumers: axis2-log-service (axis2 service receiver)
+
+Send package delivery events with:
+ant -Durl=http://localhost:9763/endpoints/packageDeliveryHTTPReceiver -DfilePath=../../artifacts/0105/deliveryEvents.txt

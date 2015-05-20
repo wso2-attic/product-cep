@@ -1,0 +1,20 @@
+{
+  "name": "org.wso2.sample.alerts",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "payloadData": [
+    {
+      "name": "cardNumber",
+      "type": "STRING"
+    },
+    {
+      "name": "transactionCount",
+      "type": "LONG"
+    },
+    {
+      "name": "totalAmount",
+      "type": "DOUBLE"
+    }
+  ]
+}

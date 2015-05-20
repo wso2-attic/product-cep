@@ -57,7 +57,7 @@ public class CappTestCase extends CEPIntegrationTest {
             throw new RemoteException("Exception caught when deploying the car file into CEP server", e);
         }
         log.info("deploying cApp...");
-        Thread.sleep(20000);
+        Thread.sleep(35000);
 
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 2);
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
@@ -100,7 +100,7 @@ public class CappTestCase extends CEPIntegrationTest {
             throw new RemoteException("Exception caught when deploying the car file into CEP server", e);
         }
 
-        Thread.sleep(20000);
+        Thread.sleep(35000);
 
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount);
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount);

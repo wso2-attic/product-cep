@@ -1,8 +1,4 @@
-This sample uses 
-InputEventAdaptor:  wso2event
-EventBuilder:           wso2event
-EventFormatter:         wso2event
-OutputEventAdaptor: wso2event
+This sample demonstrates how to configure an execution plans with pass-through/projection queries.
 
-Producers:     mediation-stats
-Consumers:     wso2-event
+Producers: wso2event
+Consumers: logger
