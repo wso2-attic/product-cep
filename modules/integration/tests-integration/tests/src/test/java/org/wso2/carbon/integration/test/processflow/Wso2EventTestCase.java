@@ -25,7 +25,7 @@ import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.databridge.commons.StreamDefinition;
 import org.wso2.carbon.databridge.commons.utils.EventDefinitionConverterUtils;
-import org.wso2.carbon.integration.test.client.TestAgentServer;
+import org.wso2.carbon.integration.test.client.Wso2EventServer;
 import org.wso2.carbon.integration.test.client.Wso2EventClient;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
 
@@ -72,7 +72,7 @@ public class Wso2EventTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         // The data-bridge receiver
-        TestAgentServer agentServer = new TestAgentServer("Wso2EventTestCase",7661, false);
+        Wso2EventServer agentServer = new Wso2EventServer("Wso2EventTestCase",7661, false);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start

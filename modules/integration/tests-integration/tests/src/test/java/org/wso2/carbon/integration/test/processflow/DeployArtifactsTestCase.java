@@ -49,7 +49,7 @@ public class DeployArtifactsTestCase extends CEPIntegrationTest{
         eventStreamCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
         eventReceiverCount = eventReceiverAdminServiceClient.getActiveEventReceiverCount();
         eventPublisherCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
-        executionPlanCount = eventProcessorAdminServiceClient.getAllActiveExecutionPlanConfigurationCount();
+        executionPlanCount = eventProcessorAdminServiceClient.getActiveExecutionPlanConfigurationCount();
 
         log.info("=======================Adding an event receiver ======================= ");
         String eventReceiverConfig = getXMLArtifactConfiguration("DeployArtifactsTestCase", "PizzaOrder.xml");
@@ -74,7 +74,7 @@ public class DeployArtifactsTestCase extends CEPIntegrationTest{
         log.info("=======================Adding an execution plan ======================= ");
         String executionPlan = getExecutionPlanFromFile("DeployArtifactsTestCase", "testPlan.siddhiql");
         eventProcessorAdminServiceClient.addExecutionPlan(executionPlan);
-        Assert.assertEquals(eventProcessorAdminServiceClient.getAllActiveExecutionPlanConfigurationCount(), ++executionPlanCount);
+        Assert.assertEquals(eventProcessorAdminServiceClient.getActiveExecutionPlanConfigurationCount(), ++executionPlanCount);
 
         Thread.sleep(1000);
 
@@ -95,7 +95,7 @@ public class DeployArtifactsTestCase extends CEPIntegrationTest{
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), eventStreamCount - 2);
 
         eventProcessorAdminServiceClient.removeInactiveExecutionPlan("testPlan.siddhiql");
-        Assert.assertEquals(eventProcessorAdminServiceClient.getAllActiveExecutionPlanConfigurationCount(), executionPlanCount - 1);
+        Assert.assertEquals(eventProcessorAdminServiceClient.getActiveExecutionPlanConfigurationCount(), executionPlanCount - 1);
     }
 
     @Test(groups = {"wso2.cep"}, description = "Testing the order: ES-1, ES-2, EP, ER, ExP", dependsOnMethods = {"removeArtifactsTestScenario"})
@@ -104,7 +104,7 @@ public class DeployArtifactsTestCase extends CEPIntegrationTest{
         eventStreamCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
         eventReceiverCount = eventReceiverAdminServiceClient.getActiveEventReceiverCount();
         eventPublisherCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
-        executionPlanCount = eventProcessorAdminServiceClient.getAllActiveExecutionPlanConfigurationCount();
+        executionPlanCount = eventProcessorAdminServiceClient.getActiveExecutionPlanConfigurationCount();
 
         log.info("=======================Adding a stream definition====================");
         String pizzaStreamDefinition = getJSONArtifactConfiguration("DeployArtifactsTestCase", "org.wso2.sample.pizza.order_1.0.0.json");
@@ -129,7 +129,7 @@ public class DeployArtifactsTestCase extends CEPIntegrationTest{
         log.info("=======================Adding an execution plan ======================= ");
         String executionPlan = getExecutionPlanFromFile("DeployArtifactsTestCase", "testPlan.siddhiql");
         eventProcessorAdminServiceClient.addExecutionPlan(executionPlan);
-        Assert.assertEquals(eventProcessorAdminServiceClient.getAllActiveExecutionPlanConfigurationCount(), ++executionPlanCount);
+        Assert.assertEquals(eventProcessorAdminServiceClient.getActiveExecutionPlanConfigurationCount(), ++executionPlanCount);
 
         Thread.sleep(1000);
 
@@ -142,7 +142,7 @@ public class DeployArtifactsTestCase extends CEPIntegrationTest{
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), eventStreamCount - 2);
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), eventReceiverCount - 1);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), eventPublisherCount - 1);
-        Assert.assertEquals(eventProcessorAdminServiceClient.getAllActiveExecutionPlanConfigurationCount(), executionPlanCount - 1);
+        Assert.assertEquals(eventProcessorAdminServiceClient.getActiveExecutionPlanConfigurationCount(), executionPlanCount - 1);
         eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("PizzaOrder.xml");
         eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("PizzaDeliveryNotification.xml");
         eventProcessorAdminServiceClient.removeInactiveExecutionPlan("testPlan.siddhiql");
@@ -154,12 +154,12 @@ public class DeployArtifactsTestCase extends CEPIntegrationTest{
         eventStreamCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
         eventReceiverCount = eventReceiverAdminServiceClient.getActiveEventReceiverCount();
         eventPublisherCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
-        executionPlanCount = eventProcessorAdminServiceClient.getAllActiveExecutionPlanConfigurationCount();
+        executionPlanCount = eventProcessorAdminServiceClient.getActiveExecutionPlanConfigurationCount();
 
         log.info("=======================Adding an execution plan ======================= ");
         String executionPlan = getExecutionPlanFromFile("DeployArtifactsTestCase", "testPlan.siddhiql");
         eventProcessorAdminServiceClient.addExecutionPlan(executionPlan);
-        Assert.assertEquals(eventProcessorAdminServiceClient.getAllActiveExecutionPlanConfigurationCount(), executionPlanCount);   //EP should be inactive
+        Assert.assertEquals(eventProcessorAdminServiceClient.getActiveExecutionPlanConfigurationCount(), executionPlanCount);   //EP should be inactive
 
         log.info("=======================Adding an event receiver ======================= ");
         String eventReceiverConfig = getXMLArtifactConfiguration("DeployArtifactsTestCase", "PizzaOrder.xml");
@@ -184,7 +184,7 @@ public class DeployArtifactsTestCase extends CEPIntegrationTest{
 
         Thread.sleep(1000);
 
-        Assert.assertEquals(eventProcessorAdminServiceClient.getAllActiveExecutionPlanConfigurationCount(), ++executionPlanCount);
+        Assert.assertEquals(eventProcessorAdminServiceClient.getActiveExecutionPlanConfigurationCount(), ++executionPlanCount);
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), ++eventReceiverCount);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), ++eventPublisherCount);
     }
@@ -197,7 +197,7 @@ public class DeployArtifactsTestCase extends CEPIntegrationTest{
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), eventPublisherCount - 1);
 
         eventProcessorAdminServiceClient.removeActiveExecutionPlan("testPlan");
-        Assert.assertEquals(eventProcessorAdminServiceClient.getAllActiveExecutionPlanConfigurationCount(), executionPlanCount - 1);
+        Assert.assertEquals(eventProcessorAdminServiceClient.getActiveExecutionPlanConfigurationCount(), executionPlanCount - 1);
 
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), eventStreamCount);
 

@@ -46,8 +46,8 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.regex.Matcher;
 
-public class TestAgentServer implements Runnable {
-    private Logger log = Logger.getLogger(TestAgentServer.class);
+public class Wso2EventServer implements Runnable {
+    private Logger log = Logger.getLogger(Wso2EventServer.class);
     private ThriftDataReceiver thriftDataReceiver;
     private boolean eventReceived = false;
     private AtomicLong msgCount = new AtomicLong(0);
@@ -60,7 +60,7 @@ public class TestAgentServer implements Runnable {
     AbstractStreamDefinitionStore streamDefinitionStore = new InMemoryStreamDefinitionStore();
 
 
-    public TestAgentServer(String testCaseResourceFolderName,int listeningPort, boolean isPreservingEvents){
+    public Wso2EventServer(String testCaseResourceFolderName, int listeningPort, boolean isPreservingEvents){
         this.testCaseResourceFolderName = testCaseResourceFolderName;
         this.listeningPort = listeningPort;
         this.isPreservingEvents = isPreservingEvents;

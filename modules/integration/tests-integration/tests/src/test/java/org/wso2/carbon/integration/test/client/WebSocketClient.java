@@ -48,12 +48,10 @@ public class WebSocketClient {
 //                "    </event>\n" +
 //                "</events>"));
 //
-////        WebSocketClient.foo();
-//
 //    }
 
-    public static String send(String url, String message) {
-
+    public void send(String url, String message) {
+        receivedMessage = null;
         URI uri = URI.create(url);
 
         try {
@@ -77,6 +75,50 @@ public class WebSocketClient {
         } catch (Throwable t) {
             log.error(t);
         }
+    }
+
+    public void receive(String url, int retryCount) {
+
+        receivedMessage = null;
+        final URI uri = URI.create(url);
+        final int tryCount = retryCount;
+
+        new Thread(new Runnable() {
+            @Override
+
+            public void run() {
+                try {
+
+                    WebSocketContainer container = ContainerProvider.getWebSocketContainer();
+                    try {
+                        // Attempt Connect
+                        Session session = container.connectToServer(EventSocketClient.class, uri);
+
+                        int count = 0;
+                        while (count < tryCount && receivedMessage == null) {
+                            log.info("Waiting for the sever to send message");
+                            Thread.sleep(1000);
+                        }
+
+                        session.close();
+                    } finally {
+                        // Force lifecycle stop when done with container.
+                        // This is to free up threads and resources that the
+                        // JSR-356 container allocates. But unfortunately
+                        // the JSR-356 spec does not handle lifecycles (yet)
+                        if (container instanceof LifeCycle) {
+                            ((LifeCycle) container).stop();
+                        }
+                    }
+                } catch (Throwable t) {
+                    log.error(t);
+                }
+            }
+        }).start();
+
+    }
+
+    public String getReceivedMessage() {
         return receivedMessage;
     }
 

@@ -23,13 +23,13 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
-import org.wso2.carbon.integration.test.client.TestAgentServer;
+import org.wso2.carbon.integration.test.client.Wso2EventServer;
 import org.wso2.carbon.integration.test.client.WebSocketClient;
 import org.wso2.carbon.integration.test.client.WebSocketServer;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
 
 /**
- * Sending different formatted events to the Http Receiver according to the receivers mapping type
+ * Sending different formatted events to the Websocket and Websocket local Receivers
  */
 public class WebsocketTestCase extends CEPIntegrationTest {
 
@@ -59,7 +59,7 @@ public class WebsocketTestCase extends CEPIntegrationTest {
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
-        //Add Http JSON EventReceiver without mapping
+        //Add Websocket Local XML EventReceiver without mapping
         String eventReceiverConfig = getXMLArtifactConfiguration("inputflows/sample0020", "WebsocketLocalReceiver.xml");
         eventReceiverAdminServiceClient.addEventReceiverConfiguration(eventReceiverConfig);
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
@@ -70,13 +70,14 @@ public class WebsocketTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         // The data-bridge receiver
-        TestAgentServer agentServer = new TestAgentServer("inputflows/sample0020", 7661, true);
+        Wso2EventServer agentServer = new Wso2EventServer("inputflows/sample0020", 7661, true);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start
         Thread.sleep(1000);
 
-        WebSocketClient.send("ws://localhost:9763/inputwebsocket/WebsocketLocalReceiver", "<events>\n" +
+        WebSocketClient webSocketClient = new WebSocketClient();
+        webSocketClient.send("ws://localhost:9763/inputwebsocket/WebsocketLocalReceiver", "<events>\n" +
                 "    <event>\n" +
                 "        <metaData>\n" +
                 "            <timestamp>56783</timestamp>\n" +
@@ -126,7 +127,7 @@ public class WebsocketTestCase extends CEPIntegrationTest {
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
-        //Add Http JSON EventReceiver without mapping
+        //Add Websocket XML EventReceiver without mapping
         String eventReceiverConfig = getXMLArtifactConfiguration("inputflows/sample0019", "WebsocketReceiver.xml");
         eventReceiverAdminServiceClient.addEventReceiverConfiguration(eventReceiverConfig);
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
@@ -137,7 +138,7 @@ public class WebsocketTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         // The data-bridge receiver
-        TestAgentServer agentServer = new TestAgentServer("inputflows/sample0019", 7661, true);
+        Wso2EventServer agentServer = new Wso2EventServer("inputflows/sample0019", 7661, true);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start

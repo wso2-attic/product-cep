@@ -52,12 +52,6 @@ package org.wso2.carbon.integration.test.patches;
 
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.rmi.RemoteException;
-
 public class CEP883TestCase extends CEPIntegrationTest {
 /*
     private static final Log log = LogFactory.getLog(CEP883TestCase.class);
@@ -256,7 +250,7 @@ public class CEP883TestCase extends CEPIntegrationTest {
     @Test(groups = {"wso2.cep"}, dependsOnMethods = {"addEventBuilderTestScenario1"})
     public void addEventProcessorTestScenario1() throws RemoteException, InterruptedException {
         log.info("=======================Adding a execution plan ======================= ");
-        int startCount = eventProcessorAdminServiceClient.getAllActiveExecutionPlanConfigurationCount();
+        int startCount = eventProcessorAdminServiceClient.getActiveExecutionPlanConfigurationCount();
         //configurationUtil.addEventProcessor();
 
         ExecutionPlanConfigurationDto executionPlanConfigurationDto = new ExecutionPlanConfigurationDto();
@@ -283,7 +277,7 @@ public class CEP883TestCase extends CEPIntegrationTest {
 
         Thread.sleep(1000);
         log.info("=======================Check the execution plan ======================= ");
-        Assert.assertEquals(eventProcessorAdminServiceClient.getAllActiveExecutionPlanConfigurationCount(), 1 + startCount);
+        Assert.assertEquals(eventProcessorAdminServiceClient.getActiveExecutionPlanConfigurationCount(), 1 + startCount);
 
     }
 

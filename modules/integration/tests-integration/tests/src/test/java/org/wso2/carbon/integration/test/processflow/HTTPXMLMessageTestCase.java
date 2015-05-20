@@ -33,12 +33,12 @@ import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
 import java.io.File;
 import java.rmi.RemoteException;
 
-public class HTTPXMLMessageTestCase extends CEPIntegrationTest{
+public class HTTPXMLMessageTestCase extends CEPIntegrationTest {
 
     private static final Log log = LogFactory.getLog(HTTPXMLMessageTestCase.class);
     private ServerConfigurationManager serverManager = null;
     protected final String webAppFileName = "GenericLogService.war";
-
+    private String webAppDirectoryPath = null;
 
     @BeforeClass(alwaysRun = true)
     public void init()
@@ -51,10 +51,10 @@ public class HTTPXMLMessageTestCase extends CEPIntegrationTest{
                     "artifacts" + File.separator + "CEP" + File.separator + "war"
                     + File.separator;
 
-            String webAppDirectoryPath = FrameworkPathUtil.getCarbonHome() + File.separator + "repository" + File.separator + "deployment" + File.separator + "server" + File.separator + "webapps" + File.separator;
+            webAppDirectoryPath = FrameworkPathUtil.getCarbonHome() + File.separator + "repository" + File.separator + "deployment" + File.separator + "server" + File.separator + "webapps" + File.separator;
             FileManager.copyResourceToFileSystem(warFilePath + webAppFileName, webAppDirectoryPath, webAppFileName);
             Thread.sleep(5000);
-        }  catch (Exception e) {
+        } catch (Exception e) {
             throw new RemoteException("Exception caught when deploying the war file into CEP server", e);
         }
 
@@ -73,7 +73,7 @@ public class HTTPXMLMessageTestCase extends CEPIntegrationTest{
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
 
         //Add StreamDefinition
-        String streamDefinition = getJSONArtifactConfiguration("HTTPXMLMessageTestCase","org.wso2.sample.pizza.order_1.0.0.json");
+        String streamDefinition = getJSONArtifactConfiguration("HTTPXMLMessageTestCase", "org.wso2.sample.pizza.order_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinition);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
@@ -99,18 +99,14 @@ public class HTTPXMLMessageTestCase extends CEPIntegrationTest{
 
         eventPublisherAdminServiceClient.removeActiveEventPublisherConfiguration("PizzaDeliveryNotification");
         eventReceiverAdminServiceClient.removeActiveEventReceiverConfiguration("PizzaOrder");
-        eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.sample.pizza.order","1.0.0");
+        eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.sample.pizza.order", "1.0.0");
     }
 
 
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
-        try {
-        } finally {
-            //reverting the changes done to cep sever
-            if (serverManager != null) {
-                serverManager.restoreToLastConfiguration();
-            }
+        if (webAppDirectoryPath != null) {
+            FileManager.deleteFile(webAppDirectoryPath + webAppFileName);
         }
         super.cleanup();
     }

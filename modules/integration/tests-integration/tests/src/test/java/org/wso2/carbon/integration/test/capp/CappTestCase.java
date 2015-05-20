@@ -42,7 +42,7 @@ public class CappTestCase extends CEPIntegrationTest {
         int startESCount  = eventStreamManagerAdminServiceClient.getEventStreamCount();
         int startERCount  = eventReceiverAdminServiceClient.getActiveEventReceiverCount();
         int startEPCount  = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
-        int startEPCCount = eventProcessorAdminServiceClient.getAllActiveExecutionPlanConfigurationCount();
+        int startEPCCount = eventProcessorAdminServiceClient.getActiveExecutionPlanConfigurationCount();
 
         String carFilePath = FrameworkPathUtil.getSystemResourceLocation() +
                 "artifacts" + File.separator + "CEP" + File.separator + "car"
@@ -62,7 +62,7 @@ public class CappTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 2);
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
-        Assert.assertEquals(eventProcessorAdminServiceClient.getAllActiveExecutionPlanConfigurationCount(), startEPCCount + 1);
+        Assert.assertEquals(eventProcessorAdminServiceClient.getActiveExecutionPlanConfigurationCount(), startEPCCount + 1);
 
         try {
             FileManager.deleteFile(cAppDirectoryPath + cAppFileName);
@@ -72,10 +72,10 @@ public class CappTestCase extends CEPIntegrationTest {
         log.info("undeploying cApp...");
         Thread.sleep(20000);
 
-        Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount );
+        Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount);
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount);
-        Assert.assertEquals(eventProcessorAdminServiceClient.getAllActiveExecutionPlanConfigurationCount(), startEPCCount);
+        Assert.assertEquals(eventProcessorAdminServiceClient.getActiveExecutionPlanConfigurationCount(), startEPCCount);
 
     }
 
@@ -85,7 +85,11 @@ public class CappTestCase extends CEPIntegrationTest {
         int startESCount  = eventStreamManagerAdminServiceClient.getEventStreamCount();
         int startERCount  = eventReceiverAdminServiceClient.getActiveEventReceiverCount();
         int startEPCount  = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
-        int startEPCCount = eventProcessorAdminServiceClient.getAllActiveExecutionPlanConfigurationCount();
+        int startEPCCount = eventProcessorAdminServiceClient.getActiveExecutionPlanConfigurationCount();
+
+        int startInactiveERCount  = eventReceiverAdminServiceClient.getInactiveEventReceiverCount();
+        int startInactiveEPCount  = eventPublisherAdminServiceClient.getInactiveEventPublisherCount();
+        int startInactiveEPCCount = eventProcessorAdminServiceClient.getInactiveExecutionPlanConfigurationCount();
 
         String carFilePath = FrameworkPathUtil.getSystemResourceLocation() +
                 "artifacts" + File.separator + "CEP" + File.separator + "car"
@@ -105,7 +109,11 @@ public class CappTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount);
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount);
-        Assert.assertEquals(eventProcessorAdminServiceClient.getAllActiveExecutionPlanConfigurationCount(), startEPCCount);
+        Assert.assertEquals(eventProcessorAdminServiceClient.getActiveExecutionPlanConfigurationCount(), startEPCCount);
+
+        Assert.assertEquals(eventReceiverAdminServiceClient.getInactiveEventReceiverCount(), startInactiveERCount);
+        Assert.assertEquals(eventPublisherAdminServiceClient.getInactiveEventPublisherCount(), startInactiveEPCount);
+        Assert.assertEquals(eventProcessorAdminServiceClient.getInactiveExecutionPlanConfigurationCount(), startInactiveEPCCount);
 
         try {
             FileManager.deleteFile(cAppDirectoryPath + cAppFailureFileName);
@@ -118,13 +126,6 @@ public class CappTestCase extends CEPIntegrationTest {
 
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
-        try {
-        } finally {
-            //reverting the changes done to cep sever
-            if (serverManager != null) {
-                serverManager.restoreToLastConfiguration();
-            }
-        }
         super.cleanup();
     }
 }

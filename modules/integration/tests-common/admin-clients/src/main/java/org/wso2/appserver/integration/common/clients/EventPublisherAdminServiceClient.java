@@ -64,6 +64,21 @@ public class EventPublisherAdminServiceClient {
         }
     }
 
+    public int getInactiveEventPublisherCount()
+            throws RemoteException {
+        try {
+            EventPublisherConfigurationFileDto[] configs = eventPublisherAdminServiceStub.getAllInactiveEventPublisherConfigurations();
+            if (configs == null) {
+                return 0;
+            } else {
+                return configs.length;
+            }
+        } catch (RemoteException e) {
+            throw new RemoteException("RemoteException", e);
+        }
+    }
+
+
     public int getEventPublisherCount()
             throws RemoteException {
         try {
@@ -170,6 +185,16 @@ public class EventPublisherAdminServiceClient {
             throws RemoteException {
         try {
             return eventPublisherAdminServiceStub.getActiveEventPublisherConfigurationContent(eventPublisherName);
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException();
+        }
+    }
+
+    public String getInactiveEventPublisherConfigurationContent(String eventPublisherFileName)
+            throws RemoteException {
+        try {
+            return eventPublisherAdminServiceStub.getInactiveEventPublisherConfigurationContent(eventPublisherFileName);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
             throw new RemoteException();
