@@ -36,8 +36,7 @@ public class WebsocketTestCase extends CEPIntegrationTest {
     private static final Log log = LogFactory.getLog(WebsocketTestCase.class);
 
     @BeforeClass(alwaysRun = true)
-    public void init()
-            throws Exception {
+    public void init() throws Exception {
 
         super.init(TestUserMode.SUPER_TENANT_ADMIN);
         String loggedInSessionCookie = getSessionCookie();
