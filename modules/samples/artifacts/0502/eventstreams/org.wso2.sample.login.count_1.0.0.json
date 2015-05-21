@@ -1,0 +1,17 @@
+{
+    "name": "org.wso2.sample.login.count",
+    "version": "1.0.0",
+    "nickName": "",
+    "description": "",
+    "payloadData": [
+        {
+            "name": "ipCount",
+            "type": "LONG"
+        },
+        {
+            "name": "totalCount",
+            "type": "LONG"
+        }
+    ]
+}
+	

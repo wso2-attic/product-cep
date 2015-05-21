@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventPublisher name="loginCountPublisher" statistics="disable"
+                trace="disable" xmlns="http://wso2.org/carbon/eventpublisher">
+    <from streamName="org.wso2.sample.login.count" version="1.0.0"/>
+    <mapping customMapping="enable" type="text">
+        <inline>ipCount = {{ipCount}}
+            totalCount = {{totalCount}}</inline>
+    </mapping>
+    <to eventAdapterType="logger">
+        <property name="uniqueId">login  information</property>
+    </to>
+</eventPublisher>
+

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+~ Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+~
+~ Licensed under the Apache License, Version 2.0 (the "License");
+~ you may not use this file except in compliance with the License.
+~ You may obtain a copy of the License at
+~
+~     http://www.apache.org/licenses/LICENSE-2.0
+~
+~ Unless required by applicable law or agreed to in writing, software
+~ distributed under the License is distributed on an "AS IS" BASIS,
+~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+~ See the License for the specific language governing permissions and
+~ limitations under the License.
+-->
+<eventReceiver name="wso2eventReceiver" statistics="disable"
+               trace="disable" xmlns="http://wso2.org/carbon/eventreceiver">
+    <from eventAdapterType="wso2event">
+        <property name="receiving.events.duplicated.in.cluster">false</property>
+    </from>
+    <mapping customMapping="enable" type="wso2event">
+        <from streamName="org.wso2.event.sensor.stream" version="1.0.0"/>
+        <property>
+            <from dataType="meta" name="timestamp"/>
+            <to name="meta_timestamp" type="long"/>
+        </property>
+
+        <property>
+            <from dataType="meta" name="sensorId"/>
+            <to name="meta_id" type="int"/>
+        </property>
+
+        <property>
+            <from dataType="meta" name="isPowerSaverEnabled"/>
+            <to name="meta_isPowerSavingMode" type="bool"/>
+        </property>
+
+
+        <property>
+            <from dataType="correlation" name="longitude"/>
+            <to name="correlation_longitude" type="double"/>
+        </property>
+        <property>
+            <from dataType="correlation" name="latitude"/>
+            <to name="correlation_latitude" type="double"/>
+        </property>
+
+        <property>
+            <from dataType="payload" name="humidity"/>
+            <to name="humidity" type="float"/>
+        </property>
+        <property>
+            <from dataType="payload" name="sensorValue"/>
+            <to name="value" type="double"/>
+        </property>
+    </mapping>
+    <to streamName="org.wso2.mapped.sensor.data" version="1.0.0"/>
+</eventReceiver>

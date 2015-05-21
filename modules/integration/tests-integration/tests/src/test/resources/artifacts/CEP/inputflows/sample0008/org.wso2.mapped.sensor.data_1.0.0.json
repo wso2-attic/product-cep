@@ -1,0 +1,41 @@
+{
+  "name": "org.wso2.mapped.sensor.data",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "metaData": [
+    {
+      "name": "timestamp",
+      "type": "LONG"
+    },
+    {
+      "name": "id",
+      "type": "INT"
+    },
+    {
+      "name": "isPowerSavingMode",
+      "type": "BOOL"
+    }
+  ],
+  "correlationData": [
+    {
+      "name": "longitude",
+      "type": "DOUBLE"
+    },
+    {
+      "name": "latitude",
+      "type": "DOUBLE"
+    }
+  ],
+  "payloadData": [
+    
+    {
+      "name": "humidity",
+      "type": "FLOAT"
+    },
+    {
+      "name": "value",
+      "type": "DOUBLE"
+    }
+  ]
+}
