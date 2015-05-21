@@ -28,7 +28,6 @@ import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.JMSBrokerController;
 import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config.JMSBrokerConfiguration;
 import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config.JMSBrokerConfigurationProvider;
-import org.wso2.carbon.databridge.commons.Event;
 import org.wso2.carbon.event.simulator.stub.types.EventDto;
 import org.wso2.carbon.integration.common.utils.mgt.ServerConfigurationManager;
 import org.wso2.carbon.integration.test.client.JMSConsumerClient;
@@ -96,7 +95,7 @@ public class JMSTestCase extends CEPIntegrationTest {
     @Test(groups = {"wso2.cep"}, description = "Testing activemq jms publisher with Map formatted event with default mapping")
     public void jmsMapTestWithDefaultMappingScenario() throws Exception {
         final int messageCount = 3;
-
+        String samplePath = "outputflows" + File.separator + "sample0059";
         int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
 
@@ -116,13 +115,13 @@ public class JMSTestCase extends CEPIntegrationTest {
                 "100.34", "23.4545"});
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("outputflows/sample0059",
+        String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
                 "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
         //Add ActiveMQ JMS EventPublisher
-        String eventPublisherConfig = getXMLArtifactConfiguration("outputflows/sample0059", "jmsPublisherMap.xml");
+        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "jmsPublisherMap.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
@@ -169,7 +168,7 @@ public class JMSTestCase extends CEPIntegrationTest {
             dependsOnMethods = {"jmsMapTestWithDefaultMappingScenario"})
     public void jmsTextTestWithDefaultMappingScenario() throws Exception {
         final int messageCount = 3;
-
+        String samplePath = "outputflows" + File.separator + "sample0059";
         int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
 
@@ -189,13 +188,13 @@ public class JMSTestCase extends CEPIntegrationTest {
                 "100.34", "23.4545"});
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("outputflows/sample0059",
+        String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
                 "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
         //Add ActiveMQ JMS EventPublisher
-        String eventPublisherConfig = getXMLArtifactConfiguration("outputflows/sample0059", "jmsPublisherText.xml");
+        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "jmsPublisherText.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
@@ -232,7 +231,7 @@ public class JMSTestCase extends CEPIntegrationTest {
             dependsOnMethods = {"jmsTextTestWithDefaultMappingScenario"})
     public void jmsTextTestWithCustomMappingScenario() throws Exception {
         final int messageCount = 1;
-
+        String samplePath = "outputflows" + File.separator + "sample0059";
         int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
 
@@ -243,13 +242,13 @@ public class JMSTestCase extends CEPIntegrationTest {
 
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("outputflows/sample0059",
+        String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
                 "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
         //Add ActiveMQ JMS EventPublisher
-        String eventPublisherConfig = getXMLArtifactConfiguration("outputflows/sample0059", "jmsPublisherCustomText.xml");
+        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "jmsPublisherCustomText.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
@@ -299,7 +298,7 @@ public class JMSTestCase extends CEPIntegrationTest {
             dependsOnMethods = {"jmsTextTestWithCustomMappingScenario"})
     public void jmsJSONTestWithDefaultMappingScenario() throws Exception {
         final int messageCount = 3;
-
+        String samplePath = "outputflows" + File.separator + "sample0059";
         int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
 
@@ -320,13 +319,13 @@ public class JMSTestCase extends CEPIntegrationTest {
 
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("outputflows/sample0059",
+        String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
                 "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
         //Add ActiveMQ JMS EventPublisher
-        String eventPublisherConfig = getXMLArtifactConfiguration("outputflows/sample0059", "jmsPublisherJSON.xml");
+        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "jmsPublisherJSON.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
@@ -363,7 +362,7 @@ public class JMSTestCase extends CEPIntegrationTest {
             dependsOnMethods = {"jmsJSONTestWithDefaultMappingScenario"})
     public void jmsJSONTestWithCustomMappingScenario() throws Exception {
         final int messageCount = 1;
-
+        String samplePath = "outputflows" + File.separator + "sample0059";
         int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
 
@@ -374,13 +373,13 @@ public class JMSTestCase extends CEPIntegrationTest {
 
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("outputflows/sample0059",
+        String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
                 "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
         //Add ActiveMQ JMS EventPublisher
-        String eventPublisherConfig = getXMLArtifactConfiguration("outputflows/sample0059", "jmsPublisherCustomJSON.xml");
+        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "jmsPublisherCustomJSON.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
