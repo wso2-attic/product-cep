@@ -1,0 +1,17 @@
+/* Enter a unique ExecutionPlan */
+@Plan:name('LoginCountExecutionPlan')
+
+/* Enter a unique description for ExecutionPlan */
+-- @Plan:description('ExecutionPlan')
+
+/* define streams/tables and write queries here ... */
+
+@Import('org.wso2.sample.login.info:1.0.0')
+define stream loginEvents (username string, ipAddress string, frequency int);
+
+@Export('org.wso2.sample.login.count:1.0.0')
+define stream loginCount (ipCount long, totalCount long);
+
+from loginEvents#window.length(50)
+select count(ipAddress)  as ipCount, sum(frequency) as totalCount
+insert into loginCount;
