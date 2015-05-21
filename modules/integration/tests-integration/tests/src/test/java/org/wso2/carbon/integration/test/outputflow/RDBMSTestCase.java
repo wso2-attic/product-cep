@@ -34,6 +34,7 @@ import org.wso2.carbon.ndatasource.ui.stub.core.services.xsd.WSDataSourceMetaInf
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
 
 import javax.xml.stream.XMLStreamException;
+import java.io.File;
 
 /**
  * Testing RDBMS publisher in different formats (text, xml, json)
@@ -63,15 +64,16 @@ public class RDBMSTestCase extends CEPIntegrationTest {
     public void rdbmsPublisherTestScenario() throws Exception {
         int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
+        String samplePath = "outputflows" + File.separator + "sample0072";
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("outputflows/sample0072",
+        String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
                 "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
         //Add RDBMS publisher
-        String eventPublisherConfig = getXMLArtifactConfiguration("outputflows/sample0072", "rdbmsEventPublisher.xml");
+        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "rdbmsEventPublisher.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 

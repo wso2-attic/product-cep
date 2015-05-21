@@ -26,7 +26,9 @@ import org.wso2.carbon.event.simulator.stub.types.EventDto;
 import org.wso2.carbon.integration.test.client.WireMonitorServer;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
 
-public class SOAPTestCase extends CEPIntegrationTest{
+import java.io.File;
+
+public class SOAPTestCase extends CEPIntegrationTest {
 
     private static final Log log = LogFactory.getLog(SOAPTestCase.class);
 
@@ -51,20 +53,20 @@ public class SOAPTestCase extends CEPIntegrationTest{
 
         int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
-
+        String samplePath = "outputflows" + File.separator + "sample0063";
         EventDto eventDto = new EventDto();
         eventDto.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
         eventDto.setAttributeValues(new String[]{"199008131245", "false", "100", "temperature", "23.45656", "7.12324",
                 "100.34", "23.4545"});
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("outputflows/sample0063",
+        String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
                 "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
         //Add ActiveMQ JMS EventPublisher
-        String eventPublisherConfig = getXMLArtifactConfiguration("outputflows/sample0063", "soap.xml");
+        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "soap.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
@@ -79,7 +81,7 @@ public class SOAPTestCase extends CEPIntegrationTest{
         Thread.sleep(30000);
 
         wireMonitorServer.shutdown();
-        String receivedEvent = wireMonitorServer.getCapturedMessage().replaceAll("\\s+","");
+        String receivedEvent = wireMonitorServer.getCapturedMessage().replaceAll("\\s+", "");
 
         log.info(receivedEvent);
 
@@ -107,20 +109,20 @@ public class SOAPTestCase extends CEPIntegrationTest{
 
         int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
-
+        String samplePath = "outputflows" + File.separator + "sample0063";
         EventDto eventDto = new EventDto();
         eventDto.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
         eventDto.setAttributeValues(new String[]{"199008131245", "false", "100", "temperature", "23.45656", "7.12324",
                 "100.34", "23.4545"});
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("outputflows/sample0063",
+        String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
                 "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
         //Add ActiveMQ JMS EventPublisher
-        String eventPublisherConfig = getXMLArtifactConfiguration("outputflows/sample0063", "soapCustomXML.xml");
+        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "soapCustomXML.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
@@ -135,7 +137,7 @@ public class SOAPTestCase extends CEPIntegrationTest{
         //wait while all stats are published
         Thread.sleep(30000);
         wireMonitorServer.shutdown();
-        String receivedEvent = wireMonitorServer.getCapturedMessage().replaceAll("\\s+","");
+        String receivedEvent = wireMonitorServer.getCapturedMessage().replaceAll("\\s+", "");
         log.info(receivedEvent);
 
         String sentEvent = "<SensorData>" +

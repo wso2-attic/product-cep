@@ -87,35 +87,35 @@ public class MQTTTestCase extends CEPIntegrationTest {
     @Test(groups = {"wso2.cep"}, description = "Testing mqtt receiver with JSON formatted event")
     public void MQTTJSONTestScenario() throws Exception {
         final int messageCount = 3;
-
+        String samplePath = "inputflows" + File.separator + "sample0016";
         int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
         int startERCount = eventReceiverAdminServiceClient.getActiveEventReceiverCount();
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("inputflows/sample0016", "org.wso2.event.sensor.stream_1.0.0.json");
+        String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath, "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
         //Add MQTT JSON EventReceiver without mapping
-        String eventReceiverConfig = getXMLArtifactConfiguration("inputflows/sample0016", "mqttEventReceiver.xml");
+        String eventReceiverConfig = getXMLArtifactConfiguration(samplePath, "mqttEventReceiver.xml");
         eventReceiverAdminServiceClient.addEventReceiverConfiguration(eventReceiverConfig);
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
 
         //Add Wso2event EventPublisher
-        String eventPublisherConfig2 = getXMLArtifactConfiguration("inputflows/sample0016", "wso2EventPublisher.xml");
+        String eventPublisherConfig2 = getXMLArtifactConfiguration(samplePath, "wso2EventPublisher.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig2);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         // The data-bridge receiver
-        Wso2EventServer agentServer = new Wso2EventServer("inputflows/sample0016", 7661, true);
+        Wso2EventServer agentServer = new Wso2EventServer(samplePath, 7661, true);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start
         Thread.sleep(10000);
 
         MQTTEventPublisherClient.publish("tcp://localhost:1883", "sensordata",
-                "inputflows/sample0001", "mqttEvents.txt");
+                samplePath, "mqttEvents.txt");
 
         //wait while all stats are published
         Thread.sleep(30000);

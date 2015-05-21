@@ -28,6 +28,8 @@ import org.wso2.carbon.integration.test.client.WebSocketClient;
 import org.wso2.carbon.integration.test.client.WebSocketServer;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
 
+import java.io.File;
+
 /**
  * Sending different formatted events to the Websocket and Websocket local Receivers
  */
@@ -48,28 +50,28 @@ public class WebsocketTestCase extends CEPIntegrationTest {
 
     @Test(groups = {"wso2.cep"}, description = "Testing websocket local receiver with XML formatted event")
     public void websocketLocalReceiver() throws Exception {
-
+        String samplePath = "inputflows" + File.separator + "sample0020";
         int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
         int startERCount = eventReceiverAdminServiceClient.getActiveEventReceiverCount();
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("inputflows/sample0020", "org.wso2.event.sensor.stream_1.0.0.json");
+        String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath, "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
         //Add Websocket Local XML EventReceiver without mapping
-        String eventReceiverConfig = getXMLArtifactConfiguration("inputflows/sample0020", "WebsocketLocalReceiver.xml");
+        String eventReceiverConfig = getXMLArtifactConfiguration(samplePath, "WebsocketLocalReceiver.xml");
         eventReceiverAdminServiceClient.addEventReceiverConfiguration(eventReceiverConfig);
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
 
         //Add Wso2event EventPublisher
-        String eventPublisherConfig = getXMLArtifactConfiguration("inputflows/sample0020", "wso2EventPublisher.xml");
+        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "wso2EventPublisher.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         // The data-bridge receiver
-        Wso2EventServer agentServer = new Wso2EventServer("inputflows/sample0020", 7661, true);
+        Wso2EventServer agentServer = new Wso2EventServer(samplePath, 7661, true);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start
@@ -116,28 +118,28 @@ public class WebsocketTestCase extends CEPIntegrationTest {
 
     @Test(groups = {"wso2.cep"}, description = "Testing websocket receiver with XML formatted event")
     public void websocketReceiver() throws Exception {
-
+        String samplePath = "inputflows" + File.separator + "sample0019";
         int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
         int startERCount = eventReceiverAdminServiceClient.getActiveEventReceiverCount();
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("inputflows/sample0019", "org.wso2.event.sensor.stream_1.0.0.json");
+        String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath, "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
         //Add Websocket XML EventReceiver without mapping
-        String eventReceiverConfig = getXMLArtifactConfiguration("inputflows/sample0019", "WebsocketReceiver.xml");
+        String eventReceiverConfig = getXMLArtifactConfiguration(samplePath, "WebsocketReceiver.xml");
         eventReceiverAdminServiceClient.addEventReceiverConfiguration(eventReceiverConfig);
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
 
         //Add Wso2event EventPublisher
-        String eventPublisherConfig = getXMLArtifactConfiguration("inputflows/sample0019", "wso2EventPublisher.xml");
+        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "wso2EventPublisher.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         // The data-bridge receiver
-        Wso2EventServer agentServer = new Wso2EventServer("inputflows/sample0019", 7661, true);
+        Wso2EventServer agentServer = new Wso2EventServer(samplePath, 7661, true);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start
