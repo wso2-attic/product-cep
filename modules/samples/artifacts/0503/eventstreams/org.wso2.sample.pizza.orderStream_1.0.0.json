@@ -1,0 +1,30 @@
+{
+  "name": "org.wso2.sample.pizza.orderStream",
+  "version": "1.0.0",
+  "payloadData": [
+    {
+      "name": "orderNo",
+      "type": "STRING"
+    },
+    {
+      "name": "customerName",
+      "type": "STRING"
+    },
+    {
+      "name": "telephoneNo",
+      "type": "STRING"
+    },
+    {
+      "name": "orderInfo",
+      "type": "STRING"
+    },
+    {
+      "name": "price",
+      "type": "FLOAT"
+    },
+    {
+      "name": "orderedTime",
+      "type": "STRING"
+    }
+  ]
+}

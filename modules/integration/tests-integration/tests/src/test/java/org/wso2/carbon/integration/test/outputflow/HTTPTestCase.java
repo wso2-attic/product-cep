@@ -26,6 +26,8 @@ import org.wso2.carbon.event.simulator.stub.types.EventDto;
 import org.wso2.carbon.integration.test.client.WireMonitorServer;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
 
+import java.io.File;
+
 public class HTTPTestCase extends CEPIntegrationTest {
 
     private static final Log log = LogFactory.getLog(SOAPTestCase.class);
@@ -48,7 +50,7 @@ public class HTTPTestCase extends CEPIntegrationTest {
 
     @Test(groups = {"wso2.cep"}, description = "Testing HTTP publisher with JSON formatted event with default mapping")
     public void httpJSONTestWithDefaultMappingScenario() throws Exception {
-
+        String samplePath = "outputflows" + File.separator + "sample0062";
         int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
 
@@ -58,13 +60,13 @@ public class HTTPTestCase extends CEPIntegrationTest {
                 "100.34", "23.4545"});
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("outputflows/sample0062",
+        String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
                 "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
         //Add ActiveMQ JMS EventPublisher
-        String eventPublisherConfig = getXMLArtifactConfiguration("outputflows/sample0062", "httpJson.xml");
+        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "httpJson.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
@@ -81,7 +83,7 @@ public class HTTPTestCase extends CEPIntegrationTest {
 
         wireMonitorServer.shutdown();
 
-        String receivedEvent = wireMonitorServer.getCapturedMessage().replaceAll("\\s+","");
+        String receivedEvent = wireMonitorServer.getCapturedMessage().replaceAll("\\s+", "");
         log.info(receivedEvent);
 
         String sentEvent = "{\"event\":{\"metaData\":{\"timestamp\":\"199008131245\",\"isPowerSaverEnabled\":\"false\"," +
@@ -103,7 +105,7 @@ public class HTTPTestCase extends CEPIntegrationTest {
     @Test(groups = {"wso2.cep"}, description = "Testing HTTP publisher with Text formatted event with custom mapping",
             dependsOnMethods = {"httpJSONTestWithDefaultMappingScenario"})
     public void httpTextTestWithDefaultMappingScenario() throws Exception {
-
+        String samplePath = "outputflows" + File.separator + "sample0062";
         int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
 
@@ -112,13 +114,13 @@ public class HTTPTestCase extends CEPIntegrationTest {
         eventDto.setAttributeValues(new String[]{"199008131245", "Lasantha Fernando", "2321.56", "BATA", "199008031245"});
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("outputflows/sample0062",
+        String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
                 "org.wso2.event.message.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
         //Add ActiveMQ JMS EventPublisher
-        String eventPublisherConfig = getXMLArtifactConfiguration("outputflows/sample0062", "httpText.xml");
+        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "httpText.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
@@ -156,7 +158,7 @@ public class HTTPTestCase extends CEPIntegrationTest {
     @Test(groups = {"wso2.cep"}, description = "Testing HTTP publisher with XML formatted event with default mapping",
             dependsOnMethods = {"httpTextTestWithDefaultMappingScenario"})
     public void httpXMLTestWithDefaultMappingScenario() throws Exception {
-
+        String samplePath = "outputflows" + File.separator + "sample0062";
         int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
 
@@ -166,13 +168,13 @@ public class HTTPTestCase extends CEPIntegrationTest {
                 "100.34", "23.4545"});
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("outputflows/sample0062",
+        String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
                 "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
         //Add ActiveMQ JMS EventPublisher
-        String eventPublisherConfig = getXMLArtifactConfiguration("outputflows/sample0062", "httpXml.xml");
+        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "httpXml.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 

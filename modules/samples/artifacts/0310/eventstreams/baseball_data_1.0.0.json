@@ -1,0 +1,28 @@
+{
+  "name": "baseball_data",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "payloadData": [
+		{
+		  "name": "salary",
+		  "type": "INT"
+		},
+		{
+		  "name": "rbi",
+		  "type": "INT"
+		},
+		{
+		  "name": "walks",
+		  "type": "INT"
+		},
+		{
+		  "name": "strikeouts",
+		  "type": "INT"
+		},
+		{
+		  "name": "errors",
+		  "type": "INT"
+		}
+	]
+}

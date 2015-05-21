@@ -32,6 +32,8 @@ import org.wso2.carbon.integration.test.client.HttpEventReceiverClient;
 import org.wso2.carbon.integration.test.client.WebSocketClient;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
 
+import java.io.File;
+
 /**
  * Sending different from the Websocket and websocket local publishers
  */
@@ -56,20 +58,21 @@ public class UIAdapterTestCase extends CEPIntegrationTest {
 
         int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
+        String samplePath = "outputflows" + File.separator + "sample0071";
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("outputflows/sample0071",
+        String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
                 "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
         //Add UI wso2event EventPublisher
-        String eventPublisherConfig = getXMLArtifactConfiguration("outputflows/sample0071",
+        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath,
                 "uiPublisher.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
-        WebSocketClient webSocketClient=new WebSocketClient();
+        WebSocketClient webSocketClient = new WebSocketClient();
         webSocketClient.receive("ws://localhost:9763/outputui/org.wso2.event.sensor.stream/1.0.0", 30);
 
         Thread.sleep(1000);
@@ -92,15 +95,16 @@ public class UIAdapterTestCase extends CEPIntegrationTest {
 
         int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
+        String samplePath = "outputflows" + File.separator + "sample0071";
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("outputflows/sample0071",
+        String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
                 "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
         //Add UI wso2event EventPublisher
-        String eventPublisherConfig = getXMLArtifactConfiguration("outputflows/sample0071",
+        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath,
                 "uiPublisher.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);

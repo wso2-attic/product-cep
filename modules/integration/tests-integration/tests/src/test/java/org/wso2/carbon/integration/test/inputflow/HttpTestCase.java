@@ -28,6 +28,7 @@ import org.wso2.carbon.integration.test.client.HttpEventPublisherClient;
 import org.wso2.carbon.integration.test.client.Wso2EventServer;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,35 +54,35 @@ public class HttpTestCase extends CEPIntegrationTest {
     @Test(groups = {"wso2.cep"}, description = "Testing http receiver with JSON formatted event")
     public void httpJSONTestScenario() throws Exception {
         final int messageCount = 3;
-
+        String samplePath = "inputflows" + File.separator + "sample0001";
         int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
         int startERCount = eventReceiverAdminServiceClient.getActiveEventReceiverCount();
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("inputflows/sample0001","org.wso2.event.sensor.stream_1.0.0.json");
+        String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath, "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
         //Add Http JSON EventReceiver without mapping
-        String eventReceiverConfig = getXMLArtifactConfiguration("inputflows/sample0001", "httpReceiver.xml");
+        String eventReceiverConfig = getXMLArtifactConfiguration(samplePath, "httpReceiver.xml");
         eventReceiverAdminServiceClient.addEventReceiverConfiguration(eventReceiverConfig);
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
 
         //Add Wso2event EventPublisher
-        String eventPublisherConfig = getXMLArtifactConfiguration("inputflows/sample0001", "wso2EventPublisher.xml");
+        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "wso2EventPublisher.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         // The data-bridge receiver
-        Wso2EventServer agentServer = new Wso2EventServer("inputflows/sample0001",7661, true);
+        Wso2EventServer agentServer = new Wso2EventServer(samplePath, 7661, true);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start
         Thread.sleep(10000);
 
         HttpEventPublisherClient.publish("http://localhost:9763/endpoints/httpReceiver", "admin", "admin",
-                "inputflows/sample0001", "httpReceiver.txt");
+                samplePath, "httpReceiver.txt");
 
         //wait while all stats are published
         Thread.sleep(30000);
@@ -127,36 +128,36 @@ public class HttpTestCase extends CEPIntegrationTest {
     @Test(groups = {"wso2.cep"}, description = "Testing http receiver with JSON formatted event with mapping enabled")
     public void httpJSONMappingTestScenario() throws Exception {
         final int messageCount = 3;
-
+        String samplePath = "inputflows" + File.separator + "sample0002";
         int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
         int startERCount = eventReceiverAdminServiceClient.getActiveEventReceiverCount();
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
 
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("inputflows/sample0002","org.wso2.event.sensor.stream_1.0.0.json");
+        String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath, "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
         //Add Http JSON EventReceiver with mapping
-        String eventReceiverConfig = getXMLArtifactConfiguration("inputflows/sample0002", "httpReceiver.xml");
+        String eventReceiverConfig = getXMLArtifactConfiguration(samplePath, "httpReceiver.xml");
         eventReceiverAdminServiceClient.addEventReceiverConfiguration(eventReceiverConfig);
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
 
         //Add Wso2event EventPublisher
-        String eventPublisherConfig = getXMLArtifactConfiguration("inputflows/sample0002", "wso2EventPublisher.xml");
+        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "wso2EventPublisher.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         // The data-bridge receiver
-        Wso2EventServer agentServer = new Wso2EventServer("inputflows/sample0002",7661, true);
+        Wso2EventServer agentServer = new Wso2EventServer(samplePath, 7661, true);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start
         Thread.sleep(10000);
 
         HttpEventPublisherClient.publish("http://localhost:9763/endpoints/httpReceiver", "admin", "admin",
-                "inputflows/sample0002", "httpReceiver.txt");
+                samplePath, "httpReceiver.txt");
 
         //wait while all stats are published
         Thread.sleep(5000);
@@ -202,36 +203,36 @@ public class HttpTestCase extends CEPIntegrationTest {
     @Test(groups = {"wso2.cep"}, description = "Testing http receiver with XML formatted event")
     public void httpXMLTestScenario() throws Exception {
         final int messageCount = 3;
-
+        String samplePath = "inputflows" + File.separator + "sample0003";
         int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
         int startERCount = eventReceiverAdminServiceClient.getActiveEventReceiverCount();
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
 
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("inputflows/sample0003","org.wso2.event.sensor.stream_1.0.0.json");
+        String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath, "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
         //Add Http XML EventReceiver
-        String eventReceiverConfig = getXMLArtifactConfiguration("inputflows/sample0003", "httpReceiver.xml");
+        String eventReceiverConfig = getXMLArtifactConfiguration(samplePath, "httpReceiver.xml");
         eventReceiverAdminServiceClient.addEventReceiverConfiguration(eventReceiverConfig);
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
 
         //Add Wso2event EventPublisher
-        String eventPublisherConfig = getXMLArtifactConfiguration("inputflows/sample0003", "wso2EventPublisher.xml");
+        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "wso2EventPublisher.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         // The data-bridge receiver
-        Wso2EventServer agentServer = new Wso2EventServer("inputflows/sample0003",7661, true);
+        Wso2EventServer agentServer = new Wso2EventServer(samplePath, 7661, true);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start
         Thread.sleep(10000);
 
         HttpEventPublisherClient.publish("http://localhost:9763/endpoints/httpReceiver", "admin", "admin",
-                "inputflows/sample0003", "httpReceiver.txt");
+                samplePath, "httpReceiver.txt");
 
         //wait while all stats are published
         Thread.sleep(5000);
@@ -276,36 +277,36 @@ public class HttpTestCase extends CEPIntegrationTest {
     @Test(groups = {"wso2.cep"}, description = "Testing http receiver with XML formatted event with mapping enabled")
     public void httpXMLMappingTestScenario() throws Exception {
         final int messageCount = 3;
-
+        String samplePath = "inputflows" + File.separator + "sample0004";
         int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
         int startERCount = eventReceiverAdminServiceClient.getActiveEventReceiverCount();
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
 
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("inputflows/sample0004","org.wso2.event.sensor.stream_1.0.0.json");
+        String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath, "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
         //Add Http XML EventReceiver with mapping
-        String eventReceiverConfig = getXMLArtifactConfiguration("inputflows/sample0004", "httpReceiver.xml");
+        String eventReceiverConfig = getXMLArtifactConfiguration(samplePath, "httpReceiver.xml");
         eventReceiverAdminServiceClient.addEventReceiverConfiguration(eventReceiverConfig);
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
 
         //Add Wso2event EventPublisher
-        String eventPublisherConfig = getXMLArtifactConfiguration("inputflows/sample0004", "wso2EventPublisher.xml");
+        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "wso2EventPublisher.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         // The data-bridge receiver
-        Wso2EventServer agentServer = new Wso2EventServer("inputflows/sample0004",7661, true);
+        Wso2EventServer agentServer = new Wso2EventServer(samplePath, 7661, true);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start
         Thread.sleep(10000);
 
         HttpEventPublisherClient.publish("http://localhost:9763/endpoints/httpReceiver", "admin", "admin",
-                "inputflows/sample0004", "httpReceiver.txt");
+                samplePath, "httpReceiver.txt");
 
         //wait while all stats are published
         Thread.sleep(5000);
@@ -350,36 +351,36 @@ public class HttpTestCase extends CEPIntegrationTest {
     @Test(groups = {"wso2.cep"}, description = "Testing http receiver with Text formatted event")
     public void httpTextTestScenario() throws Exception {
         final int messageCount = 3;
-
+        String samplePath = "inputflows" + File.separator + "sample0005";
         int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
         int startERCount = eventReceiverAdminServiceClient.getActiveEventReceiverCount();
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
 
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("inputflows/sample0005","org.wso2.event.sensor.stream_1.0.0.json");
+        String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath, "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
         //Add Http Text EventReceiver
-        String eventReceiverConfig = getXMLArtifactConfiguration("inputflows/sample0005", "httpReceiver.xml");
+        String eventReceiverConfig = getXMLArtifactConfiguration(samplePath, "httpReceiver.xml");
         eventReceiverAdminServiceClient.addEventReceiverConfiguration(eventReceiverConfig);
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
 
         //Add Wso2event EventPublisher
-        String eventPublisherConfig = getXMLArtifactConfiguration("inputflows/sample0005", "wso2EventPublisher.xml");
+        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "wso2EventPublisher.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         // The data-bridge receiver
-        Wso2EventServer agentServer = new Wso2EventServer("inputflows/sample0005",7661, true);
+        Wso2EventServer agentServer = new Wso2EventServer(samplePath, 7661, true);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start
         Thread.sleep(10000);
 
         HttpEventPublisherClient.publish("http://localhost:9763/endpoints/httpReceiver", "admin", "admin",
-                "inputflows/sample0005", "httpReceiver.txt");
+                samplePath, "httpReceiver.txt");
 
         //wait while all stats are published
         Thread.sleep(5000);
@@ -424,36 +425,36 @@ public class HttpTestCase extends CEPIntegrationTest {
     @Test(groups = {"wso2.cep"}, description = "Testing http receiver with Text formatted event with mapping enabled")
     public void httpTextMappingTestScenario() throws Exception {
         final int messageCount = 3;
-
+        String samplePath = "inputflows" + File.separator + "sample0006";
         int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
         int startERCount = eventReceiverAdminServiceClient.getActiveEventReceiverCount();
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
 
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("inputflows/sample0006","org.wso2.event.sensor.stream_1.0.0.json");
+        String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath, "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
         //Add Http Text EventReceiver with mapping
-        String eventReceiverConfig = getXMLArtifactConfiguration("inputflows/sample0006", "httpReceiver.xml");
+        String eventReceiverConfig = getXMLArtifactConfiguration(samplePath, "httpReceiver.xml");
         eventReceiverAdminServiceClient.addEventReceiverConfiguration(eventReceiverConfig);
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
 
         //Add Wso2event EventPublisher
-        String eventPublisherConfig = getXMLArtifactConfiguration("inputflows/sample0006", "wso2EventPublisher.xml");
+        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "wso2EventPublisher.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         // The data-bridge receiver
-        Wso2EventServer agentServer = new Wso2EventServer("inputflows/sample0006",7661, true);
+        Wso2EventServer agentServer = new Wso2EventServer(samplePath, 7661, true);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start
         Thread.sleep(10000);
 
         HttpEventPublisherClient.publish("http://localhost:9763/endpoints/httpReceiver", "admin", "admin",
-                "inputflows/sample0006", "httpReceiver.txt");
+                samplePath, "httpReceiver.txt");
 
         //wait while all stats are published
         Thread.sleep(5000);

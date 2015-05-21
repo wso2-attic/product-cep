@@ -1,0 +1,38 @@
+<events>
+    <event>
+        <payloadData>
+            <orderNo>BM-1</orderNo>
+            <customerName>mohan</customerName>
+            <telephoneNo>0094771117645</telephoneNo>
+            <orderInfo>Develled Chichen Pan PIzza and Coke</orderInfo>
+            <price>500.75</price>
+            <orderedTime>27-04-2015, 3.00</orderedTime>
+        </payloadData>
+    </event>
+</events>
+*****
+<events>
+    <event>
+        <payloadData>
+            <orderNo>CM-1</orderNo>
+            <customerName>mohan</customerName>
+            <telephoneNo>0094771117645</telephoneNo>
+            <orderInfo>Sausage Chichen Pan PIzza and Coke</orderInfo>
+            <price>1500.00</price>
+            <orderedTime>27-04-2015, 4.00</orderedTime>
+        </payloadData>
+    </event>
+</events>
+*****
+<events>
+    <event>
+        <payloadData>
+            <orderNo>CM-5</orderNo>
+            <customerName>raja</customerName>
+            <telephoneNo>0094772345623</telephoneNo>
+            <orderInfo>Veg Pizza</orderInfo>
+            <price>450.50</price>
+            <orderedTime>29-04-2015, 4.00</orderedTime>
+        </payloadData>
+    </event>
+</events>

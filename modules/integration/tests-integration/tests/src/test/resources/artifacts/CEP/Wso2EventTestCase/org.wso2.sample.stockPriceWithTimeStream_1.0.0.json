@@ -1,0 +1,20 @@
+{
+  "name": "org.wso2.sample.stockPriceWithTimeStream",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "payloadData": [
+    {
+      "name": "symbol",
+      "type": "STRING"
+    },
+    {
+      "name": "utcTimestamp",
+      "type": "STRING"
+    },
+    {
+      "name": "price",
+      "type": "LONG"
+    }
+  ]
+}

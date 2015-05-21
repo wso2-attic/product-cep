@@ -1,0 +1,2 @@
+subscribe=org.wso2.siddhi.extension.geo.geoeventfuser.ExecutionPlanSubscriber
+eventsFusion=org.wso2.siddhi.extension.geo.geoeventfuser.FuseEvents

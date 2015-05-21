@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventReceiver name="loginInfoReceiver" statistics="disable"
+               trace="disable" xmlns="http://wso2.org/carbon/eventreceiver">
+    <from eventAdapterType="http">
+        <property name="transports">all</property>
+    </from>
+    <mapping customMapping="disable" type="xml"/>
+    <to streamName="org.wso2.sample.login.info" version="1.0.0"/>
+</eventReceiver>
+                      

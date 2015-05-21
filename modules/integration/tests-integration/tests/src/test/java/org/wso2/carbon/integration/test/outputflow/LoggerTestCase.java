@@ -28,6 +28,8 @@ import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
 import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
 
+import java.io.File;
+
 /**
  * Testing Logger publisher in different formats (text, xml, json)
  */
@@ -57,15 +59,16 @@ public class LoggerTestCase extends CEPIntegrationTest {
     public void loggerTextTestScenario() throws Exception {
         int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
+        String samplePath = "outputflows" + File.separator + "sample0055";
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("outputflows/sample0055",
+        String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
                 "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
         //Add Text Logger
-        String eventPublisherConfig = getXMLArtifactConfiguration("outputflows/sample0055", "logger.xml");
+        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "logger.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
@@ -100,15 +103,16 @@ public class LoggerTestCase extends CEPIntegrationTest {
     public void loggerTextWithMappingTestScenario() throws Exception {
         int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
+        String samplePath = "outputflows" + File.separator + "sample0056";
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("outputflows/sample0056",
+        String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
                 "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
         //Add Text Logger
-        String eventPublisherConfig = getXMLArtifactConfiguration("outputflows/sample0056", "logger.xml");
+        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "logger.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
@@ -162,15 +166,16 @@ public class LoggerTestCase extends CEPIntegrationTest {
     public void loggerJSONTestScenario() throws Exception {
         int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
+        String samplePath = "outputflows" + File.separator + "sample0051";
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("outputflows/sample0051",
+        String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
                 "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
         //Add Text Logger
-        String eventPublisherConfig = getXMLArtifactConfiguration("outputflows/sample0051", "logger.xml");
+        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "logger.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
@@ -206,15 +211,16 @@ public class LoggerTestCase extends CEPIntegrationTest {
     public void loggerJSONWithMappingTestScenario() throws Exception {
         int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
+        String samplePath = "outputflows" + File.separator + "sample0052";
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("outputflows/sample0052",
+        String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
                 "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
         //Add Text Logger
-        String eventPublisherConfig = getXMLArtifactConfiguration("outputflows/sample0052", "logger.xml");
+        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "logger.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
@@ -272,15 +278,16 @@ public class LoggerTestCase extends CEPIntegrationTest {
     public void loggerXMLTestScenario() throws Exception {
         int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
+        String samplePath = "outputflows" + File.separator + "sample0053";
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("outputflows/sample0053",
+        String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
                 "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
         //Add Text Logger
-        String eventPublisherConfig = getXMLArtifactConfiguration("outputflows/sample0053", "logger.xml");
+        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "logger.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
@@ -316,15 +323,16 @@ public class LoggerTestCase extends CEPIntegrationTest {
     public void loggerXMLWithMappingTestScenario() throws Exception {
         int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
+        String samplePath = "outputflows" + File.separator + "sample0054";
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("outputflows/sample0054",
+        String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
                 "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
         //Add Text Logger
-        String eventPublisherConfig = getXMLArtifactConfiguration("outputflows/sample0054", "logger.xml");
+        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "logger.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 

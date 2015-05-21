@@ -1,0 +1,52 @@
+{
+  "name": "regression_results",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "payloadData": [
+		{
+		  "name": "salary",
+		  "type": "INT"
+		},
+		{
+		  "name": "rbi",
+		  "type": "INT"
+		},
+		{
+		  "name": "walks",
+		  "type": "INT"
+		},
+		{
+		  "name": "strikeouts",
+		  "type": "INT"
+		},
+		{
+		  "name": "errors",
+		  "type": "INT"
+		},
+		{
+		  "name": "stdErr",
+		  "type": "DOUBLE"
+		},
+		{
+		  "name": "beta0",
+		  "type": "DOUBLE"
+		},
+		{
+		  "name": "beta1",
+		  "type": "DOUBLE"
+		},
+		{
+		  "name": "beta2",
+		  "type": "DOUBLE"
+		},
+		{
+		  "name": "beta3",
+		  "type": "DOUBLE"
+		},
+		{
+		  "name": "beta4",
+		  "type": "DOUBLE"
+		}
+	]
+}

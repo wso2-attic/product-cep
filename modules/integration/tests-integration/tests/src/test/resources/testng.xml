@@ -43,6 +43,7 @@
             <class name="org.wso2.carbon.integration.test.inputflow.WebsocketTestCase"/>
             <class name="org.wso2.carbon.integration.test.inputflow.SOAPTestCase"/>
             <class name="org.wso2.carbon.integration.test.inputflow.FileTestCase"/>
+            <class name="org.wso2.carbon.integration.test.inputflow.Wso2EventTestCase"/>
             <!--<class name="org.wso2.carbon.integration.test.outputflow.LoggerTestCase"/>-->
             <class name="org.wso2.carbon.integration.test.outputflow.RDBMSTestCase"/>
             <class name="org.wso2.carbon.integration.test.outputflow.JMSTestCase"/>
@@ -50,6 +51,7 @@
             <class name="org.wso2.carbon.integration.test.outputflow.SOAPTestCase"/>
             <class name="org.wso2.carbon.integration.test.outputflow.HTTPTestCase"/>
             <class name="org.wso2.carbon.integration.test.outputflow.UIAdapterTestCase"/>
+            <class name="org.wso2.carbon.integration.test.outputflow.Wso2EventTestCase"/>
             <!--<class name="org.wso2.carbon.integration.test.processflow.PassThroughWithWso2Event"/>-->
             <!--<class name="org.wso2.carbon.integration.test.processflow.MQTTXMLMessageTestCase"/>-->
             <!--<class name="org.wso2.carbon.integration.test.storm.StormTestCase"/>-->
@@ -57,6 +59,7 @@
             <!--<class name="org.wso2.carbon.integration.test.inputflow.MQTTTestCase"/>-->
             <class name="org.wso2.carbon.integration.test.capp.CappTestCase"/>
             <class name="org.wso2.carbon.integration.test.extensionflow.RDBMSEventTableTestCase"/>
+            <class name="org.wso2.carbon.integration.test.extensionflow.TimeExtensionTestCase"/>
             <class name="org.wso2.carbon.integration.test.extensionflow.RegexTestCase"/>
         </classes>
 

@@ -1,0 +1,17 @@
+/* Enter a unique ExecutionPlan */
+@Plan:name('ExecutionPlan')
+
+/* Enter a unique description for ExecutionPlan */
+-- @Plan:description('ExecutionPlan')
+
+/* define streams/tables and write queries here ... */
+
+@Import('org.wso2.sample.stock.quote.stream:1.0.0')
+define stream stockStream (symbol string, price long, volume long);
+
+@Export('org.wso2.sample.stockPriceWithTimeStream:1.0.0')
+define stream stockPriceWithTimeStream (symbol string, utcTimestamp string, price long);
+
+from stockStream
+select symbol, time:utcTimestamp() as utcTimestamp, price
+insert into stockPriceWithTimeStream;
