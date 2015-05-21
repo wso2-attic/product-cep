@@ -127,9 +127,11 @@ public class Wso2EventTestCase extends CEPIntegrationTest {
             counter++;
         }
 
+        wso2EventServer.stop();
         eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream","1.0.0");
         eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream.map","1.0.0");
         eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("eventPublisher.xml");
+
     }
 
     @AfterClass(alwaysRun = true)
