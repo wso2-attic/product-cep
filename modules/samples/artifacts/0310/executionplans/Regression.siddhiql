@@ -1,0 +1,17 @@
+/* Enter a unique ExecutionPlan */
+@Plan:name('Regression')
+
+/* Enter a unique description for ExecutionPlan */
+-- @Plan:description('ExecutionPlan')
+
+/* define streams/tables and write queries here ... */
+
+@Import('baseball_data:1.0.0')
+define stream baseballData (salary int, rbi int, walks int, strikeouts int, errors int);
+
+@Export('regression_results:1.0.0')
+define stream regResults (salary int, rbi int, walks int, strikeouts int, errors int, stderr double, beta0 double, beta1 double, beta2 double, beta3 double, beta4 double);
+
+@name('query 1') @dist(parallel='4')from baseballData#timeseries:regress(2, 10000, 0.95, salary, rbi, walks, strikeouts, errors)
+        select *
+        insert into regResults;
