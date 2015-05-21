@@ -60,7 +60,7 @@ public class JMSClient {
                     Thread consumerThread = new Thread(topicConsumer);
                     log.info("Starting" + broker + "consumerTopic thread...");
                     consumerThread.start();
-                    Thread.sleep(5*600);
+                    Thread.sleep(5*60000);
                     log.info("Shutting down " + broker + " consumerTopic...");
                     topicConsumer.shutdown();
                 }else{
@@ -70,7 +70,7 @@ public class JMSClient {
                     Thread consumerThread = new Thread(queueConsumer);
                     log.info("Starting" + broker + "consumerQueue thread...");
                     consumerThread.start();
-                    Thread.sleep(5*600);
+                    Thread.sleep(5*60000);
                     log.info("Shutting down " + broker + " consumerQueue...");
                     queueConsumer.shutdown();
                 }
