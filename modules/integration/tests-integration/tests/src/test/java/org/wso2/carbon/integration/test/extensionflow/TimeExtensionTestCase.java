@@ -102,6 +102,8 @@ public class TimeExtensionTestCase extends CEPIntegrationTest {
         eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("Wso2EventPublisher.xml");
 
         Thread.sleep(2000);
+
+        agentServer.stop();
     }
 
     @AfterClass(alwaysRun = true)
