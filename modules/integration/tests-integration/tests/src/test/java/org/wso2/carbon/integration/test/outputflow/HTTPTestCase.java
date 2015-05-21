@@ -89,7 +89,7 @@ public class HTTPTestCase extends CEPIntegrationTest {
                 "\"latitude\":\"7.12324\"},\"payloadData\":{\"humidity\":\"100.34\",\"sensorValue\":\"23.4545\"}}}";
 
         eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
-        eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("soap.xml");
+        eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("httpJson.xml");
 
         try {
             Assert.assertTrue(receivedEvent.contains(sentEvent), "Incorrect mapping has occurred!");
