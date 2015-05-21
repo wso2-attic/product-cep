@@ -132,6 +132,14 @@
             </includes>
         </fileSet>
         <fileSet>
+            <directory>../../modules/samples/target/output-ui-test</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/samples/artifacts/0071/webapps</outputDirectory>
+            <includes>
+                <include>*.war</include>
+            </includes>
+        </fileSet>
+
+        <fileSet>
             <directory>scripts</directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/bin</outputDirectory>
             <includes>
