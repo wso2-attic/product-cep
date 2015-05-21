@@ -1,0 +1,16 @@
+{
+  "name": "org.wso2.sample.order.count",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "payloadData": [
+    {
+      "name": "totalOrders",
+      "type": "LONG"
+    },
+    {
+      "name": "sumPrice",
+      "type": "DOUBLE"
+    }
+  ]
+}

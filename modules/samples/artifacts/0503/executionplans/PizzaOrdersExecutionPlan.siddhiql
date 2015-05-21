@@ -1,0 +1,17 @@
+/* Enter a unique ExecutionPlan */
+@Plan:name('PizzaOrdersExecutionPlan')
+
+/* Enter a unique description for ExecutionPlan */
+-- @Plan:description('ExecutionPlan')
+
+/* define streams/tables and write queries here ... */
+
+@Import('org.wso2.sample.pizza.orderStream:1.0.0')
+define stream pizzaOrder (orderNo string, customerName string, telephoneNo string, orderInfo string, price float, orderedTime string);
+
+@Export('org.wso2.sample.order.count:1.0.0')
+define stream orderCount (totalOrders long, sumPrice double);
+
+from pizzaOrder#window.length(20)
+select count(orderNo) as totalOrders, sum(price) as sumPrice
+insert into orderCount;
