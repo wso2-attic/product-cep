@@ -24,6 +24,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.event.simulator.stub.types.EventDto;
+import org.wso2.carbon.integration.common.admin.client.LogViewerClient;
+import org.wso2.carbon.logging.view.stub.types.carbon.LogEvent;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
 
 /**
@@ -32,6 +34,7 @@ import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
 public class LoggerTestCase extends CEPIntegrationTest {
 
     private static final Log log = LogFactory.getLog(LoggerTestCase.class);
+    private static LogViewerClient logViewerClient;
 
     @BeforeClass(alwaysRun = true)
     public void init()
@@ -40,9 +43,14 @@ public class LoggerTestCase extends CEPIntegrationTest {
         super.init(TestUserMode.SUPER_TENANT_ADMIN);
         String loggedInSessionCookie = getSessionCookie();
 
-        eventSimulatorAdminServiceClient = configurationUtil.getEventSimulatorAdminServiceClient(backendURL, loggedInSessionCookie);
-        eventStreamManagerAdminServiceClient = configurationUtil.getEventStreamManagerAdminServiceClient(backendURL, loggedInSessionCookie);
-        eventPublisherAdminServiceClient = configurationUtil.getEventPublisherAdminServiceClient(backendURL, loggedInSessionCookie);
+        eventSimulatorAdminServiceClient = configurationUtil.getEventSimulatorAdminServiceClient(
+                backendURL, loggedInSessionCookie);
+        eventStreamManagerAdminServiceClient = configurationUtil.getEventStreamManagerAdminServiceClient(
+                backendURL, loggedInSessionCookie);
+        eventPublisherAdminServiceClient = configurationUtil.getEventPublisherAdminServiceClient(
+                backendURL, loggedInSessionCookie);
+        logViewerClient = new LogViewerClient(backendURL, loggedInSessionCookie);
+
     }
 
     @Test(groups = {"wso2.cep"}, description = "Testing Text Logger")
@@ -51,7 +59,8 @@ public class LoggerTestCase extends CEPIntegrationTest {
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("outputflows/sample0055", "org.wso2.event.sensor.stream_1.0.0.json");
+        String streamDefinitionAsString = getJSONArtifactConfiguration("outputflows/sample0055",
+                "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
@@ -62,15 +71,18 @@ public class LoggerTestCase extends CEPIntegrationTest {
 
         EventDto eventDto = new EventDto();
         eventDto.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
-        eventDto.setAttributeValues(new String[]{"199008131245", "false", "100", "temperature", "23.45656", "7.12324", "100.34", "23.4545"});
+        eventDto.setAttributeValues(new String[]{"199008131245", "false", "100", "temperature", "23.45656", "7.12324",
+                "100.34", "23.4545"});
 
         EventDto eventDto2 = new EventDto();
         eventDto2.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
-        eventDto2.setAttributeValues(new String[]{"199008131245", "false", "101", "temperature", "23.45656", "7.12324", "100.34", "23.4545"});
+        eventDto2.setAttributeValues(new String[]{"199008131245", "false", "101", "temperature", "23.45656", "7.12324",
+                "100.34", "23.4545"});
 
         EventDto eventDto3 = new EventDto();
         eventDto3.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
-        eventDto3.setAttributeValues(new String[]{"199008131245", "false", "103", "temperature", "23.45656", "7.12324", "100.34", "23.4545"});
+        eventDto3.setAttributeValues(new String[]{"199008131245", "false", "103", "temperature", "23.45656", "7.12324",
+                "100.34", "23.4545"});
 
         eventSimulatorAdminServiceClient.sendEvent(eventDto);
         Thread.sleep(1000);
@@ -90,7 +102,8 @@ public class LoggerTestCase extends CEPIntegrationTest {
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("outputflows/sample0056", "org.wso2.event.sensor.stream_1.0.0.json");
+        String streamDefinitionAsString = getJSONArtifactConfiguration("outputflows/sample0056",
+                "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
@@ -101,21 +114,42 @@ public class LoggerTestCase extends CEPIntegrationTest {
 
         EventDto eventDto = new EventDto();
         eventDto.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
-        eventDto.setAttributeValues(new String[]{"199008131245", "false", "200", "temperature", "23.45656", "7.12324", "100.34", "23.4545"});
+        eventDto.setAttributeValues(new String[]{"199008131245", "false", "200", "temperature", "23.45656", "7.12324",
+                "100.34", "23.4545"});
 
         EventDto eventDto2 = new EventDto();
         eventDto2.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
-        eventDto2.setAttributeValues(new String[]{"199008131245", "false", "201", "temperature", "23.45656", "7.12324", "100.34", "23.4545"});
+        eventDto2.setAttributeValues(new String[]{"199008131245", "false", "201", "temperature", "23.45656", "7.12324",
+                "100.34", "23.4545"});
 
         EventDto eventDto3 = new EventDto();
         eventDto3.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
-        eventDto3.setAttributeValues(new String[]{"199008131245", "false", "203", "temperature", "23.45656", "7.12324", "100.34", "23.4545"});
+        eventDto3.setAttributeValues(new String[]{"199008131245", "false", "203", "temperature", "23.45656", "7.12324",
+                "100.34", "23.4545"});
 
+        int beforeCount = logViewerClient.getAllRemoteSystemLogs().length;
         eventSimulatorAdminServiceClient.sendEvent(eventDto);
         Thread.sleep(1000);
         eventSimulatorAdminServiceClient.sendEvent(eventDto2);
         Thread.sleep(1000);
         eventSimulatorAdminServiceClient.sendEvent(eventDto3);
+        Thread.sleep(1000);
+        try {
+            boolean mappingPortionFound = false;
+            Thread.sleep(2000);
+            LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
+            for (int i = 0; i < (logs.length - beforeCount); i++) {
+                if (logs[i].getMessage().contains("temperature Sensor related data. \n- sensor id: 200\n- time-stamp: 199008131245\n- power saving enabled: false\nLocation \n- longitude: 23.45656\n- latitude: 7.12324\nValues\n- temperature: 23.4545\n- humidity: 100.34")) {
+                    mappingPortionFound = true;
+                    break;
+                }
+            }
+            Assert.assertTrue(mappingPortionFound, "Incorrect mapping has occurred! ");
+            Thread.sleep(2000);
+        } catch (Throwable e) {
+            log.error("Exception thrown: " + e.getMessage(), e);
+            Assert.fail("Exception: " + e.getMessage());
+        }
 
         eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
         eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("logger.xml");
@@ -130,7 +164,8 @@ public class LoggerTestCase extends CEPIntegrationTest {
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("outputflows/sample0051", "org.wso2.event.sensor.stream_1.0.0.json");
+        String streamDefinitionAsString = getJSONArtifactConfiguration("outputflows/sample0051",
+                "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
@@ -141,15 +176,18 @@ public class LoggerTestCase extends CEPIntegrationTest {
 
         EventDto eventDto = new EventDto();
         eventDto.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
-        eventDto.setAttributeValues(new String[]{"199008131245", "false", "300", "temperature", "23.45656", "7.12324", "100.34", "23.4545"});
+        eventDto.setAttributeValues(new String[]{"199008131245", "false", "300", "temperature", "23.45656", "7.12324",
+                "100.34", "23.4545"});
 
         EventDto eventDto2 = new EventDto();
         eventDto2.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
-        eventDto2.setAttributeValues(new String[]{"199008131245", "false", "301", "temperature", "23.45656", "7.12324", "100.34", "23.4545"});
+        eventDto2.setAttributeValues(new String[]{"199008131245", "false", "301", "temperature", "23.45656", "7.12324",
+                "100.34", "23.4545"});
 
         EventDto eventDto3 = new EventDto();
         eventDto3.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
-        eventDto3.setAttributeValues(new String[]{"199008131245", "false", "303", "temperature", "23.45656", "7.12324", "100.34", "23.4545"});
+        eventDto3.setAttributeValues(new String[]{"199008131245", "false", "303", "temperature", "23.45656", "7.12324",
+                "100.34", "23.4545"});
 
         eventSimulatorAdminServiceClient.sendEvent(eventDto);
         Thread.sleep(1000);
@@ -170,7 +208,8 @@ public class LoggerTestCase extends CEPIntegrationTest {
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("outputflows/sample0052", "org.wso2.event.sensor.stream_1.0.0.json");
+        String streamDefinitionAsString = getJSONArtifactConfiguration("outputflows/sample0052",
+                "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
@@ -181,21 +220,46 @@ public class LoggerTestCase extends CEPIntegrationTest {
 
         EventDto eventDto = new EventDto();
         eventDto.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
-        eventDto.setAttributeValues(new String[]{"199008131245", "false", "400", "temperature", "23.45656", "7.12324", "100.34", "23.4545"});
+        eventDto.setAttributeValues(new String[]{"199008131245", "false", "400", "temperature", "23.45656", "7.12324",
+                "100.34", "23.4545"});
 
         EventDto eventDto2 = new EventDto();
         eventDto2.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
-        eventDto2.setAttributeValues(new String[]{"199008131245", "false", "401", "temperature", "23.45656", "7.12324", "100.34", "23.4545"});
+        eventDto2.setAttributeValues(new String[]{"199008131245", "false", "401", "temperature", "23.45656", "7.12324",
+                "100.34", "23.4545"});
 
         EventDto eventDto3 = new EventDto();
         eventDto3.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
-        eventDto3.setAttributeValues(new String[]{"199008131245", "false", "403", "temperature", "23.45656", "7.12324", "100.34", "23.4545"});
+        eventDto3.setAttributeValues(new String[]{"199008131245", "false", "403", "temperature", "23.45656", "7.12324",
+                "100.34", "23.4545"});
+
+        int beforeCount = logViewerClient.getAllRemoteSystemLogs().length;
 
         eventSimulatorAdminServiceClient.sendEvent(eventDto);
         Thread.sleep(1000);
         eventSimulatorAdminServiceClient.sendEvent(eventDto2);
         Thread.sleep(1000);
         eventSimulatorAdminServiceClient.sendEvent(eventDto3);
+
+        try {
+            boolean mappingPortionFound = false;
+            Thread.sleep(2000);
+            LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
+            for (int i = 0; i < (logs.length - beforeCount); i++) {
+                if (logs[i].getMessage().contains("{\"Sensor Data\":{\"equipment related data\":" +
+                        "{\"timestamp\":199008131245,\"isPowerSaverEnabled\":false,\"sensorId\":400," +
+                        "\"sensorName\":\"temperature\"},\"location data\":{\"longitude\":23.45656,\"latitude\":7.12324}," +
+                        "\"sensor data\":{\"humidity\":100.34,\"sensorValue\":23.4545}}}")) {
+                    mappingPortionFound = true;
+                    break;
+                }
+            }
+            Assert.assertTrue(mappingPortionFound, "Incorrect mapping has occurred! ");
+            Thread.sleep(2000);
+        } catch (Throwable e) {
+            log.error("Exception thrown: " + e.getMessage(), e);
+            Assert.fail("Exception: " + e.getMessage());
+        }
 
         eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
         eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("logger.xml");
@@ -210,7 +274,8 @@ public class LoggerTestCase extends CEPIntegrationTest {
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("outputflows/sample0053", "org.wso2.event.sensor.stream_1.0.0.json");
+        String streamDefinitionAsString = getJSONArtifactConfiguration("outputflows/sample0053",
+                "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
@@ -221,15 +286,18 @@ public class LoggerTestCase extends CEPIntegrationTest {
 
         EventDto eventDto = new EventDto();
         eventDto.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
-        eventDto.setAttributeValues(new String[]{"199008131245", "false", "500", "temperature", "23.45656", "7.12324", "100.34", "23.4545"});
+        eventDto.setAttributeValues(new String[]{"199008131245", "false", "500", "temperature", "23.45656", "7.12324",
+                "100.34", "23.4545"});
 
         EventDto eventDto2 = new EventDto();
         eventDto2.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
-        eventDto2.setAttributeValues(new String[]{"199008131245", "false", "501", "temperature", "23.45656", "7.12324", "100.34", "23.4545"});
+        eventDto2.setAttributeValues(new String[]{"199008131245", "false", "501", "temperature", "23.45656", "7.12324",
+                "100.34", "23.4545"});
 
         EventDto eventDto3 = new EventDto();
         eventDto3.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
-        eventDto3.setAttributeValues(new String[]{"199008131245", "false", "503", "temperature", "23.45656", "7.12324", "100.34", "23.4545"});
+        eventDto3.setAttributeValues(new String[]{"199008131245", "false", "503", "temperature", "23.45656", "7.12324",
+                "100.34", "23.4545"});
 
         eventSimulatorAdminServiceClient.sendEvent(eventDto);
         Thread.sleep(1000);
@@ -250,7 +318,8 @@ public class LoggerTestCase extends CEPIntegrationTest {
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("outputflows/sample0054", "org.wso2.event.sensor.stream_1.0.0.json");
+        String streamDefinitionAsString = getJSONArtifactConfiguration("outputflows/sample0054",
+                "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
@@ -261,21 +330,58 @@ public class LoggerTestCase extends CEPIntegrationTest {
 
         EventDto eventDto = new EventDto();
         eventDto.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
-        eventDto.setAttributeValues(new String[]{"199008131245", "false", "500", "temperature", "23.45656", "7.12324", "100.34", "23.4545"});
+        eventDto.setAttributeValues(new String[]{"199008131245", "false", "500", "temperature", "23.45656", "7.12324",
+                "100.34", "23.4545"});
 
         EventDto eventDto2 = new EventDto();
         eventDto2.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
-        eventDto2.setAttributeValues(new String[]{"199008131245", "false", "501", "temperature", "23.45656", "7.12324", "100.34", "23.4545"});
+        eventDto2.setAttributeValues(new String[]{"199008131245", "false", "501", "temperature", "23.45656", "7.12324",
+                "100.34", "23.4545"});
 
         EventDto eventDto3 = new EventDto();
         eventDto3.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
-        eventDto3.setAttributeValues(new String[]{"199008131245", "false", "503", "temperature", "23.45656", "7.12324", "100.34", "23.4545"});
+        eventDto3.setAttributeValues(new String[]{"199008131245", "false", "503", "temperature", "23.45656", "7.12324",
+                "100.34", "23.4545"});
+
+        int beforeCount = logViewerClient.getAllRemoteSystemLogs().length;
 
         eventSimulatorAdminServiceClient.sendEvent(eventDto);
         Thread.sleep(1000);
         eventSimulatorAdminServiceClient.sendEvent(eventDto2);
         Thread.sleep(1000);
         eventSimulatorAdminServiceClient.sendEvent(eventDto3);
+
+        try {
+            boolean mappingPortionFound = false;
+            Thread.sleep(2000);
+            LogEvent[] logs = logViewerClient.getAllRemoteSystemLogs();
+            for (int i = 0; i < (logs.length - beforeCount); i++) {
+                if (logs[i].getMessage().contains("<SensorData>\n" +
+                        "        <equipmentRelatedData>\n" +
+                        "          <timestamp>199008131245</timestamp>\n" +
+                        "          <isPowerSaverEnabled>false</isPowerSaverEnabled>\n" +
+                        "          <sensorId>503</sensorId>\n" +
+                        "          <sensorName>temperature</sensorName>\n" +
+                        "        </equipmentRelatedData>\n" +
+                        "        <locationData>\n" +
+                        "          <longitude>23.45656</longitude>\n" +
+                        "          <latitude>7.12324</latitude>\n" +
+                        "        </locationData>\n" +
+                        "        <sensorData>\n" +
+                        "          <humidity>100.34</humidity>\n" +
+                        "          <sensorValue>23.4545</sensorValue>\n" +
+                        "        </sensorData>\n" +
+                        "      </SensorData>")) {
+                    mappingPortionFound = true;
+                    break;
+                }
+            }
+            Assert.assertTrue(mappingPortionFound, "Incorrect mapping has occurred! ");
+            Thread.sleep(2000);
+        } catch (Throwable e) {
+            log.error("Exception thrown: " + e.getMessage(), e);
+            Assert.fail("Exception: " + e.getMessage());
+        }
 
         eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
         eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("logger.xml");
