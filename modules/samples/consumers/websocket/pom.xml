@@ -121,7 +121,7 @@
                                 <artifactItem>
                                     <groupId>javax.servlet</groupId>
                                     <artifactId>javax.servlet-api</artifactId>
-                                    <version>${javax.servlet.api.version}</version>
+                                    <version>${javax.javax.servlet.api.version}</version>
                                     <type>jar</type>
                                 </artifactItem>
                                 <artifactItem>

@@ -123,7 +123,7 @@
                                 <artifactItem>
                                     <groupId>javax.servlet</groupId>
                                     <artifactId>javax.servlet-api</artifactId>
-                                    <version>3.1.0</version>
+                                    <version>${javax.javax.servlet.api.version}</version>
                                     <type>jar</type>
                                 </artifactItem>
                                 <artifactItem>
