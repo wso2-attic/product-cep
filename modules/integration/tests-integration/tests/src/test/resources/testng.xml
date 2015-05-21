@@ -47,6 +47,7 @@
             <class name="org.wso2.carbon.integration.test.outputflow.RDBMSTestCase"/>
             <class name="org.wso2.carbon.integration.test.outputflow.JMSTestCase"/>
             <class name="org.wso2.carbon.integration.test.outputflow.WebsocketTestCase"/>
+            <class name="org.wso2.carbon.integration.test.outputflow.Wso2EventTestCase"/>
             <!--<class name="org.wso2.carbon.integration.test.processflow.PassThroughWithWso2Event"/>-->
             <!--<class name="org.wso2.carbon.integration.test.processflow.MQTTXMLMessageTestCase"/>-->
             <!--<class name="org.wso2.carbon.integration.test.storm.StormTestCase"/>-->
