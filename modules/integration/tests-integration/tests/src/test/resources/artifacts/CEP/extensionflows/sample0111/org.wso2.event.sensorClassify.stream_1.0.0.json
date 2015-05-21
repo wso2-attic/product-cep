@@ -1,0 +1,18 @@
+{
+  "name": "org.wso2.event.sensorClassify.stream",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "metaData": [
+    {
+      "name": "isTemperature",
+      "type": "BOOL"
+    }
+  ],
+  "payloadData": [
+    {
+      "name": "value",
+      "type": "DOUBLE"
+    }
+  ]
+}

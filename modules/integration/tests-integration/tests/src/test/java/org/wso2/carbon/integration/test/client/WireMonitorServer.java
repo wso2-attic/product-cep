@@ -66,7 +66,7 @@ public class WireMonitorServer implements Runnable {
             int ch;
             builder = new StringBuilder("");
             Long time = System.currentTimeMillis();
-            while (active && (ch = inputStream.read()) != -1) {
+            while ((ch = inputStream.read()) != -1) {
                 builder.append((char) ch);
                 // In this case no need of reading more than timeout value
                 if (System.currentTimeMillis() > (time + TIMEOUT_VALUE_FOR_SERVER)) {
@@ -75,7 +75,9 @@ public class WireMonitorServer implements Runnable {
             }
 
         } catch (IOException ioException) {
-            log.error("IO Exception: " + ioException.getMessage());
+            if(active){
+                log.error("IO Exception: " + ioException.getMessage());
+            }
         }
         finally {
             try {

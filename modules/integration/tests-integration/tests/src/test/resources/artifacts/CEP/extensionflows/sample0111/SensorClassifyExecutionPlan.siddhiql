@@ -1,0 +1,19 @@
+/* Enter a unique ExecutionPlan */
+@Plan:name('SensorClassifyExecutionPlan')
+
+/* Enter a unique description for ExecutionPlan */
+-- @Plan:description('This plan will seperate the particular shoe items from shopping stream items')
+
+/* define streams/tables and write queries here ... */
+
+@Import('org.wso2.event.sensor.stream:1.0.0')
+define stream sensor (meta_timestamp long, meta_isPowerSaverEnabled bool, meta_sensorId int, meta_sensorName string, correlation_longitude double, correlation_latitude double, humidity float, sensorValue double);
+
+@Export('org.wso2.event.sensorClassify.stream:1.0.0')
+define stream tempertaure (meta_isTemperature bool, value double);
+
+from sensor
+select regex:find("temperature", meta_sensorName) as meta_isTemperature, sensorValue as value
+insert into tempertaure
+
+                    
