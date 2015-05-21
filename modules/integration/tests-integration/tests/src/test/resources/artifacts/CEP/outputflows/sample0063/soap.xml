@@ -17,9 +17,9 @@
 
 <eventPublisher name="soap" statistics="disable"
   trace="disable" xmlns="http://wso2.org/carbon/eventpublisher">
-  <from streamName="org.wso2.event.statistics.stream" version="1.0.0"/>
+  <from streamName="org.wso2.event.sensor.stream" version="1.0.0"/>
   <mapping customMapping="disable" type="xml"/>
   <to eventAdapterType="soap">
-    <property name="url">https://localhost:9443/services/Axis2LogService/log</property>
+    <property name="url">http://localhost:9445/services/Axis2LogService/log</property>
   </to>
 </eventPublisher>

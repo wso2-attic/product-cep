@@ -28,6 +28,7 @@ import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.JMSBrokerController;
 import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config.JMSBrokerConfiguration;
 import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config.JMSBrokerConfigurationProvider;
+import org.wso2.carbon.databridge.commons.Event;
 import org.wso2.carbon.event.simulator.stub.types.EventDto;
 import org.wso2.carbon.integration.common.utils.mgt.ServerConfigurationManager;
 import org.wso2.carbon.integration.test.client.JMSConsumerClient;
@@ -38,6 +39,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.rmi.RemoteException;
+import java.util.List;
 
 /**
  * Sending different formatted events to the JMS Publisher and consume using a client
@@ -216,6 +218,200 @@ public class JMSTestCase extends CEPIntegrationTest {
         try {
             Assert.assertEquals(JMSConsumerClient.getMessageCount(), messageCount,
                     "Incorrect number of messages consumed!");
+        } catch (Throwable e) {
+            log.error("Exception thrown: " + e.getMessage(), e);
+            Assert.fail("Exception: " + e.getMessage());
+        } finally {
+            JMSConsumerClient.shutdown();
+        }
+
+    }
+
+    @Test(groups = {"wso2.cep"},
+            description = "Testing activemq jms publisher with Text formatted event with custom mapping",
+            dependsOnMethods = {"jmsTextTestWithDefaultMappingScenario"})
+    public void jmsTextTestWithCustomMappingScenario() throws Exception {
+        final int messageCount = 1;
+
+        int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
+        int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
+
+        EventDto eventDto = new EventDto();
+        eventDto.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
+        eventDto.setAttributeValues(new String[]{"199008131245", "false", "100", "temperature", "23.45656", "7.12324",
+                "100.34", "23.4545"});
+
+
+        //Add StreamDefinition
+        String streamDefinitionAsString = getJSONArtifactConfiguration("outputflows/sample0059",
+                "org.wso2.event.sensor.stream_1.0.0.json");
+        eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
+        Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
+
+        //Add ActiveMQ JMS EventPublisher
+        String eventPublisherConfig = getXMLArtifactConfiguration("outputflows/sample0059", "jmsPublisherCustomText.xml");
+        eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
+        Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
+
+        Thread.sleep(10000);
+        JMSConsumerClient.startConsumer("topicText");
+        //Letting the JMS consumer start
+        Thread.sleep(3000);
+
+        eventSimulatorAdminServiceClient.sendEvent(eventDto);
+        Thread.sleep(2000);
+
+        List<Object> preservedEventList = JMSConsumerClient.getPreservedEventList();
+        String sentEvent = "Sensor Data Information\n" +
+                "temperature Sensor related data. \n" +
+                "- sensor id: 100\n" +
+                "- time-stamp: 199008131245\n" +
+                "- power saving enabled: false\n" +
+                "Location \n" +
+                "- longitude: 23.45656\n" +
+                "- latitude: 7.12324\n" +
+                "Values\n" +
+                "- temperature: 23.4545\n" +
+                "- humidity: 100.34";
+
+        String preservedEvent = (String) preservedEventList.get(0);
+
+        //wait while all stats are published
+        Thread.sleep(5000);
+        eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
+        eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("jmsPublisherCustomText.xml");
+
+        try {
+            Assert.assertEquals(JMSConsumerClient.getMessageCount(), messageCount,
+                    "Incorrect number of messages consumed!");
+            Assert.assertEquals(preservedEvent, sentEvent, "Incorrect mapping has occurred!");
+        } catch (Throwable e) {
+            log.error("Exception thrown: " + e.getMessage(), e);
+            Assert.fail("Exception: " + e.getMessage());
+        } finally {
+            JMSConsumerClient.shutdown();
+        }
+
+    }
+
+    @Test(groups = {"wso2.cep"},
+            description = "Testing activemq jms publisher with Text formatted event with custom mapping",
+            dependsOnMethods = {"jmsTextTestWithCustomMappingScenario"})
+    public void jmsJSONTestWithDefaultMappingScenario() throws Exception {
+        final int messageCount = 3;
+
+        int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
+        int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
+
+        EventDto eventDto = new EventDto();
+        eventDto.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
+        eventDto.setAttributeValues(new String[]{"199008131245", "false", "100", "temperature", "23.45656", "7.12324",
+                "100.34", "23.4545"});
+
+        EventDto eventDto2 = new EventDto();
+        eventDto2.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
+        eventDto2.setAttributeValues(new String[]{"199008131245", "false", "101", "temperature", "23.45656", "7.12324",
+                "100.34", "23.4545"});
+
+        EventDto eventDto3 = new EventDto();
+        eventDto3.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
+        eventDto3.setAttributeValues(new String[]{"199008131245", "false", "103", "temperature", "23.45656", "7.12324",
+                "100.34", "23.4545"});
+
+
+        //Add StreamDefinition
+        String streamDefinitionAsString = getJSONArtifactConfiguration("outputflows/sample0059",
+                "org.wso2.event.sensor.stream_1.0.0.json");
+        eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
+        Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
+
+        //Add ActiveMQ JMS EventPublisher
+        String eventPublisherConfig = getXMLArtifactConfiguration("outputflows/sample0059", "jmsPublisherJSON.xml");
+        eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
+        Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
+
+        Thread.sleep(10000);
+        JMSConsumerClient.startConsumer("topicJSON");
+        //Letting the JMS consumer start
+        Thread.sleep(3000);
+
+        eventSimulatorAdminServiceClient.sendEvent(eventDto);
+        Thread.sleep(1000);
+        eventSimulatorAdminServiceClient.sendEvent(eventDto2);
+        Thread.sleep(1000);
+        eventSimulatorAdminServiceClient.sendEvent(eventDto3);
+
+        //wait while all stats are published
+        Thread.sleep(5000);
+        eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
+        eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("jmsPublisherJSON.xml");
+
+        try {
+            Assert.assertEquals(JMSConsumerClient.getMessageCount(), messageCount,
+                    "Incorrect number of messages consumed!");
+        } catch (Throwable e) {
+            log.error("Exception thrown: " + e.getMessage(), e);
+            Assert.fail("Exception: " + e.getMessage());
+        } finally {
+            JMSConsumerClient.shutdown();
+        }
+
+    }
+
+    @Test(groups = {"wso2.cep"},
+            description = "Testing activemq jms publisher with Text formatted event with custom mapping",
+            dependsOnMethods = {"jmsJSONTestWithDefaultMappingScenario"})
+    public void jmsJSONTestWithCustomMappingScenario() throws Exception {
+        final int messageCount = 1;
+
+        int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
+        int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
+
+        EventDto eventDto = new EventDto();
+        eventDto.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
+        eventDto.setAttributeValues(new String[]{"199008131245", "false", "100", "temperature", "23.45656", "7.12324",
+                "100.34", "23.4545"});
+
+
+        //Add StreamDefinition
+        String streamDefinitionAsString = getJSONArtifactConfiguration("outputflows/sample0059",
+                "org.wso2.event.sensor.stream_1.0.0.json");
+        eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
+        Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
+
+        //Add ActiveMQ JMS EventPublisher
+        String eventPublisherConfig = getXMLArtifactConfiguration("outputflows/sample0059", "jmsPublisherCustomJSON.xml");
+        eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
+        Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
+
+        Thread.sleep(10000);
+        JMSConsumerClient.startConsumer("topicJSON");
+        //Letting the JMS consumer start
+        Thread.sleep(3000);
+
+        eventSimulatorAdminServiceClient.sendEvent(eventDto);
+        Thread.sleep(2000);
+
+        List<Object> preservedEventList = JMSConsumerClient.getPreservedEventList();
+        String sentEvent = "{\"Sensor Data\":" +
+                "{\"equipment related data\":{\"timestamp\":199008131245," +
+                "\"isPowerSaverEnabled\":false,\"sensorId\":100,\"sensorName\":\"temperature\"}," +
+                "\"location data\":" +
+                "{\"longitude\":23.45656,\"latitude\":7.12324}," +
+                "\"sensor data\":" +
+                "{\"humidity\":100.34,\"sensorValue\":23.4545}}}";
+
+        String preservedEvent = (String) preservedEventList.get(0);
+
+        //wait while all stats are published
+        Thread.sleep(5000);
+        eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
+        eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("jmsPublisherCustomJSON.xml");
+
+        try {
+            Assert.assertEquals(JMSConsumerClient.getMessageCount(), messageCount,
+                    "Incorrect number of messages consumed!");
+            Assert.assertEquals(preservedEvent, sentEvent, "Incorrect mapping has occurred!");
         } catch (Throwable e) {
             log.error("Exception thrown: " + e.getMessage(), e);
             Assert.fail("Exception: " + e.getMessage());
