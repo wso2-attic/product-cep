@@ -68,20 +68,20 @@ public class RDBMSEventTableTestCase extends CEPIntegrationTest {
         int startEXPCount = eventProcessorAdminServiceClient.getExecutionPlanConfigurationCount();
 
         //Add StreamDefinition
-        String streamDefinitionAsString1 = getJSONArtifactConfiguration("extensionflows/sample0110", "org.wso2.sample.pizza.orderStream_1.0.0.json");
+        String streamDefinitionAsString1 = getJSONArtifactConfiguration("extensionflows/eventtable", "org.wso2.sample.pizza.orderStream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString1);
-        String streamDefinitionAsString2 = getJSONArtifactConfiguration("extensionflows/sample0110", "org.wso2.sample.pizza.stream.previousOrders_1.0.0.json");
+        String streamDefinitionAsString2 = getJSONArtifactConfiguration("extensionflows/eventtable", "org.wso2.sample.pizza.stream.previousOrders_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString2);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 2);
 
 
         //Add Execution Plan
-        String executionPlanAsString = getExecutionPlanFromFile("extensionflows/sample0110", "PreviousHistoryProcessingPlan.siddhiql");
+        String executionPlanAsString = getExecutionPlanFromFile("extensionflows/eventtable", "PreviousHistoryProcessingPlan.siddhiql");
         eventProcessorAdminServiceClient.addExecutionPlan(executionPlanAsString);
         Assert.assertEquals(eventProcessorAdminServiceClient.getActiveExecutionPlanConfigurationCount(), startEXPCount + 1);
 
         //Add RDBMS publisher
-        String eventPublisherConfig = getXMLArtifactConfiguration("extensionflows/sample0110", "historyPizzaOrderPublisher.xml");
+        String eventPublisherConfig = getXMLArtifactConfiguration("extensionflows/eventtable", "historyPizzaOrderPublisher.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
