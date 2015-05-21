@@ -56,7 +56,7 @@ public class Wso2EventTestCase extends CEPIntegrationTest {
     }
 
     @Test(groups = {"wso2.cep"}, description = "Testing wso2event publisher with custom mapping formatting")
-    public void wso2EventMapTestWithCustomMappingScenario() throws Exception {
+    public void wso2EventPublisherMapTestWithCustomMappingScenario() throws Exception {
         final int messageCount = 3;
         String samplePath = "outputflows" + File.separator + "sample0058";
         Wso2EventServer wso2EventServer = new Wso2EventServer(samplePath, 7661, true);
