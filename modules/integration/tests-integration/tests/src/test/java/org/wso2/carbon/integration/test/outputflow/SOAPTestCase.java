@@ -72,8 +72,6 @@ public class SOAPTestCase extends CEPIntegrationTest{
         WireMonitorServer wireMonitorServer = new WireMonitorServer(9445);
         Thread wireMonitorServerThread = new Thread(wireMonitorServer);
         wireMonitorServerThread.start();
-//        WireMonitorServer2 wireMonitorServer2 = new WireMonitorServer2(9445);
-//        wireMonitorServer2.start();
         Thread.sleep(3000);
 
         eventSimulatorAdminServiceClient.sendEvent(eventDto);
