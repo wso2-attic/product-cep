@@ -42,6 +42,8 @@
     <modules>
         <module>producers</module>
         <module>consumers</module>
+        <module>extensions/geo-event-fuser</module>
+        <module>extensions/geo-event-notifier</module>
     </modules>
 
     <organization>

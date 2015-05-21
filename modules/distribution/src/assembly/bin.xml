@@ -138,6 +138,20 @@
                 <include>*.war</include>
             </includes>
         </fileSet>
+        <fileSet>
+            <directory>../../modules/samples/extensions/geo-event-notifier/target</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/samples/utils/geo-dashboard-extensions</outputDirectory>
+            <includes>
+                <include>*.jar</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>../../modules/samples/extensions/geo-event-fuser/target</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/samples/utils/geo-dashboard-extensions</outputDirectory>
+            <includes>
+                <include>*.jar</include>
+            </includes>
+        </fileSet>
 
         <fileSet>
             <directory>scripts</directory>
