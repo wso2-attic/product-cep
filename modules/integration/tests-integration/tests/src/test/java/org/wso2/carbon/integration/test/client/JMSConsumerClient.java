@@ -16,16 +16,14 @@
 package org.wso2.carbon.integration.test.client;
 
 import org.apache.log4j.Logger;
+import org.wso2.carbon.databridge.commons.Event;
 
 import javax.jms.*;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import java.io.IOException;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * JMS consumer client subscribes to an ActiveMQ broker and retrieves the messages with a certain topic name or a queue name
@@ -37,6 +35,7 @@ public class JMSConsumerClient implements Runnable{
     private static String topicName = null;
     private static boolean active = true;
     private static int messageCount = 0;
+    private static List<Object> preservedEventList = null;
     /**
      * This method will start the jms subscriber
      *
@@ -48,6 +47,7 @@ public class JMSConsumerClient implements Runnable{
         active = true;
         Properties properties = new Properties();
         topicName = topic;
+        preservedEventList = new ArrayList<>();
         try {
             properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("activemq.properties"));
             Context context = new InitialContext(properties);
@@ -92,10 +92,14 @@ public class JMSConsumerClient implements Runnable{
                             String key = (String) enumeration.nextElement();
                             map.put(key, mapMessage.getObject(key));
                         }
+                        preservedEventList.add(map);
                         log.info("Received Map Message : \n" + map + "\n");
                     } else if(message instanceof TextMessage) {
-                        log.info("Received Text Message : \n" + ((TextMessage) message).getText() + "\n");
+                        String textMessage = ((TextMessage) message).getText();
+                        preservedEventList.add(textMessage);
+                        log.info("Received Text Message : \n" + textMessage + "\n");
                     } else {
+                        preservedEventList.add(message.toString());
                         log.info("Received message : \n" + message.toString() + "\n");
                     }
                 }
@@ -115,4 +119,9 @@ public class JMSConsumerClient implements Runnable{
     public static int getMessageCount(){
         return messageCount;
     }
+
+    public static List<Object> getPreservedEventList(){
+        return preservedEventList;
+    }
+
 }
