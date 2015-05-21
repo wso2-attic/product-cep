@@ -65,12 +65,13 @@ public class RDBMSTestCase extends CEPIntegrationTest {
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("outputflows/sample0071", "org.wso2.event.sensor.stream_1.0.0.json");
+        String streamDefinitionAsString = getJSONArtifactConfiguration("outputflows/sample0072",
+                "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
         //Add RDBMS publisher
-        String eventPublisherConfig = getXMLArtifactConfiguration("outputflows/sample0071", "rdbmsEventPublisher.xml");
+        String eventPublisherConfig = getXMLArtifactConfiguration("outputflows/sample0072", "rdbmsEventPublisher.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
