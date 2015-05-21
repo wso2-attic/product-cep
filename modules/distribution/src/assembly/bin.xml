@@ -251,7 +251,7 @@
 
         <!-- Copying client libraries needed for samples/clients -->
         <fileSet>
-            <directory>repository/client-lib</directory>
+            <directory>target/client-lib</directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/client-lib</outputDirectory>
         </fileSet>
 
@@ -334,22 +334,7 @@
             <filtered>true</filtered>
         </file>
 
-        <!--Siddhi conf-->
-        <file>
-            <source>repository/conf/siddhi/siddhi.extension</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/siddhi/
-            </outputDirectory>
-            <filtered>true</filtered>
-        </file>
-
-        <!--CEP HA conf-->
-        <file>
-            <source>repository/conf/cep-ha-management.xml</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/
-            </outputDirectory>
-            <filtered>true</filtered>
-        </file>
-
+        <!--CEP-->
         <file>
             <source>
                 ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/output-event-adapters.xml
@@ -396,19 +381,6 @@
             </outputDirectory>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
-        </file>
-        <!--Copying event stream definition config file -->
-        <file>
-            <!--
-                        <source>
-                            ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/data-bridge/stream-definitions.xml
-                        </source>
-            -->
-            <source>
-                repository/conf/data-bridge/stream-definitions.xml
-            </source>
-
-            <outputDirectory>wso2cep-${pom.version}/repository/conf/data-bridge</outputDirectory>
         </file>
 
         <!--&lt;!&ndash; Including logging-config.xml file &ndash;&gt;-->
