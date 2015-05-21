@@ -112,7 +112,6 @@
             <outputDirectory>${pom.artifactId}-${pom.version}/samples</outputDirectory>
             <includes>
                 <include>artifacts/**</include>
-                <include>lib/**</include>
                 <include>consumers/**</include>
                 <include>producers/**</include>
                 <include>ReadMe.txt</include>
@@ -124,6 +123,13 @@
                 <exclude>**/pom.xml</exclude>
                 <exclude>**/target/**</exclude>
             </excludes>
+        </fileSet>
+        <fileSet>
+            <directory>../../modules/samples/target/lib</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/samples/lib</outputDirectory>
+            <includes>
+                <include>*.jar</include>
+            </includes>
         </fileSet>
         <fileSet>
             <directory>scripts</directory>
