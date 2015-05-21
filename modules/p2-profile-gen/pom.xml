@@ -257,7 +257,9 @@
                                 <featureArtifactDef>
                                     org.wso2.carbon.event-processing:org.wso2.carbon.siddhi.tryit.feature:${carbon.event-processing.version}
                                 </featureArtifactDef>
-
+                                <featureArtifactDef>
+                                    org.wso2.carbon.analytics-common:org.wso2.carbon.analytics.dashboard.feature:${carbon.analytics-common.version}
+                                </featureArtifactDef>
 
                                 <!-- cep ui features -->
                                 <featureArtifactDef>
@@ -511,6 +513,10 @@
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.event.processor.manager.commons.feature.group</id>
+                                    <version>${carbon.analytics-common.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.analytics.dashboard.feature.group</id>
                                     <version>${carbon.analytics-common.version}</version>
                                 </feature>
 
