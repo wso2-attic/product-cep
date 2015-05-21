@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventPublisher name="cassandra" statistics="disable" trace="disable" xmlns="http://wso2.org/carbon/eventpublisher">
+  <from streamName="org.wso2.event.transaction.stream" version="1.0.0"/>
+  <mapping customMapping="disable" type="map"/>
+  <to eventAdapterType="cassandra">
+    <property name="port">9160</property>
+    <property name="index.all.columns">false</property>
+    <property name="key.space.name">CEP_KS</property>
+    <property name="user.name">admin</property>
+    <property name="column.family.name">CF_Transactions</property>
+    <property name="hosts">localhost</property>
+    <property name="cluster.name">Test Cluster</property>
+    <property encrypted="true" name="password">kuv2MubUUveMyv6GeHrXr9il59ajJIqUI4eoYHcgGKf/BBFOWn96NTjJQI+wYbWjKW6r79S7L7ZzgYeWx7DlGbff5X3pBN2Gh9yV0BHP1E93QtFqR7uTWi141Tr7V7ZwScwNqJbiNoV+vyLbsqKJE7T3nP8Ih9Y6omygbcLcHzg=</property>
+  </to>
+</eventPublisher>

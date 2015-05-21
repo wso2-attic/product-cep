@@ -70,7 +70,7 @@ public class DeployArtifactsBasicTestCase  extends CEPIntegrationTest {
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), ++eventReceiverCount);
 
         //Add HTTP Publisher
-        String eventPublisherConfig = getXMLArtifactConfiguration("DeployArtifactsBasicTestCase", "PizzaDeliveryNofication.xml");
+        String eventPublisherConfig = getXMLArtifactConfiguration("DeployArtifactsBasicTestCase", "PizzaDeliveryNotification.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), ++eventPublisherCount);
 
@@ -80,7 +80,7 @@ public class DeployArtifactsBasicTestCase  extends CEPIntegrationTest {
         Assert.assertEquals(eventProcessorAdminServiceClient.getExecutionPlanConfigurationCount(), ++executionPlanCount);
     }
 
-    @Test(groups = {"wso2.cep"}, description = "Removing artifacts.")
+    @Test(groups = {"wso2.cep"}, description = "Removing artifacts." ,dependsOnMethods = {"addArtifactsTestScenario"} )
     public void removeArtifactsTestScenario() throws Exception {
         eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.sample.pizza.order","1.0.0");
         eventStreamManagerAdminServiceClient.removeEventStream("outStream","1.0.0");
@@ -89,7 +89,7 @@ public class DeployArtifactsBasicTestCase  extends CEPIntegrationTest {
         eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("PizzaOrder.xml");
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), eventReceiverCount - 1);
 
-        eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("PizzaDeliveryNofication.xml");
+        eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("PizzaDeliveryNotification.xml");
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), eventPublisherCount - 1);
 
         eventProcessorAdminServiceClient.removeInactiveExecutionPlan("testPlan.siddhiql");

@@ -49,7 +49,7 @@ public class DeployArtifactsTestCase extends CEPIntegrationTest{
         eventStreamCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
         eventReceiverCount = eventReceiverAdminServiceClient.getActiveEventReceiverCount();
         eventPublisherCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
-        executionPlanCount = eventProcessorAdminServiceClient.getExecutionPlanConfigurationCount();
+        executionPlanCount = eventProcessorAdminServiceClient.getActiveExecutionPlanConfigurationCount();
 
         log.info("=======================Adding an event receiver ======================= ");
         String eventReceiverConfig = getXMLArtifactConfiguration("DeployArtifactsTestCase", "PizzaOrder.xml");
@@ -57,7 +57,7 @@ public class DeployArtifactsTestCase extends CEPIntegrationTest{
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), eventReceiverCount);   //ER should be inactive
 
         log.info("=======================Adding an event publisher ======================= ");
-        String eventPublisherConfig = getXMLArtifactConfiguration("DeployArtifactsTestCase", "PizzaDeliveryNofication.xml");
+        String eventPublisherConfig = getXMLArtifactConfiguration("DeployArtifactsTestCase", "PizzaDeliveryNotification.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), eventPublisherCount);   //EP should be inactive
 
@@ -74,7 +74,7 @@ public class DeployArtifactsTestCase extends CEPIntegrationTest{
         log.info("=======================Adding an execution plan ======================= ");
         String executionPlan = getExecutionPlanFromFile("DeployArtifactsTestCase", "testPlan.siddhiql");
         eventProcessorAdminServiceClient.addExecutionPlan(executionPlan);
-        Assert.assertEquals(eventProcessorAdminServiceClient.getExecutionPlanConfigurationCount(), ++executionPlanCount);
+        Assert.assertEquals(eventProcessorAdminServiceClient.getActiveExecutionPlanConfigurationCount(), ++executionPlanCount);
 
         Thread.sleep(1000);
 
@@ -82,18 +82,130 @@ public class DeployArtifactsTestCase extends CEPIntegrationTest{
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), ++eventPublisherCount);
     }
 
-    @Test(groups = {"wso2.cep"}, description = "Removing artifacts.")
+    @Test(groups = {"wso2.cep"}, description = "Removing artifacts." ,dependsOnMethods = {"addArtifactsTestScenario1"})
     public void removeArtifactsTestScenario() throws Exception {
+        eventReceiverAdminServiceClient.removeActiveEventReceiverConfiguration("PizzaOrder");
+        eventPublisherAdminServiceClient.removeActiveEventPublisherConfiguration("PizzaDeliveryNotification");
+        Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), eventReceiverCount - 1);
+        Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), eventPublisherCount - 1);
+        Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), eventStreamCount);
+
         eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.sample.pizza.order","1.0.0");
         eventStreamManagerAdminServiceClient.removeEventStream("outStream","1.0.0");
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), eventStreamCount - 2);
+
+        eventProcessorAdminServiceClient.removeInactiveExecutionPlan("testPlan.siddhiql");
+        Assert.assertEquals(eventProcessorAdminServiceClient.getActiveExecutionPlanConfigurationCount(), executionPlanCount - 1);
+    }
+
+    @Test(groups = {"wso2.cep"}, description = "Testing the order: ES-1, ES-2, EP, ER, ExP", dependsOnMethods = {"removeArtifactsTestScenario"})
+    public void addArtifactsTestScenario2() throws Exception {
+        log.info("=======================Testing the order:  ES-1, ES-2, EP, ER, ExP======================= ");
+        eventStreamCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
+        eventReceiverCount = eventReceiverAdminServiceClient.getActiveEventReceiverCount();
+        eventPublisherCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
+        executionPlanCount = eventProcessorAdminServiceClient.getActiveExecutionPlanConfigurationCount();
+
+        log.info("=======================Adding a stream definition====================");
+        String pizzaStreamDefinition = getJSONArtifactConfiguration("DeployArtifactsTestCase", "org.wso2.sample.pizza.order_1.0.0.json");
+        eventStreamManagerAdminServiceClient.addEventStreamAsString(pizzaStreamDefinition);
+        Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), ++eventStreamCount);
+
+        log.info("=======================Adding another stream definition====================");
+        String outStreamDefinition = getJSONArtifactConfiguration("DeployArtifactsTestCase", "outStream_1.0.0.json");
+        eventStreamManagerAdminServiceClient.addEventStreamAsString(outStreamDefinition);
+        Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), ++eventStreamCount);
+
+        log.info("=======================Adding an event receiver ======================= ");
+        String eventReceiverConfig = getXMLArtifactConfiguration("DeployArtifactsTestCase", "PizzaOrder.xml");
+        eventReceiverAdminServiceClient.addEventReceiverConfiguration(eventReceiverConfig);
+        Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), ++eventReceiverCount);
+
+        log.info("=======================Adding an event publisher ======================= ");
+        String eventPublisherConfig = getXMLArtifactConfiguration("DeployArtifactsTestCase", "PizzaDeliveryNotification.xml");
+        eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
+        Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), ++eventPublisherCount);
+
+        log.info("=======================Adding an execution plan ======================= ");
+        String executionPlan = getExecutionPlanFromFile("DeployArtifactsTestCase", "testPlan.siddhiql");
+        eventProcessorAdminServiceClient.addExecutionPlan(executionPlan);
+        Assert.assertEquals(eventProcessorAdminServiceClient.getActiveExecutionPlanConfigurationCount(), ++executionPlanCount);
+
+        Thread.sleep(1000);
+
+    }
+
+    @Test(groups = {"wso2.cep"}, description = "Removing artifacts." ,dependsOnMethods = {"addArtifactsTestScenario2"})
+    public void removeArtifactsTestScenario2() throws Exception {
+        eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.sample.pizza.order","1.0.0");
+        eventStreamManagerAdminServiceClient.removeEventStream("outStream", "1.0.0");
+        Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), eventStreamCount - 2);
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), eventReceiverCount - 1);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), eventPublisherCount - 1);
+        Assert.assertEquals(eventProcessorAdminServiceClient.getActiveExecutionPlanConfigurationCount(), executionPlanCount - 1);
         eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("PizzaOrder.xml");
-        eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("PizzaDeliveryNofication.xml");
+        eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("PizzaDeliveryNotification.xml");
         eventProcessorAdminServiceClient.removeInactiveExecutionPlan("testPlan.siddhiql");
-        Assert.assertEquals(eventProcessorAdminServiceClient.getExecutionPlanConfigurationCount(), executionPlanCount - 1);
     }
+
+    @Test(groups = {"wso2.cep"}, description = "Testing the order: ExP, EP, ER, ES-1, ES-2", dependsOnMethods = {"removeArtifactsTestScenario2"})
+    public void addArtifactsTestScenario3() throws Exception {
+        log.info("=======================Testing the order: ExP, EP, ER, ES-1, ES-2======================= ");
+        eventStreamCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
+        eventReceiverCount = eventReceiverAdminServiceClient.getActiveEventReceiverCount();
+        eventPublisherCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
+        executionPlanCount = eventProcessorAdminServiceClient.getActiveExecutionPlanConfigurationCount();
+
+        log.info("=======================Adding an execution plan ======================= ");
+        String executionPlan = getExecutionPlanFromFile("DeployArtifactsTestCase", "testPlan.siddhiql");
+        eventProcessorAdminServiceClient.addExecutionPlan(executionPlan);
+        Assert.assertEquals(eventProcessorAdminServiceClient.getActiveExecutionPlanConfigurationCount(), executionPlanCount);   //EP should be inactive
+
+        log.info("=======================Adding an event receiver ======================= ");
+        String eventReceiverConfig = getXMLArtifactConfiguration("DeployArtifactsTestCase", "PizzaOrder.xml");
+        eventReceiverAdminServiceClient.addEventReceiverConfiguration(eventReceiverConfig);
+        Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), eventReceiverCount);   //ER should be inactive
+
+        log.info("=======================Adding an event publisher ======================= ");
+        String eventPublisherConfig = getXMLArtifactConfiguration("DeployArtifactsTestCase", "PizzaDeliveryNotification.xml");
+        eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
+        Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), eventPublisherCount);   //EP should be inactive
+
+        log.info("=======================Adding a stream definition====================");
+        String pizzaStreamDefinition = getJSONArtifactConfiguration("DeployArtifactsTestCase", "org.wso2.sample.pizza.order_1.0.0.json");
+        eventStreamManagerAdminServiceClient.addEventStreamAsString(pizzaStreamDefinition);
+        Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), ++eventStreamCount);
+
+        log.info("=======================Adding another stream definition====================");
+        String outStreamDefinition = getJSONArtifactConfiguration("DeployArtifactsTestCase", "outStream_1.0.0.json");
+        eventStreamManagerAdminServiceClient.addEventStreamAsString(outStreamDefinition);
+        Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), ++eventStreamCount);
+
+
+        Thread.sleep(1000);
+
+        Assert.assertEquals(eventProcessorAdminServiceClient.getActiveExecutionPlanConfigurationCount(), ++executionPlanCount);
+        Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), ++eventReceiverCount);
+        Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), ++eventPublisherCount);
+    }
+
+    @Test(groups = {"wso2.cep"}, description = "Removing artifacts." ,dependsOnMethods = {"addArtifactsTestScenario3"})
+    public void removeArtifactsTestScenario3() throws Exception {
+        eventReceiverAdminServiceClient.removeActiveEventReceiverConfiguration("PizzaOrder");
+        eventPublisherAdminServiceClient.removeActiveEventPublisherConfiguration("PizzaDeliveryNotification");
+        Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), eventReceiverCount - 1);
+        Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), eventPublisherCount - 1);
+
+        eventProcessorAdminServiceClient.removeActiveExecutionPlan("testPlan");
+        Assert.assertEquals(eventProcessorAdminServiceClient.getActiveExecutionPlanConfigurationCount(), executionPlanCount - 1);
+
+        Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), eventStreamCount);
+
+        eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.sample.pizza.order","1.0.0");
+        eventStreamManagerAdminServiceClient.removeEventStream("outStream","1.0.0");
+        Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), eventStreamCount - 2);
+
+          }
 
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {

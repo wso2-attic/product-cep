@@ -142,14 +142,14 @@ public class DeployArtifactsViaAPITestCase extends CEPIntegrationTest {
         mapping5.setName("//mypizza:PizzaOrder/mypizza:Address");
         mapping5.setValueOf("Address");
         mapping5.setType("string");
-        EventMappingPropertyDto[] mappings = new EventMappingPropertyDto[]{mapping0,mapping1,mapping2,mapping3,mapping4,mapping5};
+        EventMappingPropertyDto[] mappings = new EventMappingPropertyDto[]{mapping0, mapping1, mapping2, mapping3, mapping4, mapping5};
 
         BasicInputAdapterPropertyDto propertyDTO1 = new BasicInputAdapterPropertyDto();
-        propertyDTO1.setKey("topic");
-        propertyDTO1.setValue("PizzaOrder");
+        propertyDTO1.setKey("transports");
+        propertyDTO1.setValue("all");
         BasicInputAdapterPropertyDto[] propertyDTOArray = new BasicInputAdapterPropertyDto[]{propertyDTO1};
 
-        eventReceiverAdminServiceClient.addXmlEventReceiverConfiguration("PizzaOrder","org.wso2.sample.pizza.order:1.0.0","http","",namespaces,mappings,propertyDTOArray,true);
+        eventReceiverAdminServiceClient.addXmlEventReceiverConfiguration("PizzaOrder", "org.wso2.sample.pizza.order:1.0.0", "http", "", namespaces, mappings, propertyDTOArray, true);
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), ++eventReceiverCount);
 
 
@@ -196,28 +196,33 @@ public class DeployArtifactsViaAPITestCase extends CEPIntegrationTest {
         proxyPort.setKey("http.proxy.port");
         proxyPort.setValue("");
         proxyPort.set_static(false);
-        BasicOutputAdapterPropertyDto[] outputPropertyConfiguration = new BasicOutputAdapterPropertyDto[]{url,username,password,headers,proxyHost,proxyPort};
+        BasicOutputAdapterPropertyDto clientMethod = new BasicOutputAdapterPropertyDto();
+        clientMethod.setKey("http.proxy.port");
+        clientMethod.setValue("");
+        clientMethod.set_static(true);
 
-        eventPublisherAdminServiceClient.addXMLEventPublisherConfiguration("PizzaDeliveryNofication","outStream:1.0.0","http",
-                textData,outputPropertyConfiguration,"inline",true);
+        BasicOutputAdapterPropertyDto[] outputPropertyConfiguration = new BasicOutputAdapterPropertyDto[]{url, username, password, headers, proxyHost, proxyPort, clientMethod};
+
+        eventPublisherAdminServiceClient.addXMLEventPublisherConfiguration("PizzaDeliveryNotification", "outStream:1.0.0", "http",
+                textData, outputPropertyConfiguration, "inline", true);
 
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), ++eventPublisherCount);
     }
 
-    @Test(groups = {"wso2.cep"}, description = "Removing artifacts.")
+    @Test(groups = {"wso2.cep"}, description = "Removing artifacts.", dependsOnMethods = {"addArtifactsTestScenario"})
     public void removeArtifactsTestScenario() throws Exception {
 
         eventReceiverAdminServiceClient.removeActiveEventReceiverConfiguration("PizzaOrder");
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), eventReceiverCount - 1);
 
-        eventPublisherAdminServiceClient.removeActiveEventPublisherConfiguration("PizzaDeliveryNofication");
+        eventPublisherAdminServiceClient.removeActiveEventPublisherConfiguration("PizzaDeliveryNotification");
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), eventPublisherCount - 1);
 
         eventProcessorAdminServiceClient.removeActiveExecutionPlan("testPlan");
         Assert.assertEquals(eventProcessorAdminServiceClient.getExecutionPlanConfigurationCount(), executionPlanCount - 1);
 
-        eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.sample.pizza.order","1.0.0");
-        eventStreamManagerAdminServiceClient.removeEventStream("outStream","1.0.0");
+        eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.sample.pizza.order", "1.0.0");
+        eventStreamManagerAdminServiceClient.removeEventStream("outStream", "1.0.0");
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), eventStreamCount - 2);
     }
 

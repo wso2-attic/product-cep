@@ -1,0 +1,32 @@
+{
+  "name": "org.wso2.sensor.value.projected.stream",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "metaData": [
+    {
+      "name": "sensorId",
+      "type": "INT"
+    }
+  ],
+  "correlationData": [
+    {
+      "name": "longitude",
+      "type": "DOUBLE"
+    },
+    {
+      "name": "latitude",
+      "type": "DOUBLE"
+    }
+  ],
+  "payloadData": [
+    {
+      "name": "humidity",
+      "type": "FLOAT"
+    },
+    {
+      "name": "value",
+      "type": "DOUBLE"
+    }
+  ]
+}

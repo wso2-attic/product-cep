@@ -51,10 +51,25 @@ public class EventProcessorAdminServiceClient {
         return eventProcessorAdminServiceStub._getServiceClient();
     }
 
-    public int getAllActiveExecutionPlanConfigurationCount()
+    public int getActiveExecutionPlanConfigurationCount()
             throws RemoteException {
         try {
             ExecutionPlanConfigurationDto[] configs = eventProcessorAdminServiceStub.getAllActiveExecutionPlanConfigurations();
+            if (configs == null) {
+                return 0;
+            } else {
+                return configs.length;
+            }
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException();
+        }
+    }
+
+    public int getInactiveExecutionPlanConfigurationCount()
+            throws RemoteException {
+        try {
+            ExecutionPlanConfigurationFileDto[] configs = eventProcessorAdminServiceStub.getAllInactiveExecutionPlanConigurations();
             if (configs == null) {
                 return 0;
             } else {
@@ -71,9 +86,9 @@ public class EventProcessorAdminServiceClient {
         try {
             ExecutionPlanConfigurationFileDto[] configs = eventProcessorAdminServiceStub.getAllInactiveExecutionPlanConigurations();
             if (configs == null) {
-                return getAllActiveExecutionPlanConfigurationCount();
+                return getActiveExecutionPlanConfigurationCount();
             } else {
-                return configs.length + getAllActiveExecutionPlanConfigurationCount();
+                return configs.length + getActiveExecutionPlanConfigurationCount();
             }
         } catch (RemoteException e) {
             log.error("RemoteException", e);

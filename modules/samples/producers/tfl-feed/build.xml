@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+~ Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+~
+~ Licensed under the Apache License, Version 2.0 (the "License");
+~ you may not use this file except in compliance with the License.
+~ You may obtain a copy of the License at
+~
+~     http://www.apache.org/licenses/LICENSE-2.0
+~
+~ Unless required by applicable law or agreed to in writing, software
+~ distributed under the License is distributed on an "AS IS" BASIS,
+~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+~ See the License for the specific language governing permissions and
+~ limitations under the License.
+-->
+<project name="dataagent" default="run">
+
+    <property name="carbon.home" value="../../.."/>
+    <property name="src.dir" value="src"/>
+    <property name="temp.dir" value="temp"/>
+    <property name="lib.dir" value="../../lib"/>
+    <property name="class.dir" value="${temp.dir}/classes"/>
+
+
+    <path id="javac.classpath">
+        <pathelement path="${class.dir}"/>
+	<fileset dir="${carbon.home}/repository/components/plugins/">
+            <include name="gt-geojson-13.0.0-wso2v1.jar"/>
+	    <include name="httpcore_4.3.3.wso2v1.jar"/>	
+            <include name="httpclient_4.2.5.wso2v1.jar"/>
+            <include name="commons-httpclient_3.1.0.wso2v2"/>	
+            <include name="org.wso2.carbon.logging_*.jar"/>
+            <include name="slf4j.log4j12_*.jar"/>
+            <include name="slf4j.api_*.jar"/>
+
+        </fileset>
+    </path>
+
+    <target name="clean">
+        <echo>Test</echo>
+        <!--<delete dir="target" quiet="true"/>-->
+        <delete dir="${class.dir}" quiet="true"/>
+        <delete dir="${temp.dir}"/>
+    </target>
+
+    <target name="init">
+        <mkdir dir="${temp.dir}"/>
+        <mkdir dir="${class.dir}"/>
+    </target>
+
+    <target name="compile" depends="init">
+        <javac srcdir="${src.dir}" destdir="${class.dir}">
+            <include name="*/**"/>
+            <classpath refid="javac.classpath"/>
+        </javac>
+    </target>
+
+    <target name="run" depends="compile">
+        <java classname="org.wso2.carbon.sample.tfl.TflStream"
+              classpathref="javac.classpath" fork="true">
+
+        </java>
+    </target>
+
+</project>

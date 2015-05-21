@@ -1,10 +1,4 @@
-This sample uses 
-InputEventAdaptor:  wso2event
-EventBuilder:           wso2event
-EventFormatter:         wso2event
-OutputEventAdaptor: wso2event
+This sample demonstrates how to use external time windows.
 
-Producers:     pizza-shop (pizzaPublisherClient)
-Consumers:     wso2-event
-
-
+Producers: wso2event
+Consumers: logger

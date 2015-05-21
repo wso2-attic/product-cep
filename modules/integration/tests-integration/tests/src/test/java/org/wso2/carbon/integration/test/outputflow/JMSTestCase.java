@@ -213,7 +213,7 @@ public class JMSTestCase extends CEPIntegrationTest {
         //wait while all stats are published
         Thread.sleep(5000);
         eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
-        eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("jmsPublisherMap.xml");
+        eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("jmsPublisherText.xml");
 
         try {
             Assert.assertEquals(JMSConsumerClient.getMessageCount(), messageCount,

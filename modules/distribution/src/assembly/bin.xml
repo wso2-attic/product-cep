@@ -45,6 +45,7 @@
                 <exclude>**/FastMovingStockQuoteReceiver.aar</exclude>
                 <exclude>**/log4j.properties</exclude>
                 <exclude>**/bin/ciphertool.bat</exclude>
+                <exclude>**/conf/datasources/master-datasources.xml</exclude>
             </excludes>
         </fileSet>
 
@@ -116,6 +117,7 @@
                 <include>producers/**</include>
                 <include>ReadMe.txt</include>
                 <include>resource/**</include>
+                <include>utils/**</include>
             </includes>
             <excludes>
                 <exclude>**/*.iml</exclude>
@@ -255,8 +257,8 @@
 
         <!-- Dashboard -->
         <fileSet>
-            <directory>repository/resources/designer</directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/designer</outputDirectory>
+            <directory>repository/resources/portal</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/portal</outputDirectory>
         </fileSet>
         <fileSet>
             <directory>target/shindig</directory>
@@ -429,10 +431,7 @@
 
         <!-- Including log4j.properties file -->
         <file>
-            <source>
-                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/log4j.properties
-            </source>
-            <!--<source>repository/conf/log4j.properties</source>-->
+            <source>repository/conf/log4j.properties</source>
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/</outputDirectory>
         </file>
 
@@ -569,6 +568,16 @@
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/cep/domain-template</outputDirectory>
             <filtered>true</filtered>
         </file>
+
+        <!--Copying master-datasources.xml file -->
+        <file>
+            <source>repository/conf/datasources/master-datasources.xml</source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/datasources
+            </outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+
     </files>
 
     <!-- Adding rampart mar -->

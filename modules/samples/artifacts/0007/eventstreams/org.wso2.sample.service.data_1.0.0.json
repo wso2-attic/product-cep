@@ -1,68 +1,44 @@
 {
-  "name": "org.wso2.sample.service.data",
+  "name": "org.wso2.sensor.in",
   "version": "1.0.0",
   "nickName": "",
-  "description": "Sample Service Data",
+  "description": "",
   "metaData": [
-    {
-      "name": "request_url",
-      "type": "STRING"
-    },
-    {
-      "name": "remote_address",
-      "type": "STRING"
-    },
-    {
-      "name": "content_type",
-      "type": "STRING"
-    },
-    {
-      "name": "user_agent",
-      "type": "STRING"
-    },
-    {
-      "name": "host",
-      "type": "STRING"
-    },
-    {
-      "name": "referer",
-      "type": "STRING"
-    }
-  ],
-  "correlationData": [
-    {
-      "name": "correlation_id",
-      "type": "STRING"
-    }
-  ],
-  "payloadData": [
-    {
-      "name": "service_name",
-      "type": "STRING"
-    },
-    {
-      "name": "operation_name",
-      "type": "STRING"
-    },
     {
       "name": "timestamp",
       "type": "LONG"
     },
     {
-      "name": "response_time",
-      "type": "LONG"
+      "name": "powerSaver",
+      "type": "BOOL"
     },
     {
-      "name": "request_count",
+      "name": "id",
       "type": "INT"
     },
     {
-      "name": "response_count",
-      "type": "INT"
+      "name": "name",
+      "type": "STRING"
+    }
+  ],
+  "correlationData": [
+    {
+      "name": "lg",
+      "type": "DOUBLE"
     },
     {
-      "name": "fault_count",
-      "type": "INT"
+      "name": "lt",
+      "type": "DOUBLE"
+    }
+  ],
+  "payloadData": [
+    {
+      "name": "humidity",
+      "type": "FLOAT"
+    },
+    {
+      "name": "value",
+      "type": "DOUBLE"
     }
   ]
 }

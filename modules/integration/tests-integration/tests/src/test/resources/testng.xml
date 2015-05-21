@@ -21,8 +21,8 @@
 
     <test name="cep-tests" preserve-order="true" parallel="false">
         <!--<packages>-->
-            <!--<package name="org.wso2.carbon.integration.test.services.*"/>-->
-            <!--<package name="org.wso2.carbon.integration.test.processflow.*"/>-->
+        <!--<package name="org.wso2.carbon.integration.test.services.*"/>-->
+        <!--<package name="org.wso2.carbon.integration.test.processflow.*"/>-->
         <!--</packages>-->
 
         <classes>
@@ -40,16 +40,21 @@
             <class name="org.wso2.carbon.integration.test.processflow.AttributeEncryptTestCase"/>
             <class name="org.wso2.carbon.integration.test.inputflow.HttpTestCase"/>
             <class name="org.wso2.carbon.integration.test.inputflow.JMSTestCase"/>
+            <class name="org.wso2.carbon.integration.test.inputflow.WebsocketTestCase"/>
+            <class name="org.wso2.carbon.integration.test.inputflow.SOAPTestCase"/>
+            <class name="org.wso2.carbon.integration.test.inputflow.FileTestCase"/>
             <!--<class name="org.wso2.carbon.integration.test.outputflow.LoggerTestCase"/>-->
             <class name="org.wso2.carbon.integration.test.outputflow.SOAPTestCase"/>
             <class name="org.wso2.carbon.integration.test.outputflow.RDBMSTestCase"/>
             <class name="org.wso2.carbon.integration.test.outputflow.HTTPTestCase"/>
             <class name="org.wso2.carbon.integration.test.outputflow.JMSTestCase"/>
+            <class name="org.wso2.carbon.integration.test.outputflow.WebsocketTestCase"/>
             <!--<class name="org.wso2.carbon.integration.test.processflow.PassThroughWithWso2Event"/>-->
             <!--<class name="org.wso2.carbon.integration.test.processflow.MQTTXMLMessageTestCase"/>-->
             <!--<class name="org.wso2.carbon.integration.test.storm.StormTestCase"/>-->
             <class name="org.wso2.carbon.integration.test.execution.manager.ExecutionManagerTestCase"/>
             <!--<class name="org.wso2.carbon.integration.test.inputflow.MQTTTestCase"/>-->
+            <class name="org.wso2.carbon.integration.test.capp.CappTestCase"/>
         </classes>
 
     </test>

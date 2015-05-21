@@ -30,7 +30,7 @@ import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config
 import org.wso2.carbon.databridge.commons.Event;
 import org.wso2.carbon.integration.common.utils.mgt.ServerConfigurationManager;
 import org.wso2.carbon.integration.test.client.JMSPublisherClient;
-import org.wso2.carbon.integration.test.client.TestAgentServer;
+import org.wso2.carbon.integration.test.client.Wso2EventServer;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
 
 import java.io.File;
@@ -116,7 +116,7 @@ public class JMSTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         // The data-bridge receiver
-        TestAgentServer agentServer = new TestAgentServer("inputflows/sample0009",7661, true);
+        Wso2EventServer agentServer = new Wso2EventServer("inputflows/sample0009",7661, true);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start
@@ -190,7 +190,7 @@ public class JMSTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         // The data-bridge receiver
-        TestAgentServer agentServer = new TestAgentServer("inputflows/sample0010",7661, true);
+        Wso2EventServer agentServer = new Wso2EventServer("inputflows/sample0010",7661, true);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start
@@ -274,7 +274,7 @@ public class JMSTestCase extends CEPIntegrationTest {
 
 
         // The data-bridge receiver
-        TestAgentServer agentServer = new TestAgentServer("inputflows/sample0011",7661, true);
+        Wso2EventServer agentServer = new Wso2EventServer("inputflows/sample0011",7661, true);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start

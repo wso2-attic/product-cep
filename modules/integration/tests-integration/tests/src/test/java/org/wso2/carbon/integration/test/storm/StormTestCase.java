@@ -30,7 +30,7 @@ import org.wso2.carbon.event.stream.stub.types.EventStreamDefinitionDto;
 import org.wso2.carbon.integration.common.utils.LoginLogoutClient;
 import org.wso2.carbon.integration.test.client.AnalyticStatClient;
 import org.wso2.carbon.integration.test.client.StockQuoteClient;
-import org.wso2.carbon.integration.test.client.TestAgentServer;
+import org.wso2.carbon.integration.test.client.Wso2EventServer;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
 
 import java.rmi.RemoteException;
@@ -67,8 +67,8 @@ public class StormTestCase extends CEPIntegrationTest {
     public void testSingleQueryTopologyOneMember() throws Exception {
 
         configureNode(contextMap.get("cep001"));
-        TestAgentServer testAgentServer = new TestAgentServer("StormTestCase",7821, true);
-        Thread thread = new Thread(testAgentServer);
+        Wso2EventServer wso2EventServer = new Wso2EventServer("StormTestCase",7821, true);
+        Thread thread = new Thread(wso2EventServer);
         thread.start();
 
         Thread.sleep(5000);
@@ -79,8 +79,8 @@ public class StormTestCase extends CEPIntegrationTest {
                 "7611", "admin", "admin", 100);
 
         Thread.sleep(60000);
-        Assert.assertTrue(testAgentServer.getMsgCount()>0);
-        testAgentServer.stop();
+        Assert.assertTrue(wso2EventServer.getMsgCount()>0);
+        wso2EventServer.stop();
     }
 
     @Test(groups = {"wso2.cep"}, description = "Test CEP Storm integration for single query setup")
@@ -88,8 +88,8 @@ public class StormTestCase extends CEPIntegrationTest {
         configureNode(contextMap.get("cep002"));
         configureNode(contextMap.get("cep003"));
 
-        TestAgentServer testAgentServer = new TestAgentServer("StormTestCase",7821, true);
-        Thread thread = new Thread(testAgentServer);
+        Wso2EventServer wso2EventServer = new Wso2EventServer("StormTestCase",7821, true);
+        Thread thread = new Thread(wso2EventServer);
         thread.start();
 
         Thread.sleep(5000);
@@ -100,8 +100,8 @@ public class StormTestCase extends CEPIntegrationTest {
                 contextMap.get("cep002").getInstance().getPorts().get("thrift_receiver"), "admin", "admin", 100);
 
         Thread.sleep(60000);
-        Assert.assertTrue(testAgentServer.getMsgCount()>0);
-        testAgentServer.stop();
+        Assert.assertTrue(wso2EventServer.getMsgCount()>0);
+        wso2EventServer.stop();
     }
 
     private void configureNode(AutomationContext node) throws Exception {
@@ -126,11 +126,11 @@ public class StormTestCase extends CEPIntegrationTest {
     }
 
     private void addExecutionPlan(String config) throws Exception {
-        int initialExecutionPlanCount = eventProcessorAdminServiceClient.getAllActiveExecutionPlanConfigurationCount();
+        int initialExecutionPlanCount = eventProcessorAdminServiceClient.getActiveExecutionPlanConfigurationCount();
         String executionPlanConfig = getExecutionPlanFromFile("StormTestCase",config);
         eventProcessorAdminServiceClient.addExecutionPlan(executionPlanConfig);
         Thread.sleep(3000);
-        Assert.assertEquals(eventProcessorAdminServiceClient.getAllActiveExecutionPlanConfigurationCount(), initialExecutionPlanCount + 1);
+        Assert.assertEquals(eventProcessorAdminServiceClient.getActiveExecutionPlanConfigurationCount(), initialExecutionPlanCount + 1);
     }
 
     private void addEventReceiver(String config) throws Exception {

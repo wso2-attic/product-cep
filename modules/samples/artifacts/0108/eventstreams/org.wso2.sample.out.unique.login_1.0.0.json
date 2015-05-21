@@ -1,0 +1,12 @@
+{
+  "name": "org.wso2.sample.out.unique.login",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "payloadData": [
+    {
+      "name": "ip",
+      "type": "STRING"
+    }
+  ]
+}

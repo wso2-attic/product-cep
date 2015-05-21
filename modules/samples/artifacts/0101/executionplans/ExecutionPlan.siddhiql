@@ -1,0 +1,19 @@
+/* Enter a unique ExecutionPlan */
+@Plan:name('ExecutionPlan')
+
+/* Enter a unique description for ExecutionPlan */
+-- @Plan:description('ExecutionPlan')
+
+/* define streams/tables and write queries here ... */
+
+@Plan:trace('false')
+
+@Import('org.wso2.event.sensor.stream:1.0.0')
+define stream sensor_stream (meta_timestamp long, meta_isPowerSaverEnabled bool, meta_sensorId int, meta_sensorName string, correlation_longitude double, correlation_latitude double, humidity float, sensorValue double);
+
+@Export('org.wso2.sensor.value.projected.stream:1.0.0')
+define stream sensor_value_projected_stream (meta_sensorId int, correlation_longitude double, correlation_latitude double, humidity float, value double);
+
+from sensor_stream 
+select meta_sensorId, correlation_longitude, correlation_latitude, humidity, sensorValue as value
+insert into sensor_value_projected_stream;
