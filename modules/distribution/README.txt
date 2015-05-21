@@ -285,4 +285,4 @@ For further details, see theWSO2 Complex Event Processor documentation at
 http://docs.wso2.org/wiki/display/CEP400/
 
 ---------------------------------------------------------------------------
-(c) Copyright 2014 WSO2 Inc.
+(c) Copyright 2015 WSO2 Inc.

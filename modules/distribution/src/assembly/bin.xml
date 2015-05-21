@@ -112,7 +112,6 @@
             <outputDirectory>${pom.artifactId}-${pom.version}/samples</outputDirectory>
             <includes>
                 <include>artifacts/**</include>
-                <include>lib/**</include>
                 <include>consumers/**</include>
                 <include>producers/**</include>
                 <include>ReadMe.txt</include>
@@ -124,6 +123,13 @@
                 <exclude>**/pom.xml</exclude>
                 <exclude>**/target/**</exclude>
             </excludes>
+        </fileSet>
+        <fileSet>
+            <directory>../../modules/samples/target/lib</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/samples/lib</outputDirectory>
+            <includes>
+                <include>*.jar</include>
+            </includes>
         </fileSet>
         <fileSet>
             <directory>scripts</directory>
@@ -251,7 +257,7 @@
 
         <!-- Copying client libraries needed for samples/clients -->
         <fileSet>
-            <directory>repository/client-lib</directory>
+            <directory>target/client-lib</directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/client-lib</outputDirectory>
         </fileSet>
 
@@ -334,22 +340,7 @@
             <filtered>true</filtered>
         </file>
 
-        <!--Siddhi conf-->
-        <file>
-            <source>repository/conf/siddhi/siddhi.extension</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/siddhi/
-            </outputDirectory>
-            <filtered>true</filtered>
-        </file>
-
-        <!--CEP HA conf-->
-        <file>
-            <source>repository/conf/cep-ha-management.xml</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/
-            </outputDirectory>
-            <filtered>true</filtered>
-        </file>
-
+        <!--CEP-->
         <file>
             <source>
                 ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/output-event-adapters.xml
@@ -397,24 +388,12 @@
             <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
-        <!--Copying event stream definition config file -->
-        <file>
-            <!--
-                        <source>
-                            ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/data-bridge/stream-definitions.xml
-                        </source>
-            -->
-            <source>
-                repository/conf/data-bridge/stream-definitions.xml
-            </source>
-
-            <outputDirectory>wso2cep-${pom.version}/repository/conf/data-bridge</outputDirectory>
-        </file>
 
         <!--&lt;!&ndash; Including logging-config.xml file &ndash;&gt;-->
         <!--<file>-->
             <!--<source>-->
-                <!--../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/etc/logging-config.xml-->
+                <!--&lt;!&ndash;../p2-profile-gen/target/wso2carbon-core-4.4.1_SNAPSHOT/repository/conf/etc/logging-config.xml&ndash;&gt;-->
+                <!--repository/conf/etc/logging-config.xml-->
             <!--</source>-->
             <!--<outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/etc-->
             <!--</outputDirectory>-->

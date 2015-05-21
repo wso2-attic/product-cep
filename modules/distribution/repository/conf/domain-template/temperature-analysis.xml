@@ -19,7 +19,7 @@
     <description>Temperature Analysis Description</description>
     <templates>
         <template name="Template1">
-            <description>To check maximum room temperature of all rooms</description>
+            <description>Monitoring alerting based on room temperature</description>
             <executionPlan>
                 <![CDATA[
                 /* Enter a unique ExecutionPlan */
@@ -44,7 +44,7 @@
             <parameters>
                 <parameter name="maxVal" type="int">
                     <displayName>Maximum Temperature</displayName>
-                    <description>Maximum Temperature which needs to be checked</description>
+                    <description>Maximum room temperature threshold</description>
                     <defaultValue>75</defaultValue>
                 </parameter>
             </parameters>
@@ -76,7 +76,7 @@
             <parameters>
                 <parameter name="maxVal" type="int">
                     <displayName>Maximum Temperature</displayName>
-                    <description>Maximum Temperature which needs to be checked</description>
+                    <description>Maximum room temperature threshold</description>
                     <defaultValue>75</defaultValue>
                 </parameter>
 
@@ -120,7 +120,7 @@
             <parameters>
                 <parameter name="maxVal" type="int">
                     <displayName>Maximum Temperature</displayName>
-                    <description>Maximum Temperature which needs to be checked</description>
+                    <description>Maximum room temperature threshold</description>
                     <defaultValue>75</defaultValue>
                 </parameter>
                 <parameter name="timeInterval" type="time">

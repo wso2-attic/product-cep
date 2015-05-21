@@ -1,0 +1,27 @@
+/* Enter a unique ExecutionPlan */
+@Plan:name('PreviousHistoryProcessingPlan')
+
+/* Enter a unique description for ExecutionPlan */
+-- @Plan:description('ExecutionPlan')
+
+@Import('org.wso2.sample.pizza.orderStream:1.0.0')
+define stream orderStream (orderNo string, customerName string, telephoneNo string, orderInfo string, orderedTime string);
+
+@Export('org.wso2.sample.pizza.stream.previousOrders:1.0.0')
+define stream previousOrders (customerName string, noOfPreviousOrders long, lastOrderedTime string);
+
+@from(eventtable = 'rdbms' , datasource.name = 'WSO2CEP_EVENT_TABLE_DB' , table.name = 'cepTable')
+define table pizzaOrdersTable (customerName string, noOfOrders long, lastOrderedTime string);
+
+from orderStream unidirectional join pizzaOrdersTable
+on pizzaOrdersTable.customerName == orderStream.customerName
+select orderStream.customerName as customerName, pizzaOrdersTable.noOfOrders as noOfPreviousOrders, pizzaOrdersTable.lastOrderedTime as lastOrderedTime
+insert into previousOrders;
+
+from previousOrders
+select noOfPreviousOrders as noOfOrders, customerName
+update pizzaOrdersTable on pizzaOrdersTable.customerName == customerName;
+
+from orderStream[ not(( orderStream.customerName ==  pizzaOrdersTable.customerName) in pizzaOrdersTable )] 
+select customerName, 1l as noOfOrders  , orderedTime as lastOrderedTime 
+insert into pizzaOrdersTable;
