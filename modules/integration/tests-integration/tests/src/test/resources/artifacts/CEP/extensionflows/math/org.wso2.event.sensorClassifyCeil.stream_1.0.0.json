@@ -1,0 +1,12 @@
+{
+  "name": "org.wso2.event.sensorClassifyCeil.stream",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "payloadData": [
+    {
+      "name": "ceilSensorvValue",
+      "type": "DOUBLE"
+    }
+  ]
+}

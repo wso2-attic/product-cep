@@ -1,0 +1,17 @@
+/* Enter a unique ExecutionPlan */
+@Plan:name('ExecutionPlan')
+
+/* Enter a unique description for ExecutionPlan */
+-- @Plan:description('ExecutionPlan')
+
+/* define streams/tables and write queries here ... */
+
+@Import('org.wso2.event.sensor.stream:1.0.0')
+define stream inputStream (sensorValue double, sensorName string, sensorId int);
+
+@Export('org.wso2.event.sensorClassifyCharAt.stream:1.0.0')
+define stream outputStream (charAtSensorName string);
+
+from inputStream
+select str:charAt(sensorName,0) as charAtSensorName
+insert into outputStream;

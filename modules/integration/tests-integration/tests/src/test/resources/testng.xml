@@ -61,6 +61,9 @@
             <class name="org.wso2.carbon.integration.test.extensionflow.RDBMSEventTableTestCase"/>
             <class name="org.wso2.carbon.integration.test.extensionflow.TimeExtensionTestCase"/>
             <class name="org.wso2.carbon.integration.test.extensionflow.RegexTestCase"/>
+            <class name="org.wso2.carbon.integration.test.extensionflow.StringExtensionTestCase"/>
+            <class name="org.wso2.carbon.integration.test.extensionflow.MathExtensionTestCase"/>
+            <class name="org.wso2.carbon.integration.test.extensionflow.TimeSeriesExtensionTestCase"/>
         </classes>
 
     </test>

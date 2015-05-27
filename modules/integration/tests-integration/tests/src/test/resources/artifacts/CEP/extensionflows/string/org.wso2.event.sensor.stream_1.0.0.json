@@ -1,0 +1,20 @@
+{
+  "name": "org.wso2.event.sensor.stream",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "payloadData": [
+    {
+      "name": "sensorId",
+      "type": "INT"
+    },
+    {
+      "name": "sensorName",
+      "type": "STRING"
+    },
+    {
+      "name": "sensorValue",
+      "type": "DOUBLE"
+    }
+  ]
+}

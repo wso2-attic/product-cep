@@ -1,0 +1,19 @@
+/* Enter a unique ExecutionPlan */
+@Plan:name('ExecutionPlan')
+
+/* Enter a unique description for ExecutionPlan */
+-- @Plan:description('ExecutionPlan')
+
+/* define streams/tables and write queries here ... */
+
+@Import('org.wso2.event.sensor.stream:1.0.0')
+define stream inputStream (sensorId int,sensorName string,sensorValue double);
+
+@Export('org.wso2.event.sensorClassifyCeil.stream:1.0.0')
+define stream outputStream (ceilSensorvValue double);
+
+from inputStream
+select math:ceil(sensorValue) as ceilSensorvValue
+insert into outputStream;
+
+
