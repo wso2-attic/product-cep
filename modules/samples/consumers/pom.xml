@@ -39,6 +39,7 @@
         <module>generic-log-service</module>
         <module>dashboard-service</module>
         <module>websocket</module>
+        <module>performance-consumer-test</module>
     </modules>
 
 </project>
