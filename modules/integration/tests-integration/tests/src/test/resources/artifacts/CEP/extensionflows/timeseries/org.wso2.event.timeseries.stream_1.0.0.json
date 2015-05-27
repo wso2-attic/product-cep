@@ -1,0 +1,16 @@
+{
+  "name": "org.wso2.event.timeseries.stream",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "payloadData": [
+    {
+      "name": "y",
+      "type": "INT"
+    },
+    {
+      "name": "x",
+      "type": "INT"
+    }
+  ]
+}

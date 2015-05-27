@@ -1,0 +1,17 @@
+/* Enter a unique ExecutionPlan */
+@Plan:name('ExecutionPlanTimeSeries')
+
+/* Enter a unique description for ExecutionPlan */
+-- @Plan:description('ExecutionPlan')
+
+/* define streams/tables and write queries here ... */
+
+@Import('org.wso2.event.timeseries.stream:1.0.0')
+define stream InputStream (y int, x int);
+
+@Export('org.wso2.event.timeseriesClassify.stream:1.0.0')
+define stream OutputStream (beta0 double);
+
+from InputStream#timeseries:regress(1, 100, 0.95, y, x)
+select beta0
+insert into OutputStream;
