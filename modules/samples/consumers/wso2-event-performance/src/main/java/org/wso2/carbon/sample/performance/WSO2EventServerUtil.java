@@ -22,8 +22,6 @@ import org.wso2.carbon.databridge.commons.exception.MalformedStreamDefinitionExc
 import org.wso2.carbon.databridge.commons.utils.EventDefinitionConverterUtils;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class WSO2EventServerUtil {
     private static Logger log = Logger.getLogger(TestWso2EventServer.class);
@@ -53,6 +51,37 @@ public class WSO2EventServerUtil {
             filePath = new File("test" + File.separator + "resources");
         }
         return filePath.getAbsolutePath() + File.separator + "data-bridge-config.xml";
+    }
+
+    public static StreamDefinition loadStream() {
+        File fileEntry = new File("src" + File.separator + "main" + File.separator + "resources" + File.separator
+                + "org.wso2.event.sensor.stream_1.0.0.json").getAbsoluteFile();
+        BufferedReader bufferedReader = null;
+        StreamDefinition streamDefinition = null;
+        StringBuilder stringBuilder = new StringBuilder();
+        try {
+            bufferedReader = new BufferedReader(new FileReader(fileEntry));
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                stringBuilder.append(line).append("\n");
+            }
+            streamDefinition = EventDefinitionConverterUtils.convertFromJson(stringBuilder.toString().trim());
+        } catch (FileNotFoundException e) {
+            log.error("Error in reading file " + fileEntry.getName(), e);
+        } catch (IOException e) {
+            log.error("Error in reading file " + fileEntry.getName(), e);
+        } catch (MalformedStreamDefinitionException e) {
+            log.error("Error in converting Stream definition " + e.getMessage(), e);
+        } finally {
+            try {
+                if (bufferedReader != null) {
+                    bufferedReader.close();
+                }
+            } catch (IOException e) {
+                log.error("Error occurred when reading the file : " + e.getMessage(), e);
+            }
+            return streamDefinition;
+        }
     }
 
 }

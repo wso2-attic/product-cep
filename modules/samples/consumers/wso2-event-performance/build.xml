@@ -26,7 +26,6 @@
     <property name="protocol" value="thrift"/>
     <property name="host" value="localhost"/>
     <property name="port" value="7661"/>
-    <property name="eventCount" value="1000"/>
     <property name="elapsedCount" value="100"/>
 
     <path id="javac.classpath">
@@ -77,13 +76,12 @@
     </target>
 
     <target name="run" depends="compile">
-        <echo>To configure host, port and events use -Dhost=xxxx -Dport=xxx -Dprotocol=thrift/binary</echo>
+        <echo>Configure optionally use -DelapsedCount=xxxx -Dprotocol='thrift/binary' -Dhost=xxxx -Dport=xxxx</echo>
         <java classname="org.wso2.carbon.sample.performance.TestWso2EventServer"
               classpathref="javac.classpath" fork="true">
             <arg value="${host}"/>
             <arg value="${port}"/>
             <arg value="${protocol}"/>
-            <arg value="${eventCount}"/>
             <arg value="${elapsedCount}"/>
         </java>
     </target>

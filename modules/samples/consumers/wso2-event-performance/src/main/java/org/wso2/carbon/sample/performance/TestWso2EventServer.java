@@ -20,8 +20,6 @@ import org.apache.log4j.Logger;
 import org.wso2.carbon.databridge.commons.Credentials;
 import org.wso2.carbon.databridge.commons.Event;
 import org.wso2.carbon.databridge.commons.StreamDefinition;
-import org.wso2.carbon.databridge.commons.exception.MalformedStreamDefinitionException;
-import org.wso2.carbon.databridge.commons.utils.EventDefinitionConverterUtils;
 import org.wso2.carbon.databridge.core.AgentCallback;
 import org.wso2.carbon.databridge.core.DataBridge;
 import org.wso2.carbon.databridge.core.Utils.AgentSession;
@@ -35,6 +33,7 @@ import org.wso2.carbon.databridge.receiver.binary.internal.BinaryDataReceiver;
 import org.wso2.carbon.databridge.receiver.thrift.ThriftDataReceiver;
 import org.wso2.carbon.user.api.UserStoreException;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class TestWso2EventServer {
@@ -46,8 +45,7 @@ public class TestWso2EventServer {
 
 
     public static void main(String[] args) throws DataBridgeException, StreamDefinitionStoreException {
-        testServer.start(args[0], Integer.parseInt(args[1]), args[2], Integer.parseInt(args[3]),
-                Integer.parseInt(args[4]));
+        testServer.start(args[0], Integer.parseInt(args[1]), args[2], Integer.parseInt(args[3]));
         synchronized (testServer) {
             try {
                 testServer.wait();
@@ -59,10 +57,9 @@ public class TestWso2EventServer {
     }
 
 
-    public void start(String host, int receiverPort, String protocol, final int eventCount, final int elapsedCount)
+    public void start(String host, int receiverPort, String protocol, final int elapsedCount)
             throws DataBridgeException, StreamDefinitionStoreException {
         WSO2EventServerUtil.setKeyStoreParams();
-
 
 
         DataBridge databridge = new DataBridge(new AuthenticationHandler() {
@@ -94,63 +91,15 @@ public class TestWso2EventServer {
 
         }, streamDefinitionStore, WSO2EventServerUtil.getDataBridgeConfigPath());
 
+        streamDefinitionStore.saveStreamDefinitionToStore(WSO2EventServerUtil.loadStream(), -1234);
 
-        String stream = "{" +
-                "  'name': 'org.wso2.event.sensor.stream'," +
-                "  'version': '1.0.0'," +
-                "  'nickName': ''," +
-                "  'description': ''," +
-                "  'metaData': [" +
-                "    {" +
-                "      'name': 'timestamp'," +
-                "      'type': 'LONG'" +
-                "    }," +
-                "    {" +
-                "      'name': 'isPowerSaverEnabled'," +
-                "      'type': 'BOOL'" +
-                "    }," +
-                "    {" +
-                "      'name': 'sensorId'," +
-                "      'type': 'INT'" +
-                "    }," +
-                "    {" +
-                "      'name': 'sensorName'," +
-                "      'type': 'STRING'" +
-                "    }" +
-                "  ]," +
-                "  'correlationData': [" +
-                "    {" +
-                "      'name': 'longitude'," +
-                "      'type': 'DOUBLE'" +
-                "    }," +
-                "    {" +
-                "      'name': 'latitude'," +
-                "      'type': 'DOUBLE'" +
-                "    }" +
-                "  ]," +
-                "  'payloadData': [" +
-                "    {" +
-                "      'name': 'humidity'," +
-                "      'type': 'FLOAT'" +
-                "    }," +
-                "    {" +
-                "      'name': 'sensorValue'," +
-                "      'type': 'DOUBLE'" +
-                "    }" +
-                "  ]" +
-                "}";
-
-        try {
-            streamDefinitionStore.saveStreamDefinitionToStore(EventDefinitionConverterUtils.convertFromJson(stream)
-                    , -1234);
-        } catch (MalformedStreamDefinitionException e) {
-            log.error(e);
-        }
 
         databridge.subscribe(new AgentCallback() {
             int counter = 0;
-            int skippedcounter = 0;
-            long startElapsedTime = System.nanoTime();
+            int lastIndex = 0;
+            int lastCounter = 0;
+            long lastTime = System.currentTimeMillis();
+            DecimalFormat decimalFormat = new DecimalFormat("#");
 
             public void definedStream(StreamDefinition streamDefinition,
                                       int tenantID) {
@@ -164,20 +113,23 @@ public class TestWso2EventServer {
 
             @Override
             public void receive(List<Event> eventList, Credentials credentials) {
-                counter = counter + eventList.size();
-                if (((eventList.size()) % elapsedCount == 0) || counter == eventCount) {
-                    int totalCalculatedCount = skippedcounter + eventList.size();
-                    long currentTime = System.nanoTime();
-                    long elapsedTime = currentTime - startElapsedTime;
-                    double timeInSec = elapsedTime / 1000000000D;
-                    double throughputPerSec = totalCalculatedCount / timeInSec;
-                    startElapsedTime = currentTime;
-                    skippedcounter = 0;
-                    log.info("Received " + totalCalculatedCount + " sensor events in " + timeInSec
-                            + " seconds with total throughput of " + throughputPerSec + " events per second.");
-                } else {
-                    skippedcounter = skippedcounter + eventList.size();
+                long currentTime = System.currentTimeMillis();
 
+                counter = counter + eventList.size();
+                int index = counter / elapsedCount;
+
+                if (index != lastIndex) {
+                    lastIndex = index;
+
+                    int totalCalculateCount = counter - lastCounter;
+                    long elapsedTime = currentTime - lastTime;
+                    double throughputPerSecond = (((float) totalCalculateCount) / elapsedTime) * 1000;
+                    lastTime = currentTime;
+                    lastCounter = counter;
+
+                    log.info("Received " + totalCalculateCount + " sensor events in " + elapsedTime
+                            + " milliseconds with total throughput of " + decimalFormat.format(throughputPerSecond)
+                            + " events per second.");
                 }
             }
 

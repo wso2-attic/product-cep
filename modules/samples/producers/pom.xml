@@ -39,7 +39,7 @@
         <module>kafka</module>
         <module>soap</module>
         <module>websocket</module>
-        <module>performance-producer-test</module>
+        <module>wso2-event-performance</module>
 
     </modules>
 

@@ -21,6 +21,7 @@ import org.wso2.carbon.databridge.agent.AgentHolder;
 import org.wso2.carbon.databridge.agent.DataPublisher;
 import org.wso2.carbon.databridge.commons.Event;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -60,7 +61,8 @@ public class Client {
         int counter = 0;
         Random randomGenerator = new Random();
         String streamId = "org.wso2.event.sensor.stream:1.0.0";
-        long startElapsedTime = System.nanoTime();
+        long lastTime = System.currentTimeMillis();
+        DecimalFormat decimalFormat = new DecimalFormat("#");
 
         while (counter < eventCount) {
             Event event = new Event(streamId, System.currentTimeMillis(),
@@ -72,13 +74,13 @@ public class Client {
             dataPublisher.publish(event);
 
             if ((counter + 1) % elapsedCount == 0) {
-                long currentTime = System.nanoTime();
-                long elapsedTime = currentTime - startElapsedTime;
-                double timeInSec = elapsedTime / 1000000000D;
-                double throughputPerSec = elapsedCount / timeInSec;
-                startElapsedTime = currentTime;
-                log.info("Sent " + elapsedCount + " sensor events in " + timeInSec
-                        + " seconds with total throughput of " + throughputPerSec + " events per second.");
+
+                long currentTime = System.currentTimeMillis();
+                long elapsedTime = currentTime - lastTime;
+                double throughputPerSecond = (((double)elapsedCount) / elapsedTime) * 1000;
+                lastTime = currentTime;
+                log.info("Sent " + elapsedCount + " sensor events in " + elapsedTime
+                        + " milliseconds with total throughput of " + decimalFormat.format(throughputPerSecond) + " events per second.");
             }
 
             counter++;

@@ -16,13 +16,9 @@
 
 package org.wso2.carbon.sample.performance;
 
-import org.apache.log4j.Logger;
-
 import java.io.*;
 
 public class DataPublisherUtil {
-
-    private static Logger log = Logger.getLogger(DataPublisherUtil.class);
 
     static File securityFile = new File(".." + File.separator + ".." + File.separator + ".." + File.separator
             + "repository" + File.separator + "resources" + File.separator + "security");
