@@ -43,13 +43,15 @@ public class Client {
             String password = args[4];
             String eventCount = args[5];
             String elapsedCount = args[6];
+            String warmUpCount = args[7];
 
             //create data publisher
             DataPublisher dataPublisher = new DataPublisher(protocol, "tcp://" + host + ":" + port, null, username,
                     password);
 
             //Publish event for a valid stream
-            publishEvents(dataPublisher, Integer.parseInt(eventCount), Integer.parseInt(elapsedCount));
+            publishEvents(dataPublisher, Long.parseLong(eventCount), Long.parseLong(elapsedCount),
+                    Long.parseLong(warmUpCount));
 
             dataPublisher.shutdownWithAgent();
         } catch (Throwable e) {
@@ -57,8 +59,9 @@ public class Client {
         }
     }
 
-    private static void publishEvents(DataPublisher dataPublisher, int eventCount, int elapsedCount) {
-        int counter = 0;
+    private static void publishEvents(DataPublisher dataPublisher, long eventCount, long elapsedCount,
+                                      long warmUpCount) {
+        long counter = 0;
         Random randomGenerator = new Random();
         String streamId = "org.wso2.event.sensor.stream:1.0.0";
         long lastTime = System.currentTimeMillis();
@@ -66,21 +69,22 @@ public class Client {
 
         while (counter < eventCount) {
             Event event = new Event(streamId, System.currentTimeMillis(),
-                    new Object[]{System.currentTimeMillis(), randomGenerator.nextBoolean(), counter,
+                    new Object[]{System.currentTimeMillis(), randomGenerator.nextBoolean(), randomGenerator.nextInt(),
                             "temperature-" + counter},
                     new Object[]{randomGenerator.nextDouble(), randomGenerator.nextDouble()},
                     new Object[]{randomGenerator.nextFloat(), randomGenerator.nextDouble()});
 
             dataPublisher.publish(event);
 
-            if ((counter + 1) % elapsedCount == 0) {
+            if ((counter > warmUpCount) && ((counter + 1) % elapsedCount == 0)) {
 
                 long currentTime = System.currentTimeMillis();
                 long elapsedTime = currentTime - lastTime;
-                double throughputPerSecond = (((double)elapsedCount) / elapsedTime) * 1000;
+                double throughputPerSecond = (((double) elapsedCount) / elapsedTime) * 1000;
                 lastTime = currentTime;
                 log.info("Sent " + elapsedCount + " sensor events in " + elapsedTime
-                        + " milliseconds with total throughput of " + decimalFormat.format(throughputPerSecond) + " events per second.");
+                        + " milliseconds with total throughput of " + decimalFormat.format(throughputPerSecond)
+                        + " events per second.");
             }
 
             counter++;
