@@ -33,6 +33,7 @@ import org.wso2.carbon.databridge.receiver.binary.conf.BinaryDataReceiverConfigu
 import org.wso2.carbon.databridge.receiver.thrift.ThriftDataReceiver;
 import org.wso2.carbon.user.api.UserStoreException;
 
+import java.io.IOException;
 import java.util.List;
 
 public class TestWso2EventServer {
@@ -119,10 +120,16 @@ public class TestWso2EventServer {
 
         if (protocol.equalsIgnoreCase("binary")) {
             binaryDataReceiver = new BinaryDataReceiver(new BinaryDataReceiverConfiguration(receiverPort + 100, receiverPort), databridge);
+            try {
+                binaryDataReceiver.start();
+            }
+            catch (IOException e) {
+                log.error("Error occurred when reading the file : " + e.getMessage(), e);
+            }
         } else {
             thriftDataReceiver = new ThriftDataReceiver(receiverPort, databridge);
+            thriftDataReceiver.start(host);
         }
-        thriftDataReceiver.start(host);
         log.info("Test Server Started");
     }
 
