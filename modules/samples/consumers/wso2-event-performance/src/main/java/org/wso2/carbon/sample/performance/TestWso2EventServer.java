@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.wso2.carbon.sample.server;
+package org.wso2.carbon.sample.performance;
 
 import org.apache.log4j.Logger;
 import org.wso2.carbon.databridge.commons.Credentials;
@@ -28,12 +28,12 @@ import org.wso2.carbon.databridge.core.definitionstore.InMemoryStreamDefinitionS
 import org.wso2.carbon.databridge.core.exception.DataBridgeException;
 import org.wso2.carbon.databridge.core.exception.StreamDefinitionStoreException;
 import org.wso2.carbon.databridge.core.internal.authentication.AuthenticationHandler;
-import org.wso2.carbon.databridge.receiver.binary.internal.BinaryDataReceiver;
 import org.wso2.carbon.databridge.receiver.binary.conf.BinaryDataReceiverConfiguration;
+import org.wso2.carbon.databridge.receiver.binary.internal.BinaryDataReceiver;
 import org.wso2.carbon.databridge.receiver.thrift.ThriftDataReceiver;
 import org.wso2.carbon.user.api.UserStoreException;
 
-import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class TestWso2EventServer {
@@ -45,7 +45,7 @@ public class TestWso2EventServer {
 
 
     public static void main(String[] args) throws DataBridgeException, StreamDefinitionStoreException {
-        testServer.start(args[0], Integer.parseInt(args[1]), args[2],args[3]);
+        testServer.start(args[0], Integer.parseInt(args[1]), args[2], Integer.parseInt(args[3]));
         synchronized (testServer) {
             try {
                 testServer.wait();
@@ -57,15 +57,16 @@ public class TestWso2EventServer {
     }
 
 
-    public void start(String host, int receiverPort, String protocol, String sampleNumber) throws DataBridgeException, StreamDefinitionStoreException {
+    public void start(String host, int receiverPort, String protocol, final int elapsedCount)
+            throws DataBridgeException, StreamDefinitionStoreException {
         WSO2EventServerUtil.setKeyStoreParams();
+
+
         DataBridge databridge = new DataBridge(new AuthenticationHandler() {
             @Override
             public boolean authenticate(String userName,
                                         String password) {
-                return true;// allays authenticate to true
-
-
+                return true;
             }
 
             @Override
@@ -88,48 +89,61 @@ public class TestWso2EventServer {
 
             }
 
-            public void setThreadLocalContext(AgentSession agentSession) {
-                //To change body of implemented methods use File | Settings | File Templates.
-            }
         }, streamDefinitionStore, WSO2EventServerUtil.getDataBridgeConfigPath());
 
-        for (StreamDefinition streamDefinition : WSO2EventServerUtil.loadStreamDefinitions(sampleNumber)) {
-            streamDefinitionStore.saveStreamDefinitionToStore(streamDefinition, -1234);
-            log.info("StreamDefinition of '"+streamDefinition.getStreamId()+"' added to store");
-        }
+        streamDefinitionStore.saveStreamDefinitionToStore(WSO2EventServerUtil.loadStream(), -1234);
+
 
         databridge.subscribe(new AgentCallback() {
+            int counter = 0;
+            int lastIndex = 0;
+            int lastCounter = 0;
+            long lastTime = System.currentTimeMillis();
+            DecimalFormat decimalFormat = new DecimalFormat("#");
 
             public void definedStream(StreamDefinition streamDefinition,
                                       int tenantID) {
-                log.info("StreamDefinition " + streamDefinition);
             }
 
             @Override
             public void removeStream(StreamDefinition streamDefinition, int tenantID) {
                 //To change body of implemented methods use File | Settings | File Templates.
+                log.info("Test");
             }
 
             @Override
             public void receive(List<Event> eventList, Credentials credentials) {
-                log.info("eventListSize=" + eventList.size() + " eventList " + eventList + " for username " + credentials.getUsername());
+                long currentTime = System.currentTimeMillis();
+
+                counter = counter + eventList.size();
+                int index = counter / elapsedCount;
+
+                if (index != lastIndex) {
+                    lastIndex = index;
+
+                    int totalCalculateCount = counter - lastCounter;
+                    long elapsedTime = currentTime - lastTime;
+                    double throughputPerSecond = (((float) totalCalculateCount) / elapsedTime) * 1000;
+                    lastTime = currentTime;
+                    lastCounter = counter;
+
+                    log.info("Received " + totalCalculateCount + " sensor events in " + elapsedTime
+                            + " milliseconds with total throughput of " + decimalFormat.format(throughputPerSecond)
+                            + " events per second.");
+                }
             }
 
 
         });
 
+
         if (protocol.equalsIgnoreCase("binary")) {
-            binaryDataReceiver = new BinaryDataReceiver(new BinaryDataReceiverConfiguration(receiverPort + 100, receiverPort), databridge);
-            try {
-                binaryDataReceiver.start();
-            }
-            catch (IOException e) {
-                log.error("Error occurred when reading the file : " + e.getMessage(), e);
-            }
+            binaryDataReceiver = new BinaryDataReceiver(
+                    new BinaryDataReceiverConfiguration(receiverPort + 100, receiverPort), databridge);
         } else {
             thriftDataReceiver = new ThriftDataReceiver(receiverPort, databridge);
-            thriftDataReceiver.start(host);
         }
+        thriftDataReceiver.start(host);
         log.info("Test Server Started");
     }
 

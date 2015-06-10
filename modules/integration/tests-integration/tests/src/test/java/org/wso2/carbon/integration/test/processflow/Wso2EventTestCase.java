@@ -78,7 +78,7 @@ public class Wso2EventTestCase extends CEPIntegrationTest {
         // Let the server start
         Thread.sleep(1000);
 
-        Wso2EventClient.publish("thrift","localhost","7611","admin","admin",streamDefinition.getStreamId(),
+        Wso2EventClient.publish("thrift","localhost","7661","admin","admin",streamDefinition.getStreamId(),
                 "testWso2EventStreamData.csv","Wso2EventTestCase",streamDefinition,5,1000);
 
         //wait while all stats are published

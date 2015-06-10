@@ -21,7 +21,7 @@
     <clientTimeoutMin>30</clientTimeoutMin>
 
     <dataReceiver name="Thrift">
-        <config name="tcpPort">7611</config>
+        <config name="tcpPort">7661</config>
         <config name="sslPort">7711</config>
     </dataReceiver>
 
