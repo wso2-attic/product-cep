@@ -39,6 +39,7 @@
         <module>kafka</module>
         <module>soap</module>
         <module>websocket</module>
+        <module>http-performance</module>
     </modules>
 
 </project>
