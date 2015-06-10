@@ -39,6 +39,7 @@
         <module>generic-log-service</module>
         <module>dashboard-service</module>
         <module>websocket</module>
+        <module>wso2-event-performance</module>
         <module>http-performance</module>
     </modules>
 

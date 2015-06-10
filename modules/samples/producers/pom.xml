@@ -39,6 +39,7 @@
         <module>kafka</module>
         <module>soap</module>
         <module>websocket</module>
+        <module>wso2-event-performance</module>
         <module>http-performance</module>
     </modules>
 
