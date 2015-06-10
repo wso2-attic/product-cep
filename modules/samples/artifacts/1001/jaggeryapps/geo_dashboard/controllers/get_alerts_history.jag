@@ -24,7 +24,7 @@ var log = new Log();
 var db = new Database("jdbc:h2:repository/database/WSO2_GEO",configuration.username,configuration.password);
 var objectId = request.getParameter("objectId");
 
-var getHistory = 'SELECT * FROM alerts_history WHERE id = '+objectId+' ORDER BY timeStamp DESC LIMIT 50';
+var getHistory = "SELECT * FROM alerts_history WHERE id = \'"+objectId+"\' ORDER BY timeStamp DESC LIMIT 50";
 
 try{
     var history = db.query(getHistory);

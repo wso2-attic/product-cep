@@ -16,6 +16,9 @@ define stream dataOut (id string, latitude double, longitude double, timeStamp l
 @IndexBy('id')
 define table StationeryTable(id string, timeStamp long);
 
+@IndexBy('id')
+define table AlertsTable(id string, stationary bool);
+
 from dataIn#geodashboard:subscribe()
 select id, latitude, longitude, timeStamp, type, speed, heading, eventId,geo:within(longitude,latitude,"$geoFenceGeoJSON") as isWithin
 insert into innerStreamOne;
@@ -31,35 +34,54 @@ from innerStreamOne[isWithin == true]#geo:stationary(id,longitude,latitude, $flu
 select id, latitude, longitude, timeStamp, type, speed, heading, eventId,stationary
 insert into innerStreamTwo;
 
-from innerStreamTwo[innerStreamTwo.stationary == true AND not(StationeryTable.id == innerStreamTwo.id in StationeryTable)]
-select innerStreamTwo.id, innerStreamTwo.timeStamp
-insert into StationeryTable;
+from innerStreamTwo[innerStreamTwo.stationary == true]
+select innerStreamTwo.id, innerStreamTwo.stationary
+insert into AlertsTable;
+
+from innerStreamTwo[innerStreamTwo.stationary == false]
+delete AlertsTable on AlertsTable.id==innerStreamTwo.id;
 
 from innerStreamTwo[innerStreamTwo.stationary == false]
 delete StationeryTable on StationeryTable.id==innerStreamTwo.id;
+
+from innerStreamOne[isWithin == true AND not(AlertsTable.id == innerStreamOne.id in AlertsTable)]
+select id , latitude, longitude,timeStamp, type, speed, heading ,eventId , "false"  as isStationary
+insert into dataOutStream;
+
+from innerStreamOne[isWithin == true AND AlertsTable.id == innerStreamOne.id in AlertsTable]
+insert into innerStreamThree;
+
+from innerStreamThree#window.length(0) join AlertsTable
+on innerStreamThree.id == AlertsTable.id
+select innerStreamThree.id , innerStreamThree.latitude, innerStreamThree.longitude,innerStreamThree.timeStamp, innerStreamThree.type, innerStreamThree.speed, innerStreamThree.heading ,innerStreamThree.eventId
+insert into innerStreamFour;
+
+from innerStreamFour[not(StationeryTable.id == innerStreamFour.id in StationeryTable)]
+select innerStreamFour.id, innerStreamFour.timeStamp
+insert into StationeryTable;
 
 from innerStreamOne[isWithin == true AND not(StationeryTable.id == innerStreamOne.id in StationeryTable)]
 select id , latitude, longitude,timeStamp, type, speed, heading ,eventId , "false"  as isStationary
 insert into dataOutStream;
 
 from innerStreamOne[isWithin == true AND StationeryTable.id == innerStreamOne.id in StationeryTable]
-insert into innerStreamThree;
+insert into innerStreamFive;
 
-from innerStreamThree#window.length(0) join StationeryTable
-on innerStreamThree.id == StationeryTable.id
-select innerStreamThree.id , innerStreamThree.latitude, innerStreamThree.longitude,innerStreamThree.timeStamp, innerStreamThree.type, innerStreamThree.speed, innerStreamThree.heading ,innerStreamThree.eventId, StationeryTable.timeStamp as storedTime
-insert into innerStreamFour;
+from innerStreamFive#window.length(0) join StationeryTable
+on innerStreamFive.id == StationeryTable.id
+select innerStreamFive.id , innerStreamFive.latitude, innerStreamFive.longitude,innerStreamFive.timeStamp, innerStreamFive.type, innerStreamFive.speed, innerStreamFive.heading ,innerStreamFive.eventId, StationeryTable.timeStamp as storedTime
+insert into innerStreamSix;
 
-from innerStreamFour[(timeStamp - storedTime) >= $stationeryTime]
+from innerStreamSix[(timeStamp - storedTime) >= $stationeryTime]
 select id , latitude, longitude,timeStamp, type, speed, heading ,eventId ,"true"  as isStationary
 insert into dataOutStream;
 
-from innerStreamFour[(timeStamp - storedTime) < $stationeryTime]
+from innerStreamSix[(timeStamp - storedTime) < $stationeryTime]
 select id , latitude, longitude,timeStamp, type, speed, heading ,eventId ,"false"  as isStationary
 insert into dataOutStream;
 
 from dataOutStream[isStationary == 'true']
-select id ,latitude, longitude,timeStamp, type, speed, heading ,eventId ,"ALERTED" as state, "This vehicle is in $stationeryName area!!!" as information
+select id ,latitude, longitude,timeStamp, type, speed, heading ,eventId ,"ALERTED" as state, "This vehicle is in ww area!!!" as information
 insert into dataOut;
 
 from dataOutStream[isStationary == 'false']

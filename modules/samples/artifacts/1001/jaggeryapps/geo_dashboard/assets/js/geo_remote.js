@@ -64,14 +64,6 @@ function addTileUrl() {
         });
         closeAll();
     });
-
-// TODO: Show a preview of newly added tileserver map
-  //  var mapPreview = L.map('mapPreview', {
-  //      zoom: 10,
-  //      center: [6.934846, 79.851980],
-  //  });
-  //  L.tileLayer(tileUrl).addTo(mapPreview);
-
 }
 
 var defaultOSM = L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -231,7 +223,6 @@ function setSpeedAlert() {
                 timeout: 3000,
                 pos: 'top-center'
             });
-            closeAll();
         }, 'json');
     }
 
@@ -280,7 +271,6 @@ function setWithinAlert(leafletId) {
                 timeout: 3000,
                 pos: 'top-center'
             });
-            closeAll();
             closeTools(leafletId);
         }, 'json');
     }
@@ -351,7 +341,6 @@ function setStationeryAlert(leafletId) {
                 timeout: 3000,
                 pos: 'top-center'
             });
-            closeAll();
             closeTools(leafletId);
         }, 'json');
     }
@@ -453,7 +442,6 @@ function setTrafficAlert(leafletId) {
                 timeout: 3000,
                 pos: 'top-center'
             });
-            closeAll();
             closeTools(leafletId);
         }, 'json');
     }
@@ -554,7 +542,6 @@ function setProximityAlert() {
                 timeout: 3000,
                 pos: 'top-center'
             });
-            closeAll();
         }, 'json');
 
     }
