@@ -40,7 +40,7 @@ var get = require('../get_alerts.jag').get;
     <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
     <h4 class="modal-title">
         <!-- TODO: Trigger bootstrap tooltip $('#aboutTileUrl').tooltip(); to enable tooltip -->
-        Set <i>within</i> alerts for traffic
+        Set <i>traffic</i> alerts
     </h4>
 </div>
 
