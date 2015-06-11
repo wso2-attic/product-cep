@@ -81,7 +81,7 @@ select id , latitude, longitude,timeStamp, type, speed, heading ,eventId ,"false
 insert into dataOutStream;
 
 from dataOutStream[isStationary == 'true']
-select id ,latitude, longitude,timeStamp, type, speed, heading ,eventId ,"ALERTED" as state, "This vehicle is in ww area!!!" as information
+select id ,latitude, longitude,timeStamp, type, speed, heading ,eventId ,"ALERTED" as state, "This vehicle is in $stationeryName area!!!" as information
 insert into dataOut;
 
 from dataOutStream[isStationary == 'false']
