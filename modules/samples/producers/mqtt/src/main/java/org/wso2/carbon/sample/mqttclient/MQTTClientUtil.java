@@ -17,6 +17,7 @@
 package org.wso2.carbon.sample.mqttclient;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 
 public class MQTTClientUtil {
 
@@ -52,11 +53,11 @@ public class MQTTClientUtil {
         }
         File file = new File(resultingFilePath);
         if (!file.isFile()) {
-            throw new Exception("'" + resultingFilePath + "' is not a file");
+            throw new FileNotFoundException("'" + resultingFilePath + "' is not a file");
 
         }
         if (!file.exists()) {
-            throw new Exception("file '" + resultingFilePath + "' does not exist");
+            throw new FileNotFoundException("file '" + resultingFilePath + "' does not exist");
         }
         return resultingFilePath;
     }

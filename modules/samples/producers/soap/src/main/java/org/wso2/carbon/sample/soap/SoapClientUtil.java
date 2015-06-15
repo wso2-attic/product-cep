@@ -17,11 +17,12 @@
 package org.wso2.carbon.sample.soap;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 
 /**
- * SoapUtil class contains utility functions for the Http receiver class
+ * SoapClientUtil class contains utility functions for the Http receiver class
  */
-public class SoapUtil {
+public class SoapClientUtil {
 
     static String sampleFilPath =
             ".." + File.separator + ".." + File.separator + ".." + File.separator + "samples" +
@@ -52,17 +53,19 @@ public class SoapUtil {
             resultingFilePath = sampleFilPath.replace("sampleNumber", sampleNumber)
                     + urlSplitter[urlSplitter.length - 2] + fileExtension;
         } else {
-            throw new Exception("In sampleNumber:'" + sampleNumber + "' and filePath:'" + filePath +
+            throw new IllegalArgumentException("In sampleNumber:'" + sampleNumber + "' and filePath:'" + filePath +
                     "' either one should be null");
         }
         File file = new File(resultingFilePath);
-        if (!file.isFile()) {
-            throw new Exception("'" + resultingFilePath + "' is not a file");
 
-        }
         if (!file.exists()) {
-            throw new Exception("file '" + resultingFilePath + "' does not exist");
+            throw new FileNotFoundException("file '" + resultingFilePath + "' does not exist");
         }
+
+        if (!file.isFile()) {
+            throw new FileNotFoundException("'" + resultingFilePath + "' is not a file");
+        }
+
         return resultingFilePath;
     }
 }
