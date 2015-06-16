@@ -20,6 +20,7 @@ var drawControl;
 var removeAllControl;
 var drawnItems;
 var lastId;
+var controlDiv;
 
 $(function() {
     map.on('draw:created', function (e) {
@@ -74,7 +75,7 @@ function openTools(id) {
                 position: 'topleft'
             },
             onAdd: function (map) {
-                var controlDiv = L.DomUtil.create('div', 'leaflet-draw-toolbar leaflet-bar');
+                controlDiv = L.DomUtil.create('div', 'leaflet-draw-toolbar leaflet-bar');
                 L.DomEvent
                     .addListener(controlDiv, 'click', L.DomEvent.stopPropagation)
                     .addListener(controlDiv, 'click', L.DomEvent.preventDefault)
@@ -257,6 +258,7 @@ function createPopup(layer,id) {
 function closeTools(leafletId) {
     map.removeLayer(map._layers[leafletId]);
     map.removeControl(drawControl);
+    controlDiv.remove();
     console.log("DEBUG: closeTools(leafletId) = "+leafletId);
 }
 
