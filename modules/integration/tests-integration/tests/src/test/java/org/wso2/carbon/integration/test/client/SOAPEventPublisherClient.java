@@ -52,7 +52,7 @@ public class SOAPEventPublisherClient {
             OMElement messageOMElement;
 
             try {
-                System.out.println("Starting sending of events...");
+                log.info("Starting sending of events...");
                 messageOMElement = AXIOMUtil.stringToOM(message.toString());
                 serviceClient.fireAndForget(messageOMElement);
                 log.info("Message sent");
