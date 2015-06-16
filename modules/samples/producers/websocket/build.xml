@@ -30,6 +30,7 @@
     <property name="port" value="9099"/>
     <property name="url" value=""/>
     <property name="filePath" value=""/>
+    <property name="host" value="localhost"/>
 
     <path id="javac.classpath">
         <pathelement path="${class.dir}"/>
@@ -64,13 +65,15 @@
     </target>
 
     <target name="run" depends="compile">
-        <echo> Configure -Dport='server port' or -Durl='client url' and (-DfilePath=xxxx and/or -Dsn='sample number') </echo>
+        <echo> For server mode, configure -Dport='server port', -DfilePath=xxxx and/or -Dhost='host'</echo>
+        <echo> For client mode, configure -Durl='client url', -DfilePath=xxxx and/or -Dhost='host'</echo>
         <java classname="${main-class}"
               classpathref="javac.classpath">
             <arg value="${port}"/>
             <arg value="${url}"/>
             <arg value="${filePath}"/>
             <arg value="${sn}"/>
+            <arg value="${host}"/>
         </java>
     </target>
 

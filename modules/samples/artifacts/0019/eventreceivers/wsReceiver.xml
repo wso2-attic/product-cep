@@ -19,7 +19,7 @@
 
 <eventReceiver name="wsReceiver" statistics="disable" trace="disable" xmlns="http://wso2.org/carbon/eventreceiver">
     <from eventAdapterType="websocket">
-        <property name="websocket.server.url">ws://localhost:9099</property>
+        <property name="websocket.server.url">ws://localhost:9099/events/</property>
         <property name="events.duplicated.in.cluster">false</property>
     </from>
     <mapping customMapping="disable" type="json"/>

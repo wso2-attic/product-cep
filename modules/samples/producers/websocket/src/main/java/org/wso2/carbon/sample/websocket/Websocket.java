@@ -48,6 +48,9 @@ public class Websocket {
         String filePath = args[2];
         String sampleNumber = args[3];
 
+        //for host
+        String host=args[4];
+
         if (url.isEmpty()) {
             System.out.println("Starting Websocket publisher on Server Mode");
 
@@ -55,7 +58,7 @@ public class Websocket {
 
             try {
                 filePath = Util.getMessageFilePath(sampleNumber, filePath, url);
-                webSocketServer.start(Integer.parseInt(port));
+                webSocketServer.start(Integer.parseInt(port),host);
 
                 readMsg(filePath);
 
