@@ -51,37 +51,4 @@
         <url>http://wso2.com</url>
     </organization>
 
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>copy</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>copy</goal>
-                        </goals>
-                        <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>org.wso2.carbon.analytics-common</groupId>
-                                    <artifactId>org.wso2.carbon.event.output.adapter.ui.test</artifactId>
-                                    <version>${carbon.analytics-common.version}</version>
-                                    <type>war</type>
-                                    <destFileName>outputuitest.war</destFileName>
-                                </artifactItem>
-                            </artifactItems>
-                            <outputDirectory>target/output-ui-test</outputDirectory>
-                            <overWriteReleases>true</overWriteReleases>
-                            <overWriteSnapshots>true</overWriteSnapshots>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
-
 </project>
