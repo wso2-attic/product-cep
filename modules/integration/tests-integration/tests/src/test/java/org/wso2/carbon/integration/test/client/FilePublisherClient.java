@@ -27,11 +27,11 @@ import java.util.regex.Matcher;
  */
 public class FilePublisherClient {
     private static Logger log = Logger.getLogger(FilePublisherClient.class);
-    private static BufferedReader bufferedReader = null;
-    private static BufferedWriter bufferedWriter = null;
 
     public static void publish(String destinationFilePath, String testCaseFolderName, String dataFileName) {
-        System.out.println("Starting File EventPublisher Client");
+        log.info("Starting File EventPublisher Client");
+        BufferedWriter bufferedWriter = null;
+        BufferedReader bufferedReader = null;
 
         try {
             String line;
@@ -45,11 +45,9 @@ public class FilePublisherClient {
             }
 
         } catch (FileNotFoundException e) {
-            log.error("Error in reading file " + dataFileName, e);
+            log.error("File " + dataFileName + " is not found", e);
         } catch (IOException e) {
             log.error("Error in reading file " + dataFileName, e);
-        } catch (Throwable t) {
-            log.error("Error in loading file " + dataFileName, t);
         } finally {
             try {
                 if (bufferedReader != null) {
@@ -68,9 +66,10 @@ public class FilePublisherClient {
      * @param testCaseFolderName Artifact folder name
      * @param dataFileName       Text file to be read
      */
-    public static String getTestDataFileLocation(String testCaseFolderName, String dataFileName) throws Exception {
+    public static String getTestDataFileLocation(String testCaseFolderName, String dataFileName) {
         String relativeFilePath =
-                FrameworkPathUtil.getSystemResourceLocation() + "/artifacts/CEP/" + testCaseFolderName + File.separator
+                FrameworkPathUtil.getSystemResourceLocation() + File.separator + "artifacts" + File.separator
+                        + "CEP" + File.separator + testCaseFolderName + File.separator
                         + dataFileName;
         relativeFilePath = relativeFilePath.replaceAll("[\\\\/]", Matcher.quoteReplacement(File.separator));
         return relativeFilePath;
