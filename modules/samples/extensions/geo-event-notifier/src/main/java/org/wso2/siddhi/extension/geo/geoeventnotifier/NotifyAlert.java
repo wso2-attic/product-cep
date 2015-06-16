@@ -105,7 +105,7 @@ public class NotifyAlert extends FunctionExecutor{
                 throw new ExecutionPlanRuntimeException("Invalid input given to geoDashboard:needToNotify(id," +
                         "information,triggerFirst) function" + ". Second " + "argument cannot be null");
             }
-            if (data[3] == null) {
+            if (data[2] == null) {
                 throw new ExecutionPlanRuntimeException("Invalid input given to geoDashboard:needToNotify(id," +
                         "information,triggerFirst) function" + ". Third " + "argument cannot be null");
             }
