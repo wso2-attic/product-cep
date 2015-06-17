@@ -123,20 +123,20 @@ function addWmsEndPoint() {
         });
     }
 
-   /* if(layers === undefined || layers == "" || layers == null){
-        layers = "";
-    }
+    /* if(layers === undefined || layers == "" || layers == null){
+     layers = "";
+     }
 
 
 
-    if(wmsVersion === undefined || wmsVersion == "" || wmsVersion == null){
-        wmsVersion = "";
-    }
+     if(wmsVersion === undefined || wmsVersion == "" || wmsVersion == null){
+     wmsVersion = "";
+     }
 
 
-    if(outputFormat === undefined || outputFormat == "" || outputFormat == null){
-        outputFormat = "image/png";
-    }*/
+     if(outputFormat === undefined || outputFormat == "" || outputFormat == null){
+     outputFormat = "image/png";
+     }*/
 
     if(validated){
         wmsLayer = L.tileLayer.wms(serviceEndPoint, {
@@ -223,6 +223,7 @@ function setSpeedAlert() {
                 timeout: 3000,
                 pos: 'top-center'
             });
+            closeAll();
         }, 'json');
     }
 
@@ -350,42 +351,42 @@ function setStationeryAlert(leafletId) {
 
 var toggeled = false;
 /*function getPrediction(leafletId) {
-    *//*
-     * TODO: replace double quote to single quote because of a conflict when deploying execution plan in CEP
-     * this is against JSON standards so has been re-replaced when getting the data from governance registry
-     * (look in get_alerts for .replace() method)
-     * *//*
-    console.log("leafletId: " + leafletId);
-    var selectedAreaGeoJson = map._layers[leafletId].toGeoJSON().geometry;
-    var d = new Date();
-    console.log(d);
+ *//*
+ * TODO: replace double quote to single quote because of a conflict when deploying execution plan in CEP
+ * this is against JSON standards so has been re-replaced when getting the data from governance registry
+ * (look in get_alerts for .replace() method)
+ * *//*
+ console.log("leafletId: " + leafletId);
+ var selectedAreaGeoJson = map._layers[leafletId].toGeoJSON().geometry;
+ var d = new Date();
+ console.log(d);
 
-    var selectedProcessedAreaGeoJson = JSON.stringify(selectedAreaGeoJson).replace(/"/g, "'");
+ var selectedProcessedAreaGeoJson = JSON.stringify(selectedAreaGeoJson).replace(/"/g, "'");
 
-    requestPredictions(selectedAreaGeoJson.coordinates[0], selectedAreaGeoJson.coordinates[1], d);
-    if(!toggeled){
-        $('#predictionResults').animate({width: 'toggle'}, 100);
-        toggeled = true;
-    }
+ requestPredictions(selectedAreaGeoJson.coordinates[0], selectedAreaGeoJson.coordinates[1], d);
+ if(!toggeled){
+ $('#predictionResults').animate({width: 'toggle'}, 100);
+ toggeled = true;
+ }
 
-    $.UIkit.notify({
-        message: "Generating Predictions",
-        status: 'warning',
-        timeout: 5000,
-        pos: 'top-center'
-    });
+ $.UIkit.notify({
+ message: "Generating Predictions",
+ status: 'warning',
+ timeout: 5000,
+ pos: 'top-center'
+ });
 
-    setTimeout(function() {
-            var arr = getPredictions(selectedAreaGeoJson.coordinates[0], selectedAreaGeoJson.coordinates[1], d);
-            createPredictionChart();
-            console.log(arr[1]);
-            predictionChart.load({columns: arr});
-        }
-        , 5000);
+ setTimeout(function() {
+ var arr = getPredictions(selectedAreaGeoJson.coordinates[0], selectedAreaGeoJson.coordinates[1], d);
+ createPredictionChart();
+ console.log(arr[1]);
+ predictionChart.load({columns: arr});
+ }
+ , 5000);
 
 
 
-}*/
+ }*/
 
 
 function setTrafficAlert(leafletId) {
@@ -542,6 +543,7 @@ function setProximityAlert() {
                 timeout: 3000,
                 pos: 'top-center'
             });
+            closeAll();
         }, 'json');
 
     }

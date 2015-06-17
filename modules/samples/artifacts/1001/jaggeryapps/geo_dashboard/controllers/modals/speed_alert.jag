@@ -42,7 +42,7 @@ var get = require('../get_alerts.jag').get;
         </div>
         <div class="col-md-12">
             <button type="button" class="btn btn-info pull-right btn-sm" onclick="setSpeedAlert()">Set speed alert</button>
-            <button type="button" class="btn  btn-default pull-left btn-sm" onclick="$('#speedAlert').modal('hide')">Cancel</button>
+            <button type="button" class="btn  btn-default pull-left btn-sm" onclick="closeAll()">Cancel</button>
         </div>
     </div>
 </div>
