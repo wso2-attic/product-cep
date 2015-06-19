@@ -18,8 +18,8 @@
 <templateDomain name="TemperatureAnalysis">
     <description>Temperature Analysis Description</description>
     <templates>
-        <template name="Template1">
-            <description>Monitoring alerting based on room temperature</description>
+        <template name="Maximum Temperature">
+            <description>To check maximum room temperature of all rooms</description>
             <executionPlan>
                 <![CDATA[
                 /* Enter a unique ExecutionPlan */
@@ -50,7 +50,7 @@
             </parameters>
         </template>
 
-        <template name="Template2">
+        <template name="Maximum Temperature By Room">
             <description>To check maximum room temperature of specified room</description>
             <executionPlan>
                 <![CDATA[
@@ -91,7 +91,7 @@
         </template>
 
 
-        <template name="Template3">
+        <template name="Average Temperature For Specified Time">
             <description>To check average room temperature within specified time window of all rooms</description>
             <executionPlan>
                 <![CDATA[
