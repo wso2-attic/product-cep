@@ -115,7 +115,11 @@ public class HttpTestCase extends CEPIntegrationTest {
 
         try {
             Assert.assertEquals(agentServer.getMsgCount(), messageCount, "Incorrect number of messages consumed!");
-            Assert.assertEquals(agentServer.getPreservedEventList(), eventList, "Mapping is incorrect!");
+            List<Event> preservedEventList = agentServer.getPreservedEventList();
+            for (Event aEvent : preservedEventList) {
+                aEvent.setTimeStamp(0);
+            }
+            Assert.assertEquals(preservedEventList, eventList, "Mapping is incorrect!");
         } catch (Throwable e) {
             log.error("Exception thrown: " + e.getMessage(), e);
             Assert.fail("Exception: " + e.getMessage());
@@ -190,7 +194,11 @@ public class HttpTestCase extends CEPIntegrationTest {
 
         try {
             Assert.assertEquals(agentServer.getMsgCount(), messageCount, "Incorrect number of messages consumed!");
-            Assert.assertEquals(agentServer.getPreservedEventList(), eventList, "Mapping is incorrect!");
+            List<Event> preservedEventList = agentServer.getPreservedEventList();
+            for (Event aEvent : preservedEventList) {
+                aEvent.setTimeStamp(0);
+            }
+            Assert.assertEquals(preservedEventList, eventList, "Mapping is incorrect!");
         } catch (Throwable e) {
             log.error("Exception thrown: " + e.getMessage(), e);
             Assert.fail("Exception: " + e.getMessage());
@@ -265,7 +273,11 @@ public class HttpTestCase extends CEPIntegrationTest {
 
         try {
             Assert.assertEquals(agentServer.getMsgCount(), messageCount, "Incorrect number of messages consumed!");
-            Assert.assertEquals(agentServer.getPreservedEventList(), eventList, "Mapping is incorrect!");
+            List<Event> preservedEventList = agentServer.getPreservedEventList();
+            for (Event aEvent : preservedEventList) {
+                aEvent.setTimeStamp(0);
+            }
+            Assert.assertEquals(preservedEventList, eventList, "Mapping is incorrect!");
         } catch (Throwable e) {
             log.error("Exception thrown: " + e.getMessage(), e);
             Assert.fail("Exception: " + e.getMessage());
@@ -339,7 +351,11 @@ public class HttpTestCase extends CEPIntegrationTest {
 
         try {
             Assert.assertEquals(agentServer.getMsgCount(), messageCount, "Incorrect number of messages consumed!");
-            Assert.assertEquals(agentServer.getPreservedEventList(), eventList, "Mapping is incorrect!");
+            List<Event> preservedEventList = agentServer.getPreservedEventList();
+            for (Event aEvent : preservedEventList) {
+                aEvent.setTimeStamp(0);
+            }
+            Assert.assertEquals(preservedEventList, eventList, "Mapping is incorrect!");
         } catch (Throwable e) {
             log.error("Exception thrown: " + e.getMessage(), e);
             Assert.fail("Exception: " + e.getMessage());
@@ -413,7 +429,11 @@ public class HttpTestCase extends CEPIntegrationTest {
 
         try {
             Assert.assertEquals(agentServer.getMsgCount(), messageCount, "Incorrect number of messages consumed!");
-            Assert.assertEquals(agentServer.getPreservedEventList(), eventList, "Mapping is incorrect!");
+            List<Event> preservedEventList = agentServer.getPreservedEventList();
+            for (Event aEvent : preservedEventList) {
+                aEvent.setTimeStamp(0);
+            }
+            Assert.assertEquals(preservedEventList, eventList, "Mapping is incorrect!");
         } catch (Throwable e) {
             log.error("Exception thrown: " + e.getMessage(), e);
             Assert.fail("Exception: " + e.getMessage());
@@ -487,7 +507,11 @@ public class HttpTestCase extends CEPIntegrationTest {
 
         try {
             Assert.assertEquals(agentServer.getMsgCount(), messageCount, "Incorrect number of messages consumed!");
-            Assert.assertEquals(agentServer.getPreservedEventList(), eventList, "Mapping is incorrect!");
+            List<Event> preservedEventList = agentServer.getPreservedEventList();
+            for (Event aEvent : preservedEventList) {
+                aEvent.setTimeStamp(0);
+            }
+            Assert.assertEquals(preservedEventList, eventList, "Mapping is incorrect!");
         } catch (Throwable e) {
             log.error("Exception thrown: " + e.getMessage(), e);
             Assert.fail("Exception: " + e.getMessage());

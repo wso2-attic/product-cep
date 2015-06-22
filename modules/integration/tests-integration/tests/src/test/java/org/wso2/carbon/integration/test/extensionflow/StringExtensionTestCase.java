@@ -136,7 +136,11 @@ public class StringExtensionTestCase extends CEPIntegrationTest {
 		try {
 			Assert.assertEquals(agentServer.getMsgCount(), messageCount,
 			                    "Incorrect number of messages consumed!");
-			Assert.assertEquals(agentServer.getPreservedEventList(), eventList,
+            List<Event> preservedEventList= agentServer.getPreservedEventList();
+            for(Event aEvent: preservedEventList){
+                aEvent.setTimeStamp(0);
+            }
+			Assert.assertEquals(preservedEventList, eventList,
 			                    "Mismatch of character with charAt result!");
 		} catch (Throwable e) {
 			log.error("Exception occurred: " + e.getMessage(), e);

@@ -75,11 +75,10 @@ public class WireMonitorServer implements Runnable {
             }
 
         } catch (IOException ioException) {
-            if(active){
+            if (active) {
                 log.error("IO Exception: " + ioException.getMessage());
             }
-        }
-        finally {
+        } finally {
             try {
                 connection.close();
                 providerSocket.close();
@@ -91,16 +90,19 @@ public class WireMonitorServer implements Runnable {
 
     /**
      * Wait until response is received and returns
+     *
      * @return will return empty string if response is not received
      */
     public String getCapturedMessage() {
         return response;
     }
 
-    public void shutdown(){
+    public void shutdown() {
         active = false;
         try {
-            inputStream.close();
+            if (inputStream != null) {
+                inputStream.close();
+            }
         } catch (IOException e) {
             log.error("Error when closing socket connection. " + e.getMessage(), e);
         }
