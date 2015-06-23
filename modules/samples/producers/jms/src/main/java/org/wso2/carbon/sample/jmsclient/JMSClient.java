@@ -56,9 +56,10 @@ public class JMSClient {
 
         try {
 
-            filePath = JMSClientUtil.getEventFilePath(sampleNumber, format, topicName, filePath);
-
             if(topicName != null && !topicName.equalsIgnoreCase("")) {
+
+                filePath = JMSClientUtil.getEventFilePath(sampleNumber, format, topicName, filePath);
+
                 TopicConnection topicConnection;
                 TopicConnectionFactory connFactory = null;
 
@@ -112,6 +113,9 @@ public class JMSClient {
                     log.error("Error when creating connection factory. Please check necessary jar files");
                 }
             }else if(queueName != null && !queueName.equalsIgnoreCase("")){
+
+                filePath = JMSClientUtil.getEventFilePath(sampleNumber, format, queueName, filePath);
+
                 QueueConnection queueConnection;
                 QueueConnectionFactory connFactory = null;
 
