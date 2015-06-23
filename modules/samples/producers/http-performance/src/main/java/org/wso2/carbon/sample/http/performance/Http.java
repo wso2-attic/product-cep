@@ -22,19 +22,15 @@ import org.apache.http.impl.client.SystemDefaultHttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.axiom.om.util.Base64;
 import org.apache.log4j.Logger;
-import org.json.JSONException;
-import org.json.JSONObject;
 import com.google.gson.JsonObject;
 
 import java.text.DecimalFormat;
-import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 
 public class Http implements Runnable {
 	private static Logger log = Logger.getLogger(Http.class);
-//	private static Random random = new Random();
 
 	static String url;
 	static String username;
@@ -85,22 +81,6 @@ public class Http implements Runnable {
 		JsonObject correlationData = new JsonObject();
 		JsonObject payLoadData = new JsonObject();
 
-
-//		metaData.addProperty("timestamp", System.currentTimeMillis());
-//		metaData.addProperty("isPowerSaverEnabled", random.nextBoolean());
-//		metaData.addProperty("sensorId", count);
-//		metaData.addProperty("sensorName", "temperature");
-//
-//		correlationData.addProperty("longitude", random.nextDouble());
-//		correlationData.addProperty("latitude", random.nextDouble());
-//
-//		payLoadData.addProperty("humidity", random.nextFloat());
-//		payLoadData.addProperty("sensorValue", random.nextDouble());
-//
-//		event.add("metaData", metaData);
-//		event.add("correlationData", correlationData);
-//		event.add("payloadData", payLoadData);
-
 		metaData.addProperty("timestamp", System.currentTimeMillis());
 		metaData.addProperty("isPowerSaverEnabled", false);
 		metaData.addProperty("sensorId", count);
@@ -145,8 +125,9 @@ public class Http implements Runnable {
 					long elapsedTime = currentTime - lastTime;
 					double throughputPerSecond = (((double)elapsedCount) / elapsedTime) * 1000;
 					lastTime = currentTime;
-					log.info("Sent " + elapsedCount + " sensor events in " + elapsedTime
-							+ " milliseconds with total throughput of " + decimalFormat.format(throughputPerSecond) + " events per second.");
+					log.info("Sent " + elapsedCount + " sensor events in " + elapsedTime +
+							" milliseconds with total throughput of " + decimalFormat.format(throughputPerSecond) +
+							" events per second.");
 				}
 
 			}

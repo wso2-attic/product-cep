@@ -39,7 +39,8 @@ public class HttpUtil {
 	}
 
 	/**
-	 * File path will be created for the file to be read with respect to the arguments passed. If sample number given file path will be created accordingly
+	 * File path will be created for the file to be read with respect to the arguments passed.
+	 * If sample number given file path will be created accordingly
 	 *
 	 * @param filePath     Text file to be read
 	 * @param sampleNumber Number of the http sample
@@ -58,7 +59,8 @@ public class HttpUtil {
 			resultingFilePath = filePath;
 		} else if (filePath == null && sampleNumber != null) {
 			String urlSplitter[] = url.split("/");
-			resultingFilePath = sampleFilPath.replace("sampleNumber", sampleNumber)+urlSplitter[urlSplitter.length-1]+fileExtension;
+			resultingFilePath = sampleFilPath.replace("sampleNumber", sampleNumber) +
+					urlSplitter[urlSplitter.length-1]+fileExtension;
 		} else {
 			throw new Exception("In sampleNumber:'" + sampleNumber + "' and filePath:'" + filePath +
 			                    "' either one should be null");

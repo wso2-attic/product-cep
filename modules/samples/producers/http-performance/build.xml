@@ -80,7 +80,8 @@
     </target>
 
     <target name="run" depends="compile">
-        <echo> Configure -Durl=xxxx and -DnoOfEvents=xxxx -DnoOfPublishers=xxxx -Doptionally use -Dusername=xxxx -Dpassword=xxxx </echo>
+        <echo> Configure -Durl=xxxx and -DnoOfEvents=xxxx -DnoOfPublishers=xxxx -Doptionally use -Dusername=xxxx
+            -Dpassword=xxxx </echo>
         <java classname="${main-class}"
               classpathref="javac.classpath" fork="true">
             <arg value="${url}"/>
