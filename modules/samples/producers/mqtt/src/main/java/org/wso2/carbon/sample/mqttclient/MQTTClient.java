@@ -32,11 +32,11 @@ import java.util.List;
 public class MQTTClient {
 
     private static Logger log = Logger.getLogger(MQTTClient.class);
-    private static List<String> messagesList = new ArrayList<String>();
+    private static List<String> messagesList = new ArrayList<>();
     private static BufferedReader bufferedReader = null;
     private static StringBuffer message = new StringBuffer("");
-    private static final String asterixLine = "*****";
-    private static MqttClient mqttClient;
+    private static final String messageEndLine = "*****";
+
 
     public static void main(String args[]) {
         String url = args[0];
@@ -47,13 +47,13 @@ public class MQTTClient {
             sampleNumber = args[3];
         }
 
-        System.out.println("Starting MQTT Client");
+        log.info("Starting MQTT Client");
         MqttConnectOptions connOpt = new MqttConnectOptions();
         connOpt.setCleanSession(true);
         connOpt.setKeepAliveInterval(30);
 
         try {
-            mqttClient = new MqttClient(url, "SIMPLE-MQTT-PUB");
+            MqttClient mqttClient = new MqttClient(url, "SIMPLE-MQTT-PUB");
             mqttClient.connect(connOpt);
 
             try {
@@ -61,8 +61,8 @@ public class MQTTClient {
                 readMsg(filePath);
 
                 for (String message : messagesList) {
-                    System.out.println("Sending message:");
-                    System.out.println(message);
+                    log.info("Sending message:");
+                    log.info(message);
                     int pubQoS = 1;
                     MqttMessage mqttMessage = new MqttMessage(message.getBytes());
                     mqttMessage.setQos(pubQoS);
@@ -73,12 +73,10 @@ public class MQTTClient {
             } catch (Throwable t) {
                 log.error("Error when sending the messages", t);
             } finally {
-                if (mqttClient != null) {
-                    try {
-                        mqttClient.disconnect();
-                    } catch (MqttException e) {
-                        log.error("Error while disconnecting the MQTT client", e);
-                    }
+                try {
+                    mqttClient.disconnect();
+                } catch (MqttException e) {
+                    log.error("Error while disconnecting the MQTT client", e);
                 }
             }
 
@@ -99,7 +97,7 @@ public class MQTTClient {
             String line;
             bufferedReader = new BufferedReader(new FileReader(filePath));
             while ((line = bufferedReader.readLine()) != null) {
-                if ((line.equals(asterixLine.trim()) && !"".equals(message.toString().trim()))) {
+                if ((line.equals(messageEndLine.trim()) && !"".equals(message.toString().trim()))) {
                     messagesList.add(message.toString());
                     message = new StringBuffer("");
                 } else {

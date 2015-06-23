@@ -36,13 +36,13 @@ import java.util.List;
 /**
  * Http client reads a text file with multiple xml messages and post it to the given url.
  */
-public class Soap {
+public class SoapClient {
 
-    private static Logger log = Logger.getLogger(Soap.class);
+    private static Logger log = Logger.getLogger(SoapClient.class);
     private static List<String> messagesList = new ArrayList<String>();
     private static BufferedReader bufferedReader = null;
     private static StringBuffer message = new StringBuffer("");
-    private static final String asterixLine = "*****";
+    private static final String messageEndLine = "*****";
 
     public static void main(String[] args) {
 
@@ -59,14 +59,14 @@ public class Soap {
             serviceClient.setOptions(options);
 
             if (serviceClient != null) {
-                filePath = SoapUtil.getMessageFilePath(sampleNumber, filePath, url);
+                filePath = SoapClientUtil.getMessageFilePath(sampleNumber, filePath, url);
                 readMsg(filePath);
-                OMElement omElement1;
+                OMElement messageOMElement;
 
                 try {
-                    System.out.println("Starting sending of events...");
-                    omElement1 = AXIOMUtil.stringToOM(message.toString());
-                    serviceClient.fireAndForget(omElement1);
+                    log.info("Starting sending of events...");
+                    messageOMElement = AXIOMUtil.stringToOM(message.toString());
+                    serviceClient.fireAndForget(messageOMElement);
                     log.info("Message sent");
 
                 } catch (XMLStreamException e) {
@@ -92,7 +92,7 @@ public class Soap {
             String line;
             bufferedReader = new BufferedReader(new FileReader(filePath));
             while ((line = bufferedReader.readLine()) != null) {
-                if ((line.equals(asterixLine.trim()) && !"".equals(message.toString().trim()))) {
+                if ((line.equals(messageEndLine.trim()) && !"".equals(message.toString().trim()))) {
                     messagesList.add(message.toString());
                     message = new StringBuffer("");
                 } else {

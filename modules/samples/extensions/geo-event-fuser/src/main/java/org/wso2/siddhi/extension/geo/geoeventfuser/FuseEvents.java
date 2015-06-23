@@ -30,7 +30,6 @@ import org.wso2.siddhi.core.executor.VariableExpressionExecutor;
 import org.wso2.siddhi.core.query.processor.Processor;
 import org.wso2.siddhi.core.query.processor.stream.window.WindowProcessor;
 import org.wso2.siddhi.query.api.exception.ExecutionPlanValidationException;
-import org.wso2.siddhi.query.api.expression.Variable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -73,36 +72,39 @@ public class FuseEvents extends WindowProcessor {
             StreamEventCloner streamEventCloner) {
 
         while (streamEventChunk.hasNext()) {
-
             StreamEvent streamEvent = streamEventChunk.next();
             String eventId = (String) streamEvent.getOutputData()[variablePosition];
 
             if (eventsBuffer.containsKey(eventId)) {
                 eventsBuffer.get(eventId).add(streamEvent);
+
                 if (eventsBuffer.get(eventId).size() == getDeployedExecutionPlansCount()) {
                     // Do the fusion here and return combined event
-                    ComplexEventChunk fusedEvent = eventsFuser(streamEvent);
-                    nextProcessor.process(fusedEvent);
+                    fuseEvent(streamEvent);
                     eventsBuffer.remove(eventId);
+                } else{
+                    streamEventChunk.remove();
                 }
 
-            } else if (getDeployedExecutionPlansCount().equals(1)) { // This is a special case,
-            // where we do not need to fuse(combine) multiple events(because actually we don't get multiple events) so just doing a pass through
+            } else if (getDeployedExecutionPlansCount().equals(1)) {
+                // This is a special case,
+                // where we do not need to fuse(combine) multiple events(because actually we don't get multiple events) so just doing a pass through
                 nextProcessor.process(streamEventChunk);
             } else {
                 ArrayList<StreamEvent> buffer = new ArrayList<StreamEvent>();
                 buffer.add(streamEvent);
                 eventsBuffer.put(eventId, buffer);
+                streamEventChunk.remove();
             }
-
         }
+        nextProcessor.process(streamEventChunk);
     }
 
     public Integer getDeployedExecutionPlansCount() {
         return ExecutionPlansCount.getNumberOfExecutionPlans();
     }
 
-    public ComplexEventChunk eventsFuser(StreamEvent event) {
+    public void fuseEvent(StreamEvent event) {
 
     /*
         * --For reference--
@@ -132,7 +134,7 @@ public class FuseEvents extends WindowProcessor {
         ArrayList<StreamEvent> receivedEvents = eventsBuffer.get(eventId);
 
         String alertStrings = "";
-        String warningStrings = ""; // TODO: what if no warnings came ?
+        String warningStrings = "";
 
         Integer currentStateIndex = -1;
 
@@ -140,7 +142,7 @@ public class FuseEvents extends WindowProcessor {
             String thisState = (String) receivedEvent.getOutputData()[8];
             Integer thisStateIndex = states.indexOf(thisState);
 
-            if (thisStateIndex > currentStateIndex) { // TODO: `this` and `current` little bit confusing??
+            if (thisStateIndex > currentStateIndex) {
                 finalState = thisState;
                 currentStateIndex = thisStateIndex;
             }
@@ -177,11 +179,6 @@ public class FuseEvents extends WindowProcessor {
         };
 
         event.setOutputData(dataOut);
-
-        ComplexEventChunk complexEventChunk = new ComplexEventChunk();
-        complexEventChunk.add(event);
-
-        return complexEventChunk;
     }
 
     @Override

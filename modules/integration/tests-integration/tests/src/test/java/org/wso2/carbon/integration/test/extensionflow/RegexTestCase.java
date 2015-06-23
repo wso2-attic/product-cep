@@ -137,7 +137,11 @@ public class RegexTestCase extends CEPIntegrationTest {
 
         try {
             Assert.assertEquals(agentServer.getMsgCount(), messageCount, "Incorrect number of messages consumed!");
-            Assert.assertEquals(agentServer.getPreservedEventList(), eventList, "RegEx is incorrect!");
+            List<Event> preservedEventList= agentServer.getPreservedEventList();
+            for(Event aEvent: preservedEventList){
+                aEvent.setTimeStamp(0);
+            }
+            Assert.assertEquals(preservedEventList, eventList, "RegEx is incorrect!");
         } catch (Throwable e) {
             log.error("Exception thrown: " + e.getMessage(), e);
             Assert.fail("Exception: " + e.getMessage());

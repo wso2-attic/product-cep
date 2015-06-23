@@ -21,6 +21,6 @@
   <from streamName="org.wso2.event.sensor.stream" version="1.0.0"/>
   <mapping customMapping="disable" type="json"/>
   <to eventAdapterType="websocket">
-    <property name="websocket.server.url">ws://localhost:9099</property>
+    <property name="websocket.server.url">ws://localhost:9099/events/</property>
   </to>
 </eventPublisher>

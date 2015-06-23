@@ -27,8 +27,6 @@ import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 
 /**
@@ -36,13 +34,12 @@ import java.util.regex.Matcher;
  */
 public class SOAPEventPublisherClient {
     private static Logger log = Logger.getLogger(SOAPEventPublisherClient.class);
-    private static List<String> messagesList = new ArrayList<String>();
     private static BufferedReader bufferedReader = null;
     private static StringBuffer message = new StringBuffer("");
-    private static final String asterixLine = "*****";
+    private static final String messageEndLine = "*****";
 
     public static void publish(String url, String testCaseFolderName, String dataFileName) {
-        System.out.println("Starting SOAP EventPublisher Client");
+        log.info("Starting SOAP EventPublisher Client");
         KeyStoreUtil.setTrustStoreParams();
         ServiceClient serviceClient;
         try {
@@ -51,22 +48,21 @@ public class SOAPEventPublisherClient {
             options.setTo(new EndpointReference(url));
             serviceClient.setOptions(options);
 
-            if (serviceClient != null) {
-                readMsg(getTestDataFileLocation(testCaseFolderName, dataFileName));
-                OMElement omElement1;
+            readMsg(getTestDataFileLocation(testCaseFolderName, dataFileName));
+            OMElement messageOMElement;
 
-                try {
-                    System.out.println("Starting sending of events...");
-                    omElement1 = AXIOMUtil.stringToOM(message.toString());
-                    serviceClient.fireAndForget(omElement1);
-                    log.info("Message sent");
+            try {
+                log.info("Starting sending of events...");
+                messageOMElement = AXIOMUtil.stringToOM(message.toString());
+                serviceClient.fireAndForget(messageOMElement);
+                log.info("Message sent");
 
-                } catch (XMLStreamException e) {
-                    log.error("Error occurred when sending message " + message.toString(), e);
-                } catch (AxisFault axisFault) {
-                    log.error("Error occurred when sending message " + message.toString(), axisFault);
-                }
+            } catch (XMLStreamException e) {
+                log.error("Streaming Exception occurred when sending message " + message.toString(), e);
+            } catch (AxisFault axisFault) {
+                log.error("Error occurred when sending message " + message.toString(), axisFault);
             }
+
         } catch (Throwable t) {
             log.error("Error occurred when connecting to endpoint " + url, t);
         }
@@ -84,19 +80,15 @@ public class SOAPEventPublisherClient {
             String line;
             bufferedReader = new BufferedReader(new FileReader(filePath));
             while ((line = bufferedReader.readLine()) != null) {
-                if ((line.equals(asterixLine.trim()) && !"".equals(message.toString().trim()))) {
-                    messagesList.add(message.toString());
+                if ((line.equals(messageEndLine.trim()) && !"".equals(message.toString().trim()))) {
                     message = new StringBuffer("");
                 } else {
                     message = message.append(String.format("\n%s", line));
                 }
             }
-            if (!"".equals(message.toString().trim())) {
-                messagesList.add(message.toString());
-            }
 
         } catch (FileNotFoundException e) {
-            log.error("Error in reading file " + filePath, e);
+            log.error("File is found at " + filePath, e);
         } catch (IOException e) {
             log.error("Error in reading file " + filePath, e);
         } finally {

@@ -24,7 +24,7 @@
     <property name="temp.dir" value="temp"/>
     <property name="lib.dir" value="../../lib"/>
     <property name="class.dir" value="${temp.dir}/classes"/>
-    <property name="main-class" value="org.wso2.carbon.sample.soap.Soap"/>
+    <property name="main-class" value="org.wso2.carbon.sample.soap.SoapClient"/>
     <property name="username" value="admin"/>
     <property name="password" value="admin"/>
 

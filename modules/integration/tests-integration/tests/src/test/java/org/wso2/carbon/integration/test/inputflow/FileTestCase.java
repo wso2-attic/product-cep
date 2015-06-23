@@ -134,6 +134,7 @@ public class FileTestCase extends CEPIntegrationTest {
 
             int counter = 0;
             for (Event currentEvent : agentServer.getPreservedEventList()) {
+                currentEvent.setTimeStamp(0);
                 Assert.assertEquals(currentEvent.toString(), eventList.get(counter).toString(), "Mapping is incorrect!");
                 counter++;
             }

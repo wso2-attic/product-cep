@@ -123,6 +123,9 @@ public class Wso2EventTestCase extends CEPIntegrationTest {
             event.setCorrelationData(Arrays.copyOfRange(events.get(counter).getAttributeValues(), 4, 6));
             //final two attributes are payload
             event.setPayloadData(Arrays.copyOfRange(events.get(counter).getAttributeValues(), 6, 8));
+
+            currentEvent.setTimeStamp(0);
+
             Assert.assertEquals(currentEvent.toString(), event.toString(), "Mapping is incorrect!");
             counter++;
         }
