@@ -22,6 +22,7 @@ import org.apache.log4j.Logger;
 import javax.jms.*;
 import javax.naming.Context;
 import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
@@ -38,9 +39,10 @@ public class JMSClient {
 
         String sampleNumber = args[0];
         String topicName = args[1];
-        String format = args[2];
-        String filePath = args[3];
-        String broker = args[4];
+        String queueName = args[2];
+        String format = args[3];
+        String filePath = args[4];
+        String broker = args[5];
 
         if (format == null || "map".equals(format)) {
             format = "csv";
@@ -49,66 +51,126 @@ public class JMSClient {
             broker = "activemq";
         }
 
+        Session session = null;
+        Properties properties = new Properties();
+
         try {
 
             filePath = JMSClientUtil.getEventFilePath(sampleNumber, format, topicName, filePath);
 
-            TopicConnection topicConnection = null;
-            Session session = null;
+            if(topicName != null && !topicName.equalsIgnoreCase("")) {
+                TopicConnection topicConnection;
+                TopicConnectionFactory connFactory = null;
 
-            Properties properties = new Properties();
-            if(broker.equalsIgnoreCase("activemq")){
-                properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("activemq.properties"));
-                Context context = new InitialContext(properties);
-                TopicConnectionFactory connFactory = (TopicConnectionFactory) context.lookup("ConnectionFactory");
-                topicConnection = connFactory.createTopicConnection();
-                topicConnection.start();
-                session = topicConnection.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
-            }else if(broker.equalsIgnoreCase("mb")){
-                properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("mb.properties"));
-                Context context = new InitialContext(properties);
-                TopicConnectionFactory connFactory = (TopicConnectionFactory) context.lookup("qpidConnectionFactory");
-                topicConnection = connFactory.createTopicConnection();
-                topicConnection.start();
-                session = topicConnection.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
-            }else if(broker.equalsIgnoreCase("qpid")){
-                properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("qpid.properties"));
-                Context context = new InitialContext(properties);
-                TopicConnectionFactory connFactory = (TopicConnectionFactory) context.lookup("qpidConnectionFactory");
-                topicConnection = connFactory.createTopicConnection();
-                topicConnection.start();
-                session = topicConnection.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
-            }else{
-                log.info("Please enter a valid JMS message broker. (ex: activemq, mb, qpid");
-            }
-
-            if(session != null){
-                Topic topic  = session.createTopic(topicName);
-                MessageProducer producer  = session.createProducer(topic);
-
-                List<String> messagesList = JMSClientUtil.readFile(filePath);
-                try {
-                    if(format.equalsIgnoreCase("csv")){
-                        log.info("Sending Map messages on '" + topicName + "' topic");
-                        JMSClientUtil.publishMapMessage(producer, session, messagesList);
-
-                    }else{
-                        log.info("Sending  " + format + " messages on '" + topicName + "' topic");
-                        JMSClientUtil.publishTextMessage(producer, session, messagesList);
-                    }
-                } catch (JMSException e) {
-                    log.error("Can not subscribe." + e.getMessage(), e);
-                } catch (IOException e){
-                    log.error("Error when reading the data file." + e.getMessage(), e);
-                }finally{
-                    producer.close();
-                    session.close();
-                    topicConnection.stop();
+                if (broker.equalsIgnoreCase("activemq")) {
+                    properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("activemq.properties"));
+                    Context context = new InitialContext(properties);
+                    connFactory = (TopicConnectionFactory) context.lookup("ConnectionFactory");
+                } else if (broker.equalsIgnoreCase("mb")) {
+                    properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("mb.properties"));
+                    Context context = new InitialContext(properties);
+                    connFactory = (TopicConnectionFactory) context.lookup("qpidConnectionFactory");
+                } else if (broker.equalsIgnoreCase("qpid")) {
+                    properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("qpid.properties"));
+                    Context context = new InitialContext(properties);
+                    connFactory = (TopicConnectionFactory) context.lookup("qpidConnectionFactory");
+                } else {
+                    log.error("Please enter a valid JMS message broker. (ex: activemq, mb, qpid");
                 }
+
+                if(connFactory != null) {
+                    topicConnection = connFactory.createTopicConnection();
+                    topicConnection.start();
+                    session = topicConnection.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
+
+                    if (session != null) {
+                        Topic topic = session.createTopic(topicName);
+                        MessageProducer producer = session.createProducer(topic);
+
+                        List<String> messagesList = JMSClientUtil.readFile(filePath);
+                        try {
+                            if (format.equalsIgnoreCase("csv")) {
+                                log.info("Sending Map messages on '" + topicName + "' topic");
+                                JMSClientUtil.publishMapMessage(producer, session, messagesList);
+
+                            } else {
+                                log.info("Sending  " + format + " messages on '" + topicName + "' topic");
+                                JMSClientUtil.publishTextMessage(producer, session, messagesList);
+                            }
+                            log.info("All Order Messages sent");
+                        } catch (JMSException e) {
+                            log.error("Can not subscribe." + e.getMessage(), e);
+                        } catch (IOException e) {
+                            log.error("Error when reading the data file." + e.getMessage(), e);
+                        } finally {
+                            producer.close();
+                            session.close();
+                            topicConnection.stop();
+                        }
+                    }
+                }else{
+                    log.error("Error when creating connection factory. Please check necessary jar files");
+                }
+            }else if(queueName != null && !queueName.equalsIgnoreCase("")){
+                QueueConnection queueConnection;
+                QueueConnectionFactory connFactory = null;
+
+                if(broker.equalsIgnoreCase("activemq")){
+                    properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("activemq.properties"));
+                    Context context = new InitialContext(properties);
+                    connFactory = (QueueConnectionFactory) context.lookup("ConnectionFactory");
+
+                }else if(broker.equalsIgnoreCase("mb")){
+                    properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("mb.properties"));
+                    Context context = new InitialContext(properties);
+                    connFactory = (QueueConnectionFactory) context.lookup("qpidConnectionFactory");
+
+                }else if(broker.equalsIgnoreCase("qpid")){
+                    properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("qpid.properties"));
+                    Context context = new InitialContext(properties);
+                    connFactory = (QueueConnectionFactory) context.lookup("qpidConnectionFactory");
+
+                }else{
+                    log.error("Please enter a valid JMS message broker. (ex: activemq, mb, qpid");
+                }
+
+                if(connFactory != null) {
+                    queueConnection = connFactory.createQueueConnection();
+                    queueConnection.start();
+                    session = queueConnection.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
+
+                    if (session != null) {
+                        Queue queue = session.createQueue(queueName);
+                        MessageProducer producer = session.createProducer(queue);
+
+                        List<String> messagesList = JMSClientUtil.readFile(filePath);
+                        try {
+                            if (format.equalsIgnoreCase("csv")) {
+                                log.info("Sending Map messages on '" + queueName + "' queue");
+                                JMSClientUtil.publishMapMessage(producer, session, messagesList);
+
+                            } else {
+                                log.info("Sending  " + format + " messages on '" + queueName + "' queue");
+                                JMSClientUtil.publishTextMessage(producer, session, messagesList);
+                            }
+                        } catch (JMSException e) {
+                            log.error("Can not subscribe." + e.getMessage(), e);
+                        } catch (IOException e) {
+                            log.error("Error when reading the data file." + e.getMessage(), e);
+                        } finally {
+                            producer.close();
+                            session.close();
+                            queueConnection.stop();
+                        }
+                    }
+                }else{
+                    log.error("Error when creating connection factory. Please check necessary jar files");
+                }
+            }else{
+                log.error("Enter queue name or topic name to be published!");
             }
         } catch (Exception e) {
-            log.error("Error when publishing message" + e.getMessage(), e);
+            log.error("Error when publishing");
         }
-        log.info("All Order Messages sent");
     }
 }

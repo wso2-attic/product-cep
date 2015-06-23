@@ -27,6 +27,7 @@
 
     <property name="sn" value=""/>
     <property name="topicName" value=""/>
+    <property name="queueName" value=""/>
     <property name="format" value=""/>
     <property name="filePath" value=""/>
     <property name="broker" value=""/>
@@ -71,6 +72,7 @@
               classpathref="javac.classpath" fork="true">
             <arg value="${sn}"/>
             <arg value="${topicName}"/>
+            <arg value="${queueName}"/>
             <arg value="${format}"/>
             <arg value="${filePath}"/>
             <arg value="${broker}"/>
