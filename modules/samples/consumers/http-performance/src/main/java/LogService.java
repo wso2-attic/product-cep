@@ -39,31 +39,23 @@ public class LogService extends HttpServlet {
     private static AtomicLong eventCount = new AtomicLong(0);
     private static long lastTime;
 
-    private static ExecutorService executor;
-
     private static AtomicLong latency = new AtomicLong(0);
 
     public void init() throws ServletException {
         System.out.println("Logger service initiated");
         eventCount.set(0);
         lastTime = System.currentTimeMillis();
-        executor = Executors.newFixedThreadPool(100);
     }
 
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response)
             throws ServletException, IOException {
-//        Runnable innerLoggerService = new InnerLoggerService(request.getInputStream());
-//        executor.execute(innerLoggerService);
         this.inputStreamToString(request.getInputStream());
     }
 
     public void doPost(HttpServletRequest request,
                        HttpServletResponse response)
             throws ServletException, IOException {
-
-//        Runnable innerLoggerService = new InnerLoggerService(request.getInputStream());
-//        executor.execute(innerLoggerService);
         this.inputStreamToString(request.getInputStream());
     }
 
@@ -77,8 +69,6 @@ public class LogService extends HttpServlet {
             out.write(buff, 0, i);
         }
         out.close();
-
-
 
         JsonPath jsonPath = JsonPath.compile("$.event.metaData");
         Map<Object, Object> eventMap = jsonPath.read(out.toString());
@@ -106,62 +96,6 @@ public class LogService extends HttpServlet {
         }
 
         return out.toString();
-    }
-
-
-
-    public class InnerLoggerService implements Runnable{
-
-        private InputStream in;
-
-        public InnerLoggerService(InputStream in){
-            this.in = in;
-        }
-
-        @Override
-        public void run() {
-            long receivedTime = System.currentTimeMillis();
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
-            byte[] buff = new byte[1024];
-            int i;
-            try {
-                while ((i = in.read(buff)) > 0) {
-                    out.write(buff, 0, i);
-                }
-                out.close();
-            } catch (IOException e) {
-                log.error("Exception while reading message: " + e.getMessage(), e);
-
-            }
-
-            eventCount.addAndGet(1);
-
-            JsonPath jsonPath = JsonPath.compile("$.event.metaData");
-            Map<Object, Object> eventMap = jsonPath.read(out.toString());
-
-            long sentTime = Long.parseLong(eventMap.get("timestamp").toString());
-//        log.info("testing: " + sentTime);
-
-//        log.info("testing: " + receivedTime);
-            latency.addAndGet(receivedTime - sentTime);
-
-
-            if (eventCount.get() % elapsedCount == 0) {
-
-                long currentTime = System.currentTimeMillis();
-                long elapsedTime = currentTime - lastTime;
-                double throughputPerSecond = (((double)elapsedCount) / elapsedTime) * 1000;
-                lastTime = currentTime;
-
-                log.info("Received to log service " + elapsedCount + " sensor events in " + elapsedTime +
-                        " milliseconds with total throughput of " + decimalFormat.format(throughputPerSecond) +
-                        " events per second.");
-
-                log.info("Publishing Latency: " +  decimalFormat.format((double)latency.get() / elapsedCount));
-                latency = new AtomicLong(0);
-
-            }
-        }
     }
 
 }
