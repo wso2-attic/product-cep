@@ -23,6 +23,7 @@ V 4.0.0
 If snapshot versions of dependent jars are not available or out of date, to build this repository please build the following repositories first.
 
 * siddhi - https://github.com/wso2/siddhi
+* carbon-dashboards - https://github.com/wso2/carbon-dashboards
 * carbon-analytics-common - https://github.com/wso2/carbon-analytics-common
 * carbon-event-processing - https://github.com/wso2/carbon-event-processing
 
