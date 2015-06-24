@@ -11,8 +11,8 @@
   "properties": {
         "speed": {{speed}},
         "heading": {{heading}},
-        "state": "{{state}}",
-        "information": "{{information}}",
+        "state": {{state}},
+        "information": {{information}},
         "notify": {{notify}},
         "type": {{type}}
       },

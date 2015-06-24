@@ -7,9 +7,9 @@
 {
     "messageType" : "Alert",
     "type": "Feature",
-    "id": "{{id}}",
-    "state": "{{state}}",
-    "information": "{{information}}",
+    "id": {{id}},
+    "state": {{state}},
+    "information": {{information}},
     "longitude" : {{longitude}},
     "latitude" : {{latitude}}
 }

@@ -24,7 +24,7 @@
             "timestamp": {{meta_timestamp}},
             "isPowerSaverEnabled": {{meta_isPowerSaverEnabled}},
             "sensorId": {{meta_sensorId}},
-            "sensorName": "{{meta_sensorName}}"
+            "sensorName": {{meta_sensorName}}
         },
         "location data": {
             "longitude": {{correlation_longitude}},

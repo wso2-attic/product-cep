@@ -7,10 +7,10 @@
 {
   "messageType" : "Traffic",
   "type": "Feature",
-  "id": "{{id}}",
+  "id": {{id}},
   "properties": {
-        "state": "{{state}}",
-        "information": "{{information}}"
+        "state": {{state}},
+        "information": {{information}}
       },
   "geometry": {{geometry}}
 }
