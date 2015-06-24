@@ -16,7 +16,6 @@
 package org.wso2.carbon.integration.test.client;
 
 import org.apache.log4j.Logger;
-import org.wso2.carbon.databridge.commons.Event;
 
 import javax.jms.*;
 import javax.naming.Context;
@@ -115,6 +114,11 @@ public class JMSConsumerClient implements Runnable{
     public static void shutdown() {
         active = false;
         log.info("Shutting down ActiveMQ consumerTopic thread...");
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+
+        }
     }
     public static int getMessageCount(){
         return messageCount;
