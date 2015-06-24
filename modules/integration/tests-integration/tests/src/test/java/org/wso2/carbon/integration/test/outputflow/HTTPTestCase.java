@@ -86,9 +86,9 @@ public class HTTPTestCase extends CEPIntegrationTest {
         String receivedEvent = wireMonitorServer.getCapturedMessage().replaceAll("\\s+", "");
         log.info(receivedEvent);
 
-        String sentEvent = "{\"event\":{\"metaData\":{\"timestamp\":\"199008131245\",\"isPowerSaverEnabled\":\"false\"," +
-                "\"sensorId\":\"100\",\"sensorName\":\"temperature\"},\"correlationData\":{\"longitude\":\"23.45656\"," +
-                "\"latitude\":\"7.12324\"},\"payloadData\":{\"humidity\":\"100.34\",\"sensorValue\":\"23.4545\"}}}";
+        String sentEvent = "{\"event\":{\"metaData\":{\"timestamp\":199008131245,\"isPowerSaverEnabled\":false," +
+                "\"sensorId\":100,\"sensorName\":\"temperature\"},\"correlationData\":{\"longitude\":23.45656," +
+                "\"latitude\":7.12324},\"payloadData\":{\"humidity\":100.34,\"sensorValue\":23.4545}}}";
 
         eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
         eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("httpJson.xml");
