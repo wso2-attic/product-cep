@@ -1,0 +1,16 @@
+{
+  "name": "processedStream",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "payloadData": [
+    {
+      "name": "userID",
+      "type": "STRING"
+    },
+    {
+      "name": "difference",
+      "type": "LONG"
+    }
+  ]
+}

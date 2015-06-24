@@ -1,0 +1,34 @@
+{
+  "name": "analytics_Statistics",
+  "version": "1.3.0",
+  "nickName": "",
+  "description": "",
+  "metaData": [
+    {
+      "name": "ipAdd",
+      "type": "STRING"
+    },
+    {
+      "name": "index",
+      "type": "LONG"
+    },
+    {
+      "name": "timestamp",
+      "type": "LONG"
+    },
+    {
+      "name": "nanoTime",
+      "type": "LONG"
+    }
+  ],
+  "payloadData": [
+    {
+      "name": "userID",
+      "type": "STRING"
+    },
+    {
+      "name": "searchTerms",
+      "type": "STRING"
+    }
+  ]
+}
