@@ -22,7 +22,7 @@
     <property name="temp.dir" value="temp"/>
     <property name="class.dir" value="${temp.dir}/classes"/>
 
-    <property name="sampleNo" value=""/>
+    <property name="sn" value=""/>
 
     <path id="javac.classpath">
         <pathelement path="${class.dir}"/>
@@ -67,23 +67,23 @@
 
     <target name="-folder.check">
         <condition property="main.folder">
-            <equals arg1="${sampleNo}" arg2=""/>
+            <equals arg1="${sn}" arg2=""/>
         </condition>
         <condition property="sample.folder">
             <not>
-                <equals arg1="${sampleNo}" arg2=""/>
+                <equals arg1="${sn}" arg2=""/>
             </not>
         </condition>
     </target>
 
     <target name="-assign.sample" if="sample.folder">
-        <echo>Sample No : ${sampleNo}</echo>
-        <property name="services.dir" value="${cep.home}/samples/artifacts/${sampleNo}/axis2services"/>
+        <echo>Sample No : ${sn}</echo>
+        <property name="services.dir" value="${cep.home}/samples/artifacts/${sn}/axis2services"/>
         <echo>Services Dir : ${services.dir}</echo>
     </target>
 
     <target name="-assign.main" if="main.folder">
-        <echo>Sample No : ${sampleNo}</echo>
+        <echo>Sample No : ${sn}</echo>
         <property name="services.dir" value="${cep.home}/repository/deployment/server/axis2services"/>
         <echo>Services Dir : ${services.dir}</echo>
     </target>
