@@ -318,13 +318,25 @@
 
         <!-- Dashboard -->
         <fileSet>
-            <directory>repository/resources/portal</directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/portal</outputDirectory>
+            <directory>
+                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/deployment/server/webapps
+            </directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/webapps</outputDirectory>
+            <includes>
+                <include>shindig.war</include>
+            </includes>
         </fileSet>
         <fileSet>
-            <directory>target/shindig</directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/webapps/shindig</outputDirectory>
+            <directory>
+                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/deployment/server/jaggeryapps/portal
+            </directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/portal
+            </outputDirectory>
+            <includes>
+                <include>**/*</include>
+            </includes>
         </fileSet>
+
     </fileSets>
 
     <files>
@@ -446,12 +458,12 @@
 
         <!--&lt;!&ndash; Including logging-config.xml file &ndash;&gt;-->
         <!--<file>-->
-            <!--<source>-->
-                <!--&lt;!&ndash;../p2-profile-gen/target/wso2carbon-core-4.4.1_SNAPSHOT/repository/conf/etc/logging-config.xml&ndash;&gt;-->
-                <!--repository/conf/etc/logging-config.xml-->
-            <!--</source>-->
-            <!--<outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/etc-->
-            <!--</outputDirectory>-->
+        <!--<source>-->
+        <!--&lt;!&ndash;../p2-profile-gen/target/wso2carbon-core-4.4.1_SNAPSHOT/repository/conf/etc/logging-config.xml&ndash;&gt;-->
+        <!--repository/conf/etc/logging-config.xml-->
+        <!--</source>-->
+        <!--<outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/etc-->
+        <!--</outputDirectory>-->
         <!--</file>-->
 
         <!-- Including tenant-mgt.xml file -->
@@ -574,10 +586,10 @@
         </file>
 
         <!-- Including rdbms configuration file for event simulator -->
-       <file>
-           <source>
-               ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/cep/rdbms-configuration.xml
-           </source>
+        <file>
+            <source>
+                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/cep/rdbms-configuration.xml
+            </source>
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/cep
             </outputDirectory>
             <filtered>true</filtered>

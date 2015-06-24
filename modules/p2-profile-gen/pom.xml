@@ -261,6 +261,14 @@
                                     org.wso2.carbon.analytics-common:org.wso2.carbon.analytics.dashboard.feature:${carbon.analytics-common.version}
                                 </featureArtifactDef>
 
+                                <!--dashboard-->
+                                <featureArtifactDef>
+                                    org.wso2.carbon.dashboards:org.wso2.carbon.dashboards.shindig.feature:${carbon.dashboards.version}
+                                </featureArtifactDef>
+                                <featureArtifactDef>
+                                    org.wso2.carbon.dashboards:org.wso2.carbon.dashboards.portal.feature:${carbon.dashboards.version}
+                                </featureArtifactDef>
+
                                 <!-- cep ui features -->
                                 <featureArtifactDef>
                                     org.wso2.cep:org.wso2.cep.styles.feature:${cep.version}
@@ -518,6 +526,16 @@
                                 <feature>
                                     <id>org.wso2.carbon.analytics.dashboard.feature.group</id>
                                     <version>${carbon.analytics-common.version}</version>
+                                </feature>
+
+                                <!--dashboard-->
+                                <feature>
+                                    <id>org.wso2.carbon.dashboards.shindig.feature.group</id>
+                                    <version>${carbon.dashboards.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.dashboards.portal.feature.group</id>
+                                    <version>${carbon.dashboards.version}</version>
                                 </feature>
 
                                 <!-- cep ui features -->
