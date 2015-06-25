@@ -55,7 +55,7 @@ public class Kafka {
 
         try {
 
-            filePath = KafkaUtil.getMessageFilePath(sampleNumber, filePath, url);
+            filePath = KafkaUtil.getEventFilePath(sampleNumber, "", topic, filePath);
             readMsg(filePath);
 
             for (String message : messagesList) {
