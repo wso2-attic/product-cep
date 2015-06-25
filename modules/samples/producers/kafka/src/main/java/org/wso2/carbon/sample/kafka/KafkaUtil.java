@@ -53,7 +53,7 @@ public class KafkaUtil {
 		if (filePath != null && sampleNumber == null) {
 			resultingFilePath = filePath;
 		} else if (filePath == null && sampleNumber != null) {
-			if(format.equalsIgnoreCase("csv")){
+			if("csv".equalsIgnoreCase(format)){
 				resultingFilePath = sampleDirectoryPath.replace("sampleNumber", sampleNumber)+ topic + ".csv";
 			}else{
 				resultingFilePath = sampleDirectoryPath.replace("sampleNumber", sampleNumber)+ topic + ".txt";
