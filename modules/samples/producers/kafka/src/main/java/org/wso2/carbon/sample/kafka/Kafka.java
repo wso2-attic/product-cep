@@ -36,7 +36,7 @@ public class Kafka {
     private static List<String> messagesList = new ArrayList<String>();
     private static BufferedReader bufferedReader = null;
     private static StringBuffer message = new StringBuffer("");
-    private static final String asterixLine = "*****";
+    private static final String asteriskLine = "*****";
 
     public static void main(String args[]) {
 
@@ -55,7 +55,7 @@ public class Kafka {
 
         try {
 
-            filePath = KafkaUtil.getEventFilePath(sampleNumber, "", topic, filePath);
+            filePath = KafkaUtil.getEventFilePath(sampleNumber, topic, filePath);
             readMsg(filePath);
 
             for (String message : messagesList) {
@@ -85,7 +85,7 @@ public class Kafka {
             String line;
             bufferedReader = new BufferedReader(new FileReader(filePath));
             while ((line = bufferedReader.readLine()) != null) {
-                if ((line.equals(asterixLine.trim()) && !"".equals(message.toString().trim()))) {
+                if ((line.equals(asteriskLine.trim()) && !"".equals(message.toString().trim()))) {
                     messagesList.add(message.toString());
                     message = new StringBuffer("");
                 } else {

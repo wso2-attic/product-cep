@@ -34,12 +34,11 @@ public class KafkaUtil {
 	 * This method will construct the directory path of the data file
 	 *
 	 * @param sampleNumber  Number of the sample which is running currently
-	 * @param format        Format of the file (ex: csv, txt)
 	 * @param topic         topic of the message to be sent (the data file should be named with the topic)
 	 * @param filePath      file path if a sample if not running
 	 *
 	 */
-	public static String getEventFilePath(String sampleNumber, String format, String topic, String filePath)
+	public static String getEventFilePath(String sampleNumber, String topic, String filePath)
 			throws Exception {
 		if (sampleNumber != null && sampleNumber.length() == 0) {
 			sampleNumber = null;
@@ -53,15 +52,12 @@ public class KafkaUtil {
 		if (filePath != null && sampleNumber == null) {
 			resultingFilePath = filePath;
 		} else if (filePath == null && sampleNumber != null) {
-			if("csv".equalsIgnoreCase(format)){
-				resultingFilePath = sampleDirectoryPath.replace("sampleNumber", sampleNumber)+ topic + ".csv";
-			}else{
-				resultingFilePath = sampleDirectoryPath.replace("sampleNumber", sampleNumber)+ topic + ".txt";
-			}
+			resultingFilePath = sampleDirectoryPath.replace("sampleNumber", sampleNumber) + topic + ".txt";
 		} else {
 			throw new Exception("In sampleNumber:'" + sampleNumber + "' and filePath:'" + filePath
 					+ "' one must be null and other not null");
 		}
+
 		File file = new File(resultingFilePath);
 		if (!file.isFile()) {
 			throw new Exception("'" + resultingFilePath + "' is not a file");
