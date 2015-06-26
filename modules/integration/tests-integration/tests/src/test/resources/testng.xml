@@ -39,14 +39,12 @@
             <class name="org.wso2.carbon.integration.test.processflow.Wso2EventTestCase"/>
             <class name="org.wso2.carbon.integration.test.processflow.AttributeEncryptTestCase"/>
             <class name="org.wso2.carbon.integration.test.inputflow.HttpTestCase"/>
-            <class name="org.wso2.carbon.integration.test.inputflow.JMSTestCase"/>
             <class name="org.wso2.carbon.integration.test.inputflow.WebsocketTestCase"/>
             <class name="org.wso2.carbon.integration.test.inputflow.SOAPTestCase"/>
             <class name="org.wso2.carbon.integration.test.inputflow.FileTestCase"/>
             <class name="org.wso2.carbon.integration.test.inputflow.Wso2EventTestCase"/>
             <!--<class name="org.wso2.carbon.integration.test.outputflow.LoggerTestCase"/>-->
             <class name="org.wso2.carbon.integration.test.outputflow.RDBMSTestCase"/>
-            <class name="org.wso2.carbon.integration.test.outputflow.JMSTestCase"/>
             <class name="org.wso2.carbon.integration.test.outputflow.WebsocketTestCase"/>
             <class name="org.wso2.carbon.integration.test.outputflow.SOAPTestCase"/>
             <class name="org.wso2.carbon.integration.test.outputflow.HTTPTestCase"/>
@@ -64,6 +62,12 @@
             <class name="org.wso2.carbon.integration.test.extensionflow.StringExtensionTestCase"/>
             <class name="org.wso2.carbon.integration.test.extensionflow.MathExtensionTestCase"/>
             <class name="org.wso2.carbon.integration.test.extensionflow.TimeSeriesExtensionTestCase"/>
+
+            <!--added jms together to reduce server restart-->
+            <class name="org.wso2.carbon.integration.test.inputflow.JMSTestCase"/>
+            <class name="org.wso2.carbon.integration.test.outputflow.JMSTestCase"/>
+
+
         </classes>
 
     </test>

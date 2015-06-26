@@ -32,10 +32,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>emma</groupId>
-            <artifactId>emma</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.wso2.carbon</groupId>
             <artifactId>SecVerifier</artifactId>
             <type>aar</type>

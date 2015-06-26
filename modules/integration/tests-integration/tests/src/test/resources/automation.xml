@@ -29,9 +29,8 @@
         <executionEnvironment>standalone</executionEnvironment>
         <!--
          Change this to true if you want to generate coverage statistics
-         add -XX:-UseSplitVerifier to server startup
         -->
-        <coverage>false</coverage>
+        <coverage>true</coverage>
         <!--
          Change this to true if you want to enable framework dashboard
         -->
@@ -143,7 +142,7 @@
                 <admin>
                     <user key="admin">
                         <userName>admin</userName>
-                            <password>admin</password>
+                        <password>admin</password>
                     </user>
                 </admin>
                 <users>
@@ -158,40 +157,40 @@
                 </users>
             </tenant>
             <!--<tenant domain="abc.com" key="abcDomainKey">-->
-                <!--<admin>-->
-                    <!--<user key="admin">-->
-                        <!--<userName>admin</userName>-->
-                        <!--<password>admin</password>-->
-                    <!--</user>-->
-                <!--</admin>-->
-                <!--<users>-->
-                    <!--<user key="user1">-->
-                        <!--<userName>testuser11</userName>-->
-                        <!--<password>testuser11</password>-->
-                    <!--</user>-->
-                    <!--<user key="user2">-->
-                        <!--<userName>testuser21</userName>-->
-                        <!--<password>testuser21</password>-->
-                    <!--</user>-->
-                <!--</users>-->
+            <!--<admin>-->
+            <!--<user key="admin">-->
+            <!--<userName>admin</userName>-->
+            <!--<password>admin</password>-->
+            <!--</user>-->
+            <!--</admin>-->
+            <!--<users>-->
+            <!--<user key="user1">-->
+            <!--<userName>testuser11</userName>-->
+            <!--<password>testuser11</password>-->
+            <!--</user>-->
+            <!--<user key="user2">-->
+            <!--<userName>testuser21</userName>-->
+            <!--<password>testuser21</password>-->
+            <!--</user>-->
+            <!--</users>-->
             <!--</tenant>-->
             <!--<tenant domain="malintha.com" key="malinthaDomainKey">-->
-                <!--<admin>-->
-                    <!--<user key="admin">-->
-                        <!--<userName>admin</userName>-->
-                        <!--<password>admin</password>-->
-                    <!--</user>-->
-                <!--</admin>-->
-                <!--<users>-->
-                    <!--<user key="userm1">-->
-                        <!--<userName>testuse11</userName>-->
-                        <!--<password>testuse11</password>-->
-                    <!--</user>-->
-                    <!--<user key="userm2">-->
-                        <!--<userName>testuse21</userName>-->
-                        <!--<password>testuse21</password>-->
-                    <!--</user>-->
-                <!--</users>-->
+            <!--<admin>-->
+            <!--<user key="admin">-->
+            <!--<userName>admin</userName>-->
+            <!--<password>admin</password>-->
+            <!--</user>-->
+            <!--</admin>-->
+            <!--<users>-->
+            <!--<user key="userm1">-->
+            <!--<userName>testuse11</userName>-->
+            <!--<password>testuse11</password>-->
+            <!--</user>-->
+            <!--<user key="userm2">-->
+            <!--<userName>testuse21</userName>-->
+            <!--<password>testuse21</password>-->
+            <!--</user>-->
+            <!--</users>-->
             <!--</tenant>-->
         </tenants>
     </userManagement>
@@ -218,11 +217,14 @@
             </instance>
             <instance name="cep002" type="standalone" nonBlockingTransportEnabled="false">
                 <hosts>
-                    <host type="default">localhost</host><!--Your IP here-->
+                    <host type="default">localhost</host>
+                    <!--Your IP here-->
                 </hosts>
                 <ports>
-                    <port type="http">9764</port><!--Your HTTP port here-->
-                    <port type="https">9444</port><!--Your HTTPS port here-->
+                    <port type="http">9764</port>
+                    <!--Your HTTP port here-->
+                    <port type="https">9444</port>
+                    <!--Your HTTPS port here-->
                     <port type="thrift_receiver">7611</port>
                     <port type="thrift_publisher">7661</port>
                 </ports>
@@ -231,11 +233,14 @@
             </instance>
             <instance name="cep003" type="standalone" nonBlockingTransportEnabled="false">
                 <hosts>
-                    <host type="default">localhost</host><!--Your IP here-->
+                    <host type="default">localhost</host>
+                    <!--Your IP here-->
                 </hosts>
                 <ports>
-                    <port type="http">9765</port><!--Your HTTP port here-->
-                    <port type="https">9445</port><!--Your HTTPS port here-->
+                    <port type="http">9765</port>
+                    <!--Your HTTP port here-->
+                    <port type="https">9445</port>
+                    <!--Your HTTPS port here-->
                     <port type="thrift_receiver">7612</port>
                     <port type="thrift_publisher">7661</port>
                 </ports>
@@ -252,8 +257,8 @@
             <extentionClasses>
                 <class>
                     <name>org.wso2.carbon.automation.extensions.servers.carbonserver.CarbonServerExtension</name>
-                    <!--<parameter name="-DportOffset" value="0" />-->
-                    <!--<parameter name="cmdArg" value="debug 5005" />-->
+                    <!--<parameter name="portOffSet" value="2"/>-->
+                    <!--<parameter name="cmdArg" value="debug 5005"/>-->
                 </class>
                 <class>
                     <name>org.wso2.carbon.integration.common.extensions.usermgt.UserPopulateExtension</name>

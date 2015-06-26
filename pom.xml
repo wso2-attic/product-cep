@@ -332,9 +332,9 @@
                 <version>${activemq.version}</version>
             </dependency>
             <dependency>
-                <groupId>emma</groupId>
-                <artifactId>emma</artifactId>
-                <version>${emma.version}</version>
+                <groupId>org.jacoco</groupId>
+                <artifactId>org.jacoco.agent</artifactId>
+                <version>${jacoco.agent.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.eclipse.paho</groupId>
@@ -649,8 +649,8 @@
         <carbon.kernel.version>4.4.0</carbon.kernel.version>
         <!--<carbon.kernel.imp.pkg.version>[4.3.0, 4.4.0)</carbon.kernel.imp.pkg.version>-->
         <!--<carbon.kernel.registry.imp.pkg.version>[1.0.1, 2.0.0)</carbon.kernel.registry.imp.pkg.version>-->
-        <test.framework.version>4.3.1</test.framework.version>
-        <test.framework.util.version>4.3.0</test.framework.util.version>
+        <test.framework.version>4.4.1</test.framework.version>
+        <test.framework.util.version>4.4.1</test.framework.util.version>
 
         <carbon.p2.plugin.version>1.5.3</carbon.p2.plugin.version>
 
@@ -665,7 +665,7 @@
         <httpcore.wso2.version>4.3.3.wso2v1</httpcore.wso2.version>
 
         <javax.servlet.version>3.0.0.v201112011016</javax.servlet.version>
-        <emma.version>2.1.5320</emma.version>
+        <jacoco.agent.version>0.7.4.201502262128</jacoco.agent.version>
 
         <operadriver.version>0.8.1</operadriver.version>
         <selenium.version>2.40.0</selenium.version>
