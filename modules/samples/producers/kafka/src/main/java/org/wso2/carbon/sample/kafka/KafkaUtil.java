@@ -16,6 +16,8 @@
 
 package org.wso2.carbon.sample.kafka;
 
+import org.apache.log4j.Logger;
+
 import java.io.File;
 
 /**
@@ -23,19 +25,21 @@ import java.io.File;
  */
 public class KafkaUtil {
 
-	static String sampleFilPath =
-			".." + File.separator + ".." + File.separator + ".." + File.separator + "samples" +
-			File.separator + "artifacts" + File.separator + "sampleNumber" + File.separator;
-	static String fileExtension = ".txt";
+	private static Logger log = Logger.getLogger(KafkaUtil.class);
 
+	static String sampleDirectoryPath = ".." + File.separator + ".." + File.separator + ".." + File.separator +
+			"samples" + File.separator + "artifacts" + File.separator + "sampleNumber" + File.separator;
 
 	/**
-	 * File path will be created for the file to be read with respect to the arguments passed. If sample number given file path will be created accordingly
+	 * This method will construct the directory path of the data file
 	 *
-	 * @param filePath     Text file to be read
-	 * @param sampleNumber Number of the kafka sample
+	 * @param sampleNumber  Number of the sample which is running currently
+	 * @param topic         topic of the message to be sent (the data file should be named with the topic)
+	 * @param filePath      file path if a sample if not running
+	 *
 	 */
-	public static String getMessageFilePath(String sampleNumber, String filePath, String url) throws Exception {
+	public static String getEventFilePath(String sampleNumber, String topic, String filePath)
+			throws Exception {
 		if (sampleNumber != null && sampleNumber.length() == 0) {
 			sampleNumber = null;
 		}
@@ -48,16 +52,15 @@ public class KafkaUtil {
 		if (filePath != null && sampleNumber == null) {
 			resultingFilePath = filePath;
 		} else if (filePath == null && sampleNumber != null) {
-			String urlSplitter[] = url.split("/");
-			resultingFilePath = sampleFilPath.replace("sampleNumber", sampleNumber)+urlSplitter[urlSplitter.length-1]+fileExtension;
+			resultingFilePath = sampleDirectoryPath.replace("sampleNumber", sampleNumber) + topic + ".txt";
 		} else {
-			throw new Exception("In sampleNumber:'" + sampleNumber + "' and filePath:'" + filePath +
-			                    "' either one should be null");
+			throw new Exception("In sampleNumber:'" + sampleNumber + "' and filePath:'" + filePath
+					+ "' one must be null and other not null");
 		}
+
 		File file = new File(resultingFilePath);
 		if (!file.isFile()) {
 			throw new Exception("'" + resultingFilePath + "' is not a file");
-
 		}
 		if (!file.exists()) {
 			throw new Exception("file '" + resultingFilePath + "' does not exist");
