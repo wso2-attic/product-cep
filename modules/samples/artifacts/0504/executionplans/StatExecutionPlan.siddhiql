@@ -13,14 +13,28 @@ define stream analyticsStats (meta_ipAdd string, meta_index long, meta_timestamp
 @Export('processedStream:1.0.0')
 define stream processedStream (userID string, difference long);
 
-@name('query1') @dist(parallel='4', execGroup='1') from analyticsStats select meta_timestamp,  str:contains(userID, 'wso2') as isValidUserID, userID insert into filteredAnalyticsStats;
+@name('query1')
+@dist(parallel='4', execGroup='1')
+from analyticsStats
+select meta_timestamp,  str:contains(userID, 'wso2') as isValidUserID, userID
+insert into filteredAnalyticsStats;
 
-@name('query2') @dist(parallel='4', execGroup='1') from filteredAnalyticsStats[isValidUserID == true] select * insert into validAnalyticsStat;
+@name('query2')
+@dist(parallel='4', execGroup='1')
+from filteredAnalyticsStats[isValidUserID == true]
+select * insert into validAnalyticsStat;
 
-@name('query3') @dist(parallel='2', execGroup='2') partition with (userID of validAnalyticsStat)
+@name('query3')
+@dist(parallel='2', execGroup='2')
+partition with (userID of validAnalyticsStat)
 begin
-from validAnalyticsStat#window.lengthBatch(3) select userID, max(meta_timestamp) as latestTimestamp, min(meta_timestamp) as earliestTimestamp insert into processedAnalyticsStats;  
+    from validAnalyticsStat#window.lengthBatch(3)
+    select userID, max(meta_timestamp) as latestTimestamp, min(meta_timestamp) as earliestTimestamp
+    insert into processedAnalyticsStats;
 end ;
 
-
-@name('query4') @dist(parallel='3', execGroup='3') from processedAnalyticsStats select userID , (latestTimestamp - earliestTimestamp) as difference insert into processedStream;
+@name('query4')
+@dist(parallel='3', execGroup='3')
+from processedAnalyticsStats
+select userID , (latestTimestamp - earliestTimestamp) as difference
+insert into processedStream;
