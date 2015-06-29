@@ -19,6 +19,7 @@ package org.wso2.carbon.integration.test.extensionflow;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
@@ -148,5 +149,10 @@ public class MathExtensionTestCase extends CEPIntegrationTest {
 		} finally {
 			agentServer.stop();
 		}
+	}
+
+	@AfterClass(alwaysRun = true)
+	public void destroy() throws Exception {
+		super.cleanup();
 	}
 }
