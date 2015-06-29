@@ -52,14 +52,14 @@ function success(position) {
     });
 };
 
-function error() {
-    $.UIkit.notify({
-        message: "Unable to find browser location!",
-        status: 'warning',
-        timeout: ApplicationOptions.constance.NOTIFY_WARNING_TIMEOUT,
-        pos: 'top-center'
-    });
-};
+/*function error() {
+ $.UIkit.notify({
+ message: "Unable to find browser location!",
+ status: 'warning',
+ timeout: ApplicationOptions.constance.NOTIFY_WARNING_TIMEOUT,
+ pos: 'top-center'
+ });
+ };*/
 
 
 function initializeMap() {

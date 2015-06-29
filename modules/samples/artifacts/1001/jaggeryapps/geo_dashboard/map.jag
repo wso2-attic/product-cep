@@ -123,7 +123,24 @@ var log = new Log();
                 .constance.TENANT_INDEX+ApplicationOptions.constance.PATH_SEPARATOR + '<%= user.domain %>' +
                 ApplicationOptions.constance.PATH_SEPARATOR+ApplicationOptions.constance
                 .CEP_Traffic_STREAM_WEB_SOCKET_OUTPUT_ADAPTOR_NAME+ApplicationOptions.constance.PATH_SEPARATOR;
-        </script>
+
+
+
+        function reformatRadius(val){
+            if(val != "" && !isNaN(val)){
+                $("#fRadius" ).val(parseFloat(Math.round(val * 100) / 100).toFixed(2));
+            } else{
+                var message = "Invalid Fluctuation Radius Provided.";
+                $.UIkit.notify({
+                    message: message,
+                    status: 'danger',
+                    timeout: ApplicationOptions.constance.NOTIFY_DANGER_TIMEOUT,
+                    pos: 'top-center'
+                });
+            }
+
+        }
+    </script>
     <script src="assets/js/websocket.js"></script>
     <script src="assets/js/geo_remote.js"></script>
     <script src="assets/js/geo_fencing.js"></script>
@@ -831,7 +848,7 @@ var log = new Log();
                   <span class="help-block">Name of the selected area(i.e colombo)</span>
 
                   <label class="text-primary" for="fRadius">Fluctuation radius</label>
-                  <input class="form-control" id="fRadius" placeholder="m" type="text">
+                  <input class="form-control" id="fRadius" onblur="reformatRadius(this.form.fRadius.value);" placeholder="m" type="text">
 
                   <label class="text-primary" for="time">Time</label>
                   <input class="form-control" id="time" placeholder="Seconds" type="text">
