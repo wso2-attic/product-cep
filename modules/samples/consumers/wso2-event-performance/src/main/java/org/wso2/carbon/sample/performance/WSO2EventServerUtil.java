@@ -37,20 +37,8 @@ public class WSO2EventServerUtil {
     }
 
     public static String getDataBridgeConfigPath() {
-        File filePath = new File("src" + File.separator + "test" + File.separator + "resources");
-        if (!filePath.exists()) {
-            filePath = new File("src" + File.separator + "main" + File.separator + "resources");
-        }
-        if (!filePath.exists()) {
-            filePath = new File("test" + File.separator + "resources");
-        }
-        if (!filePath.exists()) {
-            filePath = new File("resources");
-        }
-        if (!filePath.exists()) {
-            filePath = new File("test" + File.separator + "resources");
-        }
-        return filePath.getAbsolutePath() + File.separator + "data-bridge-config.xml";
+        return new File("src" + File.separator + "main" + File.separator + "resources"
+                + File.separator + "data-bridge-config.xml").getAbsolutePath();
     }
 
     public static StreamDefinition loadStream() {

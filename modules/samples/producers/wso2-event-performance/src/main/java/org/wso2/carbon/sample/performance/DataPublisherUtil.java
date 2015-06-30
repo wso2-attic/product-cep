@@ -22,8 +22,8 @@ public class DataPublisherUtil {
 
     static File securityFile = new File(".." + File.separator + ".." + File.separator + ".." + File.separator
             + "repository" + File.separator + "resources" + File.separator + "security");
-    static String dataAgentConfigPath = ".." + File.separator + ".." + File.separator + ".." + File.separator
-            + "repository" + File.separator + "conf" + File.separator + "data-bridge" + File.separator
+    static String dataAgentConfigPath = "src" + File.separator + "main" + File.separator + "resources"
+            + File.separator
             + "data-agent-config.xml";
 
     public static void setTrustStoreParams() {
