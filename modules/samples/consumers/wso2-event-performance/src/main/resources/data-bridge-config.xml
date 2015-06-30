@@ -13,7 +13,6 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-
 <dataBridgeConfiguration>
 
     <workerThreads>10</workerThreads>
@@ -21,52 +20,15 @@
     <clientTimeoutMin>30</clientTimeoutMin>
 
     <dataReceiver name="Thrift">
-        <!--<config name="tcpPort">7611</config>-->
-        <!--<config name="sslPort">7711</config>-->
+        <config name="tcpPort">7611</config>
+        <config name="sslPort">7711</config>
     </dataReceiver>
 
     <dataReceiver name="Binary">
-        <!--<config name="tcpPort">9611</config>-->
-        <!--<config name="sslPort">9711</config>-->
+        <config name="tcpPort">9611</config>
+        <config name="sslPort">9711</config>
         <config name="sslReceiverThreadPoolSize">100</config>
         <config name="tcpReceiverThreadPoolSize">100</config>
     </dataReceiver>
-
-    <!--<streamDefinitions>
-        <streamDefinition>
-            {
-             'name':'org.wso2.esb.MediatorStatistics',
-             'version':'1.3.0',
-             'nickName': 'Stock Quote Information',
-             'description': 'Some Desc',
-             'metaData':[
-             {'name':'ipAdd','type':'STRING'}
-             ],
-             'payloadData':[
-             {'name':'symbol','type':'STRING'},
-             {'name':'price','type':'DOUBLE'},
-             {'name':'volume','type':'INT'},
-             {'name':'max','type':'DOUBLE'},
-             {'name':'min','type':'Double'}
-             ]
-            }
-        </streamDefinition>
-        <streamDefinition domainName="wso2">
-            {
-             'name':'org.wso2.esb.MediatorStatistics',
-             'version':'1.3.4',
-             'nickName': 'Stock Quote Information',
-             'description': 'Some Other Desc',
-             'metaData':[
-             {'name':'ipAdd','type':'STRING'}
-             ],
-             'payloadData':[
-             {'name':'symbol','type':'STRING'},
-             {'name':'price','type':'DOUBLE'},
-             {'name':'volume','type':'INT'}
-             ]
-            }
-        </streamDefinition>
-    </streamDefinitions>-->
 
 </dataBridgeConfiguration>

@@ -16,7 +16,6 @@
 * specific language governing permissions and limitations
 * under the License..
 -->
-
 <DataAgentsConfiguration>
     <Agent>
         <Name>Thrift</Name>
@@ -24,7 +23,10 @@
         <!--<TrustSore>src/test/resources/client-truststore.jks</TrustSore>-->
         <!--<TrustSorePassword>wso2carbon</TrustSorePassword>-->
         <QueueSize>32768</QueueSize>
-        <BatchSize>10000</BatchSize>
+        <BatchSize>200</BatchSize>
+        <CorePoolSize>10</CorePoolSize>
+        <MaxPoolSize>1</MaxPoolSize>
+        <KeepAliveTimeInPool>20</KeepAliveTimeInPool>
         <ReconnectionInterval>30</ReconnectionInterval>
         <MaxTransportPoolSize>250</MaxTransportPoolSize>
         <MaxIdleConnections>250</MaxIdleConnections>
@@ -42,7 +44,10 @@
         <!--<TrustSore>src/test/resources/client-truststore.jks</TrustSore>-->
         <!--<TrustSorePassword>wso2carbon</TrustSorePassword>-->
         <QueueSize>32768</QueueSize>
-        <BatchSize>10000</BatchSize>
+        <BatchSize>200</BatchSize>
+        <CorePoolSize>1</CorePoolSize>
+        <MaxPoolSize>1</MaxPoolSize>
+        <KeepAliveTimeInPool>20</KeepAliveTimeInPool>
         <ReconnectionInterval>30</ReconnectionInterval>
         <MaxTransportPoolSize>250</MaxTransportPoolSize>
         <MaxIdleConnections>250</MaxIdleConnections>
@@ -54,4 +59,5 @@
         <SecureMinIdleTimeInPool>5000</SecureMinIdleTimeInPool>
     </Agent>
 </DataAgentsConfiguration>
+
 
