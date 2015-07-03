@@ -395,6 +395,15 @@
             </outputDirectory>
             <filtered>true</filtered>
         </file>
+        <!-- Including rdbms configuration file for HA heartbeat check-->
+        <file>
+            <source>
+                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/hazelcast.properties
+            </source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/
+            </outputDirectory>
+            <filtered>true</filtered>
+        </file>
 
         <!--CEP-->
         <file>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventReceiver name="fileTailerReceiver" statistics="disable"
+    trace="disable" xmlns="http://wso2.org/carbon/eventreceiver">
+    <from eventAdapterType="file-tail">
+        <property name="filepath">{CEP_HOME}/samples/artifacts/0022/fileReceiver.csv</property>
+        <property name="startFromEnd">false</property>
+    </from>
+    <mapping customMapping="enable" type="text">
+        <property>
+            <from regex="([^,]+)"/>
+            <to name="meta_timestamp" type="long"/>
+        </property>
+        <property>
+            <from regex="[^,]+,([^,]+)"/>
+            <to name="meta_isPowerSaverEnabled" type="bool"/>
+        </property>
+        <property>
+            <from regex="[^,]+,[^,]+,([^,]+)"/>
+            <to name="meta_sensorId" type="int"/>
+        </property>
+        <property>
+            <from regex="[^,]+,[^,]+,[^,]+,([^,]+)"/>
+            <to name="meta_sensorName" type="string"/>
+        </property>
+        <property>
+            <from regex="[^,]+,[^,]+,[^,]+,[^,]+,([^,]+)"/>
+            <to name="correlation_longitude" type="double"/>
+        </property>
+        <property>
+            <from regex="[^,]+,[^,]+,[^,]+,[^,]+,[^,]+,([^,]+)"/>
+            <to name="correlation_latitude" type="double"/>
+        </property>
+        <property>
+            <from regex="[^,]+,[^,]+,[^,]+,[^,]+,[^,]+,[^,]+,([^,]+)"/>
+            <to name="humidity" type="float"/>
+        </property>
+        <property>
+            <from regex="[^,]+,[^,]+,[^,]+,[^,]+,[^,]+,[^,]+,[^,]+,([^,]+)"/>
+            <to name="sensorValue" type="double"/>
+        </property>
+    </mapping>
+    <to streamName="org.wso2.event.sensor.stream" version="1.0.0"/>
+</eventReceiver>
