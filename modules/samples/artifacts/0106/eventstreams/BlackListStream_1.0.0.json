@@ -1,0 +1,12 @@
+{
+  "name": "BlackListStream",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "payloadData": [
+    {
+      "name": "cardNo",
+      "type": "STRING"
+    }
+  ]
+}

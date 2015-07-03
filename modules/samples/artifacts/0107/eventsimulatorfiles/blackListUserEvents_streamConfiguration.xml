@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="UTF-8"?><streamConfiguration type="csv"><file>blackListUserEvents.csv</file><streamID>BlackListStream:1.0.0</streamID><separateChar>,</separateChar><delayBetweenEventsInMilies>1000</delayBetweenEventsInMilies></streamConfiguration>

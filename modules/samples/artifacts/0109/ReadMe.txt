@@ -1,4 +1,5 @@
-This sample demonstrates how to use external time windows.
+This sample uses 
+EventPublisher: logger
 
-Producers: wso2event
-Consumers: logger
+Producers:     event simulator
+Consumers:     console

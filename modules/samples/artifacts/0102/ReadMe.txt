@@ -1,4 +1,5 @@
-This sample demonstrates how to perform calculations over time using windows.
+This sample uses 
+EventPublisher: logger
 
-Producers: http
-Consumers: http (generic log service)
+Producers:     event simulator
+Consumers:     console

@@ -1,0 +1,19 @@
+/* Enter a unique ExecutionPlan */
+@Plan:name('ATMStatsExecutionPlan')
+
+/* Enter a unique description for ExecutionPlan */
+-- @Plan:description('ExecutionPlan')
+
+/* define streams/tables and write queries here ... */
+
+@Import('atmStatsStream:1.0.0')
+define stream atmStatsStream (cardNo string, cardHolderName string, amountWithdrawed double, transactionTime string, location string, cardHolderMobile string);
+
+@Export('possibleFraudStream:1.0.0')
+define stream possibleFraudStream (cardNo string, cardHolderName string, amountWithdrawed double, location string, cardHolderMobile string);
+
+from every a1 = atmStatsStream[amountWithdrawed < 100]
+	-> b1 = atmStatsStream[amountWithdrawed > 10000 and a1.cardNo == b1.cardNo]
+	within 1 day
+select a1.cardNo as cardNo, a1.cardHolderName as cardHolderName, b1.amountWithdrawed as amountWithdrawed, b1.location as location, b1.cardHolderMobile as cardHolderMobile
+insert into possibleFraudStream;

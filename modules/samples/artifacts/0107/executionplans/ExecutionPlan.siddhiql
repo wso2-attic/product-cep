@@ -1,0 +1,44 @@
+/* Enter a unique ExecutionPlan */
+@Plan:name('PersistedBlackListProcessor')
+
+/* Enter a unique description for ExecutionPlan */
+-- @Plan:description('ExecutionPlan')
+
+/* define streams/tables and write queries here ... */
+
+@Import('DeleteAllUsers:1.0.0')
+define stream DeleteAllUsers (deleteAll bool);
+
+@Import('BlackListStream:1.0.0')
+define stream BlackListStream (cardNo string);
+
+@Import('CardUserStream:1.0.0')
+define stream CardUserStream (name string, cardNum string, blacklisted bool);
+
+@Import('PurchaseStream:1.0.0')
+define stream PurchaseStream (price double, cardNo string, place string);
+
+@Export('WhiteListPurchaseStream:1.0.0')
+define stream WhiteListPurchaseStream (cardNo string, name string, price double);
+
+@from(eventtable = 'rdbms' , datasource.name = 'WSO2_CARBON_DB' , table.name = 'CEPSample0107CardUserTable')
+define table CardUserTable (name string, cardNum string, blacklisted bool) ; 
+
+from CardUserStream
+select * 
+insert into CardUserTable;
+	
+from BlackListStream
+select cardNo as cardNum, true as blacklisted  
+update CardUserTable
+	on cardNum == CardUserTable.cardNum;
+
+from DeleteAllUsers[deleteAll == true] 
+delete CardUserTable
+	on deleteAll == CardUserTable.blacklisted or deleteAll != CardUserTable.blacklisted ;
+	
+from PurchaseStream#window.length(1) as p join CardUserTable as c
+	on  p.cardNo == c.cardNum
+select p.cardNo as cardNo, c.name as name, p.price as price
+having c.blacklisted == false
+insert into WhiteListPurchaseStream ;

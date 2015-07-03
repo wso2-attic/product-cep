@@ -1,0 +1,20 @@
+{
+  "name": "StockStream",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "payloadData": [
+    {
+      "name": "symbol",
+      "type": "STRING"
+    },
+    {
+      "name": "price",
+      "type": "FLOAT"
+    },
+    {
+      "name": "volume",
+      "type": "INT"
+    }
+  ]
+}

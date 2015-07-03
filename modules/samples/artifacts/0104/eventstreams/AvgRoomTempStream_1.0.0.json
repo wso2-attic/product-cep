@@ -1,0 +1,16 @@
+{
+  "name": "AvgRoomTempStream",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "payloadData": [
+    {
+      "name": "roomNo",
+      "type": "INT"
+    },
+    {
+      "name": "avgTemp",
+      "type": "DOUBLE"
+    }
+  ]
+}
