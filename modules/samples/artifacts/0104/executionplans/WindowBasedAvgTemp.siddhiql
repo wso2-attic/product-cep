@@ -1,0 +1,28 @@
+/* Enter a unique ExecutionPlan */
+@Plan:name('WindowBasedAvgTemp')
+
+/* Enter a unique description for ExecutionPlan */
+@Plan:description('Window based avg temp calculation')
+
+/* define streams/tables and write queries here ... */
+
+@Import('TempStream:1.0.0')
+define stream TempStream (deviceID long, roomNo int, temp double);
+
+@Export('AvgRoomTempStream:1.0.0')
+define stream AvgRoomTempStream (roomNo int, avgTemp double);
+
+@Export('AvgRoomTempPerMinStream:1.0.0')
+define stream AvgRoomTempPerMinStream (roomNo int, avgTemp double);
+
+-- with time sliding window of 1 mim
+from TempStream#window.time(1 min)
+select roomNo, avg(temp) as avgTemp
+group by roomNo
+insert all events into AvgRoomTempStream ;
+
+-- with time batch (tumbling) window of 1 min
+from TempStream#window.timeBatch(1 min)
+select roomNo, avg(temp) as avgTemp
+group by roomNo
+insert all events into AvgRoomTempPerMinStream ;

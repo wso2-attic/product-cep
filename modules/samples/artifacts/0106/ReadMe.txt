@@ -1,6 +1,5 @@
 This sample uses 
-EventReceiver:  http
 EventPublisher: logger
 
-Producers:     http-client
+Producers:     event simulator
 Consumers:     console

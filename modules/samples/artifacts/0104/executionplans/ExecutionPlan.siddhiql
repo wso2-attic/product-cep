@@ -1,0 +1,17 @@
+/* Enter a unique ExecutionPlan */
+@Plan:name('AvgTempFromStartExecutionPlan')
+
+/* Enter a unique description for ExecutionPlan */
+@Plan:description('Avg temp from CEP server start')
+
+/* define streams/tables and write queries here ... */
+
+@Import('TempStream:1.0.0')
+define stream TempStream (deviceID long, roomNo int, temp double);
+
+@Export('AvgTempFromStartStream:1.0.0')
+define stream AvgTempFromStartStream (roomNo int, avgTemp double);
+
+from TempStream
+select roomNo, avg(temp) as avgTemp
+insert into AvgTempFromStartStream ;

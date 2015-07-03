@@ -6,26 +6,18 @@
 
 /* define streams/tables and write queries here ... */
 
-@Import('org.wso2.sample.package.arrivals:1.0.0')
-define stream arrivals_stream (trackingId string, customerName string, telephoneNo string, shippingAddress string);
+@Import('RegulatorStream:1.0.0')
+define stream RegulatorStream (deviceID string, roomNo int, isOn bool);
 
-@Import('org.wso2.sample.package.deliveries:1.0.0')
-define stream deliveries_stream (trackingId string, shippingAddress string, time string, receivedBy string, deliveredBy string);
+@Import('TempStream:1.0.0')
+define stream TempStream (deviceID long, roomNo int, temp double);
 
+@Export('RegulatorActionStream:1.0.0')
+define stream RegulatorActionStream (roomNo int, temp double, deviceID string, action string);
 
-@Export('org.wso2.sample.alerts:1.0.0')
-define stream alert_stream (trackingId string, customerName string, telephoneNo string);
+from TempStream[temp > 30.0]#window.time(1 min) as T 
+  join RegulatorStream[isOn == false]#window.length(1) as R
+  on T.roomNo == R.roomNo
+select T.roomNo, T.temp, R.deviceID, 'start' as action
+insert into RegulatorActionStream ;
 
-from arrivals_stream#window.time(2 minutes)
-select *
-insert expired events into overdue_deliveries_stream;
-
-from every arrivalEvent = arrivals_stream ->
-deliveryEvent = deliveries_stream[arrivalEvent.trackingId == trackingId] 
-    or overdue_delivery = overdue_deliveries_stream[arrivalEvent.trackingId == trackingId]
-select arrivalEvent.trackingId as trackingId, arrivalEvent.customerName as customerName, arrivalEvent.telephoneNo as telephoneNo, deliveryEvent.trackingId as deliveryId 
-insert into filter_stream;
-
-from filter_stream [ isNull(deliveryId)]  
-select trackingId, customerName, telephoneNo
-insert into alert_stream;

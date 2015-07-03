@@ -6,13 +6,23 @@
 
 /* define streams/tables and write queries here ... */
 
-@Import('org.wso2.sample.stock.trades:1.0.0')
-define stream stock_trades (symbol string, price double, quantity long);
+@Import('TempStream:1.0.0')
+define stream TempStream (deviceID long, roomNo int, temp double);
 
-@Export('org.wso2.sample.moving.average.stream:1.0.0')
-define stream moving_average_stream (symbol string, latestPrice double, movingAverage double);
+@Export('TransformedRoomTempStream:1.0.0')
+define stream TransformedRoomTempStream (uuid string, temp double, scale string);
 
-from stock_trades#window.time(1 min)
-select symbol, stock_trades.price as latestPrice, avg(price) as movingAverage
-group by symbol
-insert current events into moving_average_stream;
+@Export('EnrichedRoomTempStream:1.0.0')
+define stream EnrichedRoomTempStream (roomNo int, temp double, scale string);
+
+from TempStream
+select roomNo, temp
+insert into RoomTempStream;
+
+from RoomTempStream
+select roomNo, temp, 'C' as scale
+insert into EnrichedRoomTempStream;
+
+from TempStream
+select str:concat(roomNo, '-', deviceID) as uuid, (temp * 1.8000 + 32.00) as temp, 'F' as scale
+insert into TransformedRoomTempStream;

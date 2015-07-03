@@ -1,0 +1,20 @@
+{
+  "name": "WhiteListPurchaseStream",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "payloadData": [
+    {
+      "name": "cardNo",
+      "type": "STRING"
+    },
+    {
+      "name": "name",
+      "type": "STRING"
+    },
+    {
+      "name": "price",
+      "type": "DOUBLE"
+    }
+  ]
+}

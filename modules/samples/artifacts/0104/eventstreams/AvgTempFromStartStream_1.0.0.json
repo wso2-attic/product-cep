@@ -1,0 +1,16 @@
+{
+  "name": "AvgTempFromStartStream",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "Avg temperature of all rooms from CEP server start",
+  "payloadData": [
+    {
+      "name": "roomNo",
+      "type": "INT"
+    },
+    {
+      "name": "avgTemp",
+      "type": "DOUBLE"
+    }
+  ]
+}

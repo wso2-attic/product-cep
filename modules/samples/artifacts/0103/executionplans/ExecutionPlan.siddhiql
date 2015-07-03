@@ -1,0 +1,19 @@
+/* Enter a unique ExecutionPlan */
+@Plan:name('ExecutionPlan')
+
+/* Enter a unique description for ExecutionPlan */
+-- @Plan:description('ExecutionPlan')
+
+/* define streams/tables and write queries here ... */
+
+@Import('TempStream:1.0.0')
+define stream TempStream (deviceID long, roomNo int, temp double);
+
+@Export('AlertServerRoomTempStream:1.0.0')
+define stream AlertServerRoomTempStream (roomNo int, temp double);
+
+from TempStream [ roomNo > 245 and roomNo <= 365 and temp > 40 ]
+select roomNo, temp
+insert into AlertServerRoomTempStream ;
+
+
