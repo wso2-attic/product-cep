@@ -1,6 +1,5 @@
 This sample uses 
-EventReceiver:      wso2
-EventPublisher:     logger
+EventPublisher: logger
 
-Producers:    twitter-feed
-Consumers:    CEP server
+Producers:     event simulator
+Consumers:     console

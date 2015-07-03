@@ -1,6 +1,5 @@
-This sample uses
-EventReceiver:  soap
-EventPublisher: soap
+This sample uses 
+EventPublisher: logger
 
-Producers:     soap-client
-Consumers:     axis2-log-service (axis2 service receiver)
+Producers:     event simulator
+Consumers:     console

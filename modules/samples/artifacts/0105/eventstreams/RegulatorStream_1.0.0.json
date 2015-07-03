@@ -1,0 +1,20 @@
+{
+  "name": "RegulatorStream",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "Input Regulator Stream",
+  "payloadData": [
+    {
+      "name": "deviceID",
+      "type": "STRING"
+    },
+    {
+      "name": "roomNo",
+      "type": "INT"
+    },
+    {
+      "name": "isOn",
+      "type": "BOOL"
+    }
+  ]
+}

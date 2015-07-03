@@ -1,0 +1,20 @@
+{
+  "name": "PeakStream",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "payloadData": [
+    {
+      "name": "priceInitial",
+      "type": "FLOAT"
+    },
+    {
+      "name": "pricePeak",
+      "type": "FLOAT"
+    },
+    {
+      "name": "priceAfterPeak",
+      "type": "FLOAT"
+    }
+  ]
+}

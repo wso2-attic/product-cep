@@ -1,0 +1,20 @@
+{
+  "name": "TempStream",
+  "version": "1.0.0",
+  "nickName": "Temperature Stream",
+  "description": "Input Temperature Event Stream",
+  "payloadData": [
+    {
+      "name": "deviceID",
+      "type": "LONG"
+    },
+    {
+      "name": "roomNo",
+      "type": "INT"
+    },
+    {
+      "name": "temp",
+      "type": "DOUBLE"
+    }
+  ]
+}

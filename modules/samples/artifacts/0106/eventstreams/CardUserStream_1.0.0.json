@@ -1,0 +1,20 @@
+{
+  "name": "CardUserStream",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "payloadData": [
+    {
+      "name": "name",
+      "type": "STRING"
+    },
+    {
+      "name": "cardNum",
+      "type": "STRING"
+    },
+    {
+      "name": "blacklisted",
+      "type": "BOOL"
+    }
+  ]
+}

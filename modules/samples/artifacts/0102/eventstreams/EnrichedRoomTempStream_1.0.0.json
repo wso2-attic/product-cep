@@ -1,0 +1,20 @@
+{
+  "name": "EnrichedRoomTempStream",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "payloadData": [
+    {
+      "name": "roomNo",
+      "type": "INT"
+    },
+    {
+      "name": "temp",
+      "type": "DOUBLE"
+    },
+    {
+      "name": "scale",
+      "type": "STRING"
+    }
+  ]
+}

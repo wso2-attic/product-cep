@@ -1,8 +1,6 @@
 This sample uses 
-InputEventAdaptor:  file
-EventBuilder:           text
-EventFormatter:         text
-OutputEventAdaptor: logger
+EventReceiver:      wso2
+EventPublisher:     logger
 
-Producers:     N/A
-Consumers:     CEP server
+Producers:    twitter-feed
+Consumers:    CEP server
