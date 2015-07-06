@@ -25,7 +25,7 @@
         <QueueSize>32768</QueueSize>
         <BatchSize>200</BatchSize>
         <CorePoolSize>10</CorePoolSize>
-        <MaxPoolSize>1</MaxPoolSize>
+        <MaxPoolSize>10</MaxPoolSize>
         <KeepAliveTimeInPool>20</KeepAliveTimeInPool>
         <ReconnectionInterval>30</ReconnectionInterval>
         <MaxTransportPoolSize>250</MaxTransportPoolSize>
@@ -43,10 +43,10 @@
         <DataEndpointClass>org.wso2.carbon.databridge.agent.endpoint.binary.BinaryDataEndpoint</DataEndpointClass>
         <!--<TrustSore>src/test/resources/client-truststore.jks</TrustSore>-->
         <!--<TrustSorePassword>wso2carbon</TrustSorePassword>-->
-        <QueueSize>32768</QueueSize>
+        <QueueSize>65536</QueueSize>
         <BatchSize>200</BatchSize>
-        <CorePoolSize>1</CorePoolSize>
-        <MaxPoolSize>1</MaxPoolSize>
+        <CorePoolSize>10</CorePoolSize>
+        <MaxPoolSize>10</MaxPoolSize>
         <KeepAliveTimeInPool>20</KeepAliveTimeInPool>
         <ReconnectionInterval>30</ReconnectionInterval>
         <MaxTransportPoolSize>250</MaxTransportPoolSize>

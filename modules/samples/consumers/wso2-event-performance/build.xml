@@ -83,6 +83,11 @@
             <arg value="${port}"/>
             <arg value="${protocol}"/>
             <arg value="${elapsedCount}"/>
+            <jvmarg value="-Xmx2048m"/>
+            <jvmarg value="-Xms1024m"/>
+            <!--<jvmarg value="-XX:+UnlockCommercialFeatures"/>-->
+            <!--<jvmarg value="-XX:+FlightRecorder"/>-->
+            <!--<jvmarg value="-XX:FlightRecorderOptions=defaultrecording=true,settings=profile,disk=true,repository=./tmp,dumponexit=true,dumponexitpath=./"/>-->
         </java>
     </target>
 

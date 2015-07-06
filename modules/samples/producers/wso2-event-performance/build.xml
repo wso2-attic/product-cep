@@ -88,6 +88,11 @@
             <arg value="${eventCount}"/>
             <arg value="${elapsedCount}"/>
             <arg value="${warmUpCount}"/>
+            <jvmarg value="-Xmx1024m"/>
+            <jvmarg value="-Xms512m"/>
+            <!--<jvmarg value="-XX:+UnlockCommercialFeatures"/>-->
+            <!--<jvmarg value="-XX:+FlightRecorder"/>-->
+            <!--<jvmarg value="-XX:FlightRecorderOptions=defaultrecording=true,settings=profile,disk=true,repository=./tmp,dumponexit=true,dumponexitpath=./"/>-->
         </java>
     </target>
 

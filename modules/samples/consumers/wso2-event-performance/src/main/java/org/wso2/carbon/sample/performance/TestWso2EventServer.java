@@ -35,6 +35,8 @@ import org.wso2.carbon.user.api.UserStoreException;
 
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class TestWso2EventServer {
     Logger log = Logger.getLogger(TestWso2EventServer.class);
@@ -95,10 +97,12 @@ public class TestWso2EventServer {
 
 
         databridge.subscribe(new AgentCallback() {
-            int counter = 0;
-            int lastIndex = 0;
-            int lastCounter = 0;
-            long lastTime = System.currentTimeMillis();
+
+            AtomicLong totalDelay = new AtomicLong(0);
+            AtomicLong counter = new AtomicLong(0);
+            AtomicLong lastIndex = new AtomicLong(0);
+            AtomicLong lastCounter = new AtomicLong(0);
+            AtomicLong lastTime = new AtomicLong(System.currentTimeMillis());
             DecimalFormat decimalFormat = new DecimalFormat("#");
 
             public void definedStream(StreamDefinition streamDefinition,
@@ -115,21 +119,28 @@ public class TestWso2EventServer {
             public void receive(List<Event> eventList, Credentials credentials) {
                 long currentTime = System.currentTimeMillis();
 
-                counter = counter + eventList.size();
-                int index = counter / elapsedCount;
+                counter.set(counter.get() + eventList.size());
+                long index = counter.get() / elapsedCount;
+                long currentBatchTotalDelay = 0;
+                for (Event event : eventList) {
+                    currentBatchTotalDelay = currentBatchTotalDelay + (currentTime - event.getTimeStamp());
+                }
 
-                if (index != lastIndex) {
-                    lastIndex = index;
+                totalDelay.set(totalDelay.get() + currentBatchTotalDelay);
 
-                    int totalCalculateCount = counter - lastCounter;
-                    long elapsedTime = currentTime - lastTime;
+                if (index != lastIndex.get()) {
+                    lastIndex.set(index);
+
+                    long totalCalculateCount = counter.get() - lastCounter.get();
+                    long elapsedTime = currentTime - lastTime.get();
                     double throughputPerSecond = (((float) totalCalculateCount) / elapsedTime) * 1000;
-                    lastTime = currentTime;
-                    lastCounter = counter;
+                    lastTime.set(currentTime);
+                    lastCounter.set(counter.get());
 
                     log.info("Received " + totalCalculateCount + " sensor events in " + elapsedTime
                             + " milliseconds with total throughput of " + decimalFormat.format(throughputPerSecond)
-                            + " events per second.");
+                            + " events per second. Average delay is " + totalDelay.get()/totalCalculateCount);
+                    totalDelay.set(0);
                 }
             }
 
