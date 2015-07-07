@@ -35,25 +35,35 @@ import org.wso2.carbon.user.api.UserStoreException;
 
 import java.text.DecimalFormat;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class TestWso2EventServer {
-    Logger log = Logger.getLogger(TestWso2EventServer.class);
+    private static Logger log = Logger.getLogger(TestWso2EventServer.class);
     ThriftDataReceiver thriftDataReceiver;
     BinaryDataReceiver binaryDataReceiver;
+    AtomicLong counter = new AtomicLong(0);
     AbstractStreamDefinitionStore streamDefinitionStore = new InMemoryStreamDefinitionStore();
     static final TestWso2EventServer testServer = new TestWso2EventServer();
 
 
     public static void main(String[] args) throws DataBridgeException, StreamDefinitionStoreException {
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            @Override
+            public void run() {
+                try {
+                    log.info("Final event count: " + testServer.counter.get());
+                } catch (Throwable t) {
+                    t.printStackTrace();
+                }
+            }
+        });
+        log.info("Shutdown hook added.");
         testServer.start(args[0], Integer.parseInt(args[1]), args[2], Integer.parseInt(args[3]));
         synchronized (testServer) {
             try {
                 testServer.wait();
             } catch (InterruptedException ignored) {
-
-
+                //ignore
             }
         }
     }
@@ -62,7 +72,6 @@ public class TestWso2EventServer {
     public void start(String host, int receiverPort, String protocol, final int elapsedCount)
             throws DataBridgeException, StreamDefinitionStoreException {
         WSO2EventServerUtil.setKeyStoreParams();
-
 
         DataBridge databridge = new DataBridge(new AuthenticationHandler() {
             @Override
@@ -73,7 +82,7 @@ public class TestWso2EventServer {
 
             @Override
             public String getTenantDomain(String userName) {
-                return "admin";
+                return "carbon.super";
             }
 
             @Override
@@ -99,11 +108,10 @@ public class TestWso2EventServer {
         databridge.subscribe(new AgentCallback() {
 
             AtomicLong totalDelay = new AtomicLong(0);
-            AtomicLong counter = new AtomicLong(0);
             AtomicLong lastIndex = new AtomicLong(0);
             AtomicLong lastCounter = new AtomicLong(0);
             AtomicLong lastTime = new AtomicLong(System.currentTimeMillis());
-            DecimalFormat decimalFormat = new DecimalFormat("#");
+            DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
             public void definedStream(StreamDefinition streamDefinition,
                                       int tenantID) {
@@ -118,33 +126,29 @@ public class TestWso2EventServer {
             @Override
             public void receive(List<Event> eventList, Credentials credentials) {
                 long currentTime = System.currentTimeMillis();
-
-                counter.set(counter.get() + eventList.size());
-                long index = counter.get() / elapsedCount;
                 long currentBatchTotalDelay = 0;
                 for (Event event : eventList) {
                     currentBatchTotalDelay = currentBatchTotalDelay + (currentTime - event.getTimeStamp());
                 }
+                /** Following section should ideally be atomic **/
+                long localTotalDelay = totalDelay.addAndGet(currentBatchTotalDelay);
+                long localCounter = counter.addAndGet(eventList.size());
+                /** End of wish for atomic section **/
 
-                totalDelay.set(totalDelay.get() + currentBatchTotalDelay);
+                long index = localCounter / elapsedCount;
 
-                if (index != lastIndex.get()) {
-                    lastIndex.set(index);
+                if (lastIndex.compareAndSet(index - 1, index)) {
+                    long currentWindowEventsReceived = localCounter - lastCounter.getAndSet(localCounter);
+                    //log.info("Current time: " + System.currentTimeMillis() + ", Event received time: " + currentTime + ", Last calculation time: " + lastTime.get());
+                    long elapsedTime = currentTime - lastTime.getAndSet(currentTime);
+                    double throughputPerSecond = (((double) currentWindowEventsReceived) / elapsedTime) * 1000;
 
-                    long totalCalculateCount = counter.get() - lastCounter.get();
-                    long elapsedTime = currentTime - lastTime.get();
-                    double throughputPerSecond = (((float) totalCalculateCount) / elapsedTime) * 1000;
-                    lastTime.set(currentTime);
-                    lastCounter.set(counter.get());
-
-                    log.info("Received " + totalCalculateCount + " sensor events in " + elapsedTime
+                    log.info("[" + Thread.currentThread().getName() + "] Received " + currentWindowEventsReceived + " sensor events in " + elapsedTime
                             + " milliseconds with total throughput of " + decimalFormat.format(throughputPerSecond)
-                            + " events per second. Average delay is " + totalDelay.get()/totalCalculateCount);
-                    totalDelay.set(0);
+                            + " events per second. Average delay is " + decimalFormat.format(localTotalDelay / (double) currentWindowEventsReceived));
+                    totalDelay.addAndGet(-localTotalDelay);
                 }
             }
-
-
         });
 
 
