@@ -277,6 +277,10 @@
                                     org.wso2.cep:org.wso2.stratos.cep.dashboard.ui.feature:${cep.version}
                                 </featureArtifactDef>
 
+                                <!-- ML feature -->
+                                <featureArtifactDef>
+                                    org.wso2.carbon.ml:org.wso2.carbon.ml.siddhi.extension.feature:${carbon.ml.version}
+                                </featureArtifactDef>
                             </featureArtifacts>
                         </configuration>
                     </execution>
@@ -546,6 +550,12 @@
                                 <feature>
                                     <id>org.wso2.stratos.cep.dashboard.ui.feature.group</id>
                                     <version>${cep.version}</version>
+                                </feature>
+
+                                <!-- ML feature -->
+                                <feature>
+                                    <id>org.wso2.carbon.ml.siddhi.extension.feature.group</id>
+                                    <version>${carbon.ml.version}</version>
                                 </feature>
 
                             </features>
