@@ -1,8 +1,8 @@
 This sample uses 
-InputEventAdaptor:  soap
-EventBuilder:           xml
-EventFormatter:         xml
-OutputEventAdaptor: soap
+InputEventAdaptor:  file
+EventBuilder:           text
+EventFormatter:         text
+OutputEventAdaptor: logger
 
-Producers:     Soap service Try-it
-Consumers:     LogService
+Producers:     N/A
+Consumers:     CEP server
