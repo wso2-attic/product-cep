@@ -2,7 +2,7 @@
 <eventPublisher name="DefaultWebsocketOutputAdaptor"
   statistics="disable" trace="enable" xmlns="http://wso2.org/carbon/eventpublisher">
   <from streamName="fusedSpatialEvent" version="1.0.0"/>
-  <mapping customMapping="enable" type="json">
+  <mapping customMapping="disable" type="json">
     <inline>
 {
   "messageType" : "Point",
