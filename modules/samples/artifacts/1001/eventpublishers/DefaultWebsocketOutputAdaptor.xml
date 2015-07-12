@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <eventPublisher name="DefaultWebsocketOutputAdaptor"
-  statistics="disable" trace="disable" xmlns="http://wso2.org/carbon/eventpublisher">
+  statistics="disable" trace="enable" xmlns="http://wso2.org/carbon/eventpublisher">
   <from streamName="fusedSpatialEvent" version="1.0.0"/>
-  <mapping customMapping="enable" type="json">
+  <mapping customMapping="disable" type="json">
     <inline>
 {
   "messageType" : "Point",
   "type": "Feature",
-  "id": "{{id}}",
+  "id": {{id}},
   "properties": {
         "speed": {{speed}},
         "heading": {{heading}},
