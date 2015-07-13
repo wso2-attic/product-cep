@@ -172,6 +172,7 @@ public class TestWso2EventServer {
 
             if (lastIndex.get() != index) {
                 if (calcInProgress.compareAndSet(false, true)) {
+                    //TODO Can be made thread safe further
                     lastIndex.set(index);
                     long currentWindowEventsReceived = localCounter - lastCounter.getAndSet(localCounter);
                     //log.info("Current time: " + System.currentTimeMillis() + ", Event received time: " + currentTime + ", Last calculation time: " + lastTime.get());
@@ -216,14 +217,14 @@ public class TestWso2EventServer {
         @Override
         public void receive(List<Event> eventList, Credentials credentials) {
             long currentTime = System.currentTimeMillis();
-            log.info("Received batch of " + eventList.size() + " events at: " + currentTime);
+//            log.info("Received batch of " + eventList.size() + " events at: " + currentTime);
             long currentBatchTotalDelay = 0;
             for (Event event : eventList) {
                 currentTime = System.currentTimeMillis();
                 long currentEventLatency = currentTime - event.getTimeStamp();
-                log.info("Received event: " + event.getMetaData()[3] + " at " + currentTime +
-                        "; Event timestamp and value of timestamp attribute: " + event.getMetaData()[0] + ", "
-                        + event.getTimeStamp() + "; Latency(ms) : " + currentEventLatency);
+//                log.info("Received event: " + event.getMetaData()[3] + " at " + currentTime +
+//                        "; Event timestamp and value of timestamp attribute: " + event.getMetaData()[0] + ", "
+//                        + event.getTimeStamp() + "; Latency(ms) : " + currentEventLatency);
                 long currentMaxLatency = maxLatency.get();
                 if (currentEventLatency > currentMaxLatency) {
                     maxLatency.compareAndSet(currentMaxLatency, currentEventLatency);
@@ -288,9 +289,8 @@ public class TestWso2EventServer {
             if (receivedObject instanceof EventComposite) {
                 EventComposite eventComposite = (EventComposite) receivedObject;
                 ThriftEventBundle thriftEventBundle = (ThriftEventBundle) eventComposite.getEventBundle();
-                log.info("Received batch of " + thriftEventBundle.getEventNum() + " events at: " + currentTime);
+//                log.info("Received batch of " + thriftEventBundle.getEventNum() + " events at: " + currentTime);
                 long currentBatchTotalDelay = 0;
-                currentTime = System.currentTimeMillis();
                 long eventTimestamp = thriftEventBundle.getLongAttributeList().get(0);
                 long currentEventLatency = currentTime - eventTimestamp;
                 long currentMaxLatency = maxLatency.get();
