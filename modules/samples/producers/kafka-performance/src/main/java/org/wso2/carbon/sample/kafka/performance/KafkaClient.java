@@ -26,6 +26,7 @@ import java.text.DecimalFormat;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 
 
@@ -35,12 +36,19 @@ public class KafkaClient {
     private static String url;
     private static String topic;
     private static long noOfEvents;
-    private AtomicLong count;
     private static int elapsedCount;
     private static int noOfPublishers;
 
+    //Atomic Variables
+    private AtomicLong count;
+    private AtomicLong lastIndex;
+    private AtomicBoolean calcInProgress;
+
+
     public KafkaClient() {
         count = new AtomicLong(0);
+        lastIndex = new AtomicLong(0);
+        calcInProgress = new AtomicBoolean(false);
     }
 
     public static void main(String args[]) {
@@ -87,14 +95,20 @@ public class KafkaClient {
                     KeyedMessage<String, Object> data = new KeyedMessage<String, Object>(topic, message);
                     producer.send(data);
 
-                    if (count.get() % elapsedCount == 0) {
-                        long currentTime = System.currentTimeMillis();
-                        long elapsedTime = currentTime - lastTime;
-                        double throughputPerSecond = (((double) elapsedCount) / elapsedTime) * 1000;
-                        lastTime = currentTime;
-                        log.info("Sent " + elapsedCount + " sensor events in " + elapsedTime +
-                                " milliseconds with total throughput of " + decimalFormat.format(throughputPerSecond) +
-                                " events per second.");
+                    long index = count.get() / elapsedCount;
+
+                    if (lastIndex.get() != index) {
+                        if (calcInProgress.compareAndSet(false, true)) {
+                            lastIndex.set(index);
+                            long currentTime = System.currentTimeMillis();
+                            long elapsedTime = currentTime - lastTime;
+                            double throughputPerSecond = (((double) elapsedCount) / elapsedTime) * 1000;
+                            lastTime = currentTime;
+                            log.info("Sent " + elapsedCount + " sensor events in " + elapsedTime +
+                                    " milliseconds with total throughput of " + decimalFormat.format(throughputPerSecond) +
+                                    " events per second.");
+                            calcInProgress.set(false);
+                        }
                     }
                 }
             } catch (Throwable t) {
