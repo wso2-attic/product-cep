@@ -44,14 +44,20 @@ public class Client {
             String eventCount = args[5];
             String elapsedCount = args[6];
             String warmUpCount = args[7];
+            String calcType = args[8];
 
             //create data publisher
             DataPublisher dataPublisher = new DataPublisher(protocol, "tcp://" + host + ":" + port, null, username,
                     password);
 
             //Publish event for a valid stream
-            publishEvents(dataPublisher, Long.parseLong(eventCount), Long.parseLong(elapsedCount),
-                    Long.parseLong(warmUpCount));
+            if ("latency".equalsIgnoreCase(calcType)) {
+                publishEventsForLatency(dataPublisher, Long.parseLong(eventCount), Long.parseLong(elapsedCount),
+                        Long.parseLong(warmUpCount));
+            } else {
+                publishEvents(dataPublisher, Long.parseLong(eventCount), Long.parseLong(elapsedCount),
+                        Long.parseLong(warmUpCount));
+            }
 
             dataPublisher.shutdownWithAgent();
         } catch (Throwable e) {
@@ -68,11 +74,17 @@ public class Client {
         DecimalFormat decimalFormat = new DecimalFormat("#");
 
         while (counter < eventCount) {
+            boolean isPowerSaveEnabled = randomGenerator.nextBoolean();
+            int sensorId = randomGenerator.nextInt();
+            double longitude = randomGenerator.nextDouble();
+            double latitude = randomGenerator.nextDouble();
+            float humidity = randomGenerator.nextFloat();
+            double sensorValue = randomGenerator.nextDouble();
             Event event = new Event(streamId, System.currentTimeMillis(),
-                    new Object[]{System.currentTimeMillis(), randomGenerator.nextBoolean(), randomGenerator.nextInt(),
+                    new Object[]{System.currentTimeMillis(), isPowerSaveEnabled, sensorId,
                             "temperature-" + counter},
-                    new Object[]{randomGenerator.nextDouble(), randomGenerator.nextDouble()},
-                    new Object[]{randomGenerator.nextFloat(), randomGenerator.nextDouble()});
+                    new Object[]{longitude, latitude},
+                    new Object[]{humidity, sensorValue});
 
             dataPublisher.publish(event);
 
@@ -90,4 +102,62 @@ public class Client {
             counter++;
         }
     }
+
+    private static void sendWarmUpEvents(DataPublisher dataPublisher, long warmUpCount) {
+        long counter = 0;
+        Random randomGenerator = new Random();
+        String streamId = "org.wso2.event.sensor.stream:1.0.0";
+
+        while (counter < warmUpCount) {
+            boolean isPowerSaveEnabled = randomGenerator.nextBoolean();
+            int sensorId = randomGenerator.nextInt();
+            double longitude = randomGenerator.nextDouble();
+            double latitude = randomGenerator.nextDouble();
+            float humidity = randomGenerator.nextFloat();
+            double sensorValue = randomGenerator.nextDouble();
+            Event event = new Event(streamId, System.currentTimeMillis(),
+                    new Object[]{System.currentTimeMillis(), isPowerSaveEnabled, sensorId,
+                            "warmup-" + counter},
+                    new Object[]{longitude, latitude},
+                    new Object[]{humidity, sensorValue});
+
+            dataPublisher.publish(event);
+            counter++;
+        }
+    }
+
+    private static void publishEventsForLatency(DataPublisher dataPublisher, long eventCount, long elapsedCount,
+                                                long warmUpCount) {
+        sendWarmUpEvents(dataPublisher, warmUpCount);
+        long counter = 0;
+        Random randomGenerator = new Random();
+        String streamId = "org.wso2.event.sensor.stream:1.0.0";
+
+        while (counter < eventCount) {
+            boolean isPowerSaveEnabled = randomGenerator.nextBoolean();
+            int sensorId = randomGenerator.nextInt();
+            double longitude = randomGenerator.nextDouble();
+            double latitude = randomGenerator.nextDouble();
+            float humidity = randomGenerator.nextFloat();
+            double sensorValue = randomGenerator.nextDouble();
+            Event event = new Event(streamId, System.currentTimeMillis(),
+                    new Object[]{System.currentTimeMillis(), isPowerSaveEnabled, sensorId,
+                            "temperature-" + counter},
+                    new Object[]{longitude, latitude},
+                    new Object[]{humidity, sensorValue});
+
+            dataPublisher.publish(event);
+            log.info("Sent event " + counter + " at " + System.currentTimeMillis());
+
+            if (elapsedCount > 0) {
+                try {
+                    Thread.sleep(elapsedCount);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            counter++;
+        }
+    }
+
 }
