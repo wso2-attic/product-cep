@@ -27,6 +27,7 @@
     <property name="host" value="localhost"/>
     <property name="port" value="7661"/>
     <property name="elapsedCount" value="100"/>
+    <property name="calcType" value="throughput"/>
 
     <path id="javac.classpath">
         <pathelement path="${class.dir}"/>
@@ -76,13 +77,16 @@
     </target>
 
     <target name="run" depends="compile">
-        <echo>Configure optionally use -DelapsedCount=xxxx -Dprotocol='thrift/binary' -Dhost=xxxx -Dport=xxxx</echo>
+        <echo>Configure optionally use -DelapsedCount=xxxx -Dprotocol='thrift/binary' -Dhost=xxxx -Dport=xxxx
+            -DcalcType='throughput/latency'
+        </echo>
         <java classname="org.wso2.carbon.sample.performance.TestWso2EventServer"
               classpathref="javac.classpath" fork="true">
             <arg value="${host}"/>
             <arg value="${port}"/>
             <arg value="${protocol}"/>
             <arg value="${elapsedCount}"/>
+            <arg value="${calcType}"/>
             <jvmarg value="-Xmx2048m"/>
             <jvmarg value="-Xms1024m"/>
             <!--<jvmarg value="-XX:+UnlockCommercialFeatures"/>-->
