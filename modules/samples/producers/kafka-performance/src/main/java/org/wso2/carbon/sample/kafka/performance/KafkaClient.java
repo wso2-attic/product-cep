@@ -29,8 +29,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicLong;
 
 
-public class Kafka {
-    private static Logger log = Logger.getLogger(Kafka.class);
+public class KafkaClient {
+    private static Logger log = Logger.getLogger(KafkaClient.class);
 
     private static String url;
     private static String topic;
@@ -39,7 +39,7 @@ public class Kafka {
     private static int elapsedCount;
     private static int noOfPublishers;
 
-    public Kafka() {
+    public KafkaClient() {
         count = new AtomicLong(0);
     }
 
@@ -52,8 +52,8 @@ public class Kafka {
             elapsedCount = Integer.parseInt(args[3]);
             noOfPublishers = Integer.parseInt(args[4]);
 
-            Kafka kafka = new Kafka();
-            kafka.start();
+            KafkaClient kafkaClient = new KafkaClient();
+            kafkaClient.start();
         } catch (NumberFormatException e) {
             log.error("Entered value for no of events is invalid. Please enter an integer", e);
         }
