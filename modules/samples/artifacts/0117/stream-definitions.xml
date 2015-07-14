@@ -18,36 +18,32 @@
     <streamDefinition>
 
        {
-        "name":"apiRequestStream",
+        "name":"serverLogStream",
         "version":"1.0.0",
         "metaData":[
-        {"name":"api","type":"STRING"},
-        {"name":"api_version","type":"STRING"}
+        {"name":"fileName","type":"STRING"},
+        {"name":"serverName","type":"STRING"}
         ],
         "payloadData":[
-        {"name":"requestTime","type":"LONG"},
-        {"name":"apiPublisher","type":"STRING"},
-        {"name":"hostName","type":"STRING"}
+        {"name":"className","type":"STRING"},
+        {"name":"logType","type":"STRING"}
         ]
         }
     </streamDefinition>
-    <streamDefinition>
 
+    <streamDefinition>
     {
-        "name":"filteredAPIRequestStream",
+        "name":"warnTypeLogStream",
         "version":"1.0.0",
         "metaData":[
-        {"name":"api","type":"STRING"},
-        {"name":"api_version","type":"STRING"}
+        {"name":"fileName","type":"STRING"},
+        {"name":"serverName","type":"STRING"}
         ],
         "payloadData":[
-        {"name":"requestTime","type":"LONG"},
-        {"name":"apiPublisher","type":"STRING"},
-        {"name":"hostName","type":"STRING"}
+        {"name":"className","type":"STRING"},
+        {"name":"logType","type":"STRING"}
         ]
         }
-        
-        
     </streamDefinition>
 
 </streamDefinitions>
