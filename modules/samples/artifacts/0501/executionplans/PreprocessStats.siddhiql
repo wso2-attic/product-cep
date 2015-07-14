@@ -12,6 +12,6 @@ define stream analyticsStats (meta_ipAdd string, meta_index long, meta_timestamp
 @Export('filteredStatStream:1.0.0')
 define stream filteredStatStream (meta_ipAdd string, meta_index long, meta_timestamp long, meta_nanoTime long, userID string);
 
-@name('query 1') @dist(parallel='4')from analyticsStats[meta_ipAdd != '192.168.1.1']
+@name('query1') @dist(parallel='4')from analyticsStats[meta_ipAdd != '192.168.1.1']
         select meta_ipAdd, meta_index, meta_timestamp, meta_nanoTime, userID
         insert into filteredStatStream;
