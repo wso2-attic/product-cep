@@ -77,19 +77,20 @@ public class StormManagerServiceTestCase extends CEPIntegrationTest {
 
     @Test(groups = {"wso2.cep"}, description = "Single Storm Publisher and CEP publisher for a single execution plan on same host")
     public void singleReceiverAndPublisherInSameHost() throws Exception {
+        final String ExecutionPlan = "Test1ExecutionPlan";
         StormManagerService.Client client = createManagerServiceClient();
 
         /*CEP Publishers*/
-        client.registerCEPPublisher(1234, "TestExecutionPlan", "127.0.0.1", 15000);
-        String publisherIpPort = client.getCEPPublisher(1234,  "TestExecutionPlan", "127.0.0.1");
+        client.registerCEPPublisher(1234, ExecutionPlan, "127.0.0.1", 15000);
+        String publisherIpPort = client.getCEPPublisher(1234,  ExecutionPlan, "127.0.0.1");
 
         String[]  publisherIpAndPort = publisherIpPort.split(":");
         Assert.assertEquals(publisherIpAndPort[0], "127.0.0.1");
         Assert.assertEquals(publisherIpAndPort[1], "15000");
 
         /*Storm Receivers*/
-        client.registerStormReceiver(1234, "TestExecutionPlan", "127.0.0.1", 16000);
-        String stormReceiverIpPort = client.getStormReceiver(1234, "TestExecutionPlan", "127.0.0.1");
+        client.registerStormReceiver(1234, ExecutionPlan, "127.0.0.1", 16000);
+        String stormReceiverIpPort = client.getStormReceiver(1234, ExecutionPlan, "127.0.0.1");
 
         String[] stormReceiverIpAndPort = stormReceiverIpPort.split(":");
         Assert.assertEquals(stormReceiverIpAndPort[0], "127.0.0.1");
@@ -102,18 +103,19 @@ public class StormManagerServiceTestCase extends CEPIntegrationTest {
             Two CEP publishers for the same execution plan of same tenant but in different hosts. Client must get the CEP publisher
             in the same host as Storm Publisher.
          */
+        final String ExecutionPlan = "Test2ExecutionPlan";
         StormManagerService.Client client = createManagerServiceClient();
 
         /*CEP publishers*/
-        client.registerCEPPublisher(1234, "TestExecutionPlan", "127.0.0.1", 15000);
-        client.registerCEPPublisher(1234, "TestExecutionPlan", "127.10.0.1", 15001);
+        client.registerCEPPublisher(1234, ExecutionPlan, "127.0.0.1", 15000);
+        client.registerCEPPublisher(1234, ExecutionPlan, "127.10.0.1", 15001);
 
-        String publisherIpPort = client.getCEPPublisher(1234,  "TestExecutionPlan", "127.0.0.1");
+        String publisherIpPort = client.getCEPPublisher(1234,  ExecutionPlan, "127.0.0.1");
         String[] publisherIpAndPort = publisherIpPort.split(":");
         Assert.assertEquals(publisherIpAndPort[0], "127.0.0.1");
         Assert.assertEquals(publisherIpAndPort[1], "15000");
 
-        String publisherIpPort2 = client.getCEPPublisher(1234, "TestExecutionPlan", "127.10.0.1");
+        String publisherIpPort2 = client.getCEPPublisher(1234, ExecutionPlan, "127.10.0.1");
         String[] publisherIpAndPort2 = publisherIpPort2.split(":");
         Assert.assertEquals(publisherIpAndPort2[0], "127.10.0.1");
         Assert.assertEquals(publisherIpAndPort2[1], "15001");
@@ -123,15 +125,15 @@ public class StormManagerServiceTestCase extends CEPIntegrationTest {
             in the same host as Storm Publisher.
         */
         /*Storm Receivers*/
-        client.registerStormReceiver(1234, "TestExecutionPlan", "127.0.0.1", 16000);
-        client.registerStormReceiver(1234, "TestExecutionPlan", "127.10.0.1", 16001);
+        client.registerStormReceiver(1234, ExecutionPlan, "127.0.0.1", 16000);
+        client.registerStormReceiver(1234, ExecutionPlan, "127.10.0.1", 16001);
 
-        String stormReceiverIpPort = client.getStormReceiver(1234,  "TestExecutionPlan", "127.0.0.1");
+        String stormReceiverIpPort = client.getStormReceiver(1234,  ExecutionPlan, "127.0.0.1");
         String[] stormReceiverIpAndPort = stormReceiverIpPort.split(":");
         Assert.assertEquals(stormReceiverIpAndPort[0], "127.0.0.1");
         Assert.assertEquals(stormReceiverIpAndPort[1], "16000");
 
-        String stormReceiverIpPort2 = client.getStormReceiver(1234, "TestExecutionPlan", "127.10.0.1");
+        String stormReceiverIpPort2 = client.getStormReceiver(1234, ExecutionPlan, "127.10.0.1");
         String[] stormReceiverIpAndPort2 = stormReceiverIpPort2.split(":");
         Assert.assertEquals(stormReceiverIpAndPort2[0], "127.10.0.1");
         Assert.assertEquals(stormReceiverIpAndPort2[1], "16001");
@@ -143,15 +145,16 @@ public class StormManagerServiceTestCase extends CEPIntegrationTest {
             Two CEP publishers in same same host listening on different ports. Two consequent requests must not return the same CEP Publisher
             twice so that load is balanced among the two publishers
          */
+        final String ExecutionPlan = "Test3ExecutionPlan";
         StormManagerService.Client client = createManagerServiceClient();
 
-        client.registerCEPPublisher(4321, "TestExecutionPlan", "127.0.0.1", 25000);
-        client.registerCEPPublisher(4321, "TestExecutionPlan", "127.0.0.1", 25001);
+        client.registerCEPPublisher(4321, ExecutionPlan, "127.0.0.1", 25000);
+        client.registerCEPPublisher(4321, ExecutionPlan, "127.0.0.1", 25001);
 
-        String publisherIpPort1 = client.getCEPPublisher(4321, "TestExecutionPlan", "127.0.0.1");
+        String publisherIpPort1 = client.getCEPPublisher(4321, ExecutionPlan, "127.0.0.1");
         String[] ipAndPort1 = publisherIpPort1.split(":");
 
-        String publisherIpPort2 = client.getCEPPublisher(4321, "TestExecutionPlan", "127.0.0.1");
+        String publisherIpPort2 = client.getCEPPublisher(4321, ExecutionPlan, "127.0.0.1");
         String[] ipAndPort2 = publisherIpPort2.split(":");
 
         Assert.assertNotEquals(ipAndPort1[1], ipAndPort2[1]);
@@ -160,13 +163,13 @@ public class StormManagerServiceTestCase extends CEPIntegrationTest {
             Two Storm Receivers in same same host listening on different ports. Two consequent requests must not return the same storm receiver
             twice so that load is balanced among the two publishers
          */
-        client.registerStormReceiver(1234, "TestExecutionPlan", "127.0.0.1", 26000);
-        client.registerStormReceiver(1234, "TestExecutionPlan", "127.0.0.1", 26001);
+        client.registerStormReceiver(1234, ExecutionPlan, "127.0.0.1", 26000);
+        client.registerStormReceiver(1234, ExecutionPlan, "127.0.0.1", 26001);
 
-        String stormReceiverIpPort = client.getStormReceiver(1234,  "TestExecutionPlan", "127.0.0.1");
+        String stormReceiverIpPort = client.getStormReceiver(1234,  ExecutionPlan, "127.0.0.1");
         String[] stormReceiverIpAndPort = stormReceiverIpPort.split(":");
 
-        String stormReceiverIpPort2 = client.getStormReceiver(1234, "TestExecutionPlan", "127.0.0.1");
+        String stormReceiverIpPort2 = client.getStormReceiver(1234, ExecutionPlan, "127.0.0.1");
         String[] stormReceiverIpAndPort2 = stormReceiverIpPort2.split(":");
 
         Assert.assertNotEquals(stormReceiverIpAndPort[1], stormReceiverIpAndPort2[1]);
@@ -179,18 +182,20 @@ public class StormManagerServiceTestCase extends CEPIntegrationTest {
             Two CEP publishers for the different execution plans of same tenant but in different hosts. Client must get the CEP publisher
             for the relevant execution plan.
          */
+        final String ExecutionPlan1 = "Test4ExecutionPlan1";
+        final String ExecutionPlan2 = "Test4ExecutionPlan2";
         StormManagerService.Client client = createManagerServiceClient();
 
         /*Storm publishers*/
-        client.registerCEPPublisher(1234, "TestExecutionPlan1", "127.0.0.1", 15000);
-        client.registerCEPPublisher(1234, "TestExecutionPlan2", "127.0.0.1", 15001);
+        client.registerCEPPublisher(1234, ExecutionPlan1, "127.0.0.1", 15000);
+        client.registerCEPPublisher(1234, ExecutionPlan2, "127.0.0.1", 15001);
 
-        String publisherIpPort = client.getCEPPublisher(1234,  "TestExecutionPlan1", "127.0.0.1");
+        String publisherIpPort = client.getCEPPublisher(1234,  ExecutionPlan1, "127.0.0.1");
         String[] publisherIpAndPort = publisherIpPort.split(":");
         Assert.assertEquals(publisherIpAndPort[0], "127.0.0.1");
         Assert.assertEquals(publisherIpAndPort[1], "15000");
 
-        String publisherIpPort2 = client.getCEPPublisher(1234, "TestExecutionPlan2", "127.0.0.1");
+        String publisherIpPort2 = client.getCEPPublisher(1234, ExecutionPlan2, "127.0.0.1");
         String[] publisherIpAndPort2 = publisherIpPort2.split(":");
         Assert.assertEquals(publisherIpAndPort2[0], "127.0.0.1");
         Assert.assertEquals(publisherIpAndPort2[1], "15001");
@@ -200,15 +205,15 @@ public class StormManagerServiceTestCase extends CEPIntegrationTest {
             for the relevant execution plan.
         */
         /*Storm Receivers*/
-        client.registerStormReceiver(1234, "TestExecutionPlan1", "127.0.0.1", 16000);
-        client.registerStormReceiver(1234, "TestExecutionPlan2", "127.0.0.1", 16001);
+        client.registerStormReceiver(1234, ExecutionPlan1, "127.0.0.1", 16000);
+        client.registerStormReceiver(1234, ExecutionPlan2, "127.0.0.1", 16001);
 
-        String stormReceiverIpPort = client.getStormReceiver(1234,  "TestExecutionPlan1", "127.0.0.1");
+        String stormReceiverIpPort = client.getStormReceiver(1234,  ExecutionPlan1, "127.0.0.1");
         String[] stormReceiverIpAndPort = stormReceiverIpPort.split(":");
         Assert.assertEquals(stormReceiverIpAndPort[0], "127.0.0.1");
         Assert.assertEquals(stormReceiverIpAndPort[1], "16000");
 
-        String stormReceiverIpPort2 = client.getStormReceiver(1234, "TestExecutionPlan2", "127.0.0.1");
+        String stormReceiverIpPort2 = client.getStormReceiver(1234, ExecutionPlan2, "127.0.0.1");
         String[] stormReceiverIpAndPort2 = stormReceiverIpPort2.split(":");
         Assert.assertEquals(stormReceiverIpAndPort2[0], "127.0.0.1");
         Assert.assertEquals(stormReceiverIpAndPort2[1], "16001");
@@ -216,21 +221,22 @@ public class StormManagerServiceTestCase extends CEPIntegrationTest {
 
     @Test(groups = {"wso2.cep"}, description = "Single Receiver and Publisher for a Two execution plans on different hosts")
     public void singleReceiverAndPublisherForDifferentTenants() throws Exception {
+        final String ExecutionPlan = "Test5ExecutionPlan";
         StormManagerService.Client client = createManagerServiceClient();
         /*
             Two CEP publishers for the same execution plans of different tenant but in different hosts. Client must get the CEP publisher
             for the relevant tenant.
          */
         /*Storm publishers*/
-        client.registerCEPPublisher(1234, "TestExecutionPlan", "127.0.0.1", 15000);
-        client.registerCEPPublisher(-1234, "TestExecutionPlan", "127.0.0.1", 15001);
+        client.registerCEPPublisher(1234, ExecutionPlan, "127.0.0.1", 15000);
+        client.registerCEPPublisher(-1234, ExecutionPlan, "127.0.0.1", 15001);
 
-        String publisherIpPort = client.getCEPPublisher(1234,  "TestExecutionPlan", "127.0.0.1");
+        String publisherIpPort = client.getCEPPublisher(1234,  ExecutionPlan, "127.0.0.1");
         String[] publisherIpAndPort = publisherIpPort.split(":");
         Assert.assertEquals(publisherIpAndPort[0], "127.0.0.1");
         Assert.assertEquals(publisherIpAndPort[1], "15000");
 
-        String publisherIpPort2 = client.getCEPPublisher(-1234, "TestExecutionPlan", "127.0.0.1");
+        String publisherIpPort2 = client.getCEPPublisher(-1234, ExecutionPlan, "127.0.0.1");
         String[] publisherIpAndPort2 = publisherIpPort2.split(":");
         Assert.assertEquals(publisherIpAndPort2[0], "127.0.0.1");
         Assert.assertEquals(publisherIpAndPort2[1], "15001");
@@ -240,15 +246,15 @@ public class StormManagerServiceTestCase extends CEPIntegrationTest {
             for the relevant tenant.
         */
         /*Storm Receivers*/
-        client.registerStormReceiver(1234, "TestExecutionPlan", "127.0.0.1", 36000);
-        client.registerStormReceiver(-1234, "TestExecutionPlan", "127.0.0.1", 36001);
+        client.registerStormReceiver(1234, ExecutionPlan, "127.0.0.1", 36000);
+        client.registerStormReceiver(-1234, ExecutionPlan, "127.0.0.1", 36001);
 
-        String stormReceiverIpPort = client.getStormReceiver(1234,  "TestExecutionPlan", "127.0.0.1");
+        String stormReceiverIpPort = client.getStormReceiver(1234,  ExecutionPlan, "127.0.0.1");
         String[] stormReceiverIpAndPort = stormReceiverIpPort.split(":");
         Assert.assertEquals(stormReceiverIpAndPort[0], "127.0.0.1");
         Assert.assertEquals(stormReceiverIpAndPort[1], "36000");
 
-        String stormReceiverIpPort2 = client.getStormReceiver(-1234, "TestExecutionPlan", "127.0.0.1");
+        String stormReceiverIpPort2 = client.getStormReceiver(-1234, ExecutionPlan, "127.0.0.1");
         String[] stormReceiverIpAndPort2 = stormReceiverIpPort2.split(":");
         Assert.assertEquals(stormReceiverIpAndPort2[0], "127.0.0.1");
         Assert.assertEquals(stormReceiverIpAndPort2[1], "36001");
