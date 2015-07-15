@@ -371,6 +371,86 @@ public class JMSTestCase extends CEPIntegrationTest {
         }
     }
 
+    @Test(groups = {"wso2.cep"}, description = "Testing jms receiver with jms properties")
+    public void jmsPropertiesTestWithDefaultMappingScenario() throws Exception {
+        final int messageCount = 3;
+        String samplePath = "inputflows" + File.separator + "sample0022";
+        int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
+        int startERCount = eventReceiverAdminServiceClient.getActiveEventReceiverCount();
+        int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
+
+        //Add StreamDefinition
+        String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath, "org.wso2.event.sensor.stream_1.0.0.json");
+        eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
+        Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
+
+        //Add JMS Map EventReceiver
+        String eventReceiverConfig = getXMLArtifactConfiguration(samplePath, "jmsReceiver.xml");
+        eventReceiverAdminServiceClient.addEventReceiverConfiguration(eventReceiverConfig);
+        Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
+
+        //Add Wso2event EventPublisher
+        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "wso2EventPublisher.xml");
+        eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
+        Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
+
+        // The data-bridge receiver
+        Wso2EventServer agentServer = new Wso2EventServer(samplePath, 7661, true);
+        Thread agentServerThread = new Thread(agentServer);
+        agentServerThread.start();
+        // Let the server start
+        Thread.sleep(5000);
+
+        //Edit receiver by adding JMS properties
+        String eventReceiverNewConfig = getXMLArtifactConfiguration(samplePath, "jmsPropertiesReceiver.xml");
+        eventReceiverAdminServiceClient.editEventReceiverConfiguration(eventReceiverNewConfig, "jmsReceiver");
+        Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
+
+        JMSPublisherClient.publish("topicMap", "csv", samplePath, "topicMap.csv");
+        //wait while all stats are published
+        Thread.sleep(5000);
+
+        eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
+        eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("jmsReceiver.xml");
+        eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("wso2EventPublisher.xml");
+
+        Thread.sleep(2000);
+
+        List<Event> eventList = new ArrayList<>();
+        Event event = new Event();
+        event.setStreamId("org.wso2.event.sensor.stream:1.0.0");
+        event.setMetaData(new Object[]{19900813115534l, false, 601, "temperature"});
+        event.setCorrelationData(new Object[]{90.34344, 20.44345});
+        event.setPayloadData(new Object[]{2.3f, 20.44345});
+        eventList.add(event);
+        Event event2 = new Event();
+        event2.setStreamId("org.wso2.event.sensor.stream:1.0.0");
+        event2.setMetaData(new Object[]{19900813115534l, false, 602, "temperature"});
+        event2.setCorrelationData(new Object[]{90.34344, 20.44345});
+        event2.setPayloadData(new Object[]{2.3f, 20.44345});
+        eventList.add(event2);
+        Event event3 = new Event();
+        event3.setStreamId("org.wso2.event.sensor.stream:1.0.0");
+        event3.setMetaData(new Object[]{19900813115534l, false, 603, "temperature"});
+        event3.setCorrelationData(new Object[]{90.34344, 20.44345});
+        event3.setPayloadData(new Object[]{2.3f, 20.44345});
+        eventList.add(event3);
+
+        try {
+            Assert.assertEquals(agentServer.getMsgCount(), messageCount, "Incorrect number of messages consumed!");
+            List<Event> preservedEventList = agentServer.getPreservedEventList();
+            for (Event aEvent : preservedEventList) {
+                aEvent.setTimeStamp(0);
+            }
+            Assert.assertEquals(preservedEventList, eventList, "Mapping is incorrect!");
+        } catch (Throwable e) {
+            log.error("Exception thrown: " + e.getMessage(), e);
+            Assert.fail("Exception: " + e.getMessage());
+        } finally {
+            agentServer.stop();
+        }
+    }
+
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
         try {

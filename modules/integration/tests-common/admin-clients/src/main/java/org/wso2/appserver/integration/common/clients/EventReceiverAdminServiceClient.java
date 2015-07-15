@@ -32,7 +32,7 @@ public class EventReceiverAdminServiceClient {
     private String endPoint;
 
     public EventReceiverAdminServiceClient(String backEndUrl, String sessionCookie) throws
-                                                                                   AxisFault {
+            AxisFault {
         this.endPoint = backEndUrl + serviceName;
         eventReceiverAdminServiceStub = new EventReceiverAdminServiceStub(endPoint);
         AuthenticateStubUtil.authenticateStub(sessionCookie, eventReceiverAdminServiceStub);
@@ -163,6 +163,15 @@ public class EventReceiverAdminServiceClient {
             throws RemoteException {
         try {
             return eventReceiverAdminServiceStub.getActiveEventReceiverConfiguration(eventReceiverConfiguration);
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException();
+        }
+    }
+
+    public boolean editEventReceiverConfiguration(String eventReceiverConfiguration, String eventReceiverName) throws RemoteException {
+        try {
+            return eventReceiverAdminServiceStub.editActiveEventReceiverConfiguration(eventReceiverConfiguration, eventReceiverName);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
             throw new RemoteException();
