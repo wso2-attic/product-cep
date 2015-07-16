@@ -18,6 +18,7 @@
 package org.wso2.carbon.integration.test.outputflow;
 
 
+import org.apache.axis2.AxisFault;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.testng.Assert;
@@ -28,6 +29,7 @@ import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.JMSBrokerController;
 import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config.JMSBrokerConfiguration;
 import org.wso2.carbon.automation.extensions.servers.jmsserver.controller.config.JMSBrokerConfigurationProvider;
+import org.wso2.carbon.event.publisher.stub.types.BasicOutputAdapterPropertyDto;
 import org.wso2.carbon.event.simulator.stub.types.EventDto;
 import org.wso2.carbon.integration.common.utils.mgt.ServerConfigurationManager;
 import org.wso2.carbon.integration.test.client.JMSConsumerClient;
@@ -418,6 +420,54 @@ public class JMSTestCase extends CEPIntegrationTest {
             JMSConsumerClient.shutdown();
         }
 
+    }
+
+    @Test(groups = {"wso2.cep"}, description = "Testing JMS publisher connection")
+    public void testConnection() throws AxisFault {
+
+        String samplePath = "outputflows" + File.separator + "sample0059";
+
+        BasicOutputAdapterPropertyDto initial = new BasicOutputAdapterPropertyDto();
+        initial.setKey("java.naming.factory.initial");
+        initial.setValue("org.apache.activemq.jndi.ActiveMQInitialContextFactory");
+        initial.set_static(true);
+        BasicOutputAdapterPropertyDto url = new BasicOutputAdapterPropertyDto();
+        url.setKey("java.naming.provider.url");
+        url.setValue("tcp://localhost:61616");
+        url.set_static(true);
+        BasicOutputAdapterPropertyDto destinationType = new BasicOutputAdapterPropertyDto();
+        destinationType.setKey("transport.jms.DestinationType");
+        destinationType.setValue("topic");
+        destinationType.set_static(true);
+        BasicOutputAdapterPropertyDto destination = new BasicOutputAdapterPropertyDto();
+        destination.setKey("transport.jms.Destination");
+        destination.setValue("topicJSON");
+        destination.set_static(true);
+        BasicOutputAdapterPropertyDto connectionFactoryJNDIName = new BasicOutputAdapterPropertyDto();
+        connectionFactoryJNDIName.setKey("transport.jms.ConnectionFactoryJNDIName");
+        connectionFactoryJNDIName.setValue("TopicConnectionFactory");
+        connectionFactoryJNDIName.set_static(true);
+        BasicOutputAdapterPropertyDto[] outputPropertyConfiguration = new BasicOutputAdapterPropertyDto[]
+                {initial, url, destinationType, destination,connectionFactoryJNDIName};
+
+        try {
+            String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
+                    "org.wso2.event.sensor.stream_1.0.0.json");
+            eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
+
+            String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "jmsPublisherCustomJSON.xml");
+            eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
+
+            eventPublisherAdminServiceClient.testConnection("jmsPublisherCustomJSON","jms",outputPropertyConfiguration,"json");
+
+            eventPublisherAdminServiceClient.removeActiveEventPublisherConfiguration("jmsPublisherCustomJSON");
+            eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
+
+
+        } catch (Exception e) {
+            log.error("Exception thrown: " + e.getMessage(), e);
+            Assert.fail("Exception: " + e.getMessage());
+        }
     }
 
     @AfterClass(alwaysRun = true)

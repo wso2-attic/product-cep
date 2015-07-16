@@ -25,6 +25,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
+import org.wso2.carbon.event.publisher.stub.types.BasicOutputAdapterPropertyDto;
 import org.wso2.carbon.event.simulator.stub.types.EventDto;
 import org.wso2.carbon.integration.common.admin.client.NDataSourceAdminServiceClient;
 import org.wso2.carbon.integration.test.client.H2DatabaseClient;
@@ -108,6 +109,42 @@ public class RDBMSTestCase extends CEPIntegrationTest {
         eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("rdbmsEventPublisher.xml");
 
         Thread.sleep(2000);
+    }
+
+    @Test(groups = {"wso2.cep"}, description = "Testing RDBMS publisher connection")
+    public void testConnection() {
+        String samplePath = "outputflows" + File.separator + "sample0072";
+        BasicOutputAdapterPropertyDto dName = new BasicOutputAdapterPropertyDto();
+        dName.setKey("datasource.name");
+        dName.setValue("WSO2CEP_DB");
+        dName.set_static(true);
+        BasicOutputAdapterPropertyDto tName = new BasicOutputAdapterPropertyDto();
+        tName.setKey("table.name");
+        tName.setValue("sensordata");
+        tName.set_static(true);
+        BasicOutputAdapterPropertyDto mode = new BasicOutputAdapterPropertyDto();
+        mode.setKey("execution.mode");
+        mode.setValue("");
+        mode.set_static(true);
+        BasicOutputAdapterPropertyDto[] outputPropertyConfiguration = new BasicOutputAdapterPropertyDto[]
+                {dName, tName, mode};
+
+        try {
+            String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
+                    "org.wso2.event.sensor.stream_1.0.0.json");
+            eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
+
+            String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "rdbmsEventPublisher.xml");
+            eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
+            eventPublisherAdminServiceClient.testConnection("rdbmsEventPublisher","rdbms",
+                    outputPropertyConfiguration, "map");
+            eventPublisherAdminServiceClient.removeActiveEventPublisherConfiguration("rdbmsEventPublisher");
+            eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream","1.0.0");
+
+        } catch (Exception e) {
+            log.error("Exception thrown: " + e.getMessage(), e);
+            Assert.fail("Exception: " + e.getMessage());
+        }
     }
 
     @AfterClass(alwaysRun = true)

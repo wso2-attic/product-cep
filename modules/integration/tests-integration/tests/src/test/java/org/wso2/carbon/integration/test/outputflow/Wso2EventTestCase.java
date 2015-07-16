@@ -17,12 +17,15 @@
 */
 package org.wso2.carbon.integration.test.outputflow;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.databridge.commons.Event;
+import org.wso2.carbon.event.publisher.stub.types.BasicOutputAdapterPropertyDto;
 import org.wso2.carbon.event.simulator.stub.types.EventDto;
 import org.wso2.carbon.integration.common.utils.mgt.ServerConfigurationManager;
 import org.wso2.carbon.integration.test.client.Wso2EventServer;
@@ -37,6 +40,8 @@ import java.util.List;
  * Sending different formatted events to the Wso2Event Publisher and consume using a client
  */
 public class Wso2EventTestCase extends CEPIntegrationTest {
+
+    private static final Log log = LogFactory.getLog(Wso2EventTestCase.class);
 
     private ServerConfigurationManager serverManager = null;
 
@@ -135,6 +140,57 @@ public class Wso2EventTestCase extends CEPIntegrationTest {
         eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream.map","1.0.0");
         eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("eventPublisher.xml");
 
+    }
+
+    @Test(groups = {"wso2.cep"}, description = "Testing WSO2Event publisher connection")
+    public void testConnection() {
+
+        String samplePath = "outputflows" + File.separator + "sample0058";
+
+        BasicOutputAdapterPropertyDto username = new BasicOutputAdapterPropertyDto();
+        username.setKey("username");
+        username.setValue("admin");
+        username.set_static(true);
+        BasicOutputAdapterPropertyDto protocol = new BasicOutputAdapterPropertyDto();
+        protocol.setKey("protocol");
+        protocol.setValue("thrift");
+        protocol.set_static(true);
+        BasicOutputAdapterPropertyDto publishingMode = new BasicOutputAdapterPropertyDto();
+        publishingMode.setKey("publishingMode");
+        publishingMode.setValue("blocking");
+        publishingMode.set_static(true);
+        BasicOutputAdapterPropertyDto receiverURL = new BasicOutputAdapterPropertyDto();
+        receiverURL.setKey("receiverURL");
+        receiverURL.setValue("tcp://localhost:7611");
+        receiverURL.set_static(true);
+        BasicOutputAdapterPropertyDto password = new BasicOutputAdapterPropertyDto();
+        password.setKey("password");
+        password.setValue("admin");
+        password.set_static(true);
+        BasicOutputAdapterPropertyDto[] outputPropertyConfiguration = new BasicOutputAdapterPropertyDto[]
+                {username,protocol,publishingMode,receiverURL,password};
+        try {
+            String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
+                    "org.wso2.event.sensor.stream_1.0.0.json");
+            eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
+
+
+            String streamDefinitionMapAsString = getJSONArtifactConfiguration(samplePath,
+                    "org.wso2.event.sensor.stream.map_1.0.0.json");
+            eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionMapAsString);
+
+            String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "eventPublisher.xml");
+            eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
+
+            eventPublisherAdminServiceClient.testConnection("eventPublisher","wso2event",outputPropertyConfiguration,"wso2event");
+
+            eventPublisherAdminServiceClient.removeActiveEventPublisherConfiguration("eventPublisher");
+            eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream","1.0.0");
+            eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream.map","1.0.0");
+        }  catch (Exception e) {
+            log.error("Exception thrown: " + e.getMessage(), e);
+            Assert.fail("Exception: " + e.getMessage());
+        }
     }
 
     @AfterClass(alwaysRun = true)

@@ -168,4 +168,29 @@ public class EventReceiverAdminServiceClient {
             throw new RemoteException();
         }
     }
+
+    public EventReceiverConfigurationDto getActiveEventReceiverConfiguration(String eventReceiverName) throws RemoteException {
+        try {
+            return eventReceiverAdminServiceStub.getActiveEventReceiverConfiguration(eventReceiverName);
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException();
+        }
+    }
+
+
+    public boolean deployTextEventReceiverConfiguration(String eventReceiverName,
+                                                        String streamNameWithVersion,
+                                                        String eventAdapterType,
+                                                        EventMappingPropertyDto[] inputMappings,
+                                                        BasicInputAdapterPropertyDto[] inputPropertyConfiguration,
+                                                        boolean mappingEnabled) throws RemoteException {
+        try {
+            return eventReceiverAdminServiceStub.deployTextEventReceiverConfiguration(eventReceiverName,
+                    streamNameWithVersion,eventAdapterType,inputMappings,inputPropertyConfiguration,mappingEnabled);
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException();
+        }
+    }
 }

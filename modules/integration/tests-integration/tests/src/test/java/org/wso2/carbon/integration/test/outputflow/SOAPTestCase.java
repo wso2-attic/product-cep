@@ -16,6 +16,7 @@
 
 package org.wso2.carbon.integration.test.outputflow;
 
+import org.apache.axis2.AxisFault;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.testng.Assert;
@@ -23,11 +24,13 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
+import org.wso2.carbon.event.publisher.stub.types.BasicOutputAdapterPropertyDto;
 import org.wso2.carbon.event.simulator.stub.types.EventDto;
 import org.wso2.carbon.integration.test.client.WireMonitorServer;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
 
 import java.io.File;
+import java.rmi.RemoteException;
 
 public class SOAPTestCase extends CEPIntegrationTest {
 
@@ -169,6 +172,20 @@ public class SOAPTestCase extends CEPIntegrationTest {
         }
 
     }
+
+    @Test(groups = {"wso2.cep"}, description = "Testing SOAP publisher connection", expectedExceptions = AxisFault.class)
+    public void testConnection() throws AxisFault {
+        BasicOutputAdapterPropertyDto[] outputPropertyConfiguration = new BasicOutputAdapterPropertyDto[] {};
+        try {
+            eventPublisherAdminServiceClient.testConnection("soapCustomXML","soap",outputPropertyConfiguration,"xml");
+        } catch (AxisFault e) {
+            throw new AxisFault(e.getMessage(),e);
+        } catch (RemoteException e) {
+            log.error("Exception thrown: " + e.getMessage(), e);
+            Assert.fail("Exception: " + e.getMessage());
+        }
+    }
+
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
         super.cleanup();
