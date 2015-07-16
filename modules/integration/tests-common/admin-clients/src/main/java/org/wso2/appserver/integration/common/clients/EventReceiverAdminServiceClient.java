@@ -104,7 +104,9 @@ public class EventReceiverAdminServiceClient {
                                                   String fromStreamNameWithVersion)
             throws RemoteException {
         try {
-            eventReceiverAdminServiceStub.deployWso2EventReceiverConfiguration(eventReceiverName, streamNameWithVersion, eventAdapterType, metaData, correlationData, payloadData, inputPropertyConfiguration, mappingEnabled, fromStreamNameWithVersion);
+            eventReceiverAdminServiceStub.deployWso2EventReceiverConfiguration(eventReceiverName, streamNameWithVersion,
+                    eventAdapterType, metaData, correlationData, payloadData, inputPropertyConfiguration, mappingEnabled,
+                    fromStreamNameWithVersion);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
             throw new RemoteException();
@@ -121,12 +123,29 @@ public class EventReceiverAdminServiceClient {
                                                  boolean mappingEnabled)
             throws RemoteException {
         try {
-            eventReceiverAdminServiceStub.deployXmlEventReceiverConfiguration(eventReceiverName, streamNameWithVersion, eventAdapterType, parentXpath, namespaces, inputMappings, inputPropertyConfiguration, mappingEnabled);
+            eventReceiverAdminServiceStub.deployXmlEventReceiverConfiguration(eventReceiverName, streamNameWithVersion,
+                    eventAdapterType, parentXpath, namespaces, inputMappings, inputPropertyConfiguration, mappingEnabled);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
             throw new RemoteException();
         }
     }
+
+    public boolean addTextEventReceiverConfiguration(String eventReceiverName,
+                                                     String streamNameWithVersion,
+                                                     String eventAdapterType,
+                                                     EventMappingPropertyDto[] inputMappings,
+                                                     BasicInputAdapterPropertyDto[] inputPropertyConfiguration,
+                                                     boolean mappingEnabled) throws RemoteException {
+        try {
+            return eventReceiverAdminServiceStub.deployTextEventReceiverConfiguration(eventReceiverName,
+                    streamNameWithVersion, eventAdapterType, inputMappings, inputPropertyConfiguration, mappingEnabled);
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException();
+        }
+    }
+
 
     public void addEventReceiverConfiguration(String eventReceiverConfigurationXml)
             throws RemoteException {
@@ -178,11 +197,10 @@ public class EventReceiverAdminServiceClient {
         }
     }
 
-    public EventReceiverConfigurationDto getEventReceiverConfiguration(
-            String eventReceiverConfiguration)
+    public EventReceiverConfigurationDto getActiveEventReceiverConfiguration(String eventReceiverName)
             throws RemoteException {
         try {
-            return eventReceiverAdminServiceStub.getActiveEventReceiverConfiguration(eventReceiverConfiguration);
+            return eventReceiverAdminServiceStub.getActiveEventReceiverConfiguration(eventReceiverName);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
             throw new RemoteException();
@@ -221,7 +239,8 @@ public class EventReceiverAdminServiceClient {
         }
     }
 
-    public boolean editEventReceiverConfiguration(String eventReceiverConfiguration, String eventReceiverName) throws RemoteException {
+    public boolean editEventReceiverConfiguration(String eventReceiverConfiguration, String eventReceiverName)
+            throws RemoteException {
         try {
             return eventReceiverAdminServiceStub.editActiveEventReceiverConfiguration(eventReceiverConfiguration, eventReceiverName);
         } catch (RemoteException e) {
@@ -229,4 +248,5 @@ public class EventReceiverAdminServiceClient {
             throw new RemoteException();
         }
     }
+
 }

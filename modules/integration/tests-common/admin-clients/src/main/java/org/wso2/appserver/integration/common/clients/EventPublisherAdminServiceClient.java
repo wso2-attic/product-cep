@@ -200,4 +200,11 @@ public class EventPublisherAdminServiceClient {
             throw new RemoteException();
         }
     }
+
+    public void testConnection(String eventPublisherName, String eventPublisherType,
+                               BasicOutputAdapterPropertyDto[] outputPropertyConfiguration, String messageFormat)
+            throws RemoteException {
+        eventPublisherAdminServiceStub.testPublisherConnection(eventPublisherName, eventPublisherType,
+                outputPropertyConfiguration, messageFormat);
+    }
 }
