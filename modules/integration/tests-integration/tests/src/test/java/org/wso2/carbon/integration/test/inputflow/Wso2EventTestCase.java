@@ -94,7 +94,7 @@ public class Wso2EventTestCase extends CEPIntegrationTest {
         Thread.sleep(2000);
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startActiveERCount + 1);
         Assert.assertEquals(eventReceiverAdminServiceClient.getEventReceiverCount(), startAllERCount + 1);
-        EventReceiverConfigurationDto eventReceiverConfigurationDto = eventReceiverAdminServiceClient.getEventReceiverConfiguration(eventReceiverName);
+        EventReceiverConfigurationDto eventReceiverConfigurationDto = eventReceiverAdminServiceClient.getActiveEventReceiverConfiguration(eventReceiverName);
         Assert.assertTrue(eventReceiverConfigurationDto.getCustomMappingEnabled());
         String deployedEventReceiverConfig = eventReceiverAdminServiceClient.getEventReceiverConfigurationContent(eventReceiverName);
         Assert.assertNotNull(deployedEventReceiverConfig);
