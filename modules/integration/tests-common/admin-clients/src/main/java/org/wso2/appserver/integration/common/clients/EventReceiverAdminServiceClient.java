@@ -138,6 +138,26 @@ public class EventReceiverAdminServiceClient {
         }
     }
 
+    public void setTracingEnabled(String eventReceiverConfiguration, boolean flag)
+            throws RemoteException {
+        try {
+            eventReceiverAdminServiceStub.setTracingEnabled(eventReceiverConfiguration, flag);
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException();
+        }
+    }
+
+    public void setStatisticsEnabled(String eventReceiverConfiguration, boolean flag)
+            throws RemoteException {
+        try {
+            eventReceiverAdminServiceStub.setStatisticsEnabled(eventReceiverConfiguration, flag);
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException();
+        }
+    }
+
     public void removeActiveEventReceiverConfiguration(String eventReceiverName)
             throws RemoteException {
         try {
@@ -163,6 +183,38 @@ public class EventReceiverAdminServiceClient {
             throws RemoteException {
         try {
             return eventReceiverAdminServiceStub.getActiveEventReceiverConfiguration(eventReceiverConfiguration);
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException();
+        }
+    }
+
+    public String getEventReceiverConfigurationContent(
+            String eventReceiverConfiguration)
+            throws RemoteException {
+        try {
+            return eventReceiverAdminServiceStub.getActiveEventReceiverConfigurationContent(eventReceiverConfiguration);
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException();
+        }
+    }
+
+    public EventReceiverConfigurationInfoDto[] getAllStreamSpecificActiveEventReceiverConfigurations(
+            String streamId)
+            throws RemoteException {
+        try {
+            return eventReceiverAdminServiceStub.getAllStreamSpecificActiveEventReceiverConfigurations(streamId);
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException();
+        }
+    }
+
+    public String[] getAllInputAdapterTypes()
+            throws RemoteException {
+        try {
+            return eventReceiverAdminServiceStub.getAllInputAdapterTypes();
         } catch (RemoteException e) {
             log.error("RemoteException", e);
             throw new RemoteException();

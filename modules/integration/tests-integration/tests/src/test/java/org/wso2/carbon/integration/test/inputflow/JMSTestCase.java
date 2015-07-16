@@ -249,7 +249,7 @@ public class JMSTestCase extends CEPIntegrationTest {
             description = "Testing activemq jms receiver with JSON formatted event with default mapping",
             dependsOnMethods = {"jmsMapTestWithCustomMappingScenario"})
     public void jmsJSONTestWithDefaultMappingScenario() throws Exception {
-        final int messageCount = 8;
+        final int messageCount = 3;
         String samplePath = "inputflows" + File.separator + "sample0011";
         int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
         int startERCount = eventReceiverAdminServiceClient.getActiveEventReceiverCount();
@@ -265,21 +265,10 @@ public class JMSTestCase extends CEPIntegrationTest {
         eventReceiverAdminServiceClient.addEventReceiverConfiguration(eventReceiverConfig);
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
 
-        //Add JMS XML EventReceiver without mapping
-        String eventReceiverConfig2 = getXMLArtifactConfiguration(samplePath, "jmsReceiverXML.xml");
-        eventReceiverAdminServiceClient.addEventReceiverConfiguration(eventReceiverConfig2);
-        Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 2);
-
-        //Add JMS Text EventReceiver without mapping
-        String eventReceiverConfig3 = getXMLArtifactConfiguration(samplePath, "jmsReceiverText.xml");
-        eventReceiverAdminServiceClient.addEventReceiverConfiguration(eventReceiverConfig3);
-        Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 3);
-
         //Add Wso2event EventPublisher
         String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "wso2EventPublisher.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
-
 
         // The data-bridge receiver
         Wso2EventServer agentServer = new Wso2EventServer(samplePath, 7661, true);
@@ -290,16 +279,10 @@ public class JMSTestCase extends CEPIntegrationTest {
 
         JMSPublisherClient.publish("topicJSON", "json", samplePath, "topicJSON.txt");
         Thread.sleep(5000);
-        JMSPublisherClient.publish("topicXML", "xml", samplePath, "topicXML.txt");
-        Thread.sleep(5000);
-        JMSPublisherClient.publish("topicText", "text", samplePath, "topicText.txt");
-        Thread.sleep(5000);
         //wait while all stats are published
 
         eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
         eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("jmsReceiverJSON.xml");
-        eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("jmsReceiverXML.xml");
-        eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("jmsReceiverText.xml");
         eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("wso2EventPublisher.xml");
 
         Thread.sleep(2000);
@@ -324,6 +307,65 @@ public class JMSTestCase extends CEPIntegrationTest {
         event3.setPayloadData(new Object[]{2.3f, 20.44345});
         eventList.add(event3);
 
+        try {
+            Assert.assertEquals(agentServer.getMsgCount(), messageCount, "Incorrect number of messages consumed!");
+            List<Event> preservedEventList = agentServer.getPreservedEventList();
+            for (Event aEvent : preservedEventList) {
+                aEvent.setTimeStamp(0);
+            }
+            Assert.assertEquals(preservedEventList, eventList, "Mapping is incorrect!");
+        } catch (Throwable e) {
+            log.error("Exception thrown: " + e.getMessage(), e);
+            Assert.fail("Exception: " + e.getMessage());
+        } finally {
+            agentServer.stop();
+        }
+    }
+
+    @Test(groups = {"wso2.cep"},
+            description = "Testing activemq jms receiver with XML formatted event with default mapping",
+            dependsOnMethods = {"jmsJSONTestWithDefaultMappingScenario"})
+    public void jmsXmlTestWithDefaultMappingScenario() throws Exception {
+        final int messageCount = 2;
+        String samplePath = "inputflows" + File.separator + "sample0011";
+        int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
+        int startERCount = eventReceiverAdminServiceClient.getActiveEventReceiverCount();
+        int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
+
+        //Add StreamDefinition
+        String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath, "org.wso2.event.sensor.stream_1.0.0.json");
+        eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
+        Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
+
+        //Add JMS XML EventReceiver without mapping
+        String eventReceiverConfig2 = getXMLArtifactConfiguration(samplePath, "jmsReceiverXML.xml");
+        eventReceiverAdminServiceClient.addEventReceiverConfiguration(eventReceiverConfig2);
+        Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
+
+        //Add Wso2event EventPublisher
+        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "wso2EventPublisher.xml");
+        eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
+        Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
+
+
+        // The data-bridge receiver
+        Wso2EventServer agentServer = new Wso2EventServer(samplePath, 7661, true);
+        Thread agentServerThread = new Thread(agentServer);
+        agentServerThread.start();
+        // Let the server start
+        Thread.sleep(5000);
+
+        JMSPublisherClient.publish("topicXML", "xml", samplePath, "topicXML.txt");
+        Thread.sleep(2000);
+        //wait while all stats are published
+
+        eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
+        eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("jmsReceiverXML.xml");
+        eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("wso2EventPublisher.xml");
+
+        Thread.sleep(2000);
+
+        List<Event> eventList = new ArrayList<>();
         Event event4 = new Event();
         event4.setStreamId("org.wso2.event.sensor.stream:1.0.0");
         event4.setMetaData(new Object[]{199008131245l, true, 801, "temperature"});
@@ -337,6 +379,66 @@ public class JMSTestCase extends CEPIntegrationTest {
         event5.setPayloadData(new Object[]{6.6f, 20.44345});
         eventList.add(event5);
 
+
+        try {
+            Assert.assertEquals(agentServer.getMsgCount(), messageCount, "Incorrect number of messages consumed!");
+            List<Event> preservedEventList = agentServer.getPreservedEventList();
+            for (Event aEvent : preservedEventList) {
+                aEvent.setTimeStamp(0);
+            }
+            Assert.assertEquals(preservedEventList, eventList, "Mapping is incorrect!");
+        } catch (Throwable e) {
+            log.error("Exception thrown: " + e.getMessage(), e);
+            Assert.fail("Exception: " + e.getMessage());
+        } finally {
+            agentServer.stop();
+        }
+    }
+
+    @Test(groups = {"wso2.cep"},
+            description = "Testing activemq jms receiver with JSON formatted event with default mapping",
+            dependsOnMethods = {"jmsXmlTestWithDefaultMappingScenario"})
+    public void jmsTextTestWithDefaultMappingScenario() throws Exception {
+        final int messageCount = 3;
+        String samplePath = "inputflows" + File.separator + "sample0011";
+        int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
+        int startERCount = eventReceiverAdminServiceClient.getActiveEventReceiverCount();
+        int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
+
+        //Add StreamDefinition
+        String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath, "org.wso2.event.sensor.stream_1.0.0.json");
+        eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
+        Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
+
+        //Add JMS Text EventReceiver without mapping
+        String eventReceiverConfig3 = getXMLArtifactConfiguration(samplePath, "jmsReceiverText.xml");
+        eventReceiverAdminServiceClient.addEventReceiverConfiguration(eventReceiverConfig3);
+        Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
+
+        //Add Wso2event EventPublisher
+        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "wso2EventPublisher.xml");
+        eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
+        Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
+
+
+        // The data-bridge receiver
+        Wso2EventServer agentServer = new Wso2EventServer(samplePath, 7661, true);
+        Thread agentServerThread = new Thread(agentServer);
+        agentServerThread.start();
+        // Let the server start
+        Thread.sleep(5000);
+
+        JMSPublisherClient.publish("topicText", "text", samplePath, "topicText.txt");
+        Thread.sleep(2000);
+        //wait while all stats are published
+
+        eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
+        eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("jmsReceiverText.xml");
+        eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("wso2EventPublisher.xml");
+
+        Thread.sleep(2000);
+
+        List<Event> eventList = new ArrayList<>();
         Event event6 = new Event();
         event6.setStreamId("org.wso2.event.sensor.stream:1.0.0");
         event6.setMetaData(new Object[]{19900813115534l, false, 901, "temperature"});
@@ -371,7 +473,9 @@ public class JMSTestCase extends CEPIntegrationTest {
         }
     }
 
-    @Test(groups = {"wso2.cep"}, description = "Testing jms receiver with jms properties")
+
+    @Test(groups = {"wso2.cep"}, description = "Testing jms receiver with jms properties",
+            dependsOnMethods = {"jmsTextTestWithDefaultMappingScenario"})
     public void jmsPropertiesTestWithDefaultMappingScenario() throws Exception {
         final int messageCount = 3;
         String samplePath = "inputflows" + File.separator + "sample0022";
