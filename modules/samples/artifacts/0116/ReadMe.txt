@@ -1,6 +1,6 @@
 This sample uses 
-EventReceiver:  http
-EventPublisher: logger
+EventReceiver:      wso2
+EventPublisher:     wso2
 
-Producers:     http-client
-Consumers:     console
+Producers:     AnalyticsStatisticsClient.java
+Consumers:     wso2-event
