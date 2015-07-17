@@ -169,13 +169,88 @@ public class EventReceiverAdminServiceTestCase extends CEPIntegrationTest {
             String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
                     "org.wso2.event.sensor.stream_1.0.0.json");
             eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
-            eventReceiverAdminServiceClient.deployTextEventReceiverConfiguration("fileReceiver",
+            eventReceiverAdminServiceClient.addTextEventReceiverConfiguration("fileReceiver",
                     "org.wso2.event.sensor.stream:1.0.0",
                     "file-tail",
-                    new EventMappingPropertyDto[]{timestamp,isPowerSaverEnabled,sensorId,
-                            sensorName,longitude,latitude,humidity,sensorValue},
-                    new BasicInputAdapterPropertyDto[]{filepath,duplicated,startFromEnd}, true);
+                    new EventMappingPropertyDto[]{timestamp, isPowerSaverEnabled, sensorId,
+                            sensorName, longitude, latitude, humidity, sensorValue},
+                    new BasicInputAdapterPropertyDto[]{filepath, duplicated, startFromEnd}, true);
             eventReceiverAdminServiceClient.removeActiveEventReceiverConfiguration("fileReceiver");
+            eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream","1.0.0");
+        } catch (Exception e) {
+            log.error("Exception thrown: " + e.getMessage(), e);
+            Assert.fail("Exception: " + e.getMessage());
+        }
+    }
+
+    @Test(groups = {"wso2.cep"}, description = "Test deploy map event receiver configuration")
+    public void testDeployMapEventReceiverConfiguration() {
+        String samplePath = "inputflows" + File.separator + "sample0017";
+
+        EventMappingPropertyDto timestamp = new EventMappingPropertyDto();
+        timestamp.setName("timestamp:([a-z0-9.]*),*");
+        timestamp.setType("long");
+        timestamp.setValueOf("meta_timestamp");
+        EventMappingPropertyDto isPowerSaverEnabled = new EventMappingPropertyDto();
+        isPowerSaverEnabled.setName("isPowerSaverEnabled:([a-z0-9.]*),*");
+        isPowerSaverEnabled.setType("bool");
+        isPowerSaverEnabled.setValueOf("meta_isPowerSaverEnabled");
+        EventMappingPropertyDto sensorId = new EventMappingPropertyDto();
+        sensorId.setName("sensorId:([a-z0-9.]*),*");
+        sensorId.setType("int");
+        sensorId.setValueOf("meta_sensorId");
+        EventMappingPropertyDto sensorName = new EventMappingPropertyDto();
+        sensorName.setName("sensorName:([a-z0-9.]*),*");
+        sensorName.setType("string");
+        sensorName.setValueOf("meta_sensorName");
+        EventMappingPropertyDto longitude = new EventMappingPropertyDto();
+        longitude.setName("longitude:([a-z0-9.]*),*");
+        longitude.setType("double");
+        longitude.setValueOf("correlation_longitude");
+        EventMappingPropertyDto latitude = new EventMappingPropertyDto();
+        latitude.setName("latitude:([a-z0-9.]*),*");
+        latitude.setType("double");
+        latitude.setValueOf("correlation_latitude");
+        EventMappingPropertyDto humidity = new EventMappingPropertyDto();
+        humidity.setName("humidity:([a-z0-9.]*),*");
+        humidity.setType("float");
+        humidity.setValueOf("humidity");
+        EventMappingPropertyDto sensorValue = new EventMappingPropertyDto();
+        sensorValue.setName("sensorValue:([a-z0-9.]*),*");
+        sensorValue.setType("double");
+        sensorValue.setValueOf("sensorValue");
+
+        BasicInputAdapterPropertyDto initial = new BasicInputAdapterPropertyDto();
+        initial.setKey("java.naming.factory.initial");
+        initial.setValue("org.apache.activemq.jndi.ActiveMQInitialContextFactory");
+        BasicInputAdapterPropertyDto duplicated = new BasicInputAdapterPropertyDto();
+        duplicated.setKey("receiving.events.duplicated.in.cluster");
+        duplicated.setValue("false");
+        BasicInputAdapterPropertyDto startFromEnd = new BasicInputAdapterPropertyDto();
+        startFromEnd.setKey("java.naming.provider.url");
+        startFromEnd.setValue("tcp://localhost:61616");
+        BasicInputAdapterPropertyDto destinationType = new BasicInputAdapterPropertyDto();
+        destinationType.setKey("transport.jms.DestinationType");
+        destinationType.setValue("topic");
+        BasicInputAdapterPropertyDto destination = new BasicInputAdapterPropertyDto();
+        destination.setKey("transport.jms.Destination");
+        destination.setValue("topic");
+        BasicInputAdapterPropertyDto ConnectionFactory = new BasicInputAdapterPropertyDto();
+        ConnectionFactory.setKey("transport.jms.ConnectionFactoryJNDIName");
+        ConnectionFactory.setValue("TopicConnectionFactory");
+
+        try {
+            String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
+                    "org.wso2.event.sensor.stream_1.0.0.json");
+            eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
+            eventReceiverAdminServiceClient.addMapEventReceiverConfiguration("mapReceiver",
+                    "org.wso2.event.sensor.stream:1.0.0",
+                    "jms",
+                    new EventMappingPropertyDto[]{timestamp, isPowerSaverEnabled, sensorId,
+                            sensorName, longitude, latitude, humidity, sensorValue},
+                    new BasicInputAdapterPropertyDto[]{initial, duplicated, startFromEnd, destinationType, destination,
+                            ConnectionFactory }, true);
+            eventReceiverAdminServiceClient.removeActiveEventReceiverConfiguration("mapReceiver");
             eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream","1.0.0");
         } catch (Exception e) {
             log.error("Exception thrown: " + e.getMessage(), e);
