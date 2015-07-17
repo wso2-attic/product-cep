@@ -1,0 +1,17 @@
+/* Enter a unique ExecutionPlan */
+@Plan:name('testPlan')
+
+/* Enter a unique description for ExecutionPlan */
+-- @Plan:description('ExecutionPlan')
+
+/* define streams and write query here ... */
+
+@Import('org.wso2.sample.pizza.order:1.0.0')
+define stream pizzaStream (correlation_OrderNo int, Type string, Size string, Quantity int, Contact string, Address string);
+
+@Export('outStream:1.0.0')
+define stream outStream (correlation_OrderNo int, Type string, Size string, Quantity int, Contact string, Address string);
+
+from pizzaStream
+select *
+insert into outStream;
