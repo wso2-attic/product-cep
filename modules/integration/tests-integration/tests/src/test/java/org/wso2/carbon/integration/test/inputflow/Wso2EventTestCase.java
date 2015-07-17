@@ -16,6 +16,8 @@
 
 package org.wso2.carbon.integration.test.inputflow;
 
+import org.apache.axiom.om.OMElement;
+import org.apache.axiom.om.util.AXIOMUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.testng.Assert;
@@ -26,12 +28,16 @@ import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.databridge.commons.Event;
 import org.wso2.carbon.databridge.commons.StreamDefinition;
 import org.wso2.carbon.databridge.commons.utils.EventDefinitionConverterUtils;
+import org.wso2.carbon.event.receiver.stub.types.EventReceiverConfigurationDto;
+import org.wso2.carbon.event.receiver.stub.types.EventReceiverConfigurationInfoDto;
 import org.wso2.carbon.integration.test.client.Wso2EventClient;
 import org.wso2.carbon.integration.test.client.Wso2EventServer;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
 
+import javax.xml.namespace.QName;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -60,10 +66,16 @@ public class Wso2EventTestCase extends CEPIntegrationTest {
     @Test(groups = {"wso2.cep"}, description = "Testing wso2event receiver with custom mapping formatting")
     public void wso2EventMapReceiverTestWithCustomMappingScenario() throws Exception {
         String samplePath = "inputflows" + File.separator + "sample0008";
+        String eventReceiverName = "wso2eventReceiver";
 
         int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
-        int startERCount = eventReceiverAdminServiceClient.getActiveEventReceiverCount();
+        int startActiveERCount = eventReceiverAdminServiceClient.getActiveEventReceiverCount();
+        int startAllERCount = eventReceiverAdminServiceClient.getEventReceiverCount();
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
+
+        EventReceiverConfigurationInfoDto[] startEventReceiverConfigurationInfoDtos = eventReceiverAdminServiceClient
+                .getAllStreamSpecificActiveEventReceiverConfigurations("org.wso2.event.sensor.stream:1.0.0");
+        int startStreamSpecificActiveERCount = startEventReceiverConfigurationInfoDtos == null ? 0 : startEventReceiverConfigurationInfoDtos.length;
 
         //Add StreamDefinition
         String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
@@ -79,7 +91,35 @@ public class Wso2EventTestCase extends CEPIntegrationTest {
         //Add File EventReceiver without mapping
         String eventReceiverConfig = getXMLArtifactConfiguration(samplePath, "wso2eventReceiver.xml");
         eventReceiverAdminServiceClient.addEventReceiverConfiguration(eventReceiverConfig);
-        Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
+        Thread.sleep(2000);
+        Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startActiveERCount + 1);
+        Assert.assertEquals(eventReceiverAdminServiceClient.getEventReceiverCount(), startAllERCount + 1);
+        EventReceiverConfigurationDto eventReceiverConfigurationDto = eventReceiverAdminServiceClient.getActiveEventReceiverConfiguration(eventReceiverName);
+        Assert.assertTrue(eventReceiverConfigurationDto.getCustomMappingEnabled());
+        String deployedEventReceiverConfig = eventReceiverAdminServiceClient.getEventReceiverConfigurationContent(eventReceiverName);
+        Assert.assertNotNull(deployedEventReceiverConfig);
+        OMElement omElement = AXIOMUtil.stringToOM(deployedEventReceiverConfig);
+        String deployedERName = omElement.getAttributeValue(new QName("name"));
+        Assert.assertEquals(deployedERName, eventReceiverName);
+
+        eventReceiverAdminServiceClient.setTracingEnabled(eventReceiverName, false);
+        eventReceiverAdminServiceClient.setStatisticsEnabled(eventReceiverName, true);
+        EventReceiverConfigurationInfoDto[] eventReceiverConfigurationInfoDtos = eventReceiverAdminServiceClient
+                .getAllStreamSpecificActiveEventReceiverConfigurations("org.wso2.mapped.sensor.data:1.0.0");
+        Assert.assertEquals(eventReceiverConfigurationInfoDtos.length, startStreamSpecificActiveERCount + 1);
+        EventReceiverConfigurationInfoDto deployedERInfoDto = null;
+        for (EventReceiverConfigurationInfoDto eventReceiverConfigurationInfoDto : eventReceiverConfigurationInfoDtos) {
+            if (eventReceiverConfigurationDto.getEventReceiverName().equals(eventReceiverName)) {
+                deployedERInfoDto = eventReceiverConfigurationInfoDto;
+                break;
+            }
+        }
+        Assert.assertNotNull(deployedERInfoDto);
+        Assert.assertFalse(deployedERInfoDto.getEnableTracing());
+        Assert.assertTrue(deployedERInfoDto.getEnableStats());
+
+        String[] supportedAdapterTypes = eventReceiverAdminServiceClient.getAllInputAdapterTypes();
+        Assert.assertTrue(Arrays.asList(supportedAdapterTypes).contains(deployedERInfoDto.getInputAdapterType()));
 
         //Add Wso2event EventPublisher
         String eventPublisherConfig2 = getXMLArtifactConfiguration(samplePath, "wso2eventPublisher.xml");

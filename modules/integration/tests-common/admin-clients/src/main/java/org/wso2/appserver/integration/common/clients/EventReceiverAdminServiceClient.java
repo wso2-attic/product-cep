@@ -32,7 +32,7 @@ public class EventReceiverAdminServiceClient {
     private String endPoint;
 
     public EventReceiverAdminServiceClient(String backEndUrl, String sessionCookie) throws
-                                                                                   AxisFault {
+            AxisFault {
         this.endPoint = backEndUrl + serviceName;
         eventReceiverAdminServiceStub = new EventReceiverAdminServiceStub(endPoint);
         AuthenticateStubUtil.authenticateStub(sessionCookie, eventReceiverAdminServiceStub);
@@ -104,7 +104,9 @@ public class EventReceiverAdminServiceClient {
                                                   String fromStreamNameWithVersion)
             throws RemoteException {
         try {
-            eventReceiverAdminServiceStub.deployWso2EventReceiverConfiguration(eventReceiverName, streamNameWithVersion, eventAdapterType, metaData, correlationData, payloadData, inputPropertyConfiguration, mappingEnabled, fromStreamNameWithVersion);
+            eventReceiverAdminServiceStub.deployWso2EventReceiverConfiguration(eventReceiverName, streamNameWithVersion,
+                    eventAdapterType, metaData, correlationData, payloadData, inputPropertyConfiguration, mappingEnabled,
+                    fromStreamNameWithVersion);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
             throw new RemoteException();
@@ -121,17 +123,54 @@ public class EventReceiverAdminServiceClient {
                                                  boolean mappingEnabled)
             throws RemoteException {
         try {
-            eventReceiverAdminServiceStub.deployXmlEventReceiverConfiguration(eventReceiverName, streamNameWithVersion, eventAdapterType, parentXpath, namespaces, inputMappings, inputPropertyConfiguration, mappingEnabled);
+            eventReceiverAdminServiceStub.deployXmlEventReceiverConfiguration(eventReceiverName, streamNameWithVersion,
+                    eventAdapterType, parentXpath, namespaces, inputMappings, inputPropertyConfiguration, mappingEnabled);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
             throw new RemoteException();
         }
     }
 
+    public boolean addTextEventReceiverConfiguration(String eventReceiverName,
+                                                     String streamNameWithVersion,
+                                                     String eventAdapterType,
+                                                     EventMappingPropertyDto[] inputMappings,
+                                                     BasicInputAdapterPropertyDto[] inputPropertyConfiguration,
+                                                     boolean mappingEnabled) throws RemoteException {
+        try {
+            return eventReceiverAdminServiceStub.deployTextEventReceiverConfiguration(eventReceiverName,
+                    streamNameWithVersion, eventAdapterType, inputMappings, inputPropertyConfiguration, mappingEnabled);
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException();
+        }
+    }
+
+
     public void addEventReceiverConfiguration(String eventReceiverConfigurationXml)
             throws RemoteException {
         try {
             eventReceiverAdminServiceStub.deployEventReceiverConfiguration(eventReceiverConfigurationXml);
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException();
+        }
+    }
+
+    public void setTracingEnabled(String eventReceiverConfiguration, boolean flag)
+            throws RemoteException {
+        try {
+            eventReceiverAdminServiceStub.setTracingEnabled(eventReceiverConfiguration, flag);
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException();
+        }
+    }
+
+    public void setStatisticsEnabled(String eventReceiverConfiguration, boolean flag)
+            throws RemoteException {
+        try {
+            eventReceiverAdminServiceStub.setStatisticsEnabled(eventReceiverConfiguration, flag);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
             throw new RemoteException();
@@ -158,18 +197,8 @@ public class EventReceiverAdminServiceClient {
         }
     }
 
-    public EventReceiverConfigurationDto getEventReceiverConfiguration(
-            String eventReceiverConfiguration)
+    public EventReceiverConfigurationDto getActiveEventReceiverConfiguration(String eventReceiverName)
             throws RemoteException {
-        try {
-            return eventReceiverAdminServiceStub.getActiveEventReceiverConfiguration(eventReceiverConfiguration);
-        } catch (RemoteException e) {
-            log.error("RemoteException", e);
-            throw new RemoteException();
-        }
-    }
-
-    public EventReceiverConfigurationDto getActiveEventReceiverConfiguration(String eventReceiverName) throws RemoteException {
         try {
             return eventReceiverAdminServiceStub.getActiveEventReceiverConfiguration(eventReceiverName);
         } catch (RemoteException e) {
@@ -178,19 +207,46 @@ public class EventReceiverAdminServiceClient {
         }
     }
 
-
-    public boolean deployTextEventReceiverConfiguration(String eventReceiverName,
-                                                        String streamNameWithVersion,
-                                                        String eventAdapterType,
-                                                        EventMappingPropertyDto[] inputMappings,
-                                                        BasicInputAdapterPropertyDto[] inputPropertyConfiguration,
-                                                        boolean mappingEnabled) throws RemoteException {
+    public String getEventReceiverConfigurationContent(
+            String eventReceiverConfiguration)
+            throws RemoteException {
         try {
-            return eventReceiverAdminServiceStub.deployTextEventReceiverConfiguration(eventReceiverName,
-                    streamNameWithVersion,eventAdapterType,inputMappings,inputPropertyConfiguration,mappingEnabled);
+            return eventReceiverAdminServiceStub.getActiveEventReceiverConfigurationContent(eventReceiverConfiguration);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
             throw new RemoteException();
         }
     }
+
+    public EventReceiverConfigurationInfoDto[] getAllStreamSpecificActiveEventReceiverConfigurations(
+            String streamId)
+            throws RemoteException {
+        try {
+            return eventReceiverAdminServiceStub.getAllStreamSpecificActiveEventReceiverConfigurations(streamId);
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException();
+        }
+    }
+
+    public String[] getAllInputAdapterTypes()
+            throws RemoteException {
+        try {
+            return eventReceiverAdminServiceStub.getAllInputAdapterTypes();
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException();
+        }
+    }
+
+    public boolean editEventReceiverConfiguration(String eventReceiverConfiguration, String eventReceiverName)
+            throws RemoteException {
+        try {
+            return eventReceiverAdminServiceStub.editActiveEventReceiverConfiguration(eventReceiverConfiguration, eventReceiverName);
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException();
+        }
+    }
+
 }

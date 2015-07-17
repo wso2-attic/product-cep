@@ -24,7 +24,10 @@ import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
 import javax.jms.*;
 import javax.naming.Context;
 import javax.naming.InitialContext;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -109,16 +112,16 @@ public class JMSPublisherClient {
         String regexPattern = "(.*)\\((.*)\\):(.*)";
         Pattern pattern = Pattern.compile(regexPattern);
         for(String message: messagesList){
-            MapMessage mapMessage = session.createMapMessage();
+            MapMessage jmsMapMessage = session.createMapMessage();
             for (String line : message.split("\\n")) {
                 if(line!=null && !line.equalsIgnoreCase("")){
                     Matcher matcher = pattern.matcher(line);
                     if(matcher.find()){
-                        mapMessage.setObject(matcher.group(1), parseAttributeValue(matcher.group(2), matcher.group(3)));
+                        jmsMapMessage.setObject(matcher.group(1), parseAttributeValue(matcher.group(2), matcher.group(3)));
                     }
                 }
             }
-            producer.send(mapMessage);
+            producer.send(jmsMapMessage);
         }
     }
 
@@ -132,9 +135,9 @@ public class JMSPublisherClient {
      */
     public static void publishTextMessage(MessageProducer producer, Session session, List<String> messagesList) throws JMSException {
         for(String message: messagesList){
-            TextMessage jmsMessage = session.createTextMessage();
-            jmsMessage.setText(message);
-            producer.send(jmsMessage);
+            TextMessage jmsTextMessage = session.createTextMessage();
+            jmsTextMessage.setText(message);
+            producer.send(jmsTextMessage);
         }
     }
 

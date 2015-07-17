@@ -67,6 +67,7 @@
             <class name="org.wso2.carbon.integration.test.inputflow.JMSTestCase"/>
             <class name="org.wso2.carbon.integration.test.outputflow.JMSTestCase"/>
 
+            <class name="org.wso2.carbon.integration.test.storm.StormManagerServiceTestCase"/>
 
         </classes>
 
