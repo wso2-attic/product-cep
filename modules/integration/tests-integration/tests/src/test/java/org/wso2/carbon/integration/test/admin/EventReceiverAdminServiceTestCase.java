@@ -14,7 +14,6 @@ import org.wso2.carbon.integration.common.utils.LoginLogoutClient;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
 
 import java.io.File;
-import java.rmi.RemoteException;
 
 public class EventReceiverAdminServiceTestCase extends CEPIntegrationTest {
 
@@ -169,7 +168,7 @@ public class EventReceiverAdminServiceTestCase extends CEPIntegrationTest {
             String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
                     "org.wso2.event.sensor.stream_1.0.0.json");
             eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
-            eventReceiverAdminServiceClient.deployTextEventReceiverConfiguration("fileReceiver",
+            eventReceiverAdminServiceClient.addTextEventReceiverConfiguration("fileReceiver",
                     "org.wso2.event.sensor.stream:1.0.0",
                     "file-tail",
                     new EventMappingPropertyDto[]{timestamp,isPowerSaverEnabled,sensorId,
