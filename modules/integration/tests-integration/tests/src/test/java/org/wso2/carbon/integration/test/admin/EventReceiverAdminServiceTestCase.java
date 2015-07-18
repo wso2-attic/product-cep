@@ -158,8 +158,8 @@ public class EventReceiverAdminServiceTestCase extends CEPIntegrationTest {
         filepath.setKey("filepath");
         filepath.setValue("$testFilePath");
         BasicInputAdapterPropertyDto duplicated = new BasicInputAdapterPropertyDto();
-        duplicated.setKey("receiving.events.duplicated.in.cluster");
-        duplicated.setValue("false");
+        duplicated.setKey("delayInMillis");
+        duplicated.setValue("1000");
         BasicInputAdapterPropertyDto startFromEnd = new BasicInputAdapterPropertyDto();
         startFromEnd.setKey("startFromEnd");
         startFromEnd.setValue("false");
@@ -171,9 +171,9 @@ public class EventReceiverAdminServiceTestCase extends CEPIntegrationTest {
             eventReceiverAdminServiceClient.addTextEventReceiverConfiguration("fileReceiver",
                     "org.wso2.event.sensor.stream:1.0.0",
                     "file-tail",
-                    new EventMappingPropertyDto[]{timestamp,isPowerSaverEnabled,sensorId,
-                            sensorName,longitude,latitude,humidity,sensorValue},
-                    new BasicInputAdapterPropertyDto[]{filepath,duplicated,startFromEnd}, true);
+                    new EventMappingPropertyDto[]{timestamp, isPowerSaverEnabled, sensorId,
+                            sensorName, longitude, latitude, humidity, sensorValue},
+                    new BasicInputAdapterPropertyDto[]{filepath, duplicated, startFromEnd}, true);
             eventReceiverAdminServiceClient.removeActiveEventReceiverConfiguration("fileReceiver");
             eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream","1.0.0");
         } catch (Exception e) {
