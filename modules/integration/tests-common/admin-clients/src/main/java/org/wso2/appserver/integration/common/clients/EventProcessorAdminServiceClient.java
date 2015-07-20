@@ -23,6 +23,7 @@ import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.event.processor.stub.EventProcessorAdminServiceStub;
 import org.wso2.carbon.event.processor.stub.types.ExecutionPlanConfigurationDto;
 import org.wso2.carbon.event.processor.stub.types.ExecutionPlanConfigurationFileDto;
+import org.wso2.carbon.event.processor.stub.types.StreamDefinitionDto;
 
 import java.rmi.RemoteException;
 
@@ -96,6 +97,16 @@ public class EventProcessorAdminServiceClient {
         }
     }
 
+    public ExecutionPlanConfigurationDto getActiveExecutionPlanConfiguration(String executionPlanName)
+            throws RemoteException {
+        try {
+            return eventProcessorAdminServiceStub.getActiveExecutionPlanConfiguration(executionPlanName);
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException();
+        }
+    }
+
     public void addExecutionPlan(String executionPlan)
             throws RemoteException {
         try {
@@ -123,6 +134,53 @@ public class EventProcessorAdminServiceClient {
         } catch (RemoteException e) {
             log.error("RemoteException", e);
             throw new RemoteException();
+        }
+    }
+
+    public void editActiveExecutionPlan(String executionPlan, String executionPlanName)
+            throws RemoteException {
+        try {
+            eventProcessorAdminServiceStub.editActiveExecutionPlan(executionPlan, executionPlanName);
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException();
+        }
+    }
+
+    public String validateExecutionPlan(String executionPlan) throws RemoteException {
+        try {
+            return eventProcessorAdminServiceStub.validateExecutionPlan(executionPlan);
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException(e.getMessage(), e);
+        }
+
+    }
+
+    public void setStatisticsEnabled(String executionPlanName, boolean isEnabled) throws RemoteException {
+        try {
+            eventProcessorAdminServiceStub.setStatisticsEnabled(executionPlanName, isEnabled);
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException(e.getMessage(), e);
+        }
+    }
+
+    public void setTracingEnabled(String executionPlanName, boolean isEnabled) throws RemoteException {
+        try {
+            eventProcessorAdminServiceStub.setTracingEnabled(executionPlanName, isEnabled);
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException(e.getMessage(), e);
+        }
+    }
+
+    public StreamDefinitionDto[] getSiddhiStreams(String executionPlan) throws RemoteException {
+        try {
+            return eventProcessorAdminServiceStub.getSiddhiStreams(executionPlan);
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException(e.getMessage(), e);
         }
     }
 }
