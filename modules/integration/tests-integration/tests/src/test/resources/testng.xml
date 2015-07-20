@@ -32,6 +32,7 @@
             <!--<class name="org.wso2.carbon.integration.test.processflow.EventFlowTestCase"/>-->
             <!--<class name="org.wso2.carbon.integration.test.processflow.JMSTextMessageTestCase"/>-->
             <!--<class name="org.wso2.carbon.integration.test.patches.CEP883TestCase"/>-->
+            <class name="org.wso2.carbon.integration.test.admin.EventReceiverAdminServiceTestCase"/>
             <class name="org.wso2.carbon.integration.test.processflow.HTTPXMLMessageTestCase"/>
             <class name="org.wso2.carbon.integration.test.processflow.DeployArtifactsBasicTestCase"/>
             <class name="org.wso2.carbon.integration.test.processflow.DeployArtifactsViaAPITestCase"/>
