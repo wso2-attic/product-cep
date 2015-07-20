@@ -14,7 +14,6 @@ import org.wso2.carbon.integration.common.utils.LoginLogoutClient;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
 
 import java.io.File;
-import java.rmi.RemoteException;
 
 public class EventReceiverAdminServiceTestCase extends CEPIntegrationTest {
 
@@ -158,9 +157,9 @@ public class EventReceiverAdminServiceTestCase extends CEPIntegrationTest {
         BasicInputAdapterPropertyDto filepath = new BasicInputAdapterPropertyDto();
         filepath.setKey("filepath");
         filepath.setValue("$testFilePath");
-        BasicInputAdapterPropertyDto duplicated = new BasicInputAdapterPropertyDto();
-        duplicated.setKey("receiving.events.duplicated.in.cluster");
-        duplicated.setValue("false");
+        BasicInputAdapterPropertyDto delay = new BasicInputAdapterPropertyDto();
+        delay.setKey("delayInMillis");
+        delay.setValue("1000");
         BasicInputAdapterPropertyDto startFromEnd = new BasicInputAdapterPropertyDto();
         startFromEnd.setKey("startFromEnd");
         startFromEnd.setValue("false");
@@ -174,7 +173,7 @@ public class EventReceiverAdminServiceTestCase extends CEPIntegrationTest {
                     "file-tail",
                     new EventMappingPropertyDto[]{timestamp,isPowerSaverEnabled,sensorId,
                             sensorName,longitude,latitude,humidity,sensorValue},
-                    new BasicInputAdapterPropertyDto[]{filepath,duplicated,startFromEnd}, true);
+                    new BasicInputAdapterPropertyDto[]{filepath,delay,startFromEnd}, true);
             eventReceiverAdminServiceClient.removeActiveEventReceiverConfiguration("fileReceiver");
             eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream","1.0.0");
         } catch (Exception e) {
