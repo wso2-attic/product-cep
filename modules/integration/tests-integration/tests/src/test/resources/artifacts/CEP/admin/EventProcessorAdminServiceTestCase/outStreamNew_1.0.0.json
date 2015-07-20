@@ -1,0 +1,12 @@
+{
+  "name": "outStreamNew",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "correlationData": [
+    {
+      "name": "OrderNo",
+      "type": "INT"
+    }
+  ]
+}
