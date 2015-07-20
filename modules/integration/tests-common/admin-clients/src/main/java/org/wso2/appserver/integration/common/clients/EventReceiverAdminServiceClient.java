@@ -161,6 +161,19 @@ public class EventReceiverAdminServiceClient {
         }
     }
 
+    public boolean addJsonEventReceiverConfiguration(String eventRecieverName, String streamNameWithVersion,
+                                                     String eventAdaptorType, EventMappingPropertyDto[] inputMappings,
+                                                     BasicInputAdapterPropertyDto[] inputPrortyConfiguration,
+                                                     boolean mappingEnabled) throws RemoteException {
+        try {
+            return eventReceiverAdminServiceStub.deployJsonEventReceiverConfiguration(eventRecieverName,
+                    streamNameWithVersion, eventAdaptorType,inputMappings,inputPrortyConfiguration,mappingEnabled);
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException();
+        }
+    }
+
 
     public void addEventReceiverConfiguration(String eventReceiverConfigurationXml)
             throws RemoteException {

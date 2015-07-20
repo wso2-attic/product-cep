@@ -173,7 +173,7 @@ public class EventReceiverAdminServiceTestCase extends CEPIntegrationTest {
                     "file-tail",
                     new EventMappingPropertyDto[]{timestamp,isPowerSaverEnabled,sensorId,
                             sensorName,longitude,latitude,humidity,sensorValue},
-                    new BasicInputAdapterPropertyDto[]{filepath,delay,startFromEnd}, true);
+                    new BasicInputAdapterPropertyDto[]{filepath,delay,startFromEnd}, false);
             eventReceiverAdminServiceClient.removeActiveEventReceiverConfiguration("fileReceiver");
             eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream","1.0.0");
         } catch (Exception e) {
@@ -250,6 +250,47 @@ public class EventReceiverAdminServiceTestCase extends CEPIntegrationTest {
                     new BasicInputAdapterPropertyDto[]{initial, duplicated, startFromEnd, destinationType, destination,
                             ConnectionFactory }, true);
             eventReceiverAdminServiceClient.removeActiveEventReceiverConfiguration("mapReceiver");
+            eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream","1.0.0");
+        } catch (Exception e) {
+            log.error("Exception thrown: " + e.getMessage(), e);
+            Assert.fail("Exception: " + e.getMessage());
+        }
+    }
+
+    @Test(groups = {"wso2.cep"}, description = "Test deploy deploy json event receiver configuration")
+    public void testDeployJsonEventReceiverConfiguration() {
+        String samplePath = "inputflows" + File.separator + "sample0011";
+
+        BasicInputAdapterPropertyDto initial = new BasicInputAdapterPropertyDto();
+        initial.setKey("java.naming.factory.initial");
+        initial.setValue("org.apache.activemq.jndi.ActiveMQInitialContextFactory");
+        BasicInputAdapterPropertyDto duplicated = new BasicInputAdapterPropertyDto();
+        duplicated.setKey("receiving.events.duplicated.in.cluster");
+        duplicated.setValue("false");
+        BasicInputAdapterPropertyDto startFromEnd = new BasicInputAdapterPropertyDto();
+        startFromEnd.setKey("java.naming.provider.url");
+        startFromEnd.setValue("tcp://localhost:61616");
+        BasicInputAdapterPropertyDto destinationType = new BasicInputAdapterPropertyDto();
+        destinationType.setKey("transport.jms.DestinationType");
+        destinationType.setValue("topic");
+        BasicInputAdapterPropertyDto destination = new BasicInputAdapterPropertyDto();
+        destination.setKey("transport.jms.Destination");
+        destination.setValue("topic");
+        BasicInputAdapterPropertyDto ConnectionFactory = new BasicInputAdapterPropertyDto();
+        ConnectionFactory.setKey("transport.jms.ConnectionFactoryJNDIName");
+        ConnectionFactory.setValue("TopicConnectionFactory");
+
+        try {
+            String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
+                    "org.wso2.event.sensor.stream_1.0.0.json");
+            eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
+            eventReceiverAdminServiceClient.addJsonEventReceiverConfiguration("jsonReceiver",
+                    "org.wso2.event.sensor.stream:1.0.0",
+                    "jms",
+                    new EventMappingPropertyDto[]{},
+                    new BasicInputAdapterPropertyDto[]{initial, duplicated, startFromEnd, destinationType, destination,
+                            ConnectionFactory }, false);
+            eventReceiverAdminServiceClient.removeActiveEventReceiverConfiguration("jsonReceiver");
             eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream","1.0.0");
         } catch (Exception e) {
             log.error("Exception thrown: " + e.getMessage(), e);
