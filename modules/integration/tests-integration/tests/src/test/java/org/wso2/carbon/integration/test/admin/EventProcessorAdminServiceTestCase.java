@@ -140,6 +140,7 @@ public class EventProcessorAdminServiceTestCase extends CEPIntegrationTest {
     @Test(groups = {"wso2.cep"}, description = "Testing get siddhi streams and set statistics/tracing enable")
     public void testGetSiddhiStreamsAndSetStatisticsAndTracingEnable() throws Exception {
         String samplePath = "admin" + File.separator + "EventProcessorAdminServiceTestCase";
+        int siddhiEventStreamCount = 2;
 
         try {
             eventStreamCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
@@ -166,11 +167,12 @@ public class EventProcessorAdminServiceTestCase extends CEPIntegrationTest {
 
             //Get active execution plans
             ExecutionPlanConfigurationDto executionPlanConfigurationDto = eventProcessorAdminServiceClient.getActiveExecutionPlanConfiguration("testPlan");
-            Assert.assertEquals(executionPlanConfigurationDto.getName(), "testPlan");
+            Assert.assertEquals(executionPlanConfigurationDto.getStatisticsEnabled(), true);
+            Assert.assertEquals(executionPlanConfigurationDto.getTracingEnabled(), true);
 
             //Get siddhi stream count
             StreamDefinitionDto[] streamDefinitionDtos = eventProcessorAdminServiceClient.getSiddhiStreams(executionPlan);
-            Assert.assertEquals(streamDefinitionDtos.length, eventStreamCount);
+            Assert.assertEquals(streamDefinitionDtos.length, siddhiEventStreamCount);
 
             //Remove artifacts
             eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.sample.pizza.order", "1.0.0");
