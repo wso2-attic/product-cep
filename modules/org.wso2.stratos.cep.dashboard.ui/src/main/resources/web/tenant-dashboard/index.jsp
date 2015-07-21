@@ -265,7 +265,7 @@
                     <%
                         }
                     %>
-                    <p>Contains the execution logic that need to be performed on the event streams.</p>
+                    <p>Contains the execution logic that needs to be performed on the event streams.</p>
 
                 </div>
             </td>
