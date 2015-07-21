@@ -191,6 +191,16 @@ public class EventPublisherAdminServiceClient {
         }
     }
 
+    public EventPublisherConfigurationDto getActiveEventPublisherConfiguration(
+            String eventPublisherName) throws RemoteException {
+        try {
+            return eventPublisherAdminServiceStub.getActiveEventPublisherConfiguration(eventPublisherName);
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException();
+        }
+    }
+
     public String getInactiveEventPublisherConfigurationContent(String eventPublisherFileName)
             throws RemoteException {
         try {
