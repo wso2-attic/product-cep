@@ -22,6 +22,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.event.simulator.stub.EventSimulatorAdminServiceStub;
 import org.wso2.carbon.event.simulator.stub.types.EventDto;
+import org.wso2.carbon.event.simulator.stub.types.StreamDefinitionInfoDto;
 
 import java.rmi.RemoteException;
 
@@ -51,6 +52,15 @@ public class EventSimulatorAdminServiceClient {
     public void sendEvent(EventDto eventDto) throws RemoteException {
         try {
             executionSimulatorAdminServiceStub.sendEvent(eventDto);
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException();
+        }
+    }
+
+    public StreamDefinitionInfoDto[] getAllEventStreamInfoDto() throws RemoteException {
+        try {
+            return executionSimulatorAdminServiceStub.getAllEventStreamInfoDto();
         } catch (RemoteException e) {
             log.error("RemoteException", e);
             throw new RemoteException();
