@@ -73,6 +73,7 @@
             <!--Event processor admin service test case -->
             <class name="org.wso2.carbon.integration.test.admin.EventProcessorAdminServiceTestCase"/>
             <class name="org.wso2.carbon.integration.test.admin.EventPublisherAdminServiceTestCase"/>
+            <class name="org.wso2.carbon.integration.test.admin.EventSimulatorAdminServiceTestCase"/>
         </classes>
 
     </test>

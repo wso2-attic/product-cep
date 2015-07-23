@@ -34,6 +34,7 @@ public class EventSimulatorAdminServiceTestCase extends CEPIntegrationTest {
             Assert.assertEquals(allEventStreamInfoDto.length, 1);
             Assert.assertEquals(allEventStreamInfoDto[0].getStreamName(), "org.wso2.event.sensor.stream");
             Assert.assertEquals(allEventStreamInfoDto[0].getStreamVersion(), "1.0.0");
+            eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream","1.0.0");
         } catch (Exception e) {
             e.printStackTrace();
         }
