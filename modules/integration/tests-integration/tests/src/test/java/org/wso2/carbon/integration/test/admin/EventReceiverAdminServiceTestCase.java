@@ -23,8 +23,10 @@ public class EventReceiverAdminServiceTestCase extends CEPIntegrationTest {
     public void init() throws Exception {
         super.init(TestUserMode.SUPER_TENANT_ADMIN);
         String loggedInSessionCookie = new LoginLogoutClient(cepServer).login();
-        eventReceiverAdminServiceClient = configurationUtil.getEventReceiverAdminServiceClient(backendURL, loggedInSessionCookie);
-        eventStreamManagerAdminServiceClient = configurationUtil.getEventStreamManagerAdminServiceClient(backendURL, loggedInSessionCookie);
+        eventReceiverAdminServiceClient = configurationUtil
+                .getEventReceiverAdminServiceClient(backendURL, loggedInSessionCookie);
+        eventStreamManagerAdminServiceClient = configurationUtil
+                .getEventStreamManagerAdminServiceClient(backendURL, loggedInSessionCookie);
     }
 
     @Test(groups = {"wso2.cep"}, description = "Test get active event receiver configuration")
@@ -32,7 +34,8 @@ public class EventReceiverAdminServiceTestCase extends CEPIntegrationTest {
         String samplePath = "inputflows" + File.separator + "sample0003";
         String eventReceiverConfig = null;
         try {
-            String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath, "org.wso2.event.sensor.stream_1.0.0.json");
+            String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
+                    "org.wso2.event.sensor.stream_1.0.0.json");
             eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
             eventReceiverConfig = getXMLArtifactConfiguration(samplePath, "httpReceiver.xml");
             eventReceiverAdminServiceClient.addEventReceiverConfiguration(eventReceiverConfig);
@@ -41,7 +44,8 @@ public class EventReceiverAdminServiceTestCase extends CEPIntegrationTest {
                     eventReceiverAdminServiceClient.getActiveEventReceiverConfiguration("httpReceiver");
 
             Assert.assertEquals(eventReceiverConfigurationDto.getEventReceiverName(), "httpReceiver");
-            Assert.assertEquals(eventReceiverConfigurationDto.getToStreamNameWithVersion(),"org.wso2.event.sensor.stream:1.0.0");
+            Assert.assertEquals(eventReceiverConfigurationDto.getToStreamNameWithVersion(),
+                    "org.wso2.event.sensor.stream:1.0.0");
 
             eventReceiverAdminServiceClient.removeActiveEventReceiverConfiguration("httpReceiver");
             eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream","1.0.0");

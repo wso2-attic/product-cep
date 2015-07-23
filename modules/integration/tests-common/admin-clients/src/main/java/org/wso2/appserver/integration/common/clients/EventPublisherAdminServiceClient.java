@@ -111,6 +111,21 @@ public class EventPublisherAdminServiceClient {
         }
     }
 
+    public boolean addMapEventPublisherConfiguration(String eventPublisherName,
+                                                        String streamNameWithVersion,
+                                                        String eventAdapterType,
+                                                        EventMappingPropertyDto[] mapData,
+                                                        BasicOutputAdapterPropertyDto[] outputPropertyConfiguration,
+                                                        boolean mappingEnabled) throws RemoteException {
+        try {
+            return eventPublisherAdminServiceStub.deployMapEventPublisherConfiguration(eventPublisherName,streamNameWithVersion,
+                    eventAdapterType,mapData,outputPropertyConfiguration,mappingEnabled);
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException();
+        }
+    }
+
     public void addXMLEventPublisherConfiguration(String eventPublisherName,
                                                   String streamNameWithVersion,
                                                   String eventAdapterType,
@@ -120,6 +135,23 @@ public class EventPublisherAdminServiceClient {
             throws RemoteException {
         try {
             eventPublisherAdminServiceStub.deployXmlEventPublisherConfiguration(eventPublisherName, streamNameWithVersion, eventAdapterType, textData, outputPropertyConfiguration, dataFrom, mappingEnabled);
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException();
+        }
+    }
+
+    public boolean addTextEventPublisherConfiguration(String eventPublisherName,
+                                                         String streamNameWithVersion,
+                                                         String eventAdapterType,
+                                                         String textData,
+                                                         BasicOutputAdapterPropertyDto[] outputPropertyConfiguration,
+                                                         String dataFrom,
+                                                         boolean mappingEnabled) throws RemoteException {
+        try {
+            return eventPublisherAdminServiceStub.deployTextEventPublisherConfiguration(eventPublisherName
+                    ,streamNameWithVersion,eventAdapterType,textData,outputPropertyConfiguration,dataFrom,
+                    mappingEnabled);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
             throw new RemoteException();
@@ -216,5 +248,15 @@ public class EventPublisherAdminServiceClient {
             throws RemoteException {
         eventPublisherAdminServiceStub.testPublisherConnection(eventPublisherName, eventPublisherType,
                 outputPropertyConfiguration, messageFormat);
+    }
+
+    public EventPublisherConfigurationInfoDto[] getAllStreamSpecificActiveEventPublisherConfigurations(String streamId)
+            throws RemoteException {
+        try {
+            return eventPublisherAdminServiceStub.getAllStreamSpecificActiveEventPublisherConfigurations(streamId);
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException();
+        }
     }
 }
