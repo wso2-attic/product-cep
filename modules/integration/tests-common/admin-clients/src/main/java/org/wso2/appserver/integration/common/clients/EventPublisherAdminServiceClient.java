@@ -249,4 +249,14 @@ public class EventPublisherAdminServiceClient {
         eventPublisherAdminServiceStub.testPublisherConnection(eventPublisherName, eventPublisherType,
                 outputPropertyConfiguration, messageFormat);
     }
+
+    public EventPublisherConfigurationInfoDto[] getAllStreamSpecificActiveEventPublisherConfigurations(String streamId)
+            throws RemoteException {
+        try {
+            return eventPublisherAdminServiceStub.getAllStreamSpecificActiveEventPublisherConfigurations(streamId);
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException();
+        }
+    }
 }
