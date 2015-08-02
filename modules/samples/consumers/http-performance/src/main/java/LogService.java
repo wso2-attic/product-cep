@@ -42,7 +42,7 @@ public class LogService extends HttpServlet {
     private static AtomicLong latency = new AtomicLong(0);
 
     public void init() throws ServletException {
-        System.out.println("Logger service initiated");
+        log.info("Logger service initiated");
         eventCount.set(0);
         lastTime = System.currentTimeMillis();
     }

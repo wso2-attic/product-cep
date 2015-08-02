@@ -141,6 +141,23 @@ public class EventPublisherAdminServiceClient {
         }
     }
 
+    public boolean addTextEventPublisherConfiguration(String eventPublisherName,
+                                                         String streamNameWithVersion,
+                                                         String eventAdapterType,
+                                                         String textData,
+                                                         BasicOutputAdapterPropertyDto[] outputPropertyConfiguration,
+                                                         String dataFrom,
+                                                         boolean mappingEnabled) throws RemoteException {
+        try {
+            return eventPublisherAdminServiceStub.deployTextEventPublisherConfiguration(eventPublisherName
+                    ,streamNameWithVersion,eventAdapterType,textData,outputPropertyConfiguration,dataFrom,
+                    mappingEnabled);
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException();
+        }
+    }
+
     public void addJSONEventPublisherConfiguration(String eventPublisherName,
                                                    String streamNameWithVersion,
                                                    String eventAdapterType,
@@ -231,5 +248,15 @@ public class EventPublisherAdminServiceClient {
             throws RemoteException {
         eventPublisherAdminServiceStub.testPublisherConnection(eventPublisherName, eventPublisherType,
                 outputPropertyConfiguration, messageFormat);
+    }
+
+    public EventPublisherConfigurationInfoDto[] getAllStreamSpecificActiveEventPublisherConfigurations(String streamId)
+            throws RemoteException {
+        try {
+            return eventPublisherAdminServiceStub.getAllStreamSpecificActiveEventPublisherConfigurations(streamId);
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException();
+        }
     }
 }

@@ -31,12 +31,12 @@
                 /* define streams and write query here ... */
 
                 @Import('inStream:1.0.0')
-                define stream inStream (testParameter int);
+                define stream inStream (meta_testParameter int);
 
                 @Export('outStream:1.0.0')
-                define stream outStream (testParameter int);
+                define stream outStream (meta_testParameter int);
 
-                from inStream[testParameter < $maxVal and $maxVal > 2]
+                from inStream[meta_testParameter < $maxVal and $maxVal > 2]
                 select *
                 insert into outStream;
                  ]]>
@@ -62,12 +62,12 @@
                 /* define streams and write query here ... */
 
                 @Import('inStream:1.0.0')
-                define stream inStream (testParameter int);
+                define stream inStream (meta_testParameter int);
 
                 @Export('outStream:1.0.0')
-                define stream outStream (testParameter int);
+                define stream outStream (meta_testParameter int);
 
-                from inStream[testParameter < $maxVal and $maxVal > 2]
+                from inStream[meta_testParameter < $maxVal and $maxVal > 2]
                 select *
                 insert into outStream;
                  ]]>
@@ -92,12 +92,12 @@
                 /* define streams and write query here ... */
 
                 @Import('inStream:1.0.0')
-                define stream inStream (testParameter int);
+                define stream inStream (meta_testParameter int);
 
                 @Export('outStream:1.0.0')
-                define stream outStream (testParameter int);
+                define stream outStream (meta_testParameter int);
 
-                from inStream[testParameter < $maxVal and $maxVal > 2]
+                from inStream[meta_testParameter < $maxVal and $maxVal > 2]
                 select *
                 insert into outStream;
                  ]]>
