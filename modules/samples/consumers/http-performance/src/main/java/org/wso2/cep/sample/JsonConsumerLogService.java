@@ -68,6 +68,7 @@ public class JsonConsumerLogService extends HttpServlet {
         }
         out.close();
 
+        //TODO Do we need to use json path to get the timestamp, string manipulations might be faster
         JsonPath jsonPath = JsonPath.compile("$.event.metaData");
         Map<Object, Object> eventMap = jsonPath.read(out.toString());
 
