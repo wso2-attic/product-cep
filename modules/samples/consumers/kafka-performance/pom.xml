@@ -26,6 +26,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>kafka-performance-server</artifactId>
+    <name>WSO2 CEP - Consumer - Kafka Consumer</name>
 
     <dependencies>
         <dependency>

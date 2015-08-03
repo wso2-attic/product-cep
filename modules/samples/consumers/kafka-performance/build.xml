@@ -29,8 +29,8 @@
 
     <property name="zookeeperUrl" value="127.0.0.1:2181"/>
     <property name="groupId" value="group"/>
-    <property name="topic" value=""/>
-    <property name="noOfConsumers" value=""/>
+    <property name="topic" value="kafkaTopicConsume"/>
+    <property name="noOfConsumers" value="10"/>
 
     <path id="javac.classpath">
         <pathelement path="${class.dir}"/>

@@ -26,6 +26,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>kafka-performance-client</artifactId>
+    <name>WSO2 CEP - Publisher - Kafka Producer</name>
 
     <dependencies>
         <dependency>
