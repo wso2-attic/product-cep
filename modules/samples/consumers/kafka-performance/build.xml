@@ -22,15 +22,15 @@
     <property name="temp.dir" value="temp"/>
     <property name="lib.dir" value="../../lib"/>
     <property name="class.dir" value="${temp.dir}/classes"/>
-    <property name="main-class" value="org.wso2.carbon.sample.kafka.performance.KafkaClient"/>
+    <property name="main-class" value="org.wso2.carbon.sample.kafka.performance.KafkaConsumer"/>
+
     <property name="username" value="admin"/>
     <property name="password" value="admin"/>
 
-    <property name="url" value="localhost:9092"/>
-    <property name="topic" value="kafkaTopicProduce"/>
-    <property name="noOfEvents" value="20000000"/>
-    <property name="elapsedCount" value="1000000"/>
-    <property name="noOfPublishers" value="1"/>
+    <property name="zookeeperUrl" value="127.0.0.1:2181"/>
+    <property name="groupId" value="group"/>
+    <property name="topic" value="kafkaTopicConsume"/>
+    <property name="noOfConsumers" value="10"/>
 
     <path id="javac.classpath">
         <pathelement path="${class.dir}"/>
@@ -39,8 +39,6 @@
             <include name="org.wso2.carbon.logging_*.jar"/>
             <include name="slf4j.log4j12_*.jar"/>
             <include name="slf4j.api_*.jar"/>
-            <include name="json_*.jar"/>
-            <include name="com.google.gson_*.jar"/>
         </fileset>
     </path>
 
@@ -69,14 +67,13 @@
     </target>
 
     <target name="run" depends="compile">
-        <echo>Configure -Durl=xxxx -Dtopic=xxxx -DnoOfEvents=xxxx -DelapsedCount=XXXX -DnoOfPublishers=xxxx</echo>
+        <echo>Configure -Dtopic=xxxx and -DnoOfConsumers=XXXX</echo>
         <java classname="${main-class}"
               classpathref="javac.classpath" fork="true">
-            <arg value="${url}"/>
+            <arg value="${zookeeperUrl}"/>
+            <arg value="${groupId}"/>
             <arg value="${topic}"/>
-            <arg value="${noOfEvents}"/>
-            <arg value="${elapsedCount}"/>
-            <arg value="${noOfPublishers}"/>
+            <arg value="${noOfConsumers}"/>
         </java>
     </target>
 
