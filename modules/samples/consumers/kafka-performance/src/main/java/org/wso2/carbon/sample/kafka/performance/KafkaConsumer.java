@@ -17,10 +17,8 @@
 package org.wso2.carbon.sample.kafka.performance;
 
 import kafka.consumer.ConsumerConfig;
-import kafka.consumer.ConsumerIterator;
 import kafka.consumer.KafkaStream;
 import kafka.javaapi.consumer.ConsumerConnector;
-import org.apache.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.List;
@@ -30,7 +28,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class KafkaConsumer {
-    private static Logger log = Logger.getLogger(KafkaConsumer.class);
     private final ConsumerConnector consumer;
     private final String topic;
     private ExecutorService executor;
@@ -49,12 +46,6 @@ public class KafkaConsumer {
 
         KafkaConsumer kafkaConsumer = new KafkaConsumer(zookeeperUrl, groupId, topic);
         kafkaConsumer.start(noOfConsumers);
-
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            log.error("Exception when listening for events", e);
-        }
     }
 
     public void start(int numOfConsumers) {
@@ -72,17 +63,12 @@ public class KafkaConsumer {
         }
     }
 
-    public void shutdown() {
-        if (consumer != null) consumer.shutdown();
-        if (executor != null) executor.shutdown();
-    }
-
     private static ConsumerConfig createConsumerConfig(String zookeeperUrl, String groupId) {
         Properties props = new Properties();
         props.put("zookeeper.connect", zookeeperUrl);
         props.put("group.id", groupId);
-        props.put("zookeeper.session.timeout.ms", "1000");
-        props.put("zookeeper.sync.time.ms", "200");
+        props.put("zookeeper.session.timeout.ms", "6000");
+        props.put("zookeeper.sync.time.ms", "2000");
         props.put("auto.commit.interval.ms", "1000");
         return new ConsumerConfig(props);
     }

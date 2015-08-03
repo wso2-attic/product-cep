@@ -30,32 +30,31 @@ public class ConsumerTest implements Runnable {
     DecimalFormat decimalFormat = new DecimalFormat("#");
 
     private KafkaStream kafkaStream;
-    private static long lastTime;
-    private static int elapsedCount = 1000000;
+
     private long sentTime = 0;
     private long receivedTime = 0;
+    private static int elapsedCount = 100000;
 
     //Atomic Variables
-    private AtomicLong eventCount;
-    private static AtomicLong latency;
+    private static AtomicLong eventCount = new AtomicLong(0);
+    private static AtomicLong latency = new AtomicLong(0);
+    private static AtomicLong lastTime = new AtomicLong(System.currentTimeMillis());
 
     public ConsumerTest(KafkaStream stream) {
         kafkaStream = stream;
-        eventCount = new AtomicLong(0);
-        latency = new AtomicLong(0);
-        lastTime = System.currentTimeMillis();
     }
 
     public void run() {
         try {
+            log.info("start consuming");
             ConsumerIterator<byte[], byte[]> iterator = kafkaStream.iterator();
+            Pattern eventPattern = Pattern.compile("(timestamp\":(\\d+))");
 
             while (iterator.hasNext()) {
                 String message = new String(iterator.next().message());
                 receivedTime = System.currentTimeMillis();
 
-                //Pattern match for time stamp
-                Pattern eventPattern = Pattern.compile("(<timestamp>(\\d+))");
+                //Time stamp pattern match for json format event
                 Matcher eventPatternMatcher = eventPattern.matcher(message);
                 if (eventPatternMatcher.find()) {
                     sentTime = Long.parseLong(eventPatternMatcher.group(2));
@@ -64,18 +63,19 @@ public class ConsumerTest implements Runnable {
                 }
 
                 latency.addAndGet(receivedTime - sentTime);
-                eventCount.addAndGet(1);
+                eventCount.incrementAndGet();
 
                 if (eventCount.get() % elapsedCount == 0) {
                     long currentTime = System.currentTimeMillis();
-                    long elapsedTime = currentTime - lastTime;
+                    long elapsedTime = currentTime - lastTime.getAndSet(currentTime);
                     double throughputPerSecond = (((double) elapsedCount) / elapsedTime) * 1000;
-                    lastTime = currentTime;
                     log.info("Received " + elapsedCount + " sensor events in " + elapsedTime +
                             " milliseconds with total throughput of " + decimalFormat.format(throughputPerSecond) +
                             " events per second. Average latency is " + (double) latency.get() / elapsedCount + " milliseconds per event.");
+                    latency.set(0);
                 }
             }
+            log.info("Received Total of " + eventCount.get() + " sensor events");
         } catch (Throwable t) {
             log.error("Error when receiving messages", t);
         }

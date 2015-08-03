@@ -40,16 +40,9 @@ public class KafkaClient {
     private static int noOfPublishers;
 
     //Atomic Variables
-    private AtomicLong count;
-    private AtomicLong lastIndex;
-    private AtomicBoolean calcInProgress;
-
-
-    public KafkaClient() {
-        count = new AtomicLong(0);
-        lastIndex = new AtomicLong(0);
-        calcInProgress = new AtomicBoolean(false);
-    }
+    private static AtomicLong count = new AtomicLong(0);
+    private AtomicLong lastIndex = new AtomicLong(0);
+    private AtomicBoolean calcInProgress = new AtomicBoolean(false);
 
     public static void main(String args[]) {
         log.info("Starting Kafka Client");
@@ -75,13 +68,13 @@ public class KafkaClient {
     }
 
     public class KafkaProducer implements Runnable {
-
         @Override
         public void run() {
             try {
                 Properties props = new Properties();
                 props.put("metadata.broker.list", url);
                 props.put("serializer.class", "kafka.serializer.StringEncoder");
+                props.put("producer.type", "async");
 
                 ProducerConfig config = new ProducerConfig(props);
                 Producer<String, Object> producer = new Producer<String, Object>(config);
@@ -89,6 +82,7 @@ public class KafkaClient {
                 log.info("Sending messages..");
                 long lastTime = System.currentTimeMillis();
                 DecimalFormat decimalFormat = new DecimalFormat("#");
+
                 while (count.getAndIncrement() < noOfEvents) {
                     String message = "{\"event\": " + getRandomEvent(count.get()).toString() + "}";
 
@@ -111,6 +105,7 @@ public class KafkaClient {
                         }
                     }
                 }
+                log.info("Sent " + (count.get() - 1) + " sensor events");
             } catch (Throwable t) {
                 log.error("Error when sending the messages", t);
             }
@@ -142,7 +137,5 @@ public class KafkaClient {
             return event;
         }
     }
-
-
 }
 
