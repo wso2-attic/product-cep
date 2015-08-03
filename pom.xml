@@ -411,6 +411,12 @@
                 <artifactId>json</artifactId>
                 <version>${json.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.jayway.jsonpath</groupId>
+                <artifactId>json-path</artifactId>
+                <version>${jsonpath.version}</version>
+            </dependency>
+
 
             <!--carbon automation framework-->
             <dependency>
@@ -700,6 +706,7 @@
         <junit.version>4.10</junit.version>
         <gson.version>2.1</gson.version>
         <json.version>20090211</json.version>
+        <jsonpath.version>0.9.1</jsonpath.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.scm.id>my-scm-server</project.scm.id>
