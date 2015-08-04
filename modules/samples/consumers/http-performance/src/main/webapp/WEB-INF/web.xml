@@ -22,12 +22,22 @@
            version="2.5">
 
     <servlet>
-        <servlet-name>LogService</servlet-name>
-        <servlet-class>LogService</servlet-class>
+        <servlet-name>JsonLogService</servlet-name>
+        <servlet-class>org.wso2.cep.sample.JsonConsumerLogService</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>LogService</servlet-name>
+        <servlet-name>JsonLogService</servlet-name>
         <url-pattern>/log</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>XmlLogService</servlet-name>
+        <servlet-class>org.wso2.cep.sample.XmlConsumerLogService</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>XmlLogService</servlet-name>
+        <url-pattern>/xmllog</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -18,6 +18,8 @@
 package org.wso2.carbon.integration.test.outputflow;
 
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import org.apache.axis2.AxisFault;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -410,9 +412,14 @@ public class JMSTestCase extends CEPIntegrationTest {
         eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("jmsPublisherCustomJSON.xml");
 
         try {
+            JsonParser jsonParser = new JsonParser();
             Assert.assertEquals(JMSConsumerClient.getMessageCount(), messageCount,
                     "Incorrect number of messages consumed!");
-            Assert.assertEquals(preservedEvent, sentEvent, "Incorrect mapping has occurred!");
+            // Comparing parsed JsonElement objects ensures that even if the string is different,
+            // if the parsed Json is equivalent, the test passes.
+            JsonElement preservedEventJson = jsonParser.parse(preservedEvent);
+            JsonElement sentEventJson = jsonParser.parse(sentEvent);
+            Assert.assertEquals(preservedEventJson, sentEventJson, "Incorrect mapping has occurred!");
         } catch (Throwable e) {
             log.error("Exception thrown: " + e.getMessage(), e);
             Assert.fail("Exception: " + e.getMessage());
