@@ -21,6 +21,7 @@ import org.apache.axis2.client.ServiceClient;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.event.simulator.stub.EventSimulatorAdminServiceStub;
+import org.wso2.carbon.event.simulator.stub.types.DataSourceTableAndStreamInfoDto;
 import org.wso2.carbon.event.simulator.stub.types.EventDto;
 import org.wso2.carbon.event.simulator.stub.types.StreamDefinitionInfoDto;
 
@@ -67,4 +68,23 @@ public class EventSimulatorAdminServiceClient {
         }
     }
 
+    public String testSimulateRDBMSDataSourceConnection(String eventStreamDataSourceColumnNamesAndTypeInfo)
+            throws RemoteException {
+        try {
+            return executionSimulatorAdminServiceStub.testSimulateRDBMSDataSourceConnection(
+                    eventStreamDataSourceColumnNamesAndTypeInfo);
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException();
+        }
+    }
+
+    public DataSourceTableAndStreamInfoDto[] getAllDataSourceTableAndStreamInfo() throws RemoteException {
+        try {
+            return executionSimulatorAdminServiceStub.getAllDataSourceTableAndStreamInfo();
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException();
+        }
+    }
 }
