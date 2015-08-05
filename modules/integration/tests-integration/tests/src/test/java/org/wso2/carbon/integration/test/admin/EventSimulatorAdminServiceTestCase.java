@@ -64,7 +64,6 @@ public class EventSimulatorAdminServiceTestCase extends CEPIntegrationTest {
     }*/
 
 
-    //todo: should continue after https://wso2.org/jira/browse/CEP-1255 solved
     @Test(groups = {"wso2.cep"}, description = "Test get all event stream info dtos")
     public void testSimulateRDBMSDataSourceConnection() {
         try {
