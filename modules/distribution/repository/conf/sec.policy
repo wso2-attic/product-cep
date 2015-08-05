@@ -69,8 +69,8 @@ grant codeBase "file:${carbon.home}/modules/-" {
     // Required by jaggery modules. 
     permission org.osgi.framework.ServicePermission "*", "get";
 
-    // Required by org.wso2.carbon.servlet.TenantEventRetrievalEndpoint class
-    permission java.io.FilePermission "${carbon.home}/commons-logging.properties", "read";
+    // Required by jaggery modules.
+    permission java.io.FilePermission "${carbon.home}/repository/deployment/server/jaggeryapps/-", "read";
 };
 
 // ========= Granting permissions to jaggery apps ============================
@@ -94,6 +94,6 @@ grant codeBase "file:${carbon.home}/repository/deployment/server/jaggeryapps/-" 
     // Required by jaggery apps
     permission org.osgi.framework.ServicePermission "*", "get";
 
-    // Required by org.wso2.carbon.servlet.TenantEventRetrievalEndpoint class
-    permission java.io.FilePermission "${carbon.home}/commons-logging.properties", "read";
+    // Required by jaggery apps
+    permission java.io.FilePermission "${carbon.home}/repository/deployment/server/jaggeryapps/-", "read";
 };
