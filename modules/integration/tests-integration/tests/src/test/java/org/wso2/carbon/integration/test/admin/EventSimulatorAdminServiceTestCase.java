@@ -63,8 +63,7 @@ public class EventSimulatorAdminServiceTestCase extends CEPIntegrationTest {
         }
     }*/
 
-    /*
-     * todo: should continue after https://wso2.org/jira/browse/CEP-1255 solved
+
     @Test(groups = {"wso2.cep"}, description = "Test get all event stream info dtos")
     public void testSimulateRDBMSDataSourceConnection() {
         try {
@@ -89,6 +88,9 @@ public class EventSimulatorAdminServiceTestCase extends CEPIntegrationTest {
             eventSimulatorAdminServiceClient.testSimulateRDBMSDataSourceConnection(
                 "{\n" +
                 "    \"dataSource\"                 : \"WSO2CEP_DB\",\n" +
+                "    \"eventStreamName\"            : \"org.wso2.event.sensor.stream\",\n" +
+                "    \"streamID\"                   : \"org.wso2.event.sensor.stream:1.0.0\",\n" +
+                "    \"name\"                       : \"testSimulator\",\n" +
                 "    \"tableName\"                  : \"sensordata\",\n" +
                 "    \"delayBetweenEventsInMilies\" : 1000,\n" +
                 "    \"dataSourceColumnsAndTypes\"  : [\n" +
@@ -133,7 +135,7 @@ public class EventSimulatorAdminServiceTestCase extends CEPIntegrationTest {
             log.error("Exception thrown: " + e.getMessage(), e);
             Assert.fail("Exception: " + e.getMessage());
         }
-    }*/
+    }
 
     /*@Test(groups = {"wso2.cep"}, description = "Test get all dataSource table and stream info")
     public void testGetAllDataSourceTableAndStreamInfo() {
