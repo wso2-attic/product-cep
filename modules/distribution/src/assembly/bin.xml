@@ -28,15 +28,12 @@
             <excludes>
                 <exclude>**/bin/yajsw/wrapper.conf</exclude>
                 <exclude>**/conf/axis2/axis2.xml</exclude>
-                <exclude>**/conf/axis2/axis2_client.xml</exclude>
-                <exclude>**/conf/etc/launch.ini</exclude>
                 <exclude>**/services/sample01.aar</exclude>
                 <exclude>**/repository/services/version/**</exclude>
                 <exclude>**/axis2services/Echo.aar</exclude>
                 <exclude>**/axis2services/Version.aar</exclude>
                 <exclude>**/version.txt</exclude>
                 <exclude>**/LICENSE.txt</exclude>
-                <exclude>**/wso2server.bat</exclude>
                 <exclude>**/README.txt</exclude>
                 <exclude>**/INSTALL.txt</exclude>
                 <exclude>**/release-notes.html</exclude>
@@ -118,13 +115,7 @@
                 <include>*.jar</include>
             </includes>
         </fileSet>
-        <fileSet>
-            <directory>../../modules/samples/target/output-ui-test</directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/samples/artifacts/0071/webapps</outputDirectory>
-            <includes>
-                <include>*.war</include>
-            </includes>
-        </fileSet>
+
         <fileSet>
             <directory>../../modules/samples/extensions/geo-event-notifier/target</directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/samples/utils/geo-dashboard-extensions</outputDirectory>
@@ -543,14 +534,6 @@
             <filtered>false</filtered>
             <fileMode>644</fileMode>
         </file>
-        <!--email broker config-->
-        <file>
-            <source>repository/conf/axis2/axis2_client.xml</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/axis2/
-            </outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
 
         <file>
             <source>scripts/wrapper.conf</source>
@@ -558,13 +541,6 @@
             </outputDirectory>
             <filtered>true</filtered>
             <fileMode>755</fileMode>
-        </file>
-
-        <file>
-            <source>scripts/launch.ini</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/etc</outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
         </file>
 
         <!-- Including rdbms configuration file for event simulator -->

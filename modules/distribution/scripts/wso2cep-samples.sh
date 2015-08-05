@@ -66,7 +66,14 @@ do
       SAMPLE=""
       CARBON_HOME=`cd "$PRGDIR/.." ; pwd`
       CMD="$CMD -Daxis2.repo=$CARBON_HOME/samples/artifacts/$c"
-      `[ -f $CARBON_HOME/samples/artifacts/$c/stream-definitions.xml ] && cp $CARBON_HOME/samples/artifacts/$c/stream-definitions.xml $CARBON_HOME/repository/conf/data-bridge`
+      if [ ! -d $CARBON_HOME/samples/artifacts/$c/webapps ]; then 
+        `mkdir -p $CARBON_HOME/samples/artifacts/$c/webapps`
+        `cp -r $CARBON_HOME/repository/deployment/server/webapps/* $CARBON_HOME/samples/artifacts/$c/webapps/`
+      fi
+      if [ ! -d $CARBON_HOME/samples/artifacts/$c/jaggeryapps ]; then
+              `mkdir -p $CARBON_HOME/samples/artifacts/$c/jaggeryapps`
+              `cp -r $CARBON_HOME/repository/deployment/server/jaggeryapps/* $CARBON_HOME/samples/artifacts/$c/jaggeryapps/`
+      fi
     else
       echo "*** Specified sample number is not a number *** Please specify a valid sample number with the -sn option"
       echo "Example, to run sample 1: wso2cep-samples.sh -sn 1"
