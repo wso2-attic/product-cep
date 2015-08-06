@@ -74,7 +74,7 @@
     </target>
 
     <target name="compile" depends="init">
-        <javac debug="on" srcdir="${src.dir}" destdir="${class.dir}">
+        <javac debug="on" srcdir="${src.dir}" destdir="${class.dir}" compiler="modern">
             <include name="*/**"/>
             <classpath refid="javac.classpath"/>
         </javac>
