@@ -26,8 +26,6 @@
             <directory>target/wso2carbon-core-${carbon.kernel.version}</directory>
             <outputDirectory>${pom.artifactId}-${pom.version}</outputDirectory>
             <excludes>
-                <exclude>**/wso2server.bat</exclude>
-                <exclude>**/wso2server.sh</exclude>
                 <exclude>**/bin/yajsw/wrapper.conf</exclude>
                 <exclude>**/conf/axis2/axis2.xml</exclude>
                 <exclude>**/conf/axis2/axis2_client.xml</exclude>
@@ -552,20 +550,6 @@
             </outputDirectory>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
-        </file>
-        <file>
-            <source>scripts/wso2server.sh</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/bin/
-            </outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>755</fileMode>
-        </file>
-        <file>
-            <source>scripts/wso2server.bat</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/bin/
-            </outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>755</fileMode>
         </file>
 
         <file>

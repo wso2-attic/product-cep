@@ -5,7 +5,7 @@
   ~ you may not use this file except in compliance with the License.
   ~ You may obtain a copy of the License at
   ~
-  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~ http://www.apache.org/licenses/LICENSE-2.0
   ~
   ~ Unless required by applicable law or agreed to in writing, software
   ~ distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,36 +22,23 @@
     <property name="temp.dir" value="temp"/>
     <property name="lib.dir" value="../../lib"/>
     <property name="class.dir" value="${temp.dir}/classes"/>
-    <property name="main-class" value="org.wso2.carbon.sample.http.performance.Http"/>
+    <property name="main-class" value="org.wso2.carbon.sample.kafka.performance.KafkaConsumer"/>
+
     <property name="username" value="admin"/>
     <property name="password" value="admin"/>
 
-    <property name="url" value=""/>
-    <property name="noOfEvents" value=""/>
-    <property name="elapsedCount" value=""/>
-    <property name="noOfPublishers" value=""/>
+    <property name="zookeeperUrl" value="127.0.0.1:2181"/>
+    <property name="groupId" value="group"/>
+    <property name="topic" value="kafkaTopicConsume"/>
+    <property name="noOfConsumers" value="10"/>
 
     <path id="javac.classpath">
         <pathelement path="${class.dir}"/>
         <fileset dir="${lib.dir}"/>
         <fileset dir="${carbon.home}/repository/components/plugins/">
             <include name="org.wso2.carbon.logging_*.jar"/>
-            <include name="commons-pool_*.jar"/>
-            <include name="httpclient_*.jar"/>
-            <include name="httpcore_*.jar"/>
-            <include name="commons-httpclient_*.jar"/>
-            <include name="commons-codec_*.jar"/>
             <include name="slf4j.log4j12_*.jar"/>
             <include name="slf4j.api_*.jar"/>
-            <include name="axis2_*.jar"/>
-            <include name="axiom_*.jar"/>
-            <include name="wsdl4j_*.jar"/>
-            <include name="XmlSchema_*.jar"/>
-            <include name="neethi_*.jar"/>
-            <include name="org.wso2.securevault_*.jar"/>
-            <include name="com.google.gson_*.jar"/>
-            <include name="libthrift_*.jar"/>
-            <include name="json_*.jar"/>
         </fileset>
     </path>
 
@@ -80,16 +67,13 @@
     </target>
 
     <target name="run" depends="compile">
-        <echo> Configure -Durl=xxxx and -DnoOfEvents=xxxx -DelapsedCount=xxxx -DnoOfPublishers=xxxx -Doptionally use -Dusername=xxxx
-            -Dpassword=xxxx </echo>
+        <echo>Configure -Dtopic=xxxx and -DnoOfConsumers=XXXX</echo>
         <java classname="${main-class}"
               classpathref="javac.classpath" fork="true">
-            <arg value="${url}"/>
-            <arg value="${username}"/>
-            <arg value="${password}"/>
-            <arg value="${noOfEvents}"/>
-            <arg value="${elapsedCount}"/>
-            <arg value="${noOfPublishers}"/>
+            <arg value="${zookeeperUrl}"/>
+            <arg value="${groupId}"/>
+            <arg value="${topic}"/>
+            <arg value="${noOfConsumers}"/>
         </java>
     </target>
 

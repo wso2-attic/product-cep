@@ -1,4 +1,4 @@
-/*
+package org.wso2.cep.sample;/*
  * Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,13 +26,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class LogService extends HttpServlet {
+public class JsonConsumerLogService extends HttpServlet {
 
-    private static Logger log = Logger.getLogger(LogService.class);
+    private static Logger log = Logger.getLogger(JsonConsumerLogService.class);
 
     private DecimalFormat decimalFormat = new DecimalFormat("#");
     private static int elapsedCount = 50000;
@@ -70,6 +68,7 @@ public class LogService extends HttpServlet {
         }
         out.close();
 
+        //TODO Do we need to use json path to get the timestamp, string manipulations might be faster
         JsonPath jsonPath = JsonPath.compile("$.event.metaData");
         Map<Object, Object> eventMap = jsonPath.read(out.toString());
 
