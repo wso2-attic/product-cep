@@ -27,7 +27,6 @@
             <outputDirectory>${pom.artifactId}-${pom.version}</outputDirectory>
             <excludes>
                 <exclude>**/bin/yajsw/wrapper.conf</exclude>
-                <exclude>**/conf/axis2/axis2.xml</exclude>
                 <exclude>**/services/sample01.aar</exclude>
                 <exclude>**/repository/services/version/**</exclude>
                 <exclude>**/axis2services/Echo.aar</exclude>
@@ -115,7 +114,13 @@
                 <include>*.jar</include>
             </includes>
         </fileSet>
-
+        <fileSet>
+            <directory>../../modules/samples/target/output-ui-test</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/samples/artifacts/0071/webapps</outputDirectory>
+            <includes>
+                <include>*.war</include>
+            </includes>
+        </fileSet>
         <fileSet>
             <directory>../../modules/samples/extensions/geo-event-notifier/target</directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/samples/utils/geo-dashboard-extensions</outputDirectory>
@@ -346,14 +351,6 @@
                 ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/tomcat/context.xml
             </source>
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/tomcat/
-            </outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
-
-        <file>
-            <source>repository/conf/axis2/axis2.xml</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/axis2
             </outputDirectory>
             <filtered>true</filtered>
             <fileMode>644</fileMode>

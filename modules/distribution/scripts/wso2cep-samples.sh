@@ -68,11 +68,16 @@ do
       CMD="$CMD -Daxis2.repo=$CARBON_HOME/samples/artifacts/$c"
       if [ ! -d $CARBON_HOME/samples/artifacts/$c/webapps ]; then 
         `mkdir -p $CARBON_HOME/samples/artifacts/$c/webapps`
-        `cp -r $CARBON_HOME/repository/deployment/server/webapps/* $CARBON_HOME/samples/artifacts/$c/webapps/`
+        `[ -f $CARBON_HOME/repository/deployment/server/webapps/inputwebsocket.war ] && cp $CARBON_HOME/repository/deployment/server/webapps/inputwebsocket.war $CARBON_HOME/samples/artifacts/$c/webapps/`
+        `[ -f $CARBON_HOME/repository/deployment/server/webapps/outputwebsocket.war ] && cp $CARBON_HOME/repository/deployment/server/webapps/outputwebsocket.war $CARBON_HOME/samples/artifacts/$c/webapps/`
+        `[ -f $CARBON_HOME/repository/deployment/server/webapps/outputui.war ] && cp $CARBON_HOME/repository/deployment/server/webapps/outputui.war $CARBON_HOME/samples/artifacts/$c/webapps/`
+        `[ -f $CARBON_HOME/repository/deployment/server/webapps/shindig.war ] && cp $CARBON_HOME/repository/deployment/server/webapps/shindig.war $CARBON_HOME/samples/artifacts/$c/webapps/`
+        `[ -d $CARBON_HOME/repository/deployment/server/webapps/STRATOS_ROOT ] && cp -r $CARBON_HOME/repository/deployment/server/webapps/STRATOS_ROOT $CARBON_HOME/samples/artifacts/$c/webapps/`
       fi
       if [ ! -d $CARBON_HOME/samples/artifacts/$c/jaggeryapps ]; then
-              `mkdir -p $CARBON_HOME/samples/artifacts/$c/jaggeryapps`
-              `cp -r $CARBON_HOME/repository/deployment/server/jaggeryapps/* $CARBON_HOME/samples/artifacts/$c/jaggeryapps/`
+        `mkdir -p $CARBON_HOME/samples/artifacts/$c/jaggeryapps`
+        `cp -r $CARBON_HOME/repository/deployment/server/jaggeryapps/portal $CARBON_HOME/samples/artifacts/$c/jaggeryapps/`
+        `rm -r $CARBON_HOME/samples/artifacts/$c/jaggeryapps/portal/store/*`
       fi
     else
       echo "*** Specified sample number is not a number *** Please specify a valid sample number with the -sn option"
