@@ -58,7 +58,17 @@ wso2server.bat %CMD% -Daxis2.repo=../samples/artifacts/%cn%
 goto done
 
 :copyfile
-if exist ..\samples\artifacts\%cn%\stream-definitions.xml copy ..\samples\artifacts\%cn%\stream-definitions.xml ..\repository\conf\data-bridge > nul
+if not exist ..\samples\artifacts\%cn%\webapps ( mkdir ..\samples\artifacts\%cn%\webapps > nul
+if exist ..\repository\deployment\server\webapps\inputwebsocket.war ( copy ..\repository\deployment\server\webapps\inputwebsocket.war ..\samples\artifacts\%cn%\webapps\ > nul )
+if exist ..\repository\deployment\server\webapps\outputwebsocket.war ( copy ..\repository\deployment\server\webapps\outputwebsocket.war ..\samples\artifacts\%cn%\webapps\ > nul )
+if exist ..\repository\deployment\server\webapps\outputui.war ( copy ..\repository\deployment\server\webapps\outputui.war ..\samples\artifacts\%cn%\webapps\ > nul )
+if exist ..\repository\deployment\server\webapps\shindig.war ( copy ..\repository\deployment\server\webapps\shindig.war ..\samples\artifacts\%cn%\webapps\ > nul )
+if exist ..\repository\deployment\server\webapps\STRATOS_ROOT ( xcopy ..\repository\deployment\server\webapps\STRATOS_ROOT ..\samples\artifacts\%cn%\webapps\STRATOS_ROOT /s /q /i > nul ) )
+
+if not exist ..\samples\artifacts\%cn%\jaggeryapps ( mkdir ..\samples\artifacts\%cn%\jaggeryapps\portal > nul
+xcopy ..\repository\deployment\server\jaggeryapps\portal ..\samples\artifacts\%cn%\jaggeryapps\portal\ /s /q > nul
+if exist ..\samples\artifacts\%cn%\jaggeryapps\portal\store\carbon.super ( rmdir ..\samples\artifacts\%cn%\jaggeryapps\portal\store\carbon.super /s /q > nul )
+if exist ..\samples\artifacts\%cn%\jaggeryapps\portal\store\wso2.com ( rmdir ..\samples\artifacts\%cn%\jaggeryapps\portal\store\wso2.com /s /q > nul ) )
 goto run
 
 :invalid_number
