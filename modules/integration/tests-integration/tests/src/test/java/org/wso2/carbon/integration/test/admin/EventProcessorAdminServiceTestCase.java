@@ -28,6 +28,7 @@ import org.wso2.carbon.event.processor.stub.types.StreamDefinitionDto;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
 
 import java.io.File;
+import java.rmi.RemoteException;
 
 public class EventProcessorAdminServiceTestCase extends CEPIntegrationTest {
 
@@ -190,6 +191,20 @@ public class EventProcessorAdminServiceTestCase extends CEPIntegrationTest {
             executionPlanCount = 0;
         }
     }
+
+/* todo: incomplete test case
+    @Test(groups = {"wso2.cep"}, description =
+            "Testing get all exported stream specific active execution plan configuration")
+    public void testGetAllExportedStreamSpecificActiveExecutionPlanConfiguration() {
+        try {
+            ExecutionPlanConfigurationDto[] allExportedStreamSpecificActiveExecutionPlanConfiguration
+                    = eventProcessorAdminServiceClient
+                    .getAllExportedStreamSpecificActiveExecutionPlanConfiguration("");
+        } catch (RemoteException e) {
+            log.error("Exception thrown: " + e.getMessage(), e);
+            Assert.fail("Exception: " + e.getMessage());
+        }
+    }*/
 
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {

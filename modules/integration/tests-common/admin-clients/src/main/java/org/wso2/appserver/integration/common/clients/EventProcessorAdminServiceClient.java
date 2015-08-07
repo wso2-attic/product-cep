@@ -183,4 +183,14 @@ public class EventProcessorAdminServiceClient {
             throw new RemoteException(e.getMessage(), e);
         }
     }
+
+        public ExecutionPlanConfigurationDto[] getAllExportedStreamSpecificActiveExecutionPlanConfiguration(
+            String streamId) throws RemoteException {
+        try {
+            return eventProcessorAdminServiceStub.getAllExportedStreamSpecificActiveExecutionPlanConfiguration(streamId);
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException(e.getMessage(), e);
+        }
+    }
 }

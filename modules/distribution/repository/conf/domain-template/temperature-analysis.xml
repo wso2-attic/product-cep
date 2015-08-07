@@ -31,13 +31,13 @@
                 /* define streams and write query here ... */
 
                 @Import('inStream:1.0.0')
-                define stream inStream (temperature double, roomNumber int);
+                define stream inStream (meta_temperature double, meta_roomNumber int);
 
                 @Export('outStream:1.0.0')
-                define stream outStream (temperature double, roomNumber int);
+                define stream outStream (meta_temperature double, meta_roomNumber int);
 
-                from inStream[temperature > $maxVal]
-                select temperature,roomNumber 
+                from inStream[meta_temperature > $maxVal]
+                select meta_temperature,meta_roomNumber
                 insert into outStream;
                  ]]>
             </executionPlan>
@@ -63,13 +63,13 @@
                 /* define streams and write query here ... */
 
                 @Import('inStream:1.0.0')
-                define stream inStream (temperature double, roomNumber int);
+                define stream inStream (meta_temperature double, meta_roomNumber int);
 
                 @Export('outStream:1.0.0')
-                define stream outStream (temperature double, roomNumber int);
+                define stream outStream (meta_temperature double, meta_roomNumber int);
 
-                from inStream[temperature > $maxVal and roomNumber > $roomNo]
-                select temperature,roomNumber
+                from inStream[meta_temperature > $maxVal and meta_roomNumber > $roomNo]
+                select meta_temperature,meta_roomNumber
                 insert into outStream;
                  ]]>
             </executionPlan>
@@ -104,15 +104,15 @@
                 /* define streams and write query here ... */
 
                 @Import('inStream:1.0.0')
-                define stream inStream (temperature double, roomNumber int);
+                define stream inStream (meta_temperature double, meta_roomNumber int);
 
                 @Export('outStream:1.0.0')
-                define stream outStream (temperature double, roomNumber int);
+                define stream outStream (meta_temperature double, meta_roomNumber int);
 
                 from inStream#window.time($timeInterval)
-                select avg(temperature) as temperature,roomNumber
-                group by roomNumber
-				having temperature>= $maxVal
+                select avg(meta_temperature) as meta_temperature,meta_roomNumber
+                group by meta_roomNumber
+				having meta_temperature>= $maxVal
 				insert into outStream;
 
                  ]]>

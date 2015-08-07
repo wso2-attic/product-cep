@@ -1,57 +1,99 @@
 keystore "file:${user.dir}/repository/resources/security/wso2carbon.jks", "JKS";
-
-// ========== SYSTEM CODE PERMISSIONS =========================================
-
-// These permissions apply to javac
-grant codeBase "file:${java.home}/lib/-" {
-        permission java.security.AllPermission;
-};
-
-// These permissions apply to all shared system extensions
-grant codeBase "file:${java.home}/jre/lib/ext/-" {
-        permission java.security.AllPermission;
-};
-
-// These permissions apply to javac when ${java.home] points at $JAVA_HOME/jre
-grant codeBase "file:${java.home}/../lib/-" {
-        permission java.security.AllPermission;
-};
-
-// These permissions apply to all shared system extensions when
-// ${java.home} points at $JAVA_HOME/jre
-grant codeBase "file:${java.home}/lib/ext/-" {
-        permission java.security.AllPermission;
-};
-
-// ========= Carbon Cloud Server Permissions ===================================
-
+ 
+// ========= Carbon Server Permissions ===================================
 grant {
-   permission java.net.SocketPermission "*:1-65535", "connect,resolve";
-   permission java.util.PropertyPermission "http.proxyHost", "read";
-   permission java.util.PropertyPermission "http.nonProxyHosts", "read";
-   permission java.util.PropertyPermission "adb.converterutil", "read";
-   permission java.lang.RuntimePermission "accessClassInPackage.org.wso2.carbon.context";
-   permission java.lang.RuntimePermission "accessClassInPackage.org.wso2.carbon.registry.api";
-   permission java.lang.RuntimePermission "accessClassInPackage.org.wso2.carbon.registry.core";
-   permission java.lang.RuntimePermission "accessClassInPackage.org.wso2.carbon.user.api";
-   permission java.lang.RuntimePermission "accessClassInPackage.org.wso2.carbon.user.core";
-   permission java.lang.RuntimePermission "accessClassInPackage.org.wso2.carbon.authenticator.stub";
-   permission java.lang.RuntimePermission "accessClassInPackage.org.wso2.carbon.core.common";
-   permission java.lang.RuntimePermission "setContextClassLoader";
-   permission java.lang.reflect.ReflectPermission "suppressAccessChecks";
-   permission javax.management.MBeanServerPermission "*";
-   permission javax.management.MBeanPermission "*", "*";
-   permission java.lang.RuntimePermission "accessDeclaredMembers";
-   permission java.util.PropertyPermission "*", "read";
+    // Allow socket connections for any host
+    permission java.net.SocketPermission "*:1-65535", "connect,resolve";
+ 
+    // Allow to read all properties. Use -Ddenied.system.properties in wso2server.sh to restrict properties
+    permission java.util.PropertyPermission "*", "read";
+     
+    // CarbonContext APIs require this permission
+    permission java.lang.management.ManagementPermission "control";
+ 
+    // Required by any component reading XMLs. For example: org.wso2.carbon.databridge.agent.thrift:4.2.1.
+    permission java.lang.RuntimePermission "accessClassInPackage.com.sun.xml.internal.bind.v2.runtime.reflect";
+ 
+    // Required by org.wso2.carbon.ndatasource.core:4.2.0. This is only necessary after adding above permission. 
+    permission java.lang.RuntimePermission "accessClassInPackage.com.sun.xml.internal.bind";
 };
-
-grant signedBy "wso2carbon" {
-  // permission java.util.PropertyPermission "*", "read";
-  // permission java.lang.RuntimePermission "*", "*";
-  // permission java.io.FilePermission "*", "*";
+ 
+// ========= Platform signed code permissions ===========================
+grant signedBy "signFiles" {
   permission java.security.AllPermission;
 };
+ 
+// ========= Granting permissions to webapps ============================
+grant codeBase "file:${carbon.home}/repository/deployment/server/webapps/-" {
+ 
+    // Required by webapps. For example JSF apps.
+    permission java.lang.reflect.ReflectPermission "suppressAccessChecks";
+ 
+    // Required by webapps. For example JSF apps require this to initialize com.sun.faces.config.ConfigureListener
+    permission java.lang.RuntimePermission "setContextClassLoader";
+ 
+    // Required by webapps to make HttpsURLConnection etc.
+    permission java.lang.RuntimePermission "modifyThreadGroup";
+ 
+    // Required by webapps. For example JSF apps need to invoke annotated methods like @PreDestroy
+    permission java.lang.RuntimePermission "accessDeclaredMembers";
+ 
+    // Required by webapps. For example JSF EL
+    permission java.lang.RuntimePermission "getClassLoader";
+ 
+    // Required by webapps. For example TenantEventRetrievalEndpoint class
+    permission org.osgi.framework.ServicePermission "*", "get";
 
-grant CodeBase "file:${user.dir}/lib/core/-" {
-  permission java.security.AllPermission;
+    // Required by org.wso2.carbon.servlet.TenantEventRetrievalEndpoint class
+    permission java.io.FilePermission "${carbon.home}/commons-logging.properties", "read";
+};
+
+// ========= Granting permissions to jaggery modules ============================
+grant codeBase "file:${carbon.home}/modules/-" {
+ 
+    // Required by webapps. For example JSF apps.
+    permission java.lang.reflect.ReflectPermission "suppressAccessChecks";
+ 
+    // Required by webapps. For example JSF apps require this to initialize com.sun.faces.config.ConfigureListener
+    permission java.lang.RuntimePermission "setContextClassLoader";
+ 
+    // Required by webapps to make HttpsURLConnection etc.
+    permission java.lang.RuntimePermission "modifyThreadGroup";
+ 
+    // Required by webapps. For example JSF apps need to invoke annotated methods like @PreDestroy
+    permission java.lang.RuntimePermission "accessDeclaredMembers";
+ 
+    // Required by webapps. For example JSF EL
+    permission java.lang.RuntimePermission "getClassLoader";
+ 
+    // Required by jaggery modules. 
+    permission org.osgi.framework.ServicePermission "*", "get";
+
+    // Required by jaggery modules.
+    permission java.io.FilePermission "${carbon.home}/repository/deployment/server/jaggeryapps/-", "read";
+};
+
+// ========= Granting permissions to jaggery apps ============================
+grant codeBase "file:${carbon.home}/repository/deployment/server/jaggeryapps/-" {
+ 
+    // Required by webapps. For example JSF apps.
+    permission java.lang.reflect.ReflectPermission "suppressAccessChecks";
+ 
+    // Required by webapps. For example JSF apps require this to initialize com.sun.faces.config.ConfigureListener
+    permission java.lang.RuntimePermission "setContextClassLoader";
+ 
+    // Required by webapps to make HttpsURLConnection etc.
+    permission java.lang.RuntimePermission "modifyThreadGroup";
+ 
+    // Required by webapps. For example JSF apps need to invoke annotated methods like @PreDestroy
+    permission java.lang.RuntimePermission "accessDeclaredMembers";
+ 
+    // Required by webapps. For example JSF EL
+    permission java.lang.RuntimePermission "getClassLoader";
+ 
+    // Required by jaggery apps
+    permission org.osgi.framework.ServicePermission "*", "get";
+
+    // Required by jaggery apps
+    permission java.io.FilePermission "${carbon.home}/repository/deployment/server/jaggeryapps/-", "read";
 };

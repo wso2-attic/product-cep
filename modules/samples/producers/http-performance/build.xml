@@ -68,7 +68,7 @@
     </target>
 
     <target name="compile" depends="init">
-        <javac srcdir="${src.dir}" destdir="${class.dir}">
+        <javac srcdir="${src.dir}" destdir="${class.dir}" compiler="modern">
             <include name="*/**"/>
             <classpath refid="javac.classpath"/>
         </javac>
@@ -80,7 +80,7 @@
     </target>
 
     <target name="run" depends="compile">
-        <echo> Configure -Durl=xxxx and -DnoOfEvents=xxxx -DnoOfPublishers=xxxx -Doptionally use -Dusername=xxxx
+        <echo> Configure -Durl=xxxx and -DnoOfEvents=xxxx -DelapsedCount=xxxx -DnoOfPublishers=xxxx -Doptionally use -Dusername=xxxx
             -Dpassword=xxxx </echo>
         <java classname="${main-class}"
               classpathref="javac.classpath" fork="true">
