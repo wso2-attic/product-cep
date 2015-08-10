@@ -44,7 +44,7 @@
             </definition>
         </datasource>
 
-	<datasource>
+        <datasource>
             <name>WSO2_GEO_DB</name>
             <description>The datasource used for geo dashboard</description>
             <jndiConfig>
@@ -65,55 +65,6 @@
                 </configuration>
             </definition>
         </datasource>
-
-        <!--datasource>
-            <name>SOCIAL_CACHE</name>
-            <description>The datasource used for storing the cached social objects.</description>
-            <jndiConfig>
-                <name>jdbc/test</name>
-            </jndiConfig>
-            <definition type="RDBMS">
-                <configuration>
-                    <url>jdbc:h2:repository/database/WSO2SOCIAL_CACHE_DB;DB_CLOSE_ON_EXIT=FALSE</url>
-                    <username>wso2carbon</username>
-                    <password>wso2carbon</password>
-                    <driverClassName>org.h2.Driver</driverClassName>
-                    <maxActive>50</maxActive>
-                    <maxWait>60000</maxWait>
-                </configuration>
-            </definition>
-        </datasource>
-
-        <datasource>
-            <name>SOCIAL_CASSANDRA_DB</name>
-            <description>The cassandra  datasource used for storing social activities</description>
-            <definition type="RDBMS">
-                <configuration>
-                    <url>jdbc:cassandra://localhost:9160/EVENT_KS</url>
-                    <username>admin</username>
-                    <password>admin</password>
-                     <driverClassName>org.apache.cassandra.cql.jdbc.CassandraDriver</driverClassName>
-                </configuration>
-            </definition>
-        </datasource>
-
-	<datasource>
-            <name>JAGH2</name>
-            <description>The datasource used for by the Jaggery Storage Manager</description>
-            <jndiConfig>
-                <name>jdbc/test</name>
-            </jndiConfig>
-            <definition type="RDBMS">
-                <configuration>
-                    <url>jdbc:h2:repository/database/ES_STORAGE;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000</url>
-                    <username>sa</username>
-                    <password></password>
-                    <driverClassName>org.h2.Driver</driverClassName>
-                    <maxActive>50</maxActive>
-                    <maxWait>60000</maxWait>
-                </configuration>
-            </definition>
-        </datasource-->
 
         <!-- For an explanation of the properties, see: http://people.apache.org/~fhanik/jdbc-pool/jdbc-pool.html -->
         <!--datasource>
