@@ -270,6 +270,15 @@
             </includes>
         </fileSet>
 
+        <!--Storm Jar-->
+        <fileSet>
+            <directory>repository/conf/cep/storm</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/cep/storm</outputDirectory>
+            <includes>
+                <include>org.wso2.cep.storm.dependencies.jar</include>
+            </includes>
+        </fileSet>
+
         <fileSet>
             <directory>
                 ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/deployment/server/webapps
@@ -280,16 +289,6 @@
                 <include>inputwebsocket.war</include>
                 <include>outputwebsocket.war</include>
                 <include>outputui.war</include>
-            </includes>
-        </fileSet>
-
-        <!--Storm Jar-->
-        <fileSet>
-            <directory>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/cep/storm
-            </directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/cep/storm</outputDirectory>
-            <includes>
-                <include>org.wso2.carbon.event.processor.storm.jar</include>
             </includes>
         </fileSet>
 

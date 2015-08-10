@@ -21,7 +21,7 @@
     <groupId>org.wso2.cep</groupId>
     <version>1.0.0-SNAPSHOT</version>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>org.wso2.cep.storm.jar</artifactId>
+    <artifactId>org.wso2.cep.storm.dependencies</artifactId>
     <name>WSO2 Carbon - Storm Jar</name>
     <packaging>jar</packaging>
 
@@ -62,7 +62,7 @@
             <version>${libthrift.wso2.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.wso2.lmax</groupId>
+            <groupId>org.wso2.orbit.com.lmax</groupId>
             <artifactId>disruptor</artifactId>
             <version>${disruptor.orbit.version}</version>
         </dependency>
@@ -120,13 +120,6 @@
             <groupId>org.apache.tomcat.wso2</groupId>
             <artifactId>jdbc-pool</artifactId>
             <version>${jdbc-pool.version}</version>
-        </dependency>
-
-        <!-- Need to remove this -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql.connector.version}</version>
         </dependency>
 
         <!-- Siddhi Time extension -->
@@ -188,11 +181,11 @@
         </dependency>
 
         <!-- Siddhi ML extension -->
-        <dependency>
-            <groupId>org.wso2.carbon.ml</groupId>
-            <artifactId>org.wso2.carbon.ml.siddhi.extension</artifactId>
-            <version>${carbon.ml.version}</version>
-        </dependency>
+        <!--<dependency>-->
+        <!--<groupId>org.wso2.carbon.ml</groupId>-->
+        <!--<artifactId>org.wso2.carbon.ml.siddhi.extension</artifactId>-->
+        <!--<version>${carbon.ml.version}</version>-->
+        <!--</dependency>-->
 
     </dependencies>
 
@@ -209,7 +202,8 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <!--<outputFile>../distribution/repository/conf/cep/org.wso2.cep.storm.jar</outputFile>-->
+                            <outputFile>../distribution/repository/conf/cep/org.wso2.cep.storm.dependencies.jar
+                            </outputFile>
                             <artifactSet>
                                 <includes>
                                     <include>org.wso2.siddhi:siddhi-core</include>
@@ -228,7 +222,7 @@
                                     <include>org.wso2.carbon.event-processing:org.wso2.carbon.event.processor.common
                                     </include>
                                     <include>libthrift.wso2:libthrift</include>
-                                    <include>org.wso2.lmax:disruptor</include>
+                                    <include>org.wso2.orbit.com.lmax:disruptor</include>
 
                                     <include>org.wso2.siddhi:siddhi-extension-math</include>
                                     <include>org.wso2.siddhi:siddhi-extension-regex</include>
@@ -242,9 +236,8 @@
                                     <include>org.wso2.siddhi:siddhi-extension-timeseries</include>
                                     <include>org.apache.commons:commons-math3</include>
 
-                                    <!-- Siddhi Geo extension is in GPL repo. Can we pack this and geocoder?? -->
                                     <include>org.wso2.siddhi:siddhi-extension-geo</include>
-                                    <include>org.apache.servicemix.bundes:org.apache.servicemix.bundles.geocoder-java
+                                    <include>org.apache.servicemix.bundles:org.apache.servicemix.bundles.geocoder-java
                                     </include>
                                     <include>com.googlecode.scalascriptengine:scalascriptengine_2.11</include>
                                     <include>org.scala-lang:scala-compiler</include>
@@ -317,8 +310,8 @@
 
         <libthrift.wso2.version>0.8.0.wso2v1</libthrift.wso2.version>
         <orbit.version.commons.lang>2.6.0.wso2v1</orbit.version.commons.lang>
-        <disruptor.version>3.3.0</disruptor.version>
-        <disruptor.orbit.version>${disruptor.version}.wso2v1</disruptor.orbit.version>
+        <disruptor.version.range>[2.10.0,3.4)</disruptor.version.range>
+        <disruptor.orbit.version>3.3.2.wso2v2</disruptor.orbit.version>
         <antlr.version>4.5</antlr.version>
         <guava.version>14.0.1</guava.version>
         <quartz.version>2.1.1.wso2v1</quartz.version>
