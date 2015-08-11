@@ -103,7 +103,7 @@
             </includes>
             <excludes>
                 <exclude>**/*.iml</exclude>
-                <exclude>**/pom.xml</exclude>
+                <exclude>%regex[(?!.*utils/).*pom.xml]</exclude>
                 <exclude>**/target/**</exclude>
             </excludes>
         </fileSet>

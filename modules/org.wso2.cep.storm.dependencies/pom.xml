@@ -25,6 +25,13 @@
     <name>WSO2 Carbon - Storm Jar</name>
     <packaging>jar</packaging>
 
+    <!--
+        To add additional dependencies to the storm jar and deploy within the Storm cluster, follow the steps mentioned
+        below.
+
+        1. Add the dependency maven artifact information to the dependencies section of the pom.
+
+    -->
     <dependencies>
         <dependency>
             <groupId>org.wso2.siddhi</groupId>
@@ -180,7 +187,8 @@
             <version>${scala.version}</version>
         </dependency>
 
-        <!-- Siddhi ML extension -->
+        <!-- Uncomment the following depedency section if you want to include Siddhi ML extension as part of
+            Storm dependencies -->
         <!--<dependency>-->
         <!--<groupId>org.wso2.carbon.ml</groupId>-->
         <!--<artifactId>org.wso2.carbon.ml.siddhi.extension</artifactId>-->
@@ -202,7 +210,7 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <outputFile>../distribution/repository/conf/cep/org.wso2.cep.storm.dependencies.jar
+                            <outputFile>../distribution/repository/conf/cep/storm/org.wso2.cep.storm.dependencies.jar
                             </outputFile>
                             <artifactSet>
                                 <includes>
@@ -221,6 +229,8 @@
                                     </include>
                                     <include>org.wso2.carbon.event-processing:org.wso2.carbon.event.processor.common
                                     </include>
+                                    <!--<include>org.wso2.carbon.ml:org.wso2.carbon.ml.siddhi.extension</include>-->
+
                                     <include>libthrift.wso2:libthrift</include>
                                     <include>org.wso2.orbit.com.lmax:disruptor</include>
 
@@ -235,14 +245,12 @@
                                     <include>org.apache.tomcat.wso2:jdbc-pool</include>
                                     <include>org.wso2.siddhi:siddhi-extension-timeseries</include>
                                     <include>org.apache.commons:commons-math3</include>
-
                                     <include>org.wso2.siddhi:siddhi-extension-geo</include>
                                     <include>org.apache.servicemix.bundles:org.apache.servicemix.bundles.geocoder-java
                                     </include>
                                     <include>com.googlecode.scalascriptengine:scalascriptengine_2.11</include>
                                     <include>org.scala-lang:scala-compiler</include>
                                     <include>org.scala-lang:scala-reflect</include>
-
                                 </includes>
                             </artifactSet>
                         </configuration>
@@ -298,16 +306,16 @@
     <properties>
         <!-- Carbon kernel version -->
         <carbon.kernel.version>4.4.1</carbon.kernel.version>
-        <!--<carbon.kernel.imp.pkg.version>[4.3.0, 4.4.0)</carbon.kernel.imp.pkg.version>-->
 
-
-        <carbon.commons.version>4.4.4</carbon.commons.version>
+        <!-- Carbon component dependency versions -->
         <carbon.analytics.common.version>2.0.0-SNAPSHOT</carbon.analytics.common.version>
+        <!--<carbon.ml.version>1.0.1-SNAPSHOT</carbon.ml.version>-->
 
         <!--CEP versions-->
         <siddhi.version>3.0.0-SNAPSHOT</siddhi.version>
         <carbon.event.processing.version>2.0.4-SNAPSHOT</carbon.event.processing.version>
 
+        <!-- Third party dependencies -->
         <libthrift.wso2.version>0.8.0.wso2v1</libthrift.wso2.version>
         <orbit.version.commons.lang>2.6.0.wso2v1</orbit.version.commons.lang>
         <disruptor.version.range>[2.10.0,3.4)</disruptor.version.range>
@@ -315,17 +323,12 @@
         <antlr.version>4.5</antlr.version>
         <guava.version>14.0.1</guava.version>
         <quartz.version>2.1.1.wso2v1</quartz.version>
-        <ml.version>1.0.0</ml.version>
         <commons-math3.version>3.2</commons-math3.version>
         <scala.version>2.11.0</scala.version>
         <scalascriptengine.version>1.3.10</scalascriptengine.version>
         <commons-lang3.version>3.3.2</commons-lang3.version>
-
         <hadoop.common.version>2.6.0</hadoop.common.version>
         <jdbc-pool.version>7.0.34.wso2v2</jdbc-pool.version>
-        <mysql.connector.version>5.1.6</mysql.connector.version>
-
-        <carbon.ml.version>1.0.1-SNAPSHOT</carbon.ml.version>
         <geocoder.version>0.16_1</geocoder.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
