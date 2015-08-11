@@ -27,11 +27,15 @@ public class JmsMain {
 
         int consumers = 50;
         int warmUpCount = 50000;
-        if (args.length > 0) {
-            consumers = Integer.parseInt(args[0].trim());
+        String queueName = "myQueue";
+        if (args.length> 0) {
+            queueName = args[0].trim();
         }
         if (args.length > 1) {
-            warmUpCount = Integer.parseInt(args[1].trim());
+            consumers = Integer.parseInt(args[1].trim());
+        }
+        if (args.length > 2) {
+            warmUpCount = Integer.parseInt(args[2].trim());
         }
 
         for (int i = 0;i < consumers; i++) {

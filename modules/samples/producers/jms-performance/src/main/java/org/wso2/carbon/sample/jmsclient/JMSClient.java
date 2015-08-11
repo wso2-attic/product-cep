@@ -40,23 +40,18 @@ public class JMSClient {
     public static void main(String[] args) {
 
         final String topicName = args[0];
-        String format0 = args[1];
-        String broker0 = args[2];
+        String broker0 = args[1];
 
-        if (format0 == null || "map".equals(format0)) {
-            format0 = "csv";
-        }
         if (broker0 == null || broker0.equalsIgnoreCase("")) {
             broker0 = "activemq";
         }
 
-        final String format = format0;
         final String broker = broker0;
 
         for (int i = 0; i < threads; i++) {
             new Thread() {
                 public void run() {
-                    publishMessages(topicName, format, broker);
+                    publishMessages(topicName,  broker);
 
                 }
             }.start();
@@ -65,7 +60,7 @@ public class JMSClient {
         log.info("All Messages sent");
     }
 
-    public static void publishMessages(String topicName, String format, String broker) {
+    public static void publishMessages(String topicName, String broker) {
         try {
 
 //            filePath = JMSClientUtil.getEventFilePath(sampleNumber, format, topicName, filePath);
@@ -104,7 +99,6 @@ public class JMSClient {
                 MessageProducer producer = session.createProducer(topic);
 
                 try {
-                    if (format.equalsIgnoreCase("csv")) {
 
                         List<Map<String, Object>> messageList = new ArrayList<Map<String, Object>>();
 
@@ -124,7 +118,6 @@ public class JMSClient {
                             publishMapMessage(producer, session, messageList);
 
                         }
-                    }
                 } catch (JMSException e) {
                     log.error("Can not subscribe." + e.getMessage(), e);
                 } catch (IOException e) {
