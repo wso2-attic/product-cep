@@ -43,6 +43,7 @@
         <module>wso2-event-performance</module>
         <module>http-performance</module>
         <module>kafka-performance</module>
+        <module>jms-performance</module>
     </modules>
 
 

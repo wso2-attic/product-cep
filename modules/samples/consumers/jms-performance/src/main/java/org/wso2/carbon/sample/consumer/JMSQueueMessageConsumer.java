@@ -18,26 +18,16 @@
 
 package org.wso2.carbon.sample.consumer;
 
-import javax.jms.Destination;
-import javax.jms.JMSException;
-import javax.jms.MapMessage;
-import javax.jms.Message;
-import javax.jms.MessageConsumer;
-import javax.jms.QueueConnection;
-import javax.jms.QueueConnectionFactory;
-import javax.jms.Session;
-import javax.jms.TextMessage;
-import javax.naming.NamingException;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
 import org.apache.log4j.Logger;
+
+import javax.jms.*;
+import javax.naming.NamingException;
 
 
 public class JMSQueueMessageConsumer implements Runnable {
     private static Logger log = Logger.getLogger(JMSQueueMessageConsumer.class);
 
-    private  QueueConnectionFactory queueConnectionFactory = null;
+    private QueueConnectionFactory queueConnectionFactory = null;
     private String queueName = "";
     private boolean active = true;
     private String consumerId;
@@ -50,7 +40,7 @@ public class JMSQueueMessageConsumer implements Runnable {
         this.warmUpCount = warmUpCount;
     }
 
-    public  void listen(String consumerId)
+    public void listen(String consumerId)
             throws InterruptedException, NamingException {
 
         this.consumerId = consumerId;
@@ -66,9 +56,6 @@ public class JMSQueueMessageConsumer implements Runnable {
     public void shutdown() {
         active = false;
     }
-
-
-
 
     public void run() {
         // create queue connection
@@ -96,33 +83,45 @@ public class JMSQueueMessageConsumer implements Runnable {
                 Message message = consumer.receive(1000);
                 if (message != null) {
 //                    if (message instanceof MapMessage) {
-                        MapMessage mapMessage = (MapMessage) message;
-                        long currentTime = System.currentTimeMillis();
-                        long sentTimestamp = (Long) mapMessage.getObject("time");
+                    MapMessage mapMessage = (MapMessage) message;
+                    long currentTime = System.currentTimeMillis();
+                    long sentTimestamp = (Long) mapMessage.getObject("time");
 
-                        totalLatency = totalLatency + (currentTime - sentTimestamp);
+                    totalLatency = totalLatency + (currentTime - sentTimestamp);
 
-                        int logCount = 1000;
+                    int logCount = 1000;
 
-                        if ( (count % logCount == 0) && (count > warmUpCount)) {
-                            double rate = (logCount*1000.0d/(System.currentTimeMillis() - lastTimestamp));
-                            log.info("Consumer: " + consumerId + " ("+
-                                    logCount+" received) rate: " + rate
-                                    + " Latency:" + (totalLatency / (logCount * 1.0d)));
+                    if ((count % logCount == 0) && (count > warmUpCount)) {
+                        double rate = (logCount * 1000.0d / (System.currentTimeMillis() - lastTimestamp));
+                        log.info("Consumer: " + consumerId + " (" +
+                                logCount + " received) rate: " + rate
+                                + " Latency:" + (totalLatency / (logCount * 1.0d)));
 //                            log.info("total latency:" + totalLatency);
-                            log.info("Total rate: " + (int) (consumers * rate));
-                            totalLatency = 0;
-                            lastTimestamp = System.currentTimeMillis();
-                        }
-                        count++;
+                        log.info("Total rate: " + (int) (consumers * rate));
+                        totalLatency = 0;
+                        lastTimestamp = System.currentTimeMillis();
+                    }
+                    count++;
                 }
             }
             log.info("Finished listening for messages.");
-            session.close();
-            queueConnection.stop();
-            queueConnection.close();
+
         } catch (JMSException e) {
             log.info("Can not subscribe." + e);
+        } finally {
+            if (session != null) {
+                try {
+                    session.close();
+                } catch (JMSException e) {
+                    log.error(e);
+                }
+            }
+            try {
+                queueConnection.stop();
+                queueConnection.close();
+            } catch (JMSException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

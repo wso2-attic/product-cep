@@ -58,13 +58,10 @@ public class JNDIContext {
         return instance;
     }
 
-
-
     /**
      * Create Connection factory with initial context
      */
     private void createTopicConnectionFactory() {
-
 //        create topic connection factory
         try {
             topicConnectionFactory = (TopicConnectionFactory) initContext.lookup("ConnectionFactory");
@@ -74,7 +71,6 @@ public class JNDIContext {
     }
 
     private void createQueueConnectionFactory() {
-
         // create queue connection factory
         try {
             queueConnectionFactory = (QueueConnectionFactory) initContext.lookup("ConnectionFactory");
@@ -82,8 +78,6 @@ public class JNDIContext {
             log.info("Can not create queue connection factory." + e);
         }
     }
-
-
 
     /**
      * Create Initial Context with given configuration
