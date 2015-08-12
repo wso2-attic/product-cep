@@ -1,0 +1,60 @@
+{
+  "name": "IntruderInputStream",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "payloadData": [
+    {
+      "name": "root_shell",
+      "type": "DOUBLE"
+    },
+    {
+      "name": "su_attempted",
+      "type": "DOUBLE"
+    },
+    {
+      "name": "num_root",
+      "type": "DOUBLE"
+    },
+    {
+      "name": "num_file_creations",
+      "type": "DOUBLE"
+    },
+    {
+      "name": "num_shells",
+      "type": "DOUBLE"
+    },
+    {
+      "name": "num_access_files",
+      "type": "DOUBLE"
+    },
+    {
+      "name": "num_outbound_cmds",
+      "type": "DOUBLE"
+    },
+    {
+      "name": "is_host_login",
+      "type": "DOUBLE"
+    },
+    {
+      "name": "is_guest_login",
+      "type": "DOUBLE"
+    },
+    {
+      "name": "count",
+      "type": "DOUBLE"
+    },
+    {
+      "name": "srv_count",
+      "type": "DOUBLE"
+    },
+    {
+      "name": "serror_rate",
+      "type": "DOUBLE"
+    },
+    {
+      "name": "srv_serror_rate",
+      "type": "DOUBLE"
+    }
+  ]
+}

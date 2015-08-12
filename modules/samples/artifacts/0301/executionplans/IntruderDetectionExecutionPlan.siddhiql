@@ -1,0 +1,16 @@
+/* Enter a unique ExecutionPlan */
+@Plan:name('IntruderDetectionExecutionPlan')
+
+/* Enter a unique description for ExecutionPlan */
+-- @Plan:description('ExecutionPlan')
+
+/* define streams/tables and write queries here ... */
+@Import('IntruderInputStream:1.0.0')
+define stream IntruderInputStream (root_shell double, su_attempted double, num_root double, num_file_creations double, num_shells double, num_access_files double, num_outbound_cmds double, is_host_login double, is_guest_login double, count double, srv_count double, serror_rate double, srv_serror_rate double);
+
+@Export('IntruderOutputStream:1.0.0')
+define stream IntruderOutputStream (root_shell double, su_attempted double, num_root double, num_file_creations double, num_shells double, num_access_files double, num_outbound_cmds double, is_host_login double, is_guest_login double, count double, srv_count double, serror_rate double, srv_serror_rate double, Predicted_response string, Probability_0 double, Probability_1 double);
+
+from IntruderInputStream#pmml:predict('samples/artifacts/0301/decision-tree.pmml')
+select *
+insert into IntruderOutputStream;
