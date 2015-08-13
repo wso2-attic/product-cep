@@ -684,6 +684,7 @@
         <log4j.wso2.version>1.2.17.wso2v1</log4j.wso2.version>
         <httpclient.wso2.version>4.2.5.wso2v1</httpclient.wso2.version>
         <httpcore.wso2.version>4.3.3.wso2v1</httpcore.wso2.version>
+        <cipher.tool.version>1.0.0-wso2v3</cipher.tool.version>
 
         <javax.servlet.version>3.0.0.v201112011016</javax.servlet.version>
         <jacoco.agent.version>0.7.4.201502262128</jacoco.agent.version>
