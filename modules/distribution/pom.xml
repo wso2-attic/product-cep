@@ -140,7 +140,7 @@
                             <goal>run</goal>
                         </goals>
                         <configuration>
-                            <tasks>
+                            <target>
                                 <!-- commenting "GetAllRolesOfUserEnabled" property to fix
                                 https://wso2.org/jira/browse/IDENTITY-3489 -->
                                 <echo
@@ -149,7 +149,7 @@
                                         file="target/wso2carbon-core-${carbon.kernel.version}/repository/conf/user-mgt.xml"
                                         token="&lt;Property name=&quot;GetAllRolesOfUserEnabled&quot;&gt;true&lt;/Property&gt;"
                                         value="&lt;!--Property name=&quot;GetAllRolesOfUserEnabled&quot;&gt;true&lt;/Property--&gt;"/>
-                            </tasks>
+                            </target>
                         </configuration>
                     </execution>
                     <execution>

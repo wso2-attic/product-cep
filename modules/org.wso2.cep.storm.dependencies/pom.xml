@@ -22,7 +22,7 @@
     <version>1.0.0-SNAPSHOT</version>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>org.wso2.cep.storm.dependencies</artifactId>
-    <name>WSO2 Carbon - Storm Jar</name>
+    <name>WSO2 CEP - Storm Dependencies Jar</name>
     <packaging>jar</packaging>
 
     <!--
