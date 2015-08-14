@@ -1,0 +1,20 @@
+{
+  "name": "geocodeOutputStream",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "payloadData": [
+    {
+      "name": "latitude",
+      "type": "DOUBLE"
+    },
+    {
+      "name": "longitude",
+      "type": "DOUBLE"
+    },
+    {
+      "name": "formattedAddress",
+      "type": "STRING"
+    }
+  ]
+}

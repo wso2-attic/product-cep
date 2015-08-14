@@ -62,6 +62,7 @@
             <class name="org.wso2.carbon.integration.test.extensionflow.StringExtensionTestCase"/>
             <class name="org.wso2.carbon.integration.test.extensionflow.MathExtensionTestCase"/>
             <class name="org.wso2.carbon.integration.test.extensionflow.TimeSeriesExtensionTestCase"/>
+            <class name="org.wso2.carbon.integration.test.extensionflow.GeoExtensionTestCase"/>
 
             <!--added jms together to reduce server restart-->
             <class name="org.wso2.carbon.integration.test.inputflow.JMSTestCase"/>
