@@ -1,0 +1,17 @@
+/* Enter a unique ExecutionPlan */
+@Plan:name('geoCodeStreamExecutionPlan')
+
+/* Enter a unique description for ExecutionPlan */
+-- @Plan:description('ExecutionPlan')
+
+/* define streams/tables and write queries here ... */
+
+@Import('geocodeInputStream:1.0.0')
+define stream geocodeInputStream (location string, level string, time string);
+
+@Export('geocodeOutputStream:1.0.0')
+define stream geocodeOutputStream (latitude double, longitude double, formattedAddress string);
+
+from geocodeInputStream#geo:geocode(location) 
+select latitude, longitude, formattedAddress
+insert into geocodeOutputStream;
