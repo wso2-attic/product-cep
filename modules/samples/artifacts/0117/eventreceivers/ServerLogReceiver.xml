@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventReceiver name="ServerLogReceiver" statistics="disable"
+               trace="disable" xmlns="http://wso2.org/carbon/eventreceiver">
+    <from eventAdapterType="file-tail">
+        <property name="startFromEnd">true</property>
+        <property name="delayInMillis">1000</property>
+        <property name="filepath">repository/logs/wso2carbon.log</property>
+    </from>
+    <mapping customMapping="enable" type="text">
+        <property>
+            <from regex="TID:.*\[(\d+\-\d+\-\d+\s.*)\]"/>
+            <to name="meta_timestamp" type="string"/>
+        </property>
+        <property>
+            <from regex="TID:\s+\[(.*?)\]"/>
+            <to name="meta_tenantId" type="int"/>
+        </property>
+        <property>
+            <from regex="\{(\S+)\}"/>
+            <to name="className" type="string"/>
+        </property>
+        <property>
+            <from regex="\s+(\S+)\s+\{"/>
+            <to name="logType" type="string"/>
+        </property>
+        <property>
+            <from regex="\{\S+\}\s+\-\s+(.*)"/>
+            <to name="msg" type="string"/>
+        </property>
+    </mapping>
+    <to streamName="ServerLogEvents" version="1.0.0"/>
+</eventReceiver>
