@@ -1,0 +1,12 @@
+{
+  "name": "org.wso2.event.sensorClassifyLength.stream",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "payloadData": [
+    {
+      "name": "sensorNameLength",
+      "type": "INT"
+    }
+  ]
+}
