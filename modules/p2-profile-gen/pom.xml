@@ -233,6 +233,15 @@
                                     org.wso2.carbon.analytics-common:org.wso2.carbon.analytics.dashboard.feature:${carbon.analytics-common.version}
                                 </featureArtifactDef>
 
+                                <!-- START - JMX agent -->
+                                <featureArtifactDef>
+                                    org.wso2.carbon.analytics-common:org.wso2.carbon.analytics.common.jmx.agent.feature:${carbon.analytics-common.version}
+                                </featureArtifactDef>
+                                <featureArtifactDef>
+                                    org.wso2.carbon.commons:org.wso2.carbon.ntask.core.feature:${carbon.commons.version}
+                                </featureArtifactDef>
+                                <!-- END - JMX agent -->
+
                                 <!--dashboard-->
                                 <featureArtifactDef>
                                     org.wso2.carbon.dashboards:org.wso2.carbon.dashboards.shindig.feature:${carbon.dashboards.version}
@@ -464,6 +473,17 @@
                                     <id>org.wso2.carbon.analytics.dashboard.feature.group</id>
                                     <version>${carbon.analytics-common.version}</version>
                                 </feature>
+
+                                <!-- START - JMX agent -->
+                                <feature>
+                                    <id>org.wso2.carbon.analytics.common.jmx.agent.feature.group</id>
+                                    <version>${carbon.analytics-common.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.ntask.core.feature.group</id>
+                                    <version>${carbon.commons.version}</version>
+                                </feature>
+                                <!-- END - JMX agent -->
 
                                 <!--dashboard-->
                                 <feature>
