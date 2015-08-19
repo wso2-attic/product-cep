@@ -1,0 +1,12 @@
+{
+  "name": "org.wso2.sample.stock.quote.stream.results",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "payloadData": [
+    {
+      "name": "concatResult",
+      "type": "STRING"
+    }
+  ]
+}

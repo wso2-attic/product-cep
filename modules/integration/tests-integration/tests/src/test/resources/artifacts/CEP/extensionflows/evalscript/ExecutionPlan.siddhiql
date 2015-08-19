@@ -1,0 +1,25 @@
+/* Enter a unique ExecutionPlan */
+@Plan:name('ExecutionPlan')
+
+/* Enter a unique description for ExecutionPlan */
+-- @Plan:description('ExecutionPlan')
+
+/* define streams/tables and write queries here ... */
+define function concatJ[JavaScript] return string {
+var str1 = data[0];
+var str2 = data[1];
+var str3 = data[2];
+var res = str1.concat(str2,str3);
+return res;
+};
+
+@Import('org.wso2.sample.stock.quote.stream:1.0.0')
+define stream stockQuoteStream (symbol string, price long, volume long);
+
+@Export('org.wso2.sample.stock.quote.stream.results:1.0.0')
+define stream stockQuoteStreamResults (concatResult string);
+
+@info(name = 'query1')
+from stockQuoteStream
+select concatJ(symbol,' ',price) as concatResult
+insert into stockQuoteStreamResults;
