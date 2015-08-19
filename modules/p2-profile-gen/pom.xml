@@ -125,7 +125,7 @@
                                     org.wso2.carbon.deployment:org.wso2.carbon.module.mgt.server.feature:${carbon.deployment.version}
                                 </featureArtifactDef>
                                 <!--<featureArtifactDef>-->
-                                    <!--org.wso2.carbon.deployment:org.wso2.carbon.as.runtimes.cxf.feature:${carbon.deployment.version}-->
+                                <!--org.wso2.carbon.deployment:org.wso2.carbon.as.runtimes.cxf.feature:${carbon.deployment.version}-->
                                 <!--</featureArtifactDef>-->
 
                                 <featureArtifactDef>
@@ -148,7 +148,7 @@
                                     org.wso2.carbon.commons:org.wso2.carbon.tryit.feature:${carbon.commons.version}
                                 </featureArtifactDef>
                                 <!--<featureArtifactDef>-->
-                                    <!--org.wso2.carbon.commons:org.wso2.carbon.logging.mgt.feature:4.4.1-SNAPSHOT-->
+                                <!--org.wso2.carbon.commons:org.wso2.carbon.logging.mgt.feature:4.4.1-SNAPSHOT-->
                                 <!--</featureArtifactDef>-->
                                 <featureArtifactDef>
                                     org.wso2.carbon.commons:org.wso2.carbon.ndatasource.feature:${carbon.commons.version}
@@ -253,6 +253,11 @@
                                 <featureArtifactDef>
                                     org.wso2.ciphertool:org.wso2.ciphertool.feature:${cipher.tool.version}
                                 </featureArtifactDef>
+
+                                <!-- depsync related features -->
+                                <featureArtifactDef>
+                                    org.wso2.carbon.commons:org.wso2.carbon.deployment.synchronizer.feature:${carbon.commons.version}
+                                </featureArtifactDef>
                             </featureArtifacts>
                         </configuration>
                     </execution>
@@ -323,8 +328,8 @@
                                     <version>${carbon.deployment.version}</version>
                                 </feature>
                                 <!--<feature>-->
-                                    <!--<id>org.wso2.carbon.as.runtimes.cxf.feature.group</id>-->
-                                    <!--<version>${carbon.deployment.version}</version>-->
+                                <!--<id>org.wso2.carbon.as.runtimes.cxf.feature.group</id>-->
+                                <!--<version>${carbon.deployment.version}</version>-->
                                 <!--</feature>-->
 
                                 <feature>
@@ -353,8 +358,8 @@
                                     <version>${carbon.commons.version}</version>
                                 </feature>
                                 <!--<feature>-->
-                                    <!--<id>org.wso2.carbon.logging.mgt.feature.group</id>-->
-                                    <!--<version>4.4.1-SNAPSHOT</version>-->
+                                <!--<id>org.wso2.carbon.logging.mgt.feature.group</id>-->
+                                <!--<version>4.4.1-SNAPSHOT</version>-->
                                 <!--</feature>-->
                                 <feature>
                                     <id>org.wso2.carbon.ndatasource.feature.group</id>
@@ -489,6 +494,12 @@
                                 <feature>
                                     <id>org.wso2.ciphertool.feature.group</id>
                                     <version>${cipher.tool.version}</version>
+                                </feature>
+
+                                <!-- depsync related features -->
+                                <feature>
+                                    <id>org.wso2.carbon.deployment.synchronizer.feature.group</id>
+                                    <version>${carbon.commons.version}</version>
                                 </feature>
                             </features>
                         </configuration>
