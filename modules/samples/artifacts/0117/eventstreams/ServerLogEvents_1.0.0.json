@@ -1,0 +1,30 @@
+{
+  "name": "ServerLogEvents",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "Server log entries as events",
+  "metaData": [
+    {
+      "name": "timestamp",
+      "type": "STRING"
+    },
+    {
+      "name": "tenantId",
+      "type": "INT"
+    }
+  ],
+  "payloadData": [
+    {
+      "name": "className",
+      "type": "STRING"
+    },
+    {
+      "name": "logType",
+      "type": "STRING"
+    },
+    {
+      "name": "msg",
+      "type": "STRING"
+    }
+  ]
+}

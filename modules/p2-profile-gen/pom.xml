@@ -15,7 +15,8 @@
   ~ limitations under the License.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <parent>
         <groupId>org.wso2.cep</groupId>
@@ -130,6 +131,9 @@
                                 <featureArtifactDef>
                                     org.wso2.carbon.multitenancy:org.wso2.carbon.tenant.common.feature:${carbon.multitenancy.version}
                                 </featureArtifactDef>
+                                <featureArtifactDef>
+                                    org.wso2.carbon.commons:org.wso2.carbon.tenant.mgt.common.feature:${carbon.commons.version}
+                                </featureArtifactDef>
 
                                 <featureArtifactDef>
                                     org.wso2.carbon.commons:org.wso2.carbon.system.statistics.feature:${carbon.commons.version}
@@ -150,14 +154,8 @@
                                     org.wso2.carbon.commons:org.wso2.carbon.ndatasource.feature:${carbon.commons.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
-                                    org.wso2.carbon.commons:org.wso2.carbon.user.mgt.feature:${carbon.commons.version}
-                                </featureArtifactDef>
-                                <featureArtifactDef>
                                     org.wso2.carbon.commons:org.wso2.carbon.application.mgt.feature:${carbon.commons.version}
                                 </featureArtifactDef>
-                                <!--<featureArtifactDef>-->
-                                    <!--org.wso2.carbon.commons:org.wso2.carbon.databridge.agent.thrift.server.feature:${carbon.commons.version}-->
-                                <!--</featureArtifactDef>-->
 
                                 <featureArtifactDef>
                                     org.wso2.carbon.analytics-common:org.wso2.carbon.databridge.datapublisher.feature:${carbon.analytics-common.version}
@@ -170,17 +168,17 @@
                                 </featureArtifactDef>
 
                                 <featureArtifactDef>
+                                    org.wso2.carbon.identity:org.wso2.carbon.identity.core.ui.feature:${carbon.identity.version}
+                                </featureArtifactDef>
+                                <featureArtifactDef>
                                     org.wso2.carbon.identity:org.wso2.carbon.security.mgt.feature:${carbon.identity.version}
                                 </featureArtifactDef>
-                                <!--<featureArtifactDef>-->
-                                <!--org.wso2.carbon.identity:org.wso2.carbon.um.ws.service.server.feature:${carbon.identity.version}-->
-                                <!--</featureArtifactDef>-->
+                                <featureArtifactDef>
+                                    org.wso2.carbon.identity:org.wso2.carbon.user.mgt.feature:${carbon.identity.version}
+                                </featureArtifactDef>
                                 <featureArtifactDef>
                                     org.wso2.carbon.identity:org.wso2.carbon.identity.authenticator.saml2.sso.feature:${carbon.identity.version}
                                 </featureArtifactDef>
-                                <!--<feaureArtifactDef>-->
-                                <!--org.wso2.carbon.identity:org.wso2.carbon.identity.core.feature:${carbon.identity.version}-->
-                                <!--</feaureArtifactDef>-->
 
                                 <featureArtifactDef>
                                     org.wso2.carbon.registry:org.wso2.carbon.registry.core.feature:${carbon.registry.version}
@@ -197,33 +195,7 @@
                                 <featureArtifactDef>
                                     org.wso2.carbon.analytics-common:org.wso2.carbon.event.processor.manager.commons.feature:${carbon.analytics-common.version}
                                 </featureArtifactDef>
-                                <!--<featureArtifactDef>-->
-                                    <!--org.wso2.carbon.storagemgt:org.wso2.carbon.cassandra.server.feature:${carbon.storagemgt.version}-->
-                                <!--</featureArtifactDef>-->
-                                <!--<featureArtifactDef>-->
-                                    <!--org.wso2.carbon.storagemgt:org.wso2.carbon.cassandra.mgt.feature:${carbon.storagemgt.version}-->
-                                <!--</featureArtifactDef>-->
-                                <!--<featureArtifactDef>-->
-                                    <!--org.wso2.carbon.storagemgt:org.wso2.carbon.cassandra.dataaccess.feature:${carbon.storagemgt.version}-->
-                                <!--</featureArtifactDef>-->
-                                <!--<featureArtifactDef>-->
-                                    <!--org.wso2.carbon.storagemgt:org.wso2.carbon.cassandra.common.feature:${carbon.storagemgt.version}-->
-                                <!--</featureArtifactDef>-->
 
-                                <!--<featureArtifactDef>-->
-                                    <!--org.wso2.carbon.governance:org.wso2.carbon.registry.extensions.server.feature:${carbon.governance.version}-->
-                                <!--</featureArtifactDef>-->
-                                <!--<featureArtifactDef>-->
-                                    <!--org.wso2.carbon.governance:org.wso2.carbon.governance.metadata.server.feature:${carbon.governance.version}-->
-                                <!--</featureArtifactDef>-->
-
-                                <!--cep-->
-                                <!--<featureArtifactDef>-->
-                                    <!--org.wso2.carbon.event-processing:org.wso2.carbon.event.input.adapter.feature:${carbon.event-processing.version}-->
-                                <!--</featureArtifactDef>-->
-                                <!--<featureArtifactDef>-->
-                                    <!--org.wso2.carbon.event-processing:org.wso2.carbon.event.output.adapter.feature:${carbon.event-processing.version}-->
-                                <!--</featureArtifactDef>-->
                                 <featureArtifactDef>
                                     org.wso2.carbon.analytics-common:org.wso2.carbon.event.receiver.feature:${carbon.analytics-common.version}
                                 </featureArtifactDef>
@@ -277,9 +249,9 @@
                                     org.wso2.cep:org.wso2.stratos.cep.dashboard.ui.feature:${cep.version}
                                 </featureArtifactDef>
 
-                                <!-- ML feature -->
+                                <!-- Cipher tool feature -->
                                 <featureArtifactDef>
-                                    org.wso2.carbon.ml:org.wso2.carbon.ml.siddhi.extension.feature:${carbon.ml.version}
+                                    org.wso2.ciphertool:org.wso2.ciphertool.feature:${cipher.tool.version}
                                 </featureArtifactDef>
                             </featureArtifacts>
                         </configuration>
@@ -359,6 +331,10 @@
                                     <id>org.wso2.carbon.tenant.common.feature.group</id>
                                     <version>${carbon.multitenancy.version}</version>
                                 </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.tenant.mgt.common.feature.group</id>
+                                    <version>${carbon.commons.version}</version>
+                                </feature>
 
                                 <feature>
                                     <id>org.wso2.carbon.system.statistics.feature.group</id>
@@ -385,17 +361,9 @@
                                     <version>${carbon.commons.version}</version>
                                 </feature>
                                 <feature>
-                                    <id>org.wso2.carbon.user.mgt.feature.group</id>
-                                    <version>${carbon.commons.version}</version>
-                                </feature>
-                                <feature>
                                     <id>org.wso2.carbon.application.mgt.feature.group</id>
                                     <version>${carbon.commons.version}</version>
                                 </feature>
-                                <!--<feature>-->
-                                    <!--<id>org.wso2.carbon.databridge.agent.thrift.server.feature.group</id>-->
-                                    <!--<version>${carbon.commons.version}</version>-->
-                                <!--</feature>-->
 
                                 <feature>
                                     <id>org.wso2.carbon.databridge.datapublisher.feature.group</id>
@@ -411,21 +379,21 @@
                                 </feature>
 
                                 <feature>
+                                    <id>org.wso2.carbon.identity.core.ui.feature.group</id>
+                                    <version>${carbon.identity.version}</version>
+                                </feature>
+                                <feature>
                                     <id>org.wso2.carbon.security.mgt.feature.group</id>
                                     <version>${carbon.identity.version}</version>
                                 </feature>
-                                <!--<feature>-->
-                                <!--<id>org.wso2.carbon.um.ws.service.server.feature.group</id>-->
-                                <!--<version>${carbon.identity.version}</version>-->
-                                <!--</feature>-->
+                                <feature>
+                                    <id>org.wso2.carbon.user.mgt.feature.group</id>
+                                    <version>${carbon.identity.version}</version>
+                                </feature>
                                 <feature>
                                     <id>org.wso2.carbon.identity.authenticator.saml2.sso.feature.group</id>
                                     <version>${carbon.identity.version}</version>
                                 </feature>
-                                <!--<feature>-->
-                                    <!--<id>org.wso2.carbon.identity.core.feature.group</id>-->
-                                    <!--<version>${carbon.identity.version}</version>-->
-                                <!--</feature>-->
 
                                 <feature>
                                     <id>org.wso2.carbon.registry.core.feature.group</id>
@@ -440,41 +408,6 @@
                                     <version>${carbon.registry.version}</version>
                                 </feature>
 
-                                <!--<feature>-->
-                                    <!--<id>org.wso2.carbon.cassandra.server.feature.group</id>-->
-                                    <!--<version>${carbon.storagemgt.version}</version>-->
-                                <!--</feature>-->
-                                <!--<feature>-->
-                                    <!--<id>org.wso2.carbon.cassandra.mgt.feature.group</id>-->
-                                    <!--<version>${carbon.storagemgt.version}</version>-->
-                                <!--</feature>-->
-                                <!--<feature>-->
-                                    <!--<id>org.wso2.carbon.cassandra.dataaccess.feature.group</id>-->
-                                    <!--<version>${carbon.storagemgt.version}</version>-->
-                                <!--</feature>-->
-                                <!--<feature>-->
-                                    <!--<id>org.wso2.carbon.cassandra.common.feature.group</id>-->
-                                    <!--<version>${carbon.storagemgt.version}</version>-->
-                                <!--</feature>-->
-
-                                <!--<feature>-->
-                                    <!--<id>org.wso2.carbon.registry.extensions.server.feature.group</id>-->
-                                    <!--<version>${carbon.governance.version}</version>-->
-                                <!--</feature>-->
-                                <!--<feature>-->
-                                    <!--<id>org.wso2.carbon.governance.metadata.server.feature.group</id>-->
-                                    <!--<version>${carbon.governance.version}</version>-->
-                                <!--</feature>-->
-
-                                <!--cep-->
-                                <!--<feature>-->
-                                    <!--<id>org.wso2.carbon.event.input.adapter.feature.group</id>-->
-                                    <!--<version>${carbon.event-processing.version}</version>-->
-                                <!--</feature>-->
-                                <!--<feature>-->
-                                    <!--<id>org.wso2.carbon.event.output.adapter.feature.group</id>-->
-                                    <!--<version>${carbon.event-processing.version}</version>-->
-                                <!--</feature>-->
                                 <feature>
                                     <id>org.wso2.carbon.event.receiver.feature.group</id>
                                     <version>${carbon.analytics-common.version}</version>
@@ -552,12 +485,11 @@
                                     <version>${cep.version}</version>
                                 </feature>
 
-                                <!-- ML feature -->
+                                <!-- Cipher tool feature -->
                                 <feature>
-                                    <id>org.wso2.carbon.ml.siddhi.extension.feature.group</id>
-                                    <version>${carbon.ml.version}</version>
+                                    <id>org.wso2.ciphertool.feature.group</id>
+                                    <version>${cipher.tool.version}</version>
                                 </feature>
-
                             </features>
                         </configuration>
                     </execution>
@@ -572,8 +504,9 @@
                         <phase>package</phase>
                         <configuration>
                             <tasks>
-                                <replace token="false" value="true" dir="target/wso2carbon-core-${carbon.kernel.version}/repository/components">
-                                    <include name="**/bundles.info" />
+                                <replace token="false" value="true"
+                                         dir="target/wso2carbon-core-${carbon.kernel.version}/repository/components">
+                                    <include name="**/bundles.info"/>
                                 </replace>
                             </tasks>
                         </configuration>

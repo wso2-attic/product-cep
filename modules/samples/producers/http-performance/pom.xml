@@ -26,6 +26,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>http-performance-client</artifactId>
+    <name>WSO2 CEP - Publisher - HTTP Performance Client</name>
 
     <dependencies>
         <dependency>

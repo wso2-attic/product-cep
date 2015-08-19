@@ -1,8 +1,6 @@
 This sample uses 
-InputEventAdaptor:  file
-EventBuilder:           text
-EventFormatter:         text
-OutputEventAdaptor: logger
+EventReceiver:  file
+EventPublisher: logger
 
 Producers:     N/A
 Consumers:     CEP server

@@ -1,0 +1,23 @@
+/* Enter a unique ExecutionPlan */
+@Plan:name('ExecutionPlan')
+
+/* Enter a unique description for ExecutionPlan */
+-- @Plan:description('ExecutionPlan')
+
+/* define streams/tables and write queries here ... */
+
+@Plan:trace('false')
+
+@Import('ServerLogEvents:1.0.0')
+define stream ServerLogs (meta_timestamp string, meta_tenantId int, className string, logType string, msg string);
+
+@Export('WarnTypeLogStream:1.0.0')
+define stream WarnTypeLogStream (meta_timestamp string, meta_tenantId int, className string, msg string);
+
+from ServerLogs[meta_tenantId != -1234]
+select meta_timestamp, meta_tenantId, className, logType
+insert into TenantLogs;
+
+from ServerLogs[logType=='WARN' or logType=='warn']
+select meta_timestamp, meta_tenantId, className, msg
+insert into WarnTypeLogStream;

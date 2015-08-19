@@ -1,0 +1,17 @@
+/* Enter a unique ExecutionPlan */
+@Plan:name('SensorClassifyLengthExecutionPlan')
+
+/* Enter a unique description for ExecutionPlan */
+-- @Plan:description('This plan will return the length of the sensor name')
+
+/* define streams/tables and write queries here ... */
+
+@Import('org.wso2.event.sensor.stream:1.0.0')
+define stream inputStream (sensorId int, sensorName string, sensorValue double);
+
+@Export('org.wso2.event.sensorClassifyLength.stream:1.0.0')
+define stream outputStream (sensorNameLength int);
+
+from inputStream
+select str:length(sensorName) as sensorNameLength
+insert into outputStream;

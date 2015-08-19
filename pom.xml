@@ -43,9 +43,10 @@
         <module>modules/samples</module>
         <module>modules/features</module>
         <module>modules/p2-profile-gen</module>
-        <module>modules/distribution</module>
         <module>modules/org.wso2.stratos.cep.login.ui</module>
         <module>modules/org.wso2.stratos.cep.dashboard.ui</module>
+        <module>modules/org.wso2.cep.storm.dependencies</module>
+        <module>modules/distribution</module>
         <module>modules/integration</module>
     </modules>
 
@@ -656,12 +657,11 @@
         <carbon.commons.version>4.4.4</carbon.commons.version>
         <carbon.analytics-common.version>2.0.0-SNAPSHOT</carbon.analytics-common.version>
         <carbon.dashboards.version>1.0.1-SNAPSHOT</carbon.dashboards.version>
-        <carbon.identity.version>4.4.0</carbon.identity.version>
-        <carbon.registry.version>4.4.4</carbon.registry.version>
+        <carbon.identity.version>4.5.4</carbon.identity.version>
+        <carbon.registry.version>4.4.5</carbon.registry.version>
         <!--<carbon.storagemgt.version>4.3.1-SNAPSHOT</carbon.storagemgt.version>-->
-        <carbon.multitenancy.version>4.4.0</carbon.multitenancy.version>
-        <carbon.governance.version>4.4.1</carbon.governance.version>
-        <carbon.ml.version>1.0.1-SNAPSHOT</carbon.ml.version>
+        <carbon.multitenancy.version>4.4.1</carbon.multitenancy.version>
+        <!--<carbon.governance.version>4.5.2</carbon.governance.version>-->
 
         <siddhi.version>3.0.0-SNAPSHOT</siddhi.version>
         <cep.version>4.0.0-SNAPSHOT</cep.version>
@@ -685,6 +685,7 @@
         <log4j.wso2.version>1.2.17.wso2v1</log4j.wso2.version>
         <httpclient.wso2.version>4.2.5.wso2v1</httpclient.wso2.version>
         <httpcore.wso2.version>4.3.3.wso2v1</httpcore.wso2.version>
+        <cipher.tool.version>1.0.0-wso2v3</cipher.tool.version>
 
         <javax.servlet.version>3.0.0.v201112011016</javax.servlet.version>
         <jacoco.agent.version>0.7.4.201502262128</jacoco.agent.version>

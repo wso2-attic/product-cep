@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
   ~ Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,11 +13,5 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<eventFormatter name="warnLogEventFormatter" statistics="disable"
-  trace="disable" xmlns="http://wso2.org/carbon/eventformatter">
-  <from streamName="warnTypeLogStream" version="1.0.0"/>
-  <mapping customMapping="disable" type="text"/>
-  <to eventAdaptorName="DefaultLoggerOutputAdaptor" eventAdaptorType="logger">
-    <property name="uniqueId">WarnMessage</property>
-  </to>
-</eventFormatter>
+
+<streamConfiguration type="csv"><file>intruder.csv</file><streamID>IntruderInputStream:1.0.0</streamID><separateChar>,</separateChar></streamConfiguration>

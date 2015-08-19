@@ -1,0 +1,26 @@
+{
+  "name": "WarnTypeLogStream",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "metaData": [
+    {
+      "name": "timestamp",
+      "type": "STRING"
+    },
+    {
+      "name": "tenantId",
+      "type": "INT"
+    }
+  ],
+  "payloadData": [
+    {
+      "name": "className",
+      "type": "STRING"
+    },
+    {
+      "name": "msg",
+      "type": "STRING"
+    }
+  ]
+}
