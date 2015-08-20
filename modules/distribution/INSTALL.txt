@@ -41,9 +41,6 @@ Standalone Mode
                 -DserverRoles=<roles>		A comma separated list of roles. Used in deploying cApps
                 -Dcarbon.use.registry.repo	Use registry based repository.
                 -DdisableHttpLog		    Disable HTTP access logging
-                -DapplyPatches			    Use this system property when there are patches to be applied/reverted to/from the system.
-                                            Drop the patches to $CARBON_HOME/repository/componenets/patches directory and restart the system with this property.
-                                            When you want to revert a patch, delete it from the patches directory and restart the system with this property
                 -DworkerNode=true			Set this system property when starting as a worker node.
 					                        This is required in clustered setups with master and worker nodes.
 

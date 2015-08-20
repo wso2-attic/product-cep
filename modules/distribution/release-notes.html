@@ -68,13 +68,14 @@
 <h2>Key Features</h2>
 <ul>
 
-    <li>Support Multiple Input Event Adaptor Types - WSO2 CEP supports WSO2Event, SOAP, HTTP, JMS, Email, File, Kafka
-        input adaptor types
+    <li>Support Multiple Input Event Adapter Types - WSO2 CEP supports WSO2Event, SOAP, HTTP, JMS, Email, File-tail, Kafka, MQTT, Websocket
+        input adapter types
     </li>
-    <li>Support Multiple Output Event Adaptor Types - WSO2 CEP supports WSO2Event, SOAP, HTTP, JMS, Email, SMS, Logger,
-        Kafka, MySQL, Cassandra output adaptor types
+    <li>Support Multiple Output Event Adapter Types - WSO2 CEP supports WSO2Event, SOAP, HTTP, JMS, Email, SMS, Logger,
+        Kafka, RDBMS, Cassandra, MQTT, Websocket, UI output adapter types
     </li>
     <li>Support for multiple event formats such as XML, JSON, Map, Text & WSO2Event</li>
+    <li>Distributed processing support - WSO2 CEP can be integrated with Apache Storm to perform distributed processing</li>
     <li>Siddhi Query Partitioning</li>
     <li>Siddhi Event Tables to use historical data within real time processing</li>
     <li>High Availability Deployment</li>
@@ -83,17 +84,18 @@
     <li>Tracing Support - WSO2 CEP supports tracing a message at multiple stages of the event flow.</li>
     <li>Event Flow Support - WSO2 CEP supports visualizing the event flow within the system.</li>
     <li>Event Simulator - WSO2 CEP supports an easy gui to send sample events to test the event flow.</li>
-    <li>Sample framework for CEP</li>
+    <li>Siddhi Try It Tool - A tool for experimenting with Siddhi Query Language.</li>
+    <li>Execution Manager - A user friendly dashboard to customize preconfigured domain-specific execution parameters.</li>
+    <li>Analytics Dashboard - An inbuilt dashboard, capable of visualizing event streams in real-time</li>
     <li>Easily Integrates with Enterprise System - by RESTful HTTP protocol with JSON, JMS MAP/XML/Text messages, SOAP
         and Email
     </li>
     <li>Support for Long Duration Queries - Supports periodic snapshots to a scalable persistence store (Apache
         Cassandra).
     </li>
-    <li>Tightly Integrates with WSO2 Business Activity Monitor - for recording and post processing of events with
-        Map-Reduce via Apache Hadoop.
+    <li>Tightly Integrates with WSO2 Data Analytics Server - for recording and post processing of events.
     </li>
-    <li>Realtime Dashboard using WSO2 User Engagement Server</li>
+    <li>Realtime Dashboard using the inbuilt Analytics Dashboard</li>
     <li>Siddhi Extensions</li>
     <li>Event Adaptor Extension</li>
     <li>Configuration based class loading mechanism for Siddhi</li>
@@ -102,26 +104,22 @@
 
 <h2>New Features In This Release</h2>
 <ul>
-    <li> High Availability and Fail-Over for WSO2 CEP</li>
-    <li> Improve performance for thrift events</li>
-    <li> Implement Passthrough Feature for all components</li>
-    <li> Gadget gen tool to create gadgets for CEP dashboard</li>
-    <li> Input Event Adaptor - File Tail Reader</li>
-    <li> Output Event Adaptor to log events on the screen</li>
-    <li> HTTP input event adaptor</li>
-    <li> Configurable cache sizes for siddhi event table caches</li>
-    <li> Support small Batch within Sliding Windows</li>
-    <li> Event Flow Visualizer</li>
-    <li> Event Simulator</li>
+    <li> Distributed processing with Apache Storm</li>
+    <li> Analytics Dashboard</li>
+    <li> Execution Manager</li>
+    <li> Siddhi Try It Tool</li>
+    <li> MQTT Input and Output Event Adapters</li>
+    <li> Websocket Input and Output Event Adapters</li>
+    <li> Encrypting password fields of Input and Output Adaptors</li>
+    <li> Cron TimeWindow for Siddhi</li>
+    <li> Time Series Extensions for Siddhi</li>
+    <li> Outlier Detection Extension for Siddhi</li>
+    <li> String and Math extensions for Siddhi</li>
+    <li> Hot deployment support for all CEP artifacts</li>
+    <li> File Based Stream Definition Store</li>
+    <li> Activity Mediator for ESB</li>
+    <li> Event simulation using given CSV files</li>
 </ul>
-
-
-<!--<h2>Open Source components included in WSO2 Application Server</h2>-->
-<!--<ul>-->
-<!--<li>Apache Axis2 (SOAP)</li>-->
-<!--<li>Apache Axiom (High performance XML Object Model)</li>-->
-<!--</ul>-->
-
 
 <h2>Reporting Problems</h2>
 Issues can be reported using the public JIRA available at
@@ -149,8 +147,7 @@ Alternatively, questions can also be raised in the stackoverflow:
 
 <p>
     WSO2 Inc. offers a variety of professional Training Programs, including
-    training on general Web services as well as WSO2 CEP, Siddhi, WSO2 BAM,
-    Data Services and a number of other products.
+    training on WSO2 CEP, Siddhi, WSO2 DAS and a number of other products.
 
 
     For additional support information please refer to
