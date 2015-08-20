@@ -16,23 +16,37 @@ have been developed as pluggable Carbon components.
 New Features In This Release
 ==================================
 
-[CEP-13] - High Availability and Fail-Over for WSO2 CEP
-[CEP-124] - Improve performance for thrift events
-[CEP-460] - Implement Passthrough Feature for all components
-[CEP-833] - Gadget gen tool to create gadgets for CEP dashboard
-[CEP-630] - Input Event Adaptor - File Tail Reader
-[CEP-631] - Output Event Adaptor to log events on the screen
-[CEP-648] - HTTP input event adaptor
-[CEP-753] - Configurable cache sizes for siddhi event table caches
-[CEP-730] - Support small Batch within Sliding Windows
-[CEP-773] - Event Flow Visualizer
-[CEP-794] - Event Simulator
+[CEP-148] - Activity Mediator for ESB
+[CEP-635] - Integrate Apache Storm into CEP
+[CEP-852] - Event Simulator with sending multiple events using uploaded files
+[CEP-879] - MQTT input Event Adapter for CEP
+[CEP-880] - MQTT output Event Adapter for CEP
+[CEP-881] - Input Websocket adapter for CEP
+[CEP-885] - Time Series Regression Extension to Siddhi
+[CEP-886] - Time Series Forecaster for Siddhi
+[CEP-887] - Outlier Detection Extension for Siddhi
+[CEP-888] - Initial storm solution for CEP
+[CEP-903] - Siddhi - Remove callback from stream functionality
+[CEP-909] - Input Websocket (with local websocket server) Adapter for CEP
+[CEP-910] - Output Websocket Adapter for CEP
+[CEP-911] - Output Websocket Adapter (using local websocket server) for CEP
+[CEP-945] - Improved Siddhi Query API and Compiler
+[CEP-993] - Exchangeable views between form view and source view when creating event streams
+[CEP-1017] - cApp support for CEP components
+[CEP-1018] - Encrypting password fields of Input and Output Adapters
+[CEP-1028] - File Based Stream Definition Store
+[CEP-1029] - String Extension for Siddhi
+[CEP-1030] - Math Extension for Siddhi
+[CEP-1032] - Integrating Siddhi 3.0.0
+[CEP-1033] - Adding annotation,partitioning and query grouping support in Storm
+[CEP-1062] - Cron TimeWindow for Siddhi
 
 Key Features of WSO2 CEP
 ==================================
-* Support Multiple Input Event Adaptor Types - WSO2 CEP supports WSO2Event, SOAP, HTTP, JMS, Email, File, Kafka input adaptor types
-* Support Multiple Output Event Adaptor Types - WSO2 CEP supports WSO2Event, SOAP, HTTP, JMS, Email, SMS, Logger, Kafka, MySQL, Cassandra output adaptor types
+* Support Multiple Input Event Adapter Types - WSO2 CEP supports WSO2Event, SOAP, HTTP, JMS, Email, File-tail, Kafka, MQTT, Websocket input adapter types
+* Support Multiple Output Event Adapter Types - WSO2 CEP supports WSO2Event, SOAP, HTTP, JMS, Email, SMS, Logger, Kafka, RDBMS, Cassandra, MQTT, Websocket, UI output adapter types
 * Support for multiple event formats such as XML, JSON, Map, Text & WSO2Event
+* Distributed processing support - WSO2 CEP can be integrated with Apache Storm to perform distributed processing
 * Siddhi Query Partitioning
 * Siddhi Event Tables to use historical data within real time processing
 * High Availability Deployment
@@ -41,11 +55,13 @@ Key Features of WSO2 CEP
 * Tracing Support - WSO2 CEP supports tracing a message at multiple stages of the event flow.
 * Event Flow Support - WSO2 CEP supports visualizing the event flow within the system.
 * Event Simulator - WSO2 CEP supports an easy gui to send sample events to test the event flow.
-* Sample framework for CEP
+* Siddhi Try It Tool - A tool for experimenting with Siddhi Query Language.
+* Execution Manager - A user friendly dashboard to customize preconfigured domain-specific execution parameters.
+* Analytics Dashboard - An inbuilt dashboard, capable of visualizing event streams in real-time
 * Easily Integrates with Enterprise System - by RESTful HTTP protocol with JSON, JMS MAP/XML/Text messages, SOAP and Email
 * Support for Long Duration Queries - Supports periodic snapshots to a scalable persistence store (Apache Cassandra).
-* Tightly Integrates with WSO2 Business Activity Monitor - for recording and post processing of events with Map-Reduce via Apache Hadoop.
-* Realtime Dashboard using WSO2 User Engagement Server
+* Tightly Integrates with WSO2 Data Analytics Server - for recording and post processing of events.
+* Realtime Dashboard using the inbuilt Analytics Dashboard
 * Siddhi Extensions
 * Event Adaptor Extension
 * Configuration based class loading mechanism for Siddhi
@@ -55,10 +71,10 @@ System Requirements
 ==================================
 
 1. Minimum memory - 2 GB
-2. Processor      - Pentium 800MHz or equivalent at minimum
+2. Processor      - Intel Dual-Core 1GHz or equivalent at minimum
 3. Java SE Development Kit 1.6.0_21 or higher
 4. To build WSO2 CEP from the Source distribution, it is necessary that you have
-   JDK 1.6 and Maven 3
+   JDK 1.7 or higher and Maven 3
 
 For more details see
     http://docs.wso2.org/wiki/display/CEP400/Installation+Prerequisites
@@ -217,7 +233,7 @@ By default mode, it would ask you to enter the master password
 > ciphertool -Dchange  (in UNIX)
 
 For more details see
-http://docs.wso2.org/wiki/display/Carbon420/WSO2+Carbon+Secure+Vault
+https://docs.wso2.com/display/Carbon441/Encrypting+Passwords+with+Cipher+Tool
 
 
 Training
