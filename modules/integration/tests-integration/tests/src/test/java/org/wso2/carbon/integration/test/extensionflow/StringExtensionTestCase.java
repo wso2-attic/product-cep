@@ -183,7 +183,7 @@ public class StringExtensionTestCase extends CEPIntegrationTest {
 
         //Add WSO2Event publisher
         String eventPublisherConfig =
-                getXMLArtifactConfiguration("extensionflows/string", "WSO2Publisher.xml");
+                getXMLArtifactConfiguration("extensionflows/string", "wso2EventPublisher.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(),
                 startEPCount + 1);
@@ -232,7 +232,7 @@ public class StringExtensionTestCase extends CEPIntegrationTest {
                 .removeEventStream("org.wso2.event.sensorClassifyLength.stream", "1.0.0");
         eventProcessorAdminServiceClient.removeInactiveExecutionPlan("SensorClassifyLengthExecutionPlan.siddhiql");
         eventPublisherAdminServiceClient
-                .removeInactiveEventPublisherConfiguration("WSO2Publisher.xml");
+                .removeInactiveEventPublisherConfiguration("wso2EventPublisher.xml");
 
         Thread.sleep(2000);
 
