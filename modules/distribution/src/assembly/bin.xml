@@ -441,15 +441,13 @@
             <fileMode>644</fileMode>
         </file>
 
-        <!--&lt;!&ndash; Including logging-config.xml file &ndash;&gt;-->
-        <!--<file>-->
-        <!--<source>-->
-        <!--&lt;!&ndash;../p2-profile-gen/target/wso2carbon-core-4.4.1_SNAPSHOT/repository/conf/etc/logging-config.xml&ndash;&gt;-->
-        <!--repository/conf/etc/logging-config.xml-->
-        <!--</source>-->
-        <!--<outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/etc-->
-        <!--</outputDirectory>-->
-        <!--</file>-->
+        <!--Including logging-config.xml file -->
+        <file>
+            <source>
+        	../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/etc/logging-config.xml
+            </source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/etc</outputDirectory>
+        </file>
 
         <!-- Including tenant-mgt.xml file -->
         <file>
