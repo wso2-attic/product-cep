@@ -65,6 +65,13 @@ if exist ..\repository\deployment\server\webapps\outputui.war ( copy ..\reposito
 if exist ..\repository\deployment\server\webapps\shindig.war ( copy ..\repository\deployment\server\webapps\shindig.war ..\samples\artifacts\%cn%\webapps\ > nul )
 if exist ..\repository\deployment\server\webapps\STRATOS_ROOT ( xcopy ..\repository\deployment\server\webapps\STRATOS_ROOT ..\samples\artifacts\%cn%\webapps\STRATOS_ROOT /s /q /i > nul ) )
 
+if exist ..\samples\artifacts\%cn%\webapps ( if not exist ..\samples\artifacts\%cn%\webapps\inputwebsocket.war ( copy ..\repository\deployment\server\webapps\inputwebsocket.war ..\samples\artifacts\%cn%\webapps\ > nul )
+if exist ..\samples\artifacts\%cn%\webapps ( if not exist ..\samples\artifacts\%cn%\webapps\inputwebsocket.war ( copy ..\repository\deployment\server\webapps\inputwebsocket.war ..\samples\artifacts\%cn%\webapps\ > nul )
+if not exist ..\samples\artifacts\%cn%\webapps\outputwebsocket.war ( copy ..\repository\deployment\server\webapps\outputwebsocket.war ..\samples\artifacts\%cn%\webapps\ > nul )
+if not exist ..\samples\artifacts\%cn%\webapps\outputui.war ( copy ..\repository\deployment\server\webapps\outputui.war ..\samples\artifacts\%cn%\webapps\ > nul )
+if not exist ..\samples\artifacts\%cn%\webapps\shindig.war ( copy ..\repository\deployment\server\webapps\shindig.war ..\samples\artifacts\%cn%\webapps\ > nul )
+if not exist ..\samples\artifacts\%cn%\webapps\STRATOS_ROOT ( xcopy ..\repository\deployment\server\webapps\STRATOS_ROOT ..\samples\artifacts\%cn%\webapps\STRATOS_ROOT /s /q /i > nul ) )
+
 if not exist ..\samples\artifacts\%cn%\jaggeryapps ( mkdir ..\samples\artifacts\%cn%\jaggeryapps\portal > nul
 xcopy ..\repository\deployment\server\jaggeryapps\portal ..\samples\artifacts\%cn%\jaggeryapps\portal\ /s /q > nul
 if exist ..\samples\artifacts\%cn%\jaggeryapps\portal\store\carbon.super ( rmdir ..\samples\artifacts\%cn%\jaggeryapps\portal\store\carbon.super /s /q > nul )
