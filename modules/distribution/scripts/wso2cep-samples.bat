@@ -63,10 +63,8 @@ if exist ..\repository\deployment\server\webapps\inputwebsocket.war ( copy ..\re
 if exist ..\repository\deployment\server\webapps\outputwebsocket.war ( copy ..\repository\deployment\server\webapps\outputwebsocket.war ..\samples\artifacts\%cn%\webapps\ > nul )
 if exist ..\repository\deployment\server\webapps\outputui.war ( copy ..\repository\deployment\server\webapps\outputui.war ..\samples\artifacts\%cn%\webapps\ > nul )
 if exist ..\repository\deployment\server\webapps\shindig.war ( copy ..\repository\deployment\server\webapps\shindig.war ..\samples\artifacts\%cn%\webapps\ > nul )
-if exist ..\repository\deployment\server\webapps\STRATOS_ROOT ( xcopy ..\repository\deployment\server\webapps\STRATOS_ROOT ..\samples\artifacts\%cn%\webapps\STRATOS_ROOT /s /q /i > nul ) )
-
-if exist ..\samples\artifacts\%cn%\webapps ( if not exist ..\samples\artifacts\%cn%\webapps\inputwebsocket.war ( copy ..\repository\deployment\server\webapps\inputwebsocket.war ..\samples\artifacts\%cn%\webapps\ > nul )
-if exist ..\samples\artifacts\%cn%\webapps ( if not exist ..\samples\artifacts\%cn%\webapps\inputwebsocket.war ( copy ..\repository\deployment\server\webapps\inputwebsocket.war ..\samples\artifacts\%cn%\webapps\ > nul )
+if exist ..\repository\deployment\server\webapps\STRATOS_ROOT ( xcopy ..\repository\deployment\server\webapps\STRATOS_ROOT ..\samples\artifacts\%cn%\webapps\STRATOS_ROOT /s /q /i > nul )
+) else ( if not exist ..\samples\artifacts\%cn%\webapps\inputwebsocket.war ( copy ..\repository\deployment\server\webapps\inputwebsocket.war ..\samples\artifacts\%cn%\webapps\ > nul )
 if not exist ..\samples\artifacts\%cn%\webapps\outputwebsocket.war ( copy ..\repository\deployment\server\webapps\outputwebsocket.war ..\samples\artifacts\%cn%\webapps\ > nul )
 if not exist ..\samples\artifacts\%cn%\webapps\outputui.war ( copy ..\repository\deployment\server\webapps\outputui.war ..\samples\artifacts\%cn%\webapps\ > nul )
 if not exist ..\samples\artifacts\%cn%\webapps\shindig.war ( copy ..\repository\deployment\server\webapps\shindig.war ..\samples\artifacts\%cn%\webapps\ > nul )
