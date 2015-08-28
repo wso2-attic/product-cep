@@ -35,7 +35,7 @@ public class GetData extends Thread {
     public static final String RecordedTrafficURL = "http://localhost/TFL/tims_feed.xml";
     public static final String RecordedBusURL = "http://localhost/TFL/data";
 
-    public static final String LiveTrafficURL = "http://data.tfl.gov.uk/tfl/syndication/feeds/tims_feed.xml";
+    public static final String LiveTrafficURL = "https://data.tfl.gov.uk/tfl/syndication/feeds/tims_feed.xml";
     public static final String LiveBusStopURL = "http://countdown.api.tfl.gov.uk/interfaces/ura/instant_V1?LineID=61,62,63,64,65,66&ReturnList=StopID,Latitude,Longitude";
     public static final String LiveBusURL = "http://countdown.api.tfl.gov.uk/interfaces/ura/instant_V1?LineID=61,62,63,64,65,66&ReturnList=StopID,LineID,VehicleID,EstimatedTime";
 

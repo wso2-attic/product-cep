@@ -60,6 +60,7 @@ public class Http implements Runnable {
 				Runnable publisher = new Http();
 				executor.execute(publisher);
 			}
+			executor.shutdown();
 
 		}catch(NumberFormatException e){
 			log.error("Entered value for no of events is invalid. Please enter an integer", e);
@@ -107,7 +108,7 @@ public class Http implements Runnable {
 			log.info("Sending messages..");
 			long lastTime = System.currentTimeMillis();
 			DecimalFormat decimalFormat = new DecimalFormat("#");
-			while(count <= noOfEvents){
+			while(count < noOfEvents){
 				count++;
 
 				String temp = "{\"event\": " + getRandomEvent(count).toString() + "}";

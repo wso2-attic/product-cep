@@ -25,21 +25,19 @@
 
     <path id="javac.classpath">
         <pathelement path="${class.dir}"/>
-	<fileset dir="${carbon.home}/repository/components/plugins/">
-            <include name="gt-geojson-13.0.0-wso2v1.jar"/>
-	    <include name="httpcore_4.3.3.wso2v1.jar"/>	
+        <fileset dir="${carbon.home}/repository/components/plugins/">
+            <!--<include name="gt-geojson-13.0.0-wso2v1.jar"/>-->
+            <include name="httpcore_4.3.3.wso2v1.jar"/>
             <include name="httpclient_4.2.5.wso2v1.jar"/>
-            <include name="commons-httpclient_3.1.0.wso2v2"/>	
+            <include name="commons-httpclient_3.1.0.wso2v2"/>
             <include name="org.wso2.carbon.logging_*.jar"/>
             <include name="slf4j.log4j12_*.jar"/>
             <include name="slf4j.api_*.jar"/>
-
         </fileset>
+        <fileset dir="${lib.dir}"/>
     </path>
 
     <target name="clean">
-        <echo>Test</echo>
-        <!--<delete dir="target" quiet="true"/>-->
         <delete dir="${class.dir}" quiet="true"/>
         <delete dir="${temp.dir}"/>
     </target>
@@ -59,7 +57,6 @@
     <target name="run" depends="compile">
         <java classname="org.wso2.carbon.sample.tfl.TflStream"
               classpathref="javac.classpath" fork="true">
-
         </java>
     </target>
 
