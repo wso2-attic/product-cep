@@ -73,7 +73,7 @@
             <reconnectionInterval>20000</reconnectionInterval>
         </transport>
 
-        <stormJar>org.wso2.carbon.event.processor.storm.jar</stormJar>
+        <stormJar>org.wso2.cep.storm.dependencies.jar</stormJar>
 
         <distributedUIUrl></distributedUIUrl>
 
