@@ -58,7 +58,7 @@ public class EventSimulatorAdminServiceTestCase extends CEPIntegrationTest {
             Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
             //Add RDBMS publisher
-            String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "rdbmsEventPublisher.xml");
+            String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "rdbmsEventPublisherForSimulator.xml");
             eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
             Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
@@ -76,7 +76,7 @@ public class EventSimulatorAdminServiceTestCase extends CEPIntegrationTest {
                     "    \"eventStreamName\"            : \"org.wso2.event.sensor.stream\",\n" +
                     "    \"streamID\"                   : \"org.wso2.event.sensor.stream:1.0.0\",\n" +
                     "    \"name\"                       : \"testSimulator\",\n" +
-                    "    \"tableName\"                  : \"sensordata\",\n" +
+                    "    \"tableName\"                  : \"sensordata2\",\n" +
                     "    \"delayBetweenEventsInMilies\" : 1000,\n" +
                     "    \"dataSourceColumnsAndTypes\"  : [\n" +
                     "        {\n" +
@@ -115,7 +115,7 @@ public class EventSimulatorAdminServiceTestCase extends CEPIntegrationTest {
                     "}"
             );
             eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
-            eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("rdbmsEventPublisher.xml");
+            eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("rdbmsEventPublisherForSimulator.xml");
         } catch (Exception e) {
             log.error("Exception thrown: " + e.getMessage(), e);
             Assert.fail("Exception: " + e.getMessage());
@@ -173,7 +173,7 @@ public class EventSimulatorAdminServiceTestCase extends CEPIntegrationTest {
                             "{\"streamID\":\"org.wso2.event.sensor.stream2:1.0.0\"," +
                             "\"eventStreamName\":\"org.wso2.event.sensor.stream2\"," +
                             "\"dataSource\":\"WSO2CEP_DB\"," +
-                            "\"tableName\":\"sensordata\"," +
+                            "\"tableName\":\"sensordata2\"," +
                             "\"name\":\"testSimulator\"," +
                             "\"delayBetweenEventsInMilies\":\"1000\"," +
                             "\"dataSourceColumnsAndTypes\":[" +
