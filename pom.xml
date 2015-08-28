@@ -648,14 +648,14 @@
         <system>JIRA</system>
         <url>https://wso2.org/jira/browse/CEP</url>
     </issueManagement>
-
+	
     <properties>
         <!--CEP versions-->
         <jaggery.version>0.10.1</jaggery.version>
         <jaggery.modules.version>1.3.0</jaggery.modules.version>
         <carbon.deployment.version>4.4.1</carbon.deployment.version>
         <carbon.commons.version>4.4.4</carbon.commons.version>
-        <carbon.analytics-common.version>5.0.0-SNAPSHOT</carbon.analytics-common.version>
+        <carbon.analytics-common.version>5.0.0</carbon.analytics-common.version>
         <carbon.dashboards.version>1.0.1-SNAPSHOT</carbon.dashboards.version>
         <carbon.identity.version>4.5.5</carbon.identity.version>
         <carbon.registry.version>4.4.5</carbon.registry.version>
