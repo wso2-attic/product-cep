@@ -649,13 +649,6 @@
         <url>https://wso2.org/jira/browse/CEP</url>
     </issueManagement>
 	
-    <repositories>
-    	<repository>
-            <id>analytics-common-5.0.0-repo</id>
-            <url>http://maven.wso2.org/nexus/content/repositories/orgwso2carbonanalytics-common-057/</url>
-        </repository>
-    </repositories>
-
     <properties>
         <!--CEP versions-->
         <jaggery.version>0.10.1</jaggery.version>
