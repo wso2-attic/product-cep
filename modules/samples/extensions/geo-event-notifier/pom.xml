@@ -29,7 +29,6 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>geo-event-notifier</artifactId>
-    <version>${siddhi.version}</version>
     <packaging>bundle</packaging>
     <name>Siddhi Extension - Geo Event Notifier</name>
 
