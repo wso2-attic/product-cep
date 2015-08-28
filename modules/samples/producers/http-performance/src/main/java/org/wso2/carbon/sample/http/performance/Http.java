@@ -60,6 +60,7 @@ public class Http implements Runnable {
 				Runnable publisher = new Http();
 				executor.execute(publisher);
 			}
+			executor.shutdown();
 
 		}catch(NumberFormatException e){
 			log.error("Entered value for no of events is invalid. Please enter an integer", e);
