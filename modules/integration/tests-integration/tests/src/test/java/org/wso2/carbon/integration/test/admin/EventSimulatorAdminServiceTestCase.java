@@ -35,7 +35,7 @@ public class EventSimulatorAdminServiceTestCase extends CEPIntegrationTest {
         eventSimulatorAdminServiceClient = configurationUtil
                 .getEventSimulatorAdminServiceClient(backendURL, loggedInSessionCookie);
         eventPublisherAdminServiceClient = configurationUtil
-                .getEventPublisherAdminServiceClient(backendURL,loggedInSessionCookie);
+                .getEventPublisherAdminServiceClient(backendURL, loggedInSessionCookie);
 
         NDataSourceAdminServiceClient dataSourceAdminService =
                 new NDataSourceAdminServiceClient(backendURL, loggedInSessionCookie);
@@ -43,7 +43,8 @@ public class EventSimulatorAdminServiceTestCase extends CEPIntegrationTest {
         dataSourceAdminService.addDataSource(dataSourceInfo);
     }
 
-    @Test(groups = {"wso2.cep"}, description = "Test database connection, table column information and stream attribute information is valid")
+    @Test(groups = {"wso2.cep"}, description = "Test database connection, " +
+                                               "table column information and stream attribute information is valid")
     public void testSimulateRDBMSDataSourceConnection() {
         try {
             String samplePath = "outputflows" + File.separator + "sample0072";
@@ -52,7 +53,7 @@ public class EventSimulatorAdminServiceTestCase extends CEPIntegrationTest {
 
             //Add StreamDefinition
             String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
-                    "org.wso2.event.sensor.stream_1.0.0.json");
+                                                                           "org.wso2.event.sensor.stream_1.0.0.json");
             eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
             Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
@@ -63,54 +64,55 @@ public class EventSimulatorAdminServiceTestCase extends CEPIntegrationTest {
 
             EventDto eventDto = new EventDto();
             eventDto.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
-            eventDto.setAttributeValues(new String[]{"199008131245", "false", "100", "temperature", "23.45656", "7.12324", "100.34", "23.4545"});
+            eventDto.setAttributeValues(new String[]{"199008131245", "false", "100", "temperature", "23.45656",
+                                                     "7.12324", "100.34", "23.4545"});
 
             eventSimulatorAdminServiceClient.sendEvent(eventDto);
             Thread.sleep(1000);
 
             eventSimulatorAdminServiceClient.testSimulateRDBMSDataSourceConnection(
-                "{\n" +
-                "    \"dataSource\"                 : \"WSO2CEP_DB\",\n" +
-                "    \"eventStreamName\"            : \"org.wso2.event.sensor.stream\",\n" +
-                "    \"streamID\"                   : \"org.wso2.event.sensor.stream:1.0.0\",\n" +
-                "    \"name\"                       : \"testSimulator\",\n" +
-                "    \"tableName\"                  : \"sensordata\",\n" +
-                "    \"delayBetweenEventsInMilies\" : 1000,\n" +
-                "    \"dataSourceColumnsAndTypes\"  : [\n" +
-                "        {\n" +
-                "            \"columnName\" : \"CORRELATION_LATITUDE\",\n" +
-                "            \"columnType\" : \"double\"\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"columnName\" : \"CORRELATION_LONGITUDE\",\n" +
-                "            \"columnType\" : \"double\"\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"columnName\" : \"HUMIDITY\",\n" +
-                "            \"columnType\" : \"double\"\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"columnName\" : \"META_ISPOWERSAVERENABLED\",\n" +
-                "            \"columnType\" : \"bool\"\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"columnName\" : \"META_SENSORID\",\n" +
-                "            \"columnType\" : \"string\"\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"columnName\" : \"META_SENSORNAME\",\n" +
-                "            \"columnType\" : \"string\"\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"columnName\" : \"META_TIMESTAMP\",\n" +
-                "            \"columnType\" : \"long\"\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"columnName\" : \"SENSORVALUE\",\n" +
-                "            \"columnType\" : \"double\"\n" +
-                "        }\n" +
-                "    ]\n" +
-                "}"
+                    "{\n" +
+                    "    \"dataSource\"                 : \"WSO2CEP_DB\",\n" +
+                    "    \"eventStreamName\"            : \"org.wso2.event.sensor.stream\",\n" +
+                    "    \"streamID\"                   : \"org.wso2.event.sensor.stream:1.0.0\",\n" +
+                    "    \"name\"                       : \"testSimulator\",\n" +
+                    "    \"tableName\"                  : \"sensordata\",\n" +
+                    "    \"delayBetweenEventsInMilies\" : 1000,\n" +
+                    "    \"dataSourceColumnsAndTypes\"  : [\n" +
+                    "        {\n" +
+                    "            \"columnName\" : \"CORRELATION_LATITUDE\",\n" +
+                    "            \"columnType\" : \"double\"\n" +
+                    "        },\n" +
+                    "        {\n" +
+                    "            \"columnName\" : \"CORRELATION_LONGITUDE\",\n" +
+                    "            \"columnType\" : \"double\"\n" +
+                    "        },\n" +
+                    "        {\n" +
+                    "            \"columnName\" : \"HUMIDITY\",\n" +
+                    "            \"columnType\" : \"double\"\n" +
+                    "        },\n" +
+                    "        {\n" +
+                    "            \"columnName\" : \"META_ISPOWERSAVERENABLED\",\n" +
+                    "            \"columnType\" : \"bool\"\n" +
+                    "        },\n" +
+                    "        {\n" +
+                    "            \"columnName\" : \"META_SENSORID\",\n" +
+                    "            \"columnType\" : \"string\"\n" +
+                    "        },\n" +
+                    "        {\n" +
+                    "            \"columnName\" : \"META_SENSORNAME\",\n" +
+                    "            \"columnType\" : \"string\"\n" +
+                    "        },\n" +
+                    "        {\n" +
+                    "            \"columnName\" : \"META_TIMESTAMP\",\n" +
+                    "            \"columnType\" : \"long\"\n" +
+                    "        },\n" +
+                    "        {\n" +
+                    "            \"columnName\" : \"SENSORVALUE\",\n" +
+                    "            \"columnType\" : \"double\"\n" +
+                    "        }\n" +
+                    "    ]\n" +
+                    "}"
             );
             eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
             eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("rdbmsEventPublisher.xml");
@@ -130,12 +132,12 @@ public class EventSimulatorAdminServiceTestCase extends CEPIntegrationTest {
 
         dataSourceDefinition.setType("RDBMS");
         OMElement dsConfig = AXIOMUtil.stringToOM("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
-                "<configuration>\n" +
-                "<driverClassName>" + BasicDataSource.H2_DRIVER_CLASS + "</driverClassName>\n" +
-                "<url>" + BasicDataSource.H2_CONNECTION_URL + "</url>\n" +
-                "<username>" + BasicDataSource.H2USERNAME + "</username>\n" +
-                "<password encrypted=\"true\">" + BasicDataSource.H2PASSWORD + "</password>\n" +
-                "</configuration>");
+                                                  "<configuration>\n" +
+                                                  "<driverClassName>" + BasicDataSource.H2_DRIVER_CLASS + "</driverClassName>\n" +
+                                                  "<url>" + BasicDataSource.H2_CONNECTION_URL + "</url>\n" +
+                                                  "<username>" + BasicDataSource.H2USERNAME + "</username>\n" +
+                                                  "<password encrypted=\"true\">" + BasicDataSource.H2PASSWORD + "</password>\n" +
+                                                  "</configuration>");
 
 
         dataSourceDefinition.setDsXMLConfiguration(dsConfig.toString());
@@ -166,26 +168,28 @@ public class EventSimulatorAdminServiceTestCase extends CEPIntegrationTest {
             eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
             Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
-            String eventStreamDataSourceColumnNamesAndTypeInfo = eventSimulatorAdminServiceClient.testSimulateRDBMSDataSourceConnection(
-                    "{\"streamID\":\"org.wso2.event.sensor.stream2:1.0.0\"," +
-                    "\"eventStreamName\":\"org.wso2.event.sensor.stream2\"," +
-                    "\"dataSource\":\"WSO2CEP_DB\"," +
-                    "\"tableName\":\"sensordata\"," +
-                    "\"name\":\"testSimulator\"," +
-                    "\"delayBetweenEventsInMilies\":\"1000\"," +
-                    "\"dataSourceColumnsAndTypes\":[" +
-                        "{\"streamAttribute\":\"timestamp\",\"columnType\":\"LONG\",\"columnName\":\"META_TIMESTAMP\"}," +
-                        "{\"streamAttribute\":\"isPowerSaverEnabled\",\"columnType\":\"BOOL\",\"columnName\":\"META_ISPOWERSAVERENABLED\"}," +
-                        "{\"streamAttribute\":\"sensorId\",\"columnType\":\"INT\",\"columnName\":\"META_SENSORID\"}," +
-                        "{\"streamAttribute\":\"sensorName\",\"columnType\":\"STRING\",\"columnName\":\"META_SENSORNAME\"}," +
-                        "{\"streamAttribute\":\"longitude\",\"columnType\":\"DOUBLE\",\"columnName\":\"CORRELATION_LONGITUDE\"}," +
-                        "{\"streamAttribute\":\"latitude\",\"columnType\":\"DOUBLE\",\"columnName\":\"CORRELATION_LATITUDE\"}," +
-                        "{\"streamAttribute\":\"humidity\",\"columnType\":\"FLOAT\",\"columnName\":\"HUMIDITY\"}," +
-                        "{\"streamAttribute\":\"sensorValue\",\"columnType\":\"DOUBLE\",\"columnName\":\"SENSORVALUE\"}" +
-                    "]}"
-            );
+            String eventStreamDataSourceColumnNamesAndTypeInfo = eventSimulatorAdminServiceClient
+                    .testSimulateRDBMSDataSourceConnection(
+                            "{\"streamID\":\"org.wso2.event.sensor.stream2:1.0.0\"," +
+                            "\"eventStreamName\":\"org.wso2.event.sensor.stream2\"," +
+                            "\"dataSource\":\"WSO2CEP_DB\"," +
+                            "\"tableName\":\"sensordata\"," +
+                            "\"name\":\"testSimulator\"," +
+                            "\"delayBetweenEventsInMilies\":\"1000\"," +
+                            "\"dataSourceColumnsAndTypes\":[" +
+                            "{\"streamAttribute\":\"timestamp\",\"columnType\":\"LONG\",\"columnName\":\"META_TIMESTAMP\"}," +
+                            "{\"streamAttribute\":\"isPowerSaverEnabled\",\"columnType\":\"BOOL\",\"columnName\":\"META_ISPOWERSAVERENABLED\"}," +
+                            "{\"streamAttribute\":\"sensorId\",\"columnType\":\"INT\",\"columnName\":\"META_SENSORID\"}," +
+                            "{\"streamAttribute\":\"sensorName\",\"columnType\":\"STRING\",\"columnName\":\"META_SENSORNAME\"}," +
+                            "{\"streamAttribute\":\"longitude\",\"columnType\":\"DOUBLE\",\"columnName\":\"CORRELATION_LONGITUDE\"}," +
+                            "{\"streamAttribute\":\"latitude\",\"columnType\":\"DOUBLE\",\"columnName\":\"CORRELATION_LATITUDE\"}," +
+                            "{\"streamAttribute\":\"humidity\",\"columnType\":\"FLOAT\",\"columnName\":\"HUMIDITY\"}," +
+                            "{\"streamAttribute\":\"sensorValue\",\"columnType\":\"DOUBLE\",\"columnName\":\"SENSORVALUE\"}" +
+                            "]}"
+                    );
 
-            boolean configurationSaved = eventSimulatorAdminServiceClient.saveDataSourceConfigDetails(eventStreamDataSourceColumnNamesAndTypeInfo);
+            boolean configurationSaved = eventSimulatorAdminServiceClient.saveDataSourceConfigDetails(
+                    eventStreamDataSourceColumnNamesAndTypeInfo);
             Thread.sleep(5000);
             if (configurationSaved) {
                 int i = 0;
