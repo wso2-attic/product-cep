@@ -87,4 +87,35 @@ public class EventSimulatorAdminServiceClient {
             throw new RemoteException();
         }
     }
+
+    public boolean saveDataSourceConfigDetails(String eventStreamDataSourceColumnNamesAndTypeInfo)
+            throws RemoteException {
+        try {
+            return executionSimulatorAdminServiceStub.saveDataSourceConfigDetails(
+                    eventStreamDataSourceColumnNamesAndTypeInfo);
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException();
+        }
+    }
+
+    public boolean sendDBConfigFileNameToSimulate(String fileName)
+            throws RemoteException {
+        try {
+            return executionSimulatorAdminServiceStub.sendDBConfigFileNameToSimulate(fileName);
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException();
+        }
+    }
+
+    public boolean deleteDBConfigFile(String fileName)
+            throws RemoteException {
+        try {
+            return executionSimulatorAdminServiceStub.deleteDBConfigFile(fileName);
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException();
+        }
+    }
 }
