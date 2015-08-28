@@ -67,7 +67,7 @@
                                     <artifactId>org.wso2.carbon.event.output.adapter.ui.test</artifactId>
                                     <version>${carbon.analytics-common.version}</version>
                                     <type>war</type>
-                                    <destFileName>outputuiapp.war</destFileName>
+                                    <destFileName>outputuitest.war</destFileName>
                                 </artifactItem>
                             </artifactItems>
                             <outputDirectory>../../target/output-ui-test</outputDirectory>
