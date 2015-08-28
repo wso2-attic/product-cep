@@ -54,6 +54,11 @@ public class JMSClient {
         Session session = null;
         Properties properties = new Properties();
 
+        if(!broker.equalsIgnoreCase("activemq") && !broker.equalsIgnoreCase("mb") && !broker.equalsIgnoreCase("qpid")){
+            log.error("Please enter a valid JMS message broker. (ex: activemq, mb, qpid");
+            return;
+        }
+
         try {
 
             if(topicName != null && !topicName.equalsIgnoreCase("")) {
@@ -75,8 +80,6 @@ public class JMSClient {
                     properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("qpid.properties"));
                     Context context = new InitialContext(properties);
                     connFactory = (TopicConnectionFactory) context.lookup("qpidConnectionFactory");
-                } else {
-                    log.error("Please enter a valid JMS message broker. (ex: activemq, mb, qpid");
                 }
 
                 if(connFactory != null) {
@@ -123,19 +126,14 @@ public class JMSClient {
                     properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("activemq.properties"));
                     Context context = new InitialContext(properties);
                     connFactory = (QueueConnectionFactory) context.lookup("ConnectionFactory");
-
                 }else if(broker.equalsIgnoreCase("mb")){
                     properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("mb.properties"));
                     Context context = new InitialContext(properties);
                     connFactory = (QueueConnectionFactory) context.lookup("qpidConnectionFactory");
-
                 }else if(broker.equalsIgnoreCase("qpid")){
                     properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("qpid.properties"));
                     Context context = new InitialContext(properties);
                     connFactory = (QueueConnectionFactory) context.lookup("qpidConnectionFactory");
-
-                }else{
-                    log.error("Please enter a valid JMS message broker. (ex: activemq, mb, qpid");
                 }
 
                 if(connFactory != null) {

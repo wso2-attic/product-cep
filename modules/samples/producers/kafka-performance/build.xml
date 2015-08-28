@@ -28,7 +28,7 @@
 
     <property name="url" value="localhost:9092"/>
     <property name="topic" value="kafkaTopicProduce"/>
-    <property name="noOfEvents" value="20000000"/>
+    <property name="eventCount" value="20000000"/>
     <property name="elapsedCount" value="1000000"/>
     <property name="noOfPublishers" value="1"/>
 
@@ -69,12 +69,12 @@
     </target>
 
     <target name="run" depends="compile">
-        <echo>Configure -Durl=xxxx -Dtopic=xxxx -DnoOfEvents=xxxx -DelapsedCount=XXXX -DnoOfPublishers=xxxx</echo>
+        <echo>Configure -Durl=xxxx -Dtopic=xxxx -DeventCount=xxxx -DelapsedCount=XXXX -DnoOfPublishers=xxxx</echo>
         <java classname="${main-class}"
               classpathref="javac.classpath" fork="true">
             <arg value="${url}"/>
             <arg value="${topic}"/>
-            <arg value="${noOfEvents}"/>
+            <arg value="${eventCount}"/>
             <arg value="${elapsedCount}"/>
             <arg value="${noOfPublishers}"/>
         </java>

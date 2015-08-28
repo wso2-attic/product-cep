@@ -103,7 +103,8 @@ public abstract class CEPIntegrationTest {
      */
     protected String getXMLArtifactConfiguration(String testCaseFolderName, String configFileName)
             throws Exception {
-        String relativeFilePath = getTestArtifactLocation() + "/artifacts/CEP/" + testCaseFolderName + "/" + configFileName;
+        String relativeFilePath = getTestArtifactLocation() + CEPIntegrationTestConstants.RELATIVE_PATH_TO_TEST_ARTIFACTS + testCaseFolderName + "/"
+                                  + configFileName;
         relativeFilePath = relativeFilePath.replaceAll("[\\\\/]", Matcher.quoteReplacement(File.separator));
         OMElement configElement = loadClasspathResourceXML(relativeFilePath);
         return configElement.toString();
@@ -117,7 +118,7 @@ public abstract class CEPIntegrationTest {
      */
     protected String getJSONArtifactConfiguration(String testCaseFolderName, String configFileName)
             throws Exception {
-        String relativeFilePath = getTestArtifactLocation() + "/artifacts/CEP/" + testCaseFolderName + "/" + configFileName;
+        String relativeFilePath = getTestArtifactLocation() + CEPIntegrationTestConstants.RELATIVE_PATH_TO_TEST_ARTIFACTS + testCaseFolderName + "/" + configFileName;
         relativeFilePath = relativeFilePath.replaceAll("[\\\\/]", Matcher.quoteReplacement(File.separator));
         JSONParser jsonParser = new JSONParser();
         return jsonParser.parse(new FileReader(relativeFilePath)).toString();
@@ -133,7 +134,7 @@ public abstract class CEPIntegrationTest {
      */
     protected String getExecutionPlanFromFile(String testCaseFolderName, String executionPlanFileName)
             throws Exception {
-        String relativeFilePath = getTestArtifactLocation() + "/artifacts/CEP/" + testCaseFolderName + "/" + executionPlanFileName;
+        String relativeFilePath = getTestArtifactLocation() + CEPIntegrationTestConstants.RELATIVE_PATH_TO_TEST_ARTIFACTS + testCaseFolderName + "/" + executionPlanFileName;
         relativeFilePath = relativeFilePath.replaceAll("[\\\\/]", Matcher.quoteReplacement(File.separator));
         return ConfigurationUtil.readFile(relativeFilePath);
     }
