@@ -195,7 +195,7 @@ public class EventSimulatorAdminServiceTestCase extends CEPIntegrationTest {
                 int i = 0;
                 boolean fileAvailable = false;
                 DataSourceTableAndStreamInfoDto[] dataSourceTableAndStreamInfoDtos;
-                while (i < 10 && !fileAvailable) {
+                while (i < 20 && !fileAvailable) {
                     dataSourceTableAndStreamInfoDtos = eventSimulatorAdminServiceClient.getAllDataSourceTableAndStreamInfo();
                     for (int j = 0; dataSourceTableAndStreamInfoDtos != null && j < dataSourceTableAndStreamInfoDtos.length; j++) {
                         if (dataSourceTableAndStreamInfoDtos[j].getConfigurationName().equals("testSimulator")) {
