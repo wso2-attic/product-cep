@@ -73,11 +73,21 @@ do
         `[ -f $CARBON_HOME/repository/deployment/server/webapps/outputui.war ] && cp $CARBON_HOME/repository/deployment/server/webapps/outputui.war $CARBON_HOME/samples/artifacts/$c/webapps/`
         `[ -f $CARBON_HOME/repository/deployment/server/webapps/shindig.war ] && cp $CARBON_HOME/repository/deployment/server/webapps/shindig.war $CARBON_HOME/samples/artifacts/$c/webapps/`
         `[ -d $CARBON_HOME/repository/deployment/server/webapps/STRATOS_ROOT ] && cp -r $CARBON_HOME/repository/deployment/server/webapps/STRATOS_ROOT $CARBON_HOME/samples/artifacts/$c/webapps/`
+      else
+        `[ ! -f $CARBON_HOME/samples/artifacts/$c/webapps/inputwebsocket.war ] && cp $CARBON_HOME/repository/deployment/server/webapps/inputwebsocket.war $CARBON_HOME/samples/artifacts/$c/webapps/`
+        `[ ! -f $CARBON_HOME/samples/artifacts/$c/webapps/outputwebsocket.war ] && cp $CARBON_HOME/repository/deployment/server/webapps/outputwebsocket.war $CARBON_HOME/samples/artifacts/$c/webapps/`
+        `[ ! -f $CARBON_HOME/samples/artifacts/$c/webapps/outputui.war ] && cp $CARBON_HOME/repository/deployment/server/webapps/outputui.war $CARBON_HOME/samples/artifacts/$c/webapps/`
+        `[ ! -f $CARBON_HOME/samples/artifacts/$c/webapps/shindig.war ] && cp $CARBON_HOME/repository/deployment/server/webapps/shindig.war $CARBON_HOME/samples/artifacts/$c/webapps/`
+        `[ ! -d $CARBON_HOME/samples/artifacts/$c/webapps/STRATOS_ROOT ] && cp -r $CARBON_HOME/repository/deployment/server/webapps/STRATOS_ROOT $CARBON_HOME/samples/artifacts/$c/webapps/`
       fi
       if [ ! -d $CARBON_HOME/samples/artifacts/$c/jaggeryapps ]; then
         `mkdir -p $CARBON_HOME/samples/artifacts/$c/jaggeryapps`
         `cp -r $CARBON_HOME/repository/deployment/server/jaggeryapps/portal $CARBON_HOME/samples/artifacts/$c/jaggeryapps/`
         `rm -r $CARBON_HOME/samples/artifacts/$c/jaggeryapps/portal/store/*`
+        `cp -r $CARBON_HOME/repository/deployment/server/jaggeryapps/portal/store/carbon.super $CARBON_HOME/samples/artifacts/$c/jaggeryapps/portal/store/`
+        `rm -r $CARBON_HOME/samples/artifacts/$c/jaggeryapps/portal/store/carbon.super/gadget/*`
+        `cp -r $CARBON_HOME/repository/deployment/server/jaggeryapps/portal/store/wso2.com $CARBON_HOME/samples/artifacts/$c/jaggeryapps/portal/store/`
+        `rm -r $CARBON_HOME/samples/artifacts/$c/jaggeryapps/portal/store/wso2.com/gadget/*`
       fi
     else
       echo "*** Specified sample number is not a number *** Please specify a valid sample number with the -sn option"
