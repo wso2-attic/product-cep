@@ -153,15 +153,14 @@
             </includes>
             <fileMode>755</fileMode>
         </fileSet>
-        <file>
+        <fileSet>
             <directory>scripts</directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/bin</outputDirectory>
             <includes>
                 <include>wso2server.sh</include>
             </includes>
-            <outputDirectory>${pom.artifactId}-${pom.version}/bin</outputDirectory>
             <fileMode>755</fileMode>
-        </file>
+        </fileSet>
 
 
         <!--&lt;!&ndash;creating samples/lib directory&ndash;&gt;-->
