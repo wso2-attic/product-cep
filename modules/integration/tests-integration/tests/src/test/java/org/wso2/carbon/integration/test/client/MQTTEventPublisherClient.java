@@ -16,17 +16,13 @@
 
 package org.wso2.carbon.integration.test.client;
 
-import org.apache.axiom.om.util.Base64;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.SystemDefaultHttpClient;
 import org.apache.log4j.Logger;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
+import org.wso2.cep.integration.common.utils.CEPIntegrationTestConstants;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -40,7 +36,7 @@ public class MQTTEventPublisherClient {
     private static Logger log = Logger.getLogger(MQTTEventPublisherClient.class);
 
     public static void publish(String url, String topic, String testCaseFolderName, String dataFileName) {
-        System.out.println("Starting MQTT EventPublisher Client");
+        log.info("Starting MQTT EventPublisher Client");
         KeyStoreUtil.setTrustStoreParams();
         MqttConnectOptions connOpt = new MqttConnectOptions();
         connOpt.setCleanSession(true);
@@ -52,8 +48,8 @@ public class MQTTEventPublisherClient {
 
             List<String> messagesList = readMsg(getTestDataFileLocation(testCaseFolderName, dataFileName));
             for (String message : messagesList) {
-                System.out.println("Sending message:");
-                System.out.println(message);
+                log.info("Sending message:");
+                log.info(message);
                 int pubQoS = 1;
                 MqttMessage mqttMessage = new MqttMessage(message.getBytes());
                 mqttMessage.setQos(pubQoS);
@@ -119,9 +115,9 @@ public class MQTTEventPublisherClient {
      * @param dataFileName       Text file to be read
      */
     public static String getTestDataFileLocation(String testCaseFolderName, String dataFileName) throws Exception {
-        String relativeFilePath =
-                FrameworkPathUtil.getSystemResourceLocation() + "/artifacts/CEP/" + testCaseFolderName + File.separator
-                        + dataFileName;
+        String relativeFilePath = FrameworkPathUtil.getSystemResourceLocation() +
+                                  CEPIntegrationTestConstants.RELATIVE_PATH_TO_TEST_ARTIFACTS +
+                                  testCaseFolderName + File.separator + dataFileName;
         relativeFilePath = relativeFilePath.replaceAll("[\\\\/]", Matcher.quoteReplacement(File.separator));
         return relativeFilePath;
     }

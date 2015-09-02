@@ -28,6 +28,7 @@ import org.wso2.carbon.event.publisher.stub.types.BasicOutputAdapterPropertyDto;
 import org.wso2.carbon.event.simulator.stub.types.EventDto;
 import org.wso2.carbon.integration.test.client.WireMonitorServer;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
+import org.wso2.cep.integration.common.utils.CEPIntegrationTestConstants;
 
 import java.io.File;
 import java.rmi.RemoteException;
@@ -61,11 +62,11 @@ public class SOAPTestCase extends CEPIntegrationTest {
         EventDto eventDto = new EventDto();
         eventDto.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
         eventDto.setAttributeValues(new String[]{"199008131245", "false", "100", "temperature", "23.45656", "7.12324",
-                "100.34", "23.4545"});
+                                                 "100.34", "23.4545"});
 
         //Add StreamDefinition
         String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
-                "org.wso2.event.sensor.stream_1.0.0.json");
+                                                                       "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
@@ -75,7 +76,7 @@ public class SOAPTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         Thread.sleep(10000);
-        WireMonitorServer wireMonitorServer = new WireMonitorServer(9445);
+        WireMonitorServer wireMonitorServer = new WireMonitorServer(CEPIntegrationTestConstants.WIRE_MONITOR_PORT);
         Thread wireMonitorServerThread = new Thread(wireMonitorServer);
         wireMonitorServerThread.start();
         Thread.sleep(3000);
@@ -90,10 +91,10 @@ public class SOAPTestCase extends CEPIntegrationTest {
         log.info(receivedEvent);
 
         String sentEvent = "<events><event><metaData><timestamp>199008131245</timestamp>" +
-                "<isPowerSaverEnabled>false</isPowerSaverEnabled><sensorId>100</sensorId>" +
-                "<sensorName>temperature</sensorName></metaData><correlationData><longitude>23.45656</longitude>" +
-                "<latitude>7.12324</latitude></correlationData><payloadData><humidity>100.34</humidity>" +
-                "<sensorValue>23.4545</sensorValue></payloadData></event></events>";
+                           "<isPowerSaverEnabled>false</isPowerSaverEnabled><sensorId>100</sensorId>" +
+                           "<sensorName>temperature</sensorName></metaData><correlationData><longitude>23.45656</longitude>" +
+                           "<latitude>7.12324</latitude></correlationData><payloadData><humidity>100.34</humidity>" +
+                           "<sensorValue>23.4545</sensorValue></payloadData></event></events>";
 
         eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
         eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("soap.xml");
@@ -117,11 +118,11 @@ public class SOAPTestCase extends CEPIntegrationTest {
         EventDto eventDto = new EventDto();
         eventDto.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
         eventDto.setAttributeValues(new String[]{"199008131245", "false", "100", "temperature", "23.45656", "7.12324",
-                "100.34", "23.4545"});
+                                                 "100.34", "23.4545"});
 
         //Add StreamDefinition
         String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
-                "org.wso2.event.sensor.stream_1.0.0.json");
+                                                                       "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
@@ -131,7 +132,7 @@ public class SOAPTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         Thread.sleep(10000);
-        WireMonitorServer wireMonitorServer = new WireMonitorServer(9445);
+        WireMonitorServer wireMonitorServer = new WireMonitorServer(CEPIntegrationTestConstants.WIRE_MONITOR_PORT);
         Thread wireMonitorServerThread = new Thread(wireMonitorServer);
         wireMonitorServerThread.start();
 
@@ -145,21 +146,21 @@ public class SOAPTestCase extends CEPIntegrationTest {
         log.info(receivedEvent);
 
         String sentEvent = "<SensorData>" +
-                "<equipmentRelatedData>" +
-                "<timestamp>199008131245</timestamp>" +
-                "<isPowerSaverEnabled>false</isPowerSaverEnabled>" +
-                "<sensorId>100</sensorId>" +
-                "<sensorName>temperature</sensorName>" +
-                "</equipmentRelatedData>" +
-                "<locationData>" +
-                "<longitude>23.45656</longitude>" +
-                "<latitude>7.12324</latitude>" +
-                "</locationData>" +
-                "<sensorData>" +
-                "<humidity>100.34</humidity>" +
-                "<sensorValue>23.4545</sensorValue>" +
-                "</sensorData>" +
-                "</SensorData>";
+                           "<equipmentRelatedData>" +
+                           "<timestamp>199008131245</timestamp>" +
+                           "<isPowerSaverEnabled>false</isPowerSaverEnabled>" +
+                           "<sensorId>100</sensorId>" +
+                           "<sensorName>temperature</sensorName>" +
+                           "</equipmentRelatedData>" +
+                           "<locationData>" +
+                           "<longitude>23.45656</longitude>" +
+                           "<latitude>7.12324</latitude>" +
+                           "</locationData>" +
+                           "<sensorData>" +
+                           "<humidity>100.34</humidity>" +
+                           "<sensorValue>23.4545</sensorValue>" +
+                           "</sensorData>" +
+                           "</SensorData>";
 
         eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
         eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("soapCustomXML.xml");
@@ -175,11 +176,11 @@ public class SOAPTestCase extends CEPIntegrationTest {
 
     @Test(groups = {"wso2.cep"}, description = "Testing SOAP publisher connection", expectedExceptions = AxisFault.class)
     public void testConnection() throws AxisFault {
-        BasicOutputAdapterPropertyDto[] outputPropertyConfiguration = new BasicOutputAdapterPropertyDto[] {};
+        BasicOutputAdapterPropertyDto[] outputPropertyConfiguration = new BasicOutputAdapterPropertyDto[]{};
         try {
-            eventPublisherAdminServiceClient.testConnection("soapCustomXML","soap",outputPropertyConfiguration,"xml");
+            eventPublisherAdminServiceClient.testConnection("soapCustomXML", "soap", outputPropertyConfiguration, "xml");
         } catch (AxisFault e) {
-            throw new AxisFault(e.getMessage(),e);
+            throw new AxisFault(e.getMessage(), e);
         } catch (RemoteException e) {
             log.error("Exception thrown: " + e.getMessage(), e);
             Assert.fail("Exception: " + e.getMessage());

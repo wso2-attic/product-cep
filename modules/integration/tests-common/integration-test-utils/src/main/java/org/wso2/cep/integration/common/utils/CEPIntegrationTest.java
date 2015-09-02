@@ -54,8 +54,8 @@ public abstract class CEPIntegrationTest {
     protected ExecutionManagerAdminServiceClient executionManagerAdminServiceClient;
     protected EventSimulatorAdminServiceClient eventSimulatorAdminServiceClient;
 
-    private final String artifactDeploymentDir = System.getProperty("user.dir") + File.separator + "repository" + File.separator +
-            "deployment" + File.separator + "server" + File.separator;
+    private final String artifactDeploymentDir = FrameworkPathUtil.getCarbonHome() + File.separator + "repository" +
+                                                 File.separator + "deployment" + File.separator + "server" + File.separator;
 
     protected void init() throws Exception {
         init(TestUserMode.SUPER_TENANT_ADMIN);

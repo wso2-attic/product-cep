@@ -31,6 +31,7 @@ import org.wso2.carbon.databridge.commons.exception.MalformedStreamDefinitionExc
 import org.wso2.carbon.databridge.commons.exception.NoStreamDefinitionExistException;
 import org.wso2.carbon.databridge.commons.exception.StreamDefinitionException;
 import org.wso2.carbon.databridge.commons.exception.TransportException;
+import org.wso2.cep.integration.common.utils.CEPIntegrationTestConstants;
 
 import javax.security.sasl.AuthenticationException;
 import java.io.BufferedReader;
@@ -69,9 +70,9 @@ public class Wso2EventClient {
 
     public static String getTestDataFileLocation(String testCaseFolderName, String dataFileName) {
 
-        String relativeFilePath =
-                FrameworkPathUtil.getSystemResourceLocation() + "/artifacts/CEP/" + testCaseFolderName + "/"
-                        + dataFileName;
+        String relativeFilePath = FrameworkPathUtil.getSystemResourceLocation() +
+                                  CEPIntegrationTestConstants.RELATIVE_PATH_TO_TEST_ARTIFACTS + testCaseFolderName +
+                                  "/" + dataFileName;
         relativeFilePath = relativeFilePath.replaceAll("[\\\\/]", Matcher.quoteReplacement(File.separator));
         return relativeFilePath;
     }

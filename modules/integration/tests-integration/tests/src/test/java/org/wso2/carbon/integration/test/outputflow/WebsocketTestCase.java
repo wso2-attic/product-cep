@@ -27,6 +27,7 @@ import org.wso2.carbon.event.simulator.stub.types.EventDto;
 import org.wso2.carbon.integration.test.client.WebSocketClient;
 import org.wso2.carbon.integration.test.client.WebSocketServer;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
+import org.wso2.cep.integration.common.utils.CEPIntegrationTestConstants;
 
 import java.io.File;
 
@@ -67,13 +68,15 @@ public class WebsocketTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         WebSocketClient webSocketClient = new WebSocketClient();
-        webSocketClient.receive("ws://localhost:9763/outputwebsocket/WebsocketLocalPublisher", 30);
+        webSocketClient.receive("ws://localhost:" + CEPIntegrationTestConstants.HTTP_PORT +
+                                "/outputwebsocket/WebsocketLocalPublisher", 30);
 
         Thread.sleep(1000);
 
         EventDto eventDto = new EventDto();
         eventDto.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
-        eventDto.setAttributeValues(new String[]{"199008131245", "false", "100", "temperature", "23.45656", "7.12324", "100.34", "23.4545"});
+        eventDto.setAttributeValues(new String[]{"199008131245", "false", "100", "temperature", "23.45656", "7.12324",
+                                                 "100.34", "23.4545"});
 
         eventSimulatorAdminServiceClient.sendEvent(eventDto);
         Thread.sleep(1000);
@@ -102,13 +105,14 @@ public class WebsocketTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         WebSocketServer socketServer = new WebSocketServer();
-        socketServer.start(9099);
+        socketServer.start(CEPIntegrationTestConstants.WEB_SOCKET_SERVER_PORT);
 
         Thread.sleep(1000);
 
         EventDto eventDto = new EventDto();
         eventDto.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
-        eventDto.setAttributeValues(new String[]{"199008131245", "false", "100", "temperature", "23.45656", "7.12324", "100.34", "23.4545"});
+        eventDto.setAttributeValues(new String[]{"199008131245", "false", "100", "temperature", "23.45656", "7.12324",
+                                                 "100.34", "23.4545"});
 
         eventSimulatorAdminServiceClient.sendEvent(eventDto);
         Thread.sleep(1000);

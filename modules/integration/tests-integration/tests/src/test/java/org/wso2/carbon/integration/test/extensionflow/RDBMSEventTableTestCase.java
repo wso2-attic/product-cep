@@ -34,6 +34,7 @@ import org.wso2.carbon.ndatasource.ui.stub.core.services.xsd.WSDataSourceMetaInf
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
 
 import javax.xml.stream.XMLStreamException;
+import java.io.File;
 
 /**
  * Testing RDBMS Event Table Extension Sample..
@@ -68,20 +69,22 @@ public class RDBMSEventTableTestCase extends CEPIntegrationTest {
         int startEXPCount = eventProcessorAdminServiceClient.getExecutionPlanConfigurationCount();
 
         //Add StreamDefinition
-        String streamDefinitionAsString1 = getJSONArtifactConfiguration("extensionflows/eventtable", "org.wso2.sample.pizza.orderStream_1.0.0.json");
+        String streamDefinitionAsString1 = getJSONArtifactConfiguration("extensionflows" + File.separator + "eventtable", "org.wso2" +
+                                                                                                      ".sample.pizza.orderStream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString1);
-        String streamDefinitionAsString2 = getJSONArtifactConfiguration("extensionflows/eventtable", "org.wso2.sample.pizza.stream.previousOrders_1.0.0.json");
+        String streamDefinitionAsString2 = getJSONArtifactConfiguration("extensionflows" + File.separator + "eventtable", "org.wso2" +
+                                                                                                      ".sample.pizza.stream.previousOrders_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString2);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 2);
 
 
         //Add Execution Plan
-        String executionPlanAsString = getExecutionPlanFromFile("extensionflows/eventtable", "PreviousHistoryProcessingPlan.siddhiql");
+        String executionPlanAsString = getExecutionPlanFromFile("extensionflows" + File.separator + "eventtable", "PreviousHistoryProcessingPlan.siddhiql");
         eventProcessorAdminServiceClient.addExecutionPlan(executionPlanAsString);
         Assert.assertEquals(eventProcessorAdminServiceClient.getActiveExecutionPlanConfigurationCount(), startEXPCount + 1);
 
         //Add RDBMS publisher
-        String eventPublisherConfig = getXMLArtifactConfiguration("extensionflows/eventtable", "historyPizzaOrderPublisher.xml");
+        String eventPublisherConfig = getXMLArtifactConfiguration("extensionflows" + File.separator + "eventtable", "historyPizzaOrderPublisher.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 

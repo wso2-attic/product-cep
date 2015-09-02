@@ -27,7 +27,9 @@ import org.wso2.carbon.databridge.commons.Event;
 import org.wso2.carbon.event.simulator.stub.types.EventDto;
 import org.wso2.carbon.integration.test.client.Wso2EventServer;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
+import org.wso2.cep.integration.common.utils.CEPIntegrationTestConstants;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,10 +66,10 @@ public class EvalScriptExtensionTestCase extends CEPIntegrationTest {
         int startEXPCount = eventProcessorAdminServiceClient.getExecutionPlanConfigurationCount();
 
         //Add StreamDefinition
-        String streamDefinitionAsString1 = getJSONArtifactConfiguration("extensionflows/evalscript",
+        String streamDefinitionAsString1 = getJSONArtifactConfiguration("extensionflows" + File.separator + "evalscript",
                 "org.wso2.sample.stock.quote.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString1);
-        String streamDefinitionAsString2 = getJSONArtifactConfiguration("extensionflows/evalscript",
+        String streamDefinitionAsString2 = getJSONArtifactConfiguration("extensionflows" + File.separator + "evalscript",
                 "org.wso2.sample.stock.quote.stream.results_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString2);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(),
@@ -75,7 +77,7 @@ public class EvalScriptExtensionTestCase extends CEPIntegrationTest {
 
         //Add Execution Plan
         String executionPlanAsString =
-                getExecutionPlanFromFile("extensionflows/evalscript", "ExecutionPlan.siddhiql");
+                getExecutionPlanFromFile("extensionflows" + File.separator + "evalscript", "ExecutionPlan.siddhiql");
         eventProcessorAdminServiceClient.addExecutionPlan(executionPlanAsString);
         Assert.assertEquals(
                 eventProcessorAdminServiceClient.getActiveExecutionPlanConfigurationCount(),
@@ -83,7 +85,7 @@ public class EvalScriptExtensionTestCase extends CEPIntegrationTest {
 
         //Add WSO2Event publisher
         String eventPublisherConfig =
-                getXMLArtifactConfiguration("extensionflows/evalscript", "Wso2EventPublisher.xml");
+                getXMLArtifactConfiguration("extensionflows" + File.separator + "evalscript", "Wso2EventPublisher.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(),
                 startEPCount + 1);
@@ -99,7 +101,8 @@ public class EvalScriptExtensionTestCase extends CEPIntegrationTest {
         eventDto3.setAttributeValues(new String[]{"Microsoft", "70", "50"});
 
         //The data-bridge receiver
-        Wso2EventServer agentServer = new Wso2EventServer("extensionflows/evalscript", 7661, true);
+        Wso2EventServer agentServer = new Wso2EventServer("extensionflows" + File.separator + "evalscript", CEPIntegrationTestConstants
+                .TCP_PORT, true);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start

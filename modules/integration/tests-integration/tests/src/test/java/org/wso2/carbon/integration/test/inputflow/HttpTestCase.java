@@ -27,6 +27,7 @@ import org.wso2.carbon.databridge.commons.Event;
 import org.wso2.carbon.integration.test.client.HttpEventPublisherClient;
 import org.wso2.carbon.integration.test.client.Wso2EventServer;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
+import org.wso2.cep.integration.common.utils.CEPIntegrationTestConstants;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -75,14 +76,14 @@ public class HttpTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         // The data-bridge receiver
-        Wso2EventServer agentServer = new Wso2EventServer(samplePath, 7661, true);
+        Wso2EventServer agentServer = new Wso2EventServer(samplePath, CEPIntegrationTestConstants.TCP_PORT, true);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start
         Thread.sleep(10000);
 
-        HttpEventPublisherClient.publish("http://localhost:9763/endpoints/httpReceiver", "admin", "admin",
-                samplePath, "httpReceiver.txt");
+        HttpEventPublisherClient.publish("http://localhost:" + CEPIntegrationTestConstants.HTTP_PORT +
+                                         "/endpoints/httpReceiver", "admin", "admin", samplePath, "httpReceiver.txt");
 
         //wait while all stats are published
         Thread.sleep(30000);
@@ -154,14 +155,14 @@ public class HttpTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         // The data-bridge receiver
-        Wso2EventServer agentServer = new Wso2EventServer(samplePath, 7661, true);
+        Wso2EventServer agentServer = new Wso2EventServer(samplePath, CEPIntegrationTestConstants.TCP_PORT, true);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start
         Thread.sleep(10000);
 
-        HttpEventPublisherClient.publish("http://localhost:9763/endpoints/httpReceiver", "admin", "admin",
-                samplePath, "httpReceiver.txt");
+        HttpEventPublisherClient.publish("http://localhost:" + CEPIntegrationTestConstants.HTTP_PORT +
+                                         "/endpoints/httpReceiver", "admin", "admin", samplePath, "httpReceiver.txt");
 
         //wait while all stats are published
         Thread.sleep(5000);
@@ -233,14 +234,14 @@ public class HttpTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         // The data-bridge receiver
-        Wso2EventServer agentServer = new Wso2EventServer(samplePath, 7661, true);
+        Wso2EventServer agentServer = new Wso2EventServer(samplePath, CEPIntegrationTestConstants.TCP_PORT, true);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start
         Thread.sleep(10000);
 
-        HttpEventPublisherClient.publish("http://localhost:9763/endpoints/httpReceiver", "admin", "admin",
-                samplePath, "httpReceiver.txt");
+        HttpEventPublisherClient.publish("http://localhost:" + CEPIntegrationTestConstants.HTTP_PORT +
+                                         "/endpoints/httpReceiver", "admin", "admin", samplePath, "httpReceiver.txt");
 
         //wait while all stats are published
         Thread.sleep(5000);
@@ -311,14 +312,14 @@ public class HttpTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         // The data-bridge receiver
-        Wso2EventServer agentServer = new Wso2EventServer(samplePath, 7661, true);
+        Wso2EventServer agentServer = new Wso2EventServer(samplePath, CEPIntegrationTestConstants.TCP_PORT, true);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start
         Thread.sleep(10000);
 
-        HttpEventPublisherClient.publish("http://localhost:9763/endpoints/httpReceiver", "admin", "admin",
-                samplePath, "httpReceiver.txt");
+        HttpEventPublisherClient.publish("http://localhost:" + CEPIntegrationTestConstants.HTTP_PORT +
+                                         "/endpoints/httpReceiver", "admin", "admin", samplePath, "httpReceiver.txt");
 
         //wait while all stats are published
         Thread.sleep(5000);
@@ -389,14 +390,14 @@ public class HttpTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         // The data-bridge receiver
-        Wso2EventServer agentServer = new Wso2EventServer(samplePath, 7661, true);
+        Wso2EventServer agentServer = new Wso2EventServer(samplePath, CEPIntegrationTestConstants.TCP_PORT, true);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start
         Thread.sleep(10000);
 
-        HttpEventPublisherClient.publish("http://localhost:9763/endpoints/httpReceiver", "admin", "admin",
-                samplePath, "httpReceiver.txt");
+        HttpEventPublisherClient.publish("http://localhost:" + CEPIntegrationTestConstants.HTTP_PORT +
+                                         "/endpoints/httpReceiver", "admin", "admin", samplePath, "httpReceiver.txt");
 
         //wait while all stats are published
         Thread.sleep(5000);
@@ -467,14 +468,14 @@ public class HttpTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         // The data-bridge receiver
-        Wso2EventServer agentServer = new Wso2EventServer(samplePath, 7661, true);
+        Wso2EventServer agentServer = new Wso2EventServer(samplePath, CEPIntegrationTestConstants.TCP_PORT, true);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start
         Thread.sleep(10000);
 
-        HttpEventPublisherClient.publish("http://localhost:9763/endpoints/httpReceiver", "admin", "admin",
-                samplePath, "httpReceiver.txt");
+        HttpEventPublisherClient.publish("http://localhost:" + CEPIntegrationTestConstants.HTTP_PORT +
+                                         "/endpoints/httpReceiver", "admin", "admin", samplePath, "httpReceiver.txt");
 
         //wait while all stats are published
         Thread.sleep(5000);
@@ -544,14 +545,14 @@ public class HttpTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         // The data-bridge receiver
-        Wso2EventServer agentServer = new Wso2EventServer(samplePath, 7661, true);
+        Wso2EventServer agentServer = new Wso2EventServer(samplePath, CEPIntegrationTestConstants.TCP_PORT, true);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start
         Thread.sleep(10000);
 
-        HttpEventPublisherClient.publish("https://localhost:9443/endpoints/httpReceiver", "admin", "admin",
-                samplePath, "httpReceiver.txt");
+        HttpEventPublisherClient.publish("https://localhost:" + CEPIntegrationTestConstants.HTTPS_PORT +
+                                         "/endpoints/httpReceiver", "admin", "admin", samplePath, "httpReceiver.txt");
 
         //wait while all stats are published
         Thread.sleep(30000);

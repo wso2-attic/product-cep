@@ -34,6 +34,7 @@ import org.wso2.carbon.databridge.core.exception.StreamDefinitionStoreException;
 import org.wso2.carbon.databridge.core.internal.authentication.AuthenticationHandler;
 import org.wso2.carbon.databridge.receiver.thrift.ThriftDataReceiver;
 import org.wso2.carbon.user.api.UserStoreException;
+import org.wso2.cep.integration.common.utils.CEPIntegrationTestConstants;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -164,7 +165,8 @@ public class Wso2EventServer implements Runnable {
     }
 
     public List<StreamDefinition> loadStreamDefinitions() {
-        String relativeFilePath = FrameworkPathUtil.getSystemResourceLocation() + "/artifacts/CEP/"+ testCaseResourceFolderName;
+        String relativeFilePath = FrameworkPathUtil.getSystemResourceLocation() + CEPIntegrationTestConstants
+                .RELATIVE_PATH_TO_TEST_ARTIFACTS + testCaseResourceFolderName;
         String directoryPath = relativeFilePath.replaceAll("[\\\\/]", Matcher.quoteReplacement(File.separator));
 
         GenericExtFilter filter = new GenericExtFilter(FILE_STREAM_DEFINTIONS_EXT);
@@ -219,7 +221,8 @@ public class Wso2EventServer implements Runnable {
     }
 
     public String getResourceFilePath(String testCaseFolderName, String resourceFileName) {
-        String relativeFilePath = FrameworkPathUtil.getSystemResourceLocation() + "/artifacts/CEP/"+ testCaseFolderName +"/"+ resourceFileName;
+        String relativeFilePath = FrameworkPathUtil.getSystemResourceLocation() + CEPIntegrationTestConstants
+                .RELATIVE_PATH_TO_TEST_ARTIFACTS + testCaseFolderName +"/"+ resourceFileName;
         return relativeFilePath.replaceAll("[\\\\/]", Matcher.quoteReplacement(File.separator));
     }
 

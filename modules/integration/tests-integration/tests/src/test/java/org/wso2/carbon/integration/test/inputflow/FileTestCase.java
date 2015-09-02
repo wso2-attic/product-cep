@@ -28,6 +28,7 @@ import org.wso2.carbon.integration.common.utils.mgt.ServerConfigurationManager;
 import org.wso2.carbon.integration.test.client.FilePublisherClient;
 import org.wso2.carbon.integration.test.client.Wso2EventServer;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
+import org.wso2.cep.integration.common.utils.CEPIntegrationTestConstants;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -61,7 +62,7 @@ public class FileTestCase extends CEPIntegrationTest {
         ServerConfigurationManager serverManager = new ServerConfigurationManager(cepServer);
         String samplePath = "inputflows" + File.separator + "sample0017";
         String destinationFilePath = serverManager.getCarbonHome() + File.separator + "repository" + File.separator
-                + "logs" + File.separator + "fileLogs.txt";
+                                     + "logs" + File.separator + "fileLogs.txt";
 
         File file = new File(destinationFilePath);
         //Create new file even if it exists
@@ -76,14 +77,14 @@ public class FileTestCase extends CEPIntegrationTest {
 
         //Add StreamDefinition
         String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
-                "org.wso2.event.sensor.stream_1.0.0.json");
+                                                                       "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
         //Add File EventReceiver without mapping
         String eventReceiverConfig = getXMLArtifactConfiguration(samplePath, "fileReceiver.xml");
         eventReceiverAdminServiceClient.addEventReceiverConfiguration(eventReceiverConfig.replace("$testFilePath",
-                destinationFilePath));
+                                                                                                  destinationFilePath));
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
 
         //Add Wso2event EventPublisher
@@ -92,7 +93,7 @@ public class FileTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         // The data-bridge receiver
-        Wso2EventServer agentServer = new Wso2EventServer(samplePath, 7661, true);
+        Wso2EventServer agentServer = new Wso2EventServer(samplePath, CEPIntegrationTestConstants.TCP_PORT, true);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start

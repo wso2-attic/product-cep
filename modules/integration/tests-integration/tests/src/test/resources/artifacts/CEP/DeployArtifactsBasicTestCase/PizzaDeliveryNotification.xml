@@ -34,6 +34,6 @@
         <property name="http.username">admin</property>
         <property name="http.password">admin</property>
         <property name="http.client.method">HttpPost</property>
-        <property name="http.url">http://localhost:9763/GenericLogService/log</property>
+        <property name="http.url">http://localhost:10563/GenericLogService/log</property>
     </to>
 </eventPublisher>

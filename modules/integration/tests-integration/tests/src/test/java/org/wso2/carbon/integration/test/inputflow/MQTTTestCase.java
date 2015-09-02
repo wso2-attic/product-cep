@@ -31,6 +31,7 @@ import org.wso2.carbon.integration.common.utils.mgt.ServerConfigurationManager;
 import org.wso2.carbon.integration.test.client.MQTTEventPublisherClient;
 import org.wso2.carbon.integration.test.client.Wso2EventServer;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
+import org.wso2.cep.integration.common.utils.CEPIntegrationTestConstants;
 
 import java.io.File;
 import java.io.IOException;
@@ -47,7 +48,6 @@ public class MQTTTestCase extends CEPIntegrationTest {
 
     private static final Log log = LogFactory.getLog(MQTTTestCase.class);
     private final String MQTT_CLIENT = "mqtt-client-0.4.0.jar";
-    private final String JAR_LOCATION = "/artifacts/CEP/jar";
     private JMSBrokerController activeMqBroker = null;
     private ServerConfigurationManager serverManager = null;
 
@@ -66,6 +66,7 @@ public class MQTTTestCase extends CEPIntegrationTest {
         setupMQTTBroker();
         //copying dependency mqtt jar files to component/lib
         try {
+            String JAR_LOCATION = File.separator + "artifacts" + File.separator + "CEP" + File.separator +"jar";;
             serverManager.copyToComponentLib(new File(getClass().getResource(JAR_LOCATION + File.separator + MQTT_CLIENT).toURI()));
             serverManager.restartGracefully();
         } catch (IOException e) {
@@ -108,14 +109,13 @@ public class MQTTTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         // The data-bridge receiver
-        Wso2EventServer agentServer = new Wso2EventServer(samplePath, 7661, true);
+        Wso2EventServer agentServer = new Wso2EventServer(samplePath, CEPIntegrationTestConstants.TCP_PORT, true);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start
         Thread.sleep(10000);
 
-        MQTTEventPublisherClient.publish("tcp://localhost:1883", "sensordata",
-                samplePath, "mqttEvents.txt");
+        MQTTEventPublisherClient.publish("tcp://localhost:1883", "sensordata", samplePath, "mqttEvents.txt");
 
         //wait while all stats are published
         Thread.sleep(30000);

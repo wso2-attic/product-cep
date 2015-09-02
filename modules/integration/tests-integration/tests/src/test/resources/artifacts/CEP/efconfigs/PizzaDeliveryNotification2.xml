@@ -30,6 +30,6 @@
 </inline>
   </mapping>
     <to eventAdaptorName="HttpOutputEventAdaptor" eventAdaptorType="http">
-        <property name="http.url">http://localhost:9763/GenericLogService/log</property>
+        <property name="http.url">http://localhost:10563/GenericLogService/log</property>
     </to>
 </eventFormatter>

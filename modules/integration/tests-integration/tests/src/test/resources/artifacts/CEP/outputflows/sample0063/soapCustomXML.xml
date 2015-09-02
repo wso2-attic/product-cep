@@ -39,6 +39,6 @@
         </inline>
     </mapping>
     <to eventAdapterType="soap">
-        <property name="url">http://localhost:9445/services/Axis2LogService/log</property>
+        <property name="url">http://localhost:10245/services/Axis2LogService/log</property>
     </to>
 </eventPublisher>

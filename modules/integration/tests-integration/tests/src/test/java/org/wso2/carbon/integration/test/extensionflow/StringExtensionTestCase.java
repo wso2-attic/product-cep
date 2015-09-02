@@ -27,7 +27,9 @@ import org.wso2.carbon.databridge.commons.Event;
 import org.wso2.carbon.event.simulator.stub.types.EventDto;
 import org.wso2.carbon.integration.test.client.Wso2EventServer;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
+import org.wso2.cep.integration.common.utils.CEPIntegrationTestConstants;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,18 +66,18 @@ public class StringExtensionTestCase extends CEPIntegrationTest {
         int startEXPCount = eventProcessorAdminServiceClient.getExecutionPlanConfigurationCount();
 
         //Add StreamDefinition
-        String streamDefinitionAsString1 = getJSONArtifactConfiguration("extensionflows/string",
-                "org.wso2.event.sensor.stream_1.0.0.json");
+        String streamDefinitionAsString1 = getJSONArtifactConfiguration("extensionflows" + File.separator + "string",
+                                                                        "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString1);
-        String streamDefinitionAsString2 = getJSONArtifactConfiguration("extensionflows/string",
-                "org.wso2.event.sensorClassifyCharAt.stream_1.0.0.json");
+        String streamDefinitionAsString2 = getJSONArtifactConfiguration("extensionflows" + File.separator + "string",
+                                                                        "org.wso2.event.sensorClassifyCharAt.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString2);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(),
-                startESCount + 2);
+                            startESCount + 2);
 
         //Add Execution Plan
         String executionPlanAsString =
-                getExecutionPlanFromFile("extensionflows/string", "ExecutionPlan.siddhiql");
+                getExecutionPlanFromFile("extensionflows" + File.separator + "string", "ExecutionPlan.siddhiql");
         eventProcessorAdminServiceClient.addExecutionPlan(executionPlanAsString);
         Assert.assertEquals(
                 eventProcessorAdminServiceClient.getActiveExecutionPlanConfigurationCount(),
@@ -83,10 +85,10 @@ public class StringExtensionTestCase extends CEPIntegrationTest {
 
         //Add WSO2Event publisher
         String eventPublisherConfig =
-                getXMLArtifactConfiguration("extensionflows/string", "wso2Publisher.xml");
+                getXMLArtifactConfiguration("extensionflows" + File.separator + "string", "wso2Publisher.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(),
-                startEPCount + 1);
+                            startEPCount + 1);
 
         EventDto eventDto = new EventDto();
         eventDto.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
@@ -99,7 +101,8 @@ public class StringExtensionTestCase extends CEPIntegrationTest {
         eventDto3.setAttributeValues(new String[]{"003", "Humidity", "23.4545"});
 
         // The data-bridge receiver
-        Wso2EventServer agentServer = new Wso2EventServer("extensionflows/string", 7661, true);
+        Wso2EventServer agentServer = new Wso2EventServer("extensionflows" + File.separator + "string",
+                                                          CEPIntegrationTestConstants.TCP_PORT, true);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start
@@ -138,13 +141,13 @@ public class StringExtensionTestCase extends CEPIntegrationTest {
 
         try {
             Assert.assertEquals(agentServer.getMsgCount(), messageCount,
-                    "Incorrect number of messages consumed!");
+                                "Incorrect number of messages consumed!");
             List<Event> preservedEventList = agentServer.getPreservedEventList();
             for (Event aEvent : preservedEventList) {
                 aEvent.setTimeStamp(0);
             }
             Assert.assertEquals(preservedEventList, eventList,
-                    "Mismatch of character with charAt result!");
+                                "Mismatch of character with charAt result!");
         } catch (Throwable e) {
             log.error("Exception occurred: " + e.getMessage(), e);
             Assert.fail("Exception e: " + e.getMessage());
@@ -164,18 +167,18 @@ public class StringExtensionTestCase extends CEPIntegrationTest {
         int startEXPCount = eventProcessorAdminServiceClient.getExecutionPlanConfigurationCount();
 
         //Add StreamDefinition
-        String streamDefinitionAsString1 = getJSONArtifactConfiguration("extensionflows/string",
-                "org.wso2.event.sensor.stream_1.0.0.json");
+        String streamDefinitionAsString1 = getJSONArtifactConfiguration("extensionflows" + File.separator + "string",
+                                                                        "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString1);
-        String streamDefinitionAsString2 = getJSONArtifactConfiguration("extensionflows/string",
-                "org.wso2.event.sensorClassifyLength.stream_1.0.0.json");
+        String streamDefinitionAsString2 = getJSONArtifactConfiguration("extensionflows" + File.separator + "string",
+                                                                        "org.wso2.event.sensorClassifyLength.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString2);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(),
-                startESCount + 2);
+                            startESCount + 2);
 
         //Add Execution Plan
         String executionPlanAsString =
-                getExecutionPlanFromFile("extensionflows/string", "SensorClassifyLengthExecutionPlan.siddhiql");
+                getExecutionPlanFromFile("extensionflows" + File.separator + "string", "SensorClassifyLengthExecutionPlan.siddhiql");
         eventProcessorAdminServiceClient.addExecutionPlan(executionPlanAsString);
         Assert.assertEquals(
                 eventProcessorAdminServiceClient.getActiveExecutionPlanConfigurationCount(),
@@ -183,10 +186,10 @@ public class StringExtensionTestCase extends CEPIntegrationTest {
 
         //Add WSO2Event publisher
         String eventPublisherConfig =
-                getXMLArtifactConfiguration("extensionflows/string", "wso2EventPublisher.xml");
+                getXMLArtifactConfiguration("extensionflows" + File.separator + "string", "wso2EventPublisher.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(),
-                startEPCount + 1);
+                            startEPCount + 1);
 
         EventDto eventDto = new EventDto();
         eventDto.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
@@ -199,7 +202,8 @@ public class StringExtensionTestCase extends CEPIntegrationTest {
         eventDto3.setAttributeValues(new String[]{"003", "Humidity", "23.4545"});
 
         // The data-bridge receiver
-        Wso2EventServer agentServer = new Wso2EventServer("extensionflows/string", 7661, true);
+        Wso2EventServer agentServer = new Wso2EventServer("extensionflows" + File.separator + "string",
+                                                          CEPIntegrationTestConstants.TCP_PORT, true);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start
@@ -238,13 +242,13 @@ public class StringExtensionTestCase extends CEPIntegrationTest {
 
         try {
             Assert.assertEquals(agentServer.getMsgCount(), messageCount,
-                    "Incorrect number of messages consumed!");
+                                "Incorrect number of messages consumed!");
             List<Event> preservedEventList = agentServer.getPreservedEventList();
             for (Event aEvent : preservedEventList) {
                 aEvent.setTimeStamp(0);
             }
             Assert.assertEquals(preservedEventList, eventList,
-                    "Mismatch of character with charAt result!");
+                                "Mismatch of character with charAt result!");
         } catch (Throwable e) {
             log.error("Exception occurred: " + e.getMessage(), e);
             Assert.fail("Exception e: " + e.getMessage());
