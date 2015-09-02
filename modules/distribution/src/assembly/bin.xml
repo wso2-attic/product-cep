@@ -40,6 +40,7 @@
                 <exclude>**/FastMovingStockQuoteReceiver.aar</exclude>
                 <exclude>**/log4j.properties</exclude>
                 <exclude>**/bin/ciphertool.bat</exclude>
+                <exclude>**/bin/wso2server.sh</exclude>
                 <exclude>**/conf/datasources/master-datasources.xml</exclude>
             </excludes>
         </fileSet>
@@ -152,6 +153,16 @@
             </includes>
             <fileMode>755</fileMode>
         </fileSet>
+        <file>
+            <directory>scripts</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/bin</outputDirectory>
+            <includes>
+                <include>wso2server.sh</include>
+            </includes>
+            <outputDirectory>${pom.artifactId}-${pom.version}/bin</outputDirectory>
+            <fileMode>755</fileMode>
+        </file>
+
 
         <!--&lt;!&ndash;creating samples/lib directory&ndash;&gt;-->
         <!--<fileSet>-->
