@@ -62,7 +62,7 @@ public class FileTestCase extends CEPIntegrationTest {
         ServerConfigurationManager serverManager = new ServerConfigurationManager(cepServer);
         String samplePath = "inputflows" + File.separator + "sample0017";
         String destinationFilePath = serverManager.getCarbonHome() + File.separator + "repository" + File.separator
-                + "logs" + File.separator + "fileLogs.txt";
+                                     + "logs" + File.separator + "fileLogs.txt";
 
         File file = new File(destinationFilePath);
         //Create new file even if it exists
@@ -77,14 +77,14 @@ public class FileTestCase extends CEPIntegrationTest {
 
         //Add StreamDefinition
         String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
-                "org.wso2.event.sensor.stream_1.0.0.json");
+                                                                       "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
         //Add File EventReceiver without mapping
         String eventReceiverConfig = getXMLArtifactConfiguration(samplePath, "fileReceiver.xml");
         eventReceiverAdminServiceClient.addEventReceiverConfiguration(eventReceiverConfig.replace("$testFilePath",
-                destinationFilePath));
+                                                                                                  destinationFilePath));
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
 
         //Add Wso2event EventPublisher

@@ -73,9 +73,9 @@ public class JMSTestCase extends CEPIntegrationTest {
         try {
             String JAR_LOCATION = CEPIntegrationTestConstants.RELATIVE_PATH_TO_TEST_ARTIFACTS + "jar";
             serverManager.copyToComponentLib(new File(getClass().getResource(JAR_LOCATION + File.separator +
-                    ACTIVEMQ_CORE).toURI()));
+                                                                             ACTIVEMQ_CORE).toURI()));
             serverManager.copyToComponentLib(new File(getClass().getResource(JAR_LOCATION + File.separator +
-                    GERONIMO_J2EE_MANAGEMENT).toURI()));
+                                                                             GERONIMO_J2EE_MANAGEMENT).toURI()));
             serverManager.restartGracefully();
         } catch (IOException e) {
             throw new RemoteException("IOException when initializing ActiveMQ broker", e);
@@ -107,21 +107,21 @@ public class JMSTestCase extends CEPIntegrationTest {
         EventDto eventDto = new EventDto();
         eventDto.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
         eventDto.setAttributeValues(new String[]{"199008131245", "false", "100", "temperature", "23.45656", "7.12324",
-                "100.34", "23.4545"});
+                                                 "100.34", "23.4545"});
 
         EventDto eventDto2 = new EventDto();
         eventDto2.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
         eventDto2.setAttributeValues(new String[]{"199008131245", "false", "101", "temperature", "23.45656", "7.12324",
-                "100.34", "23.4545"});
+                                                  "100.34", "23.4545"});
 
         EventDto eventDto3 = new EventDto();
         eventDto3.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
         eventDto3.setAttributeValues(new String[]{"199008131245", "false", "103", "temperature", "23.45656", "7.12324",
-                "100.34", "23.4545"});
+                                                  "100.34", "23.4545"});
 
         //Add StreamDefinition
         String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
-                "org.wso2.event.sensor.stream_1.0.0.json");
+                                                                       "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
@@ -145,7 +145,7 @@ public class JMSTestCase extends CEPIntegrationTest {
         Thread.sleep(5000);
         try {
             Assert.assertEquals(JMSConsumerClient.getMessageCount(), messageCount,
-                    "Incorrect number of messages consumed!");
+                                "Incorrect number of messages consumed!");
         } catch (Throwable e) {
             log.error("Exception thrown: " + e.getMessage(), e);
             Assert.fail("Exception: " + e.getMessage());
@@ -158,7 +158,7 @@ public class JMSTestCase extends CEPIntegrationTest {
 
         try {
             Assert.assertEquals(JMSConsumerClient.getMessageCount(), messageCount,
-                    "Incorrect number of messages consumed!");
+                                "Incorrect number of messages consumed!");
         } catch (Throwable e) {
             log.error("Exception thrown: " + e.getMessage(), e);
             Assert.fail("Exception: " + e.getMessage());
@@ -180,21 +180,21 @@ public class JMSTestCase extends CEPIntegrationTest {
         EventDto eventDto = new EventDto();
         eventDto.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
         eventDto.setAttributeValues(new String[]{"199008131245", "false", "100", "temperature", "23.45656", "7.12324",
-                "100.34", "23.4545"});
+                                                 "100.34", "23.4545"});
 
         EventDto eventDto2 = new EventDto();
         eventDto2.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
         eventDto2.setAttributeValues(new String[]{"199008131245", "false", "101", "temperature", "23.45656", "7.12324",
-                "100.34", "23.4545"});
+                                                  "100.34", "23.4545"});
 
         EventDto eventDto3 = new EventDto();
         eventDto3.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
         eventDto3.setAttributeValues(new String[]{"199008131245", "false", "103", "temperature", "23.45656", "7.12324",
-                "100.34", "23.4545"});
+                                                  "100.34", "23.4545"});
 
         //Add StreamDefinition
         String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
-                "org.wso2.event.sensor.stream_1.0.0.json");
+                                                                       "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
@@ -221,7 +221,7 @@ public class JMSTestCase extends CEPIntegrationTest {
 
         try {
             Assert.assertEquals(JMSConsumerClient.getMessageCount(), messageCount,
-                    "Incorrect number of messages consumed!");
+                                "Incorrect number of messages consumed!");
         } catch (Throwable e) {
             log.error("Exception thrown: " + e.getMessage(), e);
             Assert.fail("Exception: " + e.getMessage());
@@ -243,12 +243,12 @@ public class JMSTestCase extends CEPIntegrationTest {
         EventDto eventDto = new EventDto();
         eventDto.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
         eventDto.setAttributeValues(new String[]{"199008131245", "false", "100", "temperature", "23.45656", "7.12324",
-                "100.34", "23.4545"});
+                                                 "100.34", "23.4545"});
 
 
         //Add StreamDefinition
         String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
-                "org.wso2.event.sensor.stream_1.0.0.json");
+                                                                       "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
@@ -267,16 +267,16 @@ public class JMSTestCase extends CEPIntegrationTest {
 
         List<Object> preservedEventList = JMSConsumerClient.getPreservedEventList();
         String sentEvent = "Sensor Data Information\n" +
-                "temperature Sensor related data. \n" +
-                "- sensor id: 100\n" +
-                "- time-stamp: 199008131245\n" +
-                "- power saving enabled: false\n" +
-                "Location \n" +
-                "- longitude: 23.45656\n" +
-                "- latitude: 7.12324\n" +
-                "Values\n" +
-                "- temperature: 23.4545\n" +
-                "- humidity: 100.34";
+                           "temperature Sensor related data. \n" +
+                           "- sensor id: 100\n" +
+                           "- time-stamp: 199008131245\n" +
+                           "- power saving enabled: false\n" +
+                           "Location \n" +
+                           "- longitude: 23.45656\n" +
+                           "- latitude: 7.12324\n" +
+                           "Values\n" +
+                           "- temperature: 23.4545\n" +
+                           "- humidity: 100.34";
 
         String preservedEvent = (String) preservedEventList.get(0);
 
@@ -287,7 +287,7 @@ public class JMSTestCase extends CEPIntegrationTest {
 
         try {
             Assert.assertEquals(JMSConsumerClient.getMessageCount(), messageCount,
-                    "Incorrect number of messages consumed!");
+                                "Incorrect number of messages consumed!");
             Assert.assertEquals(preservedEvent, sentEvent, "Incorrect mapping has occurred!");
         } catch (Throwable e) {
             log.error("Exception thrown: " + e.getMessage(), e);
@@ -310,22 +310,22 @@ public class JMSTestCase extends CEPIntegrationTest {
         EventDto eventDto = new EventDto();
         eventDto.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
         eventDto.setAttributeValues(new String[]{"199008131245", "false", "100", "temperature", "23.45656", "7.12324",
-                "100.34", "23.4545"});
+                                                 "100.34", "23.4545"});
 
         EventDto eventDto2 = new EventDto();
         eventDto2.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
         eventDto2.setAttributeValues(new String[]{"199008131245", "false", "101", "temperature", "23.45656", "7.12324",
-                "100.34", "23.4545"});
+                                                  "100.34", "23.4545"});
 
         EventDto eventDto3 = new EventDto();
         eventDto3.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
         eventDto3.setAttributeValues(new String[]{"199008131245", "false", "103", "temperature", "23.45656", "7.12324",
-                "100.34", "23.4545"});
+                                                  "100.34", "23.4545"});
 
 
         //Add StreamDefinition
         String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
-                "org.wso2.event.sensor.stream_1.0.0.json");
+                                                                       "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
@@ -352,7 +352,7 @@ public class JMSTestCase extends CEPIntegrationTest {
 
         try {
             Assert.assertEquals(JMSConsumerClient.getMessageCount(), messageCount,
-                    "Incorrect number of messages consumed!");
+                                "Incorrect number of messages consumed!");
         } catch (Throwable e) {
             log.error("Exception thrown: " + e.getMessage(), e);
             Assert.fail("Exception: " + e.getMessage());
@@ -374,12 +374,12 @@ public class JMSTestCase extends CEPIntegrationTest {
         EventDto eventDto = new EventDto();
         eventDto.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
         eventDto.setAttributeValues(new String[]{"199008131245", "false", "100", "temperature", "23.45656", "7.12324",
-                "100.34", "23.4545"});
+                                                 "100.34", "23.4545"});
 
 
         //Add StreamDefinition
         String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
-                "org.wso2.event.sensor.stream_1.0.0.json");
+                                                                       "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
@@ -398,12 +398,12 @@ public class JMSTestCase extends CEPIntegrationTest {
 
         List<Object> preservedEventList = JMSConsumerClient.getPreservedEventList();
         String sentEvent = "{\"Sensor Data\":" +
-                "{\"equipment related data\":{\"timestamp\":199008131245," +
-                "\"isPowerSaverEnabled\":false,\"sensorId\":100,\"sensorName\":\"temperature\"}," +
-                "\"location data\":" +
-                "{\"longitude\":23.45656,\"latitude\":7.12324}," +
-                "\"sensor data\":" +
-                "{\"humidity\":100.34,\"sensorValue\":23.4545}}}";
+                           "{\"equipment related data\":{\"timestamp\":199008131245," +
+                           "\"isPowerSaverEnabled\":false,\"sensorId\":100,\"sensorName\":\"temperature\"}," +
+                           "\"location data\":" +
+                           "{\"longitude\":23.45656,\"latitude\":7.12324}," +
+                           "\"sensor data\":" +
+                           "{\"humidity\":100.34,\"sensorValue\":23.4545}}}";
 
         String preservedEvent = (String) preservedEventList.get(0);
 
@@ -415,7 +415,7 @@ public class JMSTestCase extends CEPIntegrationTest {
         try {
             JsonParser jsonParser = new JsonParser();
             Assert.assertEquals(JMSConsumerClient.getMessageCount(), messageCount,
-                    "Incorrect number of messages consumed!");
+                                "Incorrect number of messages consumed!");
             // Comparing parsed JsonElement objects ensures that even if the string is different,
             // if the parsed Json is equivalent, the test passes.
             JsonElement preservedEventJson = jsonParser.parse(preservedEvent);
@@ -456,17 +456,17 @@ public class JMSTestCase extends CEPIntegrationTest {
         connectionFactoryJNDIName.setValue("TopicConnectionFactory");
         connectionFactoryJNDIName.set_static(true);
         BasicOutputAdapterPropertyDto[] outputPropertyConfiguration = new BasicOutputAdapterPropertyDto[]
-                {initial, url, destinationType, destination,connectionFactoryJNDIName};
+                {initial, url, destinationType, destination, connectionFactoryJNDIName};
 
         try {
             String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
-                    "org.wso2.event.sensor.stream_1.0.0.json");
+                                                                           "org.wso2.event.sensor.stream_1.0.0.json");
             eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
 
             String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "jmsPublisherCustomJSON.xml");
             eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
 
-            eventPublisherAdminServiceClient.testConnection("jmsPublisherCustomJSON","jms",outputPropertyConfiguration,"json");
+            eventPublisherAdminServiceClient.testConnection("jmsPublisherCustomJSON", "jms", outputPropertyConfiguration, "json");
 
             eventPublisherAdminServiceClient.removeActiveEventPublisherConfiguration("jmsPublisherCustomJSON");
             eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");

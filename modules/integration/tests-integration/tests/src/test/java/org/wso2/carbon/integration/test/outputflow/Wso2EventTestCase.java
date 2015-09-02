@@ -74,17 +74,17 @@ public class Wso2EventTestCase extends CEPIntegrationTest {
         EventDto eventDto = new EventDto();
         eventDto.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
         eventDto.setAttributeValues(new String[]{"199008131245", "false", "100", "temperature", "23.45656", "7.12324",
-                "100.34", "23.4545"});
+                                                 "100.34", "23.4545"});
 
         EventDto eventDto2 = new EventDto();
         eventDto2.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
         eventDto2.setAttributeValues(new String[]{"199008131245", "false", "101", "temperature", "23.45656", "7.12324",
-                "100.34", "23.4545"});
+                                                  "100.34", "23.4545"});
 
         EventDto eventDto3 = new EventDto();
         eventDto3.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
         eventDto3.setAttributeValues(new String[]{"199008131245", "false", "103", "temperature", "23.45656", "7.12324",
-                "100.34", "23.4545"});
+                                                  "100.34", "23.4545"});
 
         events.add(eventDto);
         events.add(eventDto2);
@@ -92,13 +92,13 @@ public class Wso2EventTestCase extends CEPIntegrationTest {
 
         //Add StreamDefinition
         String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
-                "org.wso2.event.sensor.stream_1.0.0.json");
+                                                                       "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
 
         String streamDefinitionMapAsString = getJSONArtifactConfiguration(samplePath,
-                "org.wso2.event.sensor.stream.map_1.0.0.json");
+                                                                          "org.wso2.event.sensor.stream.map_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionMapAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 2);
 
@@ -116,7 +116,7 @@ public class Wso2EventTestCase extends CEPIntegrationTest {
         Thread.sleep(1000);
 
         Assert.assertEquals(wso2EventServer.getMsgCount(), messageCount,
-                "Incorrect number of messages consumed!");
+                            "Incorrect number of messages consumed!");
 
         int counter = 0;
         for (Event currentEvent : wso2EventServer.getPreservedEventList()) {
@@ -137,8 +137,8 @@ public class Wso2EventTestCase extends CEPIntegrationTest {
         }
 
         wso2EventServer.stop();
-        eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream","1.0.0");
-        eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream.map","1.0.0");
+        eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
+        eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream.map", "1.0.0");
         eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("eventPublisher.xml");
 
     }
@@ -169,26 +169,26 @@ public class Wso2EventTestCase extends CEPIntegrationTest {
         password.setValue("admin");
         password.set_static(true);
         BasicOutputAdapterPropertyDto[] outputPropertyConfiguration = new BasicOutputAdapterPropertyDto[]
-                {username,protocol,publishingMode,receiverURL,password};
+                {username, protocol, publishingMode, receiverURL, password};
         try {
             String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
-                    "org.wso2.event.sensor.stream_1.0.0.json");
+                                                                           "org.wso2.event.sensor.stream_1.0.0.json");
             eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
 
 
             String streamDefinitionMapAsString = getJSONArtifactConfiguration(samplePath,
-                    "org.wso2.event.sensor.stream.map_1.0.0.json");
+                                                                              "org.wso2.event.sensor.stream.map_1.0.0.json");
             eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionMapAsString);
 
             String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "eventPublisher.xml");
             eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
 
-            eventPublisherAdminServiceClient.testConnection("eventPublisher","wso2event",outputPropertyConfiguration,"wso2event");
+            eventPublisherAdminServiceClient.testConnection("eventPublisher", "wso2event", outputPropertyConfiguration, "wso2event");
 
             eventPublisherAdminServiceClient.removeActiveEventPublisherConfiguration("eventPublisher");
-            eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream","1.0.0");
-            eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream.map","1.0.0");
-        }  catch (Exception e) {
+            eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
+            eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream.map", "1.0.0");
+        } catch (Exception e) {
             log.error("Exception thrown: " + e.getMessage(), e);
             Assert.fail("Exception: " + e.getMessage());
         }

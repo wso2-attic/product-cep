@@ -150,7 +150,8 @@ public class DeployArtifactsViaAPITestCase extends CEPIntegrationTest {
         propertyDTO1.setValue("all");
         BasicInputAdapterPropertyDto[] propertyDTOArray = new BasicInputAdapterPropertyDto[]{propertyDTO1};
 
-        eventReceiverAdminServiceClient.addXmlEventReceiverConfiguration("PizzaOrder", "org.wso2.sample.pizza.order:1.0.0", "http", "", namespaces, mappings, propertyDTOArray, true);
+        eventReceiverAdminServiceClient.addXmlEventReceiverConfiguration(
+                "PizzaOrder", "org.wso2.sample.pizza.order:1.0.0", "http", "", namespaces, mappings, propertyDTOArray, true);
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), ++eventReceiverCount);
 
 
@@ -166,12 +167,12 @@ public class DeployArtifactsViaAPITestCase extends CEPIntegrationTest {
         log.info("=======================Adding an event publisher ======================= ");
         String textData =
                 "            <pizzadata:PizzaOrderDataEvent xmlns:pizzadata=\"http://samples.wso2.org/\">\n" +
-                        "                <pizzadata:Name>{{Contact}}</pizzadata:Name>\n" +
-                        "                <pizzadata:Type>{{Type}}</pizzadata:Type>\n" +
-                        "                <pizzadata:Size>{{Size}}</pizzadata:Size>\n" +
-                        "                <pizzadata:Quantity>{{Quantity}}</pizzadata:Quantity>\n" +
-                        "                <pizzadata:Address>{{Address}}</pizzadata:Address>\n" +
-                        "            </pizzadata:PizzaOrderDataEvent>";
+                "                <pizzadata:Name>{{Contact}}</pizzadata:Name>\n" +
+                "                <pizzadata:Type>{{Type}}</pizzadata:Type>\n" +
+                "                <pizzadata:Size>{{Size}}</pizzadata:Size>\n" +
+                "                <pizzadata:Quantity>{{Quantity}}</pizzadata:Quantity>\n" +
+                "                <pizzadata:Address>{{Address}}</pizzadata:Address>\n" +
+                "            </pizzadata:PizzaOrderDataEvent>";
 
         BasicOutputAdapterPropertyDto url = new BasicOutputAdapterPropertyDto();
         url.setKey("http.url");
@@ -202,7 +203,8 @@ public class DeployArtifactsViaAPITestCase extends CEPIntegrationTest {
         clientMethod.setValue("");
         clientMethod.set_static(true);
 
-        BasicOutputAdapterPropertyDto[] outputPropertyConfiguration = new BasicOutputAdapterPropertyDto[]{url, username, password, headers, proxyHost, proxyPort, clientMethod};
+        BasicOutputAdapterPropertyDto[] outputPropertyConfiguration =
+                new BasicOutputAdapterPropertyDto[]{url, username, password, headers, proxyHost, proxyPort, clientMethod};
 
         eventPublisherAdminServiceClient.addXMLEventPublisherConfiguration("PizzaDeliveryNotification", "outStream:1.0.0", "http",
                 textData, outputPropertyConfiguration, "inline", true);

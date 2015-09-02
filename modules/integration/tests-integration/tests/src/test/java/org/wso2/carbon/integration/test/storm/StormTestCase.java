@@ -42,7 +42,7 @@ public class StormTestCase extends CEPIntegrationTest {
 
     private static Log log = LogFactory.getLog(StormTestCase.class);
     private AutomationContext automationContext;
-    private Map<String,Instance> instanceMap;
+    private Map<String, Instance> instanceMap;
     private Map<String, AutomationContext> contextMap;
 
     @BeforeClass(alwaysRun = true)
@@ -56,7 +56,7 @@ public class StormTestCase extends CEPIntegrationTest {
             for (Map.Entry<String, Instance> entry : instanceMap.entrySet()) {
                 String instanceKey = entry.getKey();
                 contextMap.put(instanceKey, new AutomationContext("CEP", instanceKey,
-                        TestUserMode.SUPER_TENANT_ADMIN));
+                                                                  TestUserMode.SUPER_TENANT_ADMIN));
                 log.info(instanceKey);
             }
         }
@@ -81,7 +81,7 @@ public class StormTestCase extends CEPIntegrationTest {
                                  String.valueOf(CEPIntegrationTestConstants.THRIFT_RECEIVER_PORT), "admin", "admin", 100);
 
         Thread.sleep(60000);
-        Assert.assertTrue(wso2EventServer.getMsgCount()>0);
+        Assert.assertTrue(wso2EventServer.getMsgCount() > 0);
         wso2EventServer.stop();
     }
 
@@ -98,12 +98,12 @@ public class StormTestCase extends CEPIntegrationTest {
         Thread.sleep(5000);
 
         AnalyticStatClient.publish(contextMap.get("cep002").getInstance().getHosts().get("default"),
-                contextMap.get("cep002").getInstance().getPorts().get("thrift_receiver"), "admin", "admin", 100);
+                                   contextMap.get("cep002").getInstance().getPorts().get("thrift_receiver"), "admin", "admin", 100);
         StockQuoteClient.publish(contextMap.get("cep002").getInstance().getHosts().get("default"),
-                contextMap.get("cep002").getInstance().getPorts().get("thrift_receiver"), "admin", "admin", 100);
+                                 contextMap.get("cep002").getInstance().getPorts().get("thrift_receiver"), "admin", "admin", 100);
 
         Thread.sleep(60000);
-        Assert.assertTrue(wso2EventServer.getMsgCount()>0);
+        Assert.assertTrue(wso2EventServer.getMsgCount() > 0);
         wso2EventServer.stop();
     }
 
@@ -130,7 +130,7 @@ public class StormTestCase extends CEPIntegrationTest {
 
     private void addExecutionPlan(String config) throws Exception {
         int initialExecutionPlanCount = eventProcessorAdminServiceClient.getActiveExecutionPlanConfigurationCount();
-        String executionPlanConfig = getExecutionPlanFromFile("StormTestCase",config);
+        String executionPlanConfig = getExecutionPlanFromFile("StormTestCase", config);
         eventProcessorAdminServiceClient.addExecutionPlan(executionPlanConfig);
         Thread.sleep(3000);
         Assert.assertEquals(eventProcessorAdminServiceClient.getActiveExecutionPlanConfigurationCount(), initialExecutionPlanCount + 1);
@@ -187,7 +187,8 @@ public class StormTestCase extends CEPIntegrationTest {
         payloadEventStreamAttributeDto2.setAttributeName("searchTerms");
         payloadEventStreamAttributeDto2.setAttributeType("string");
 
-        EventStreamAttributeDto[] payloadEventStreamAttributeDtos = new EventStreamAttributeDto[]{payloadEventStreamAttributeDto1, payloadEventStreamAttributeDto2};
+        EventStreamAttributeDto[] payloadEventStreamAttributeDtos
+                = new EventStreamAttributeDto[]{payloadEventStreamAttributeDto1, payloadEventStreamAttributeDto2};
 
         eventStreamDefinitionDto.setName("analytics_Statistics");
         eventStreamDefinitionDto.setVersion("1.3.0");
@@ -210,7 +211,8 @@ public class StormTestCase extends CEPIntegrationTest {
         payloadEventStreamAttributeDto22.setAttributeName("symbol");
         payloadEventStreamAttributeDto22.setAttributeType("string");
 
-        EventStreamAttributeDto[] payloadEventStreamAttributeDtos2 = new EventStreamAttributeDto[]{payloadEventStreamAttributeDto21, payloadEventStreamAttributeDto22};
+        EventStreamAttributeDto[] payloadEventStreamAttributeDtos2 =
+                new EventStreamAttributeDto[]{payloadEventStreamAttributeDto21, payloadEventStreamAttributeDto22};
 
         eventStreamDefinitionDto = new EventStreamDefinitionDto();
         eventStreamDefinitionDto.setName("stock_quote");
@@ -260,9 +262,9 @@ public class StormTestCase extends CEPIntegrationTest {
         eventProcessorAdminServiceClient.removeActiveExecutionPlan("PreprocessStats");
         eventReceiverAdminServiceClient.removeActiveEventReceiverConfiguration("analyticsWso2EventReceiver");
         eventReceiverAdminServiceClient.removeActiveEventReceiverConfiguration("stockQuoteWso2EventReceiver");
-        eventStreamManagerAdminServiceClient.removeEventStream("analytics_Statistics","1.3.0");
-        eventStreamManagerAdminServiceClient.removeEventStream("stock_quote","1.3.0");
-        eventStreamManagerAdminServiceClient.removeEventStream("fortuneCompanyStream","1.0.0");
+        eventStreamManagerAdminServiceClient.removeEventStream("analytics_Statistics", "1.3.0");
+        eventStreamManagerAdminServiceClient.removeEventStream("stock_quote", "1.3.0");
+        eventStreamManagerAdminServiceClient.removeEventStream("fortuneCompanyStream", "1.0.0");
     }
 
     @AfterClass(alwaysRun = true)

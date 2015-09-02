@@ -30,6 +30,7 @@ import org.wso2.carbon.integration.test.client.Wso2EventServer;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTestConstants;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,22 +62,24 @@ public class RegexTestCase extends CEPIntegrationTest {
         int startEXPCount = eventProcessorAdminServiceClient.getExecutionPlanConfigurationCount();
 
         //Add StreamDefinition
-        String streamDefinitionAsString1 = getJSONArtifactConfiguration("extensionflows/sample0111",
-                "org.wso2.event.sensor.stream_1.0.0.json");
+        String streamDefinitionAsString1 = getJSONArtifactConfiguration("extensionflows" + File.separator + "sample0111",
+                                                                        "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString1);
-        String streamDefinitionAsString2 = getJSONArtifactConfiguration("extensionflows/sample0111",
-                "org.wso2.event.sensorClassify.stream_1.0.0.json");
+        String streamDefinitionAsString2 = getJSONArtifactConfiguration("extensionflows" + File.separator + "sample0111",
+                                                                        "org.wso2.event.sensorClassify.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString2);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 2);
 
 
         //Add Execution Plan
-        String executionPlanAsString = getExecutionPlanFromFile("extensionflows/sample0111", "SensorClassifyExecutionPlan.siddhiql");
+        String executionPlanAsString = getExecutionPlanFromFile("extensionflows" + File.separator + "sample0111",
+                                                                "SensorClassifyExecutionPlan.siddhiql");
         eventProcessorAdminServiceClient.addExecutionPlan(executionPlanAsString);
         Assert.assertEquals(eventProcessorAdminServiceClient.getActiveExecutionPlanConfigurationCount(), startEXPCount + 1);
 
         //Add RDBMS publisher
-        String eventPublisherConfig = getXMLArtifactConfiguration("extensionflows/sample0111", "wso2Publisher.xml");
+        String eventPublisherConfig = getXMLArtifactConfiguration("extensionflows" + File.separator + "sample0111",
+                                                                  "wso2Publisher.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
@@ -84,20 +87,21 @@ public class RegexTestCase extends CEPIntegrationTest {
         EventDto eventDto = new EventDto();
         eventDto.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
         eventDto.setAttributeValues(new String[]{"199008131245", "false", "400", "temperature", "23.45656", "7.12324",
-                "100.34", "23.4545"});
+                                                 "100.34", "23.4545"});
 
         EventDto eventDto2 = new EventDto();
         eventDto2.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
         eventDto2.setAttributeValues(new String[]{"199008131245", "false", "401", "temperature", "23.45656", "7.12324",
-                "100.34", "23.4545"});
+                                                  "100.34", "23.4545"});
 
         EventDto eventDto3 = new EventDto();
         eventDto3.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
         eventDto3.setAttributeValues(new String[]{"199008131245", "false", "403", "wind", "23.45656", "7.12324",
-                "100.34", "23.4545"});
+                                                  "100.34", "23.4545"});
 
         // The data-bridge receiver
-        Wso2EventServer agentServer = new Wso2EventServer("extensionflows/sample0111", CEPIntegrationTestConstants.TCP_PORT, true);
+        Wso2EventServer agentServer = new Wso2EventServer("extensionflows" + File.separator + "sample0111",
+                                                          CEPIntegrationTestConstants.TCP_PORT, true);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start
@@ -139,8 +143,8 @@ public class RegexTestCase extends CEPIntegrationTest {
 
         try {
             Assert.assertEquals(agentServer.getMsgCount(), messageCount, "Incorrect number of messages consumed!");
-            List<Event> preservedEventList= agentServer.getPreservedEventList();
-            for(Event aEvent: preservedEventList){
+            List<Event> preservedEventList = agentServer.getPreservedEventList();
+            for (Event aEvent : preservedEventList) {
                 aEvent.setTimeStamp(0);
             }
             Assert.assertEquals(preservedEventList, eventList, "RegEx is incorrect!");
@@ -151,6 +155,7 @@ public class RegexTestCase extends CEPIntegrationTest {
             agentServer.stop();
         }
     }
+
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
         super.cleanup();

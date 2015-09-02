@@ -29,6 +29,7 @@ import org.wso2.carbon.integration.test.client.Wso2EventServer;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTestConstants;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,10 +66,10 @@ public class MathExtensionTestCase extends CEPIntegrationTest {
         int startEXPCount = eventProcessorAdminServiceClient.getExecutionPlanConfigurationCount();
 
         //Add StreamDefinition
-        String streamDefinitionAsString1 = getJSONArtifactConfiguration("extensionflows/math",
+        String streamDefinitionAsString1 = getJSONArtifactConfiguration("extensionflows" + File.separator + "math",
                 "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString1);
-        String streamDefinitionAsString2 = getJSONArtifactConfiguration("extensionflows/math",
+        String streamDefinitionAsString2 = getJSONArtifactConfiguration("extensionflows" + File.separator + "math",
                 "org.wso2.event.sensorClassifyCeil.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString2);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(),
@@ -76,7 +77,7 @@ public class MathExtensionTestCase extends CEPIntegrationTest {
 
         //Add Execution Plan
         String executionPlanAsString =
-                getExecutionPlanFromFile("extensionflows/math", "ExecutionPlan.siddhiql");
+                getExecutionPlanFromFile("extensionflows" + File.separator + "math", "ExecutionPlan.siddhiql");
         eventProcessorAdminServiceClient.addExecutionPlan(executionPlanAsString);
         Assert.assertEquals(
                 eventProcessorAdminServiceClient.getActiveExecutionPlanConfigurationCount(),
@@ -84,7 +85,7 @@ public class MathExtensionTestCase extends CEPIntegrationTest {
 
         //Add WSO2Event publisher
         String eventPublisherConfig =
-                getXMLArtifactConfiguration("extensionflows/math", "Wso2Publisher.xml");
+                getXMLArtifactConfiguration("extensionflows" + File.separator + "math", "Wso2Publisher.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(),
                 startEPCount + 1);
@@ -100,7 +101,8 @@ public class MathExtensionTestCase extends CEPIntegrationTest {
         eventDto3.setAttributeValues(new String[]{"003", "Temperature", "23.4545"});
 
         //The data-bridge receiver
-        Wso2EventServer agentServer = new Wso2EventServer("extensionflows/math", CEPIntegrationTestConstants.TCP_PORT, true);
+        Wso2EventServer agentServer = new Wso2EventServer("extensionflows" + File.separator + "math", CEPIntegrationTestConstants
+                .TCP_PORT, true);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start

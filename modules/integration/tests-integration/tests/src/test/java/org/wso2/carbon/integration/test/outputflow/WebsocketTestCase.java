@@ -75,7 +75,8 @@ public class WebsocketTestCase extends CEPIntegrationTest {
 
         EventDto eventDto = new EventDto();
         eventDto.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
-        eventDto.setAttributeValues(new String[]{"199008131245", "false", "100", "temperature", "23.45656", "7.12324", "100.34", "23.4545"});
+        eventDto.setAttributeValues(new String[]{"199008131245", "false", "100", "temperature", "23.45656", "7.12324",
+                                                 "100.34", "23.4545"});
 
         eventSimulatorAdminServiceClient.sendEvent(eventDto);
         Thread.sleep(1000);
@@ -110,7 +111,8 @@ public class WebsocketTestCase extends CEPIntegrationTest {
 
         EventDto eventDto = new EventDto();
         eventDto.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
-        eventDto.setAttributeValues(new String[]{"199008131245", "false", "100", "temperature", "23.45656", "7.12324", "100.34", "23.4545"});
+        eventDto.setAttributeValues(new String[]{"199008131245", "false", "100", "temperature", "23.45656", "7.12324",
+                                                 "100.34", "23.4545"});
 
         eventSimulatorAdminServiceClient.sendEvent(eventDto);
         Thread.sleep(1000);

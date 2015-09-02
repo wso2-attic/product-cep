@@ -70,9 +70,9 @@ public class Wso2EventClient {
 
     public static String getTestDataFileLocation(String testCaseFolderName, String dataFileName) {
 
-        String relativeFilePath =
-                FrameworkPathUtil.getSystemResourceLocation() + CEPIntegrationTestConstants.RELATIVE_PATH_TO_TEST_ARTIFACTS + testCaseFolderName + "/"
-                        + dataFileName;
+        String relativeFilePath = FrameworkPathUtil.getSystemResourceLocation() +
+                                  CEPIntegrationTestConstants.RELATIVE_PATH_TO_TEST_ARTIFACTS + testCaseFolderName +
+                                  "/" + dataFileName;
         relativeFilePath = relativeFilePath.replaceAll("[\\\\/]", Matcher.quoteReplacement(File.separator));
         return relativeFilePath;
     }

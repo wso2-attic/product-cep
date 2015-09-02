@@ -56,11 +56,11 @@ public class Wso2EventTestCase extends CEPIntegrationTest {
         String loggedInSessionCookie = getSessionCookie();
 
         eventReceiverAdminServiceClient = configurationUtil.getEventReceiverAdminServiceClient(backendURL,
-                loggedInSessionCookie);
+                                                                                               loggedInSessionCookie);
         eventStreamManagerAdminServiceClient = configurationUtil.getEventStreamManagerAdminServiceClient(backendURL,
-                loggedInSessionCookie);
+                                                                                                         loggedInSessionCookie);
         eventPublisherAdminServiceClient = configurationUtil.getEventPublisherAdminServiceClient(backendURL,
-                loggedInSessionCookie);
+                                                                                                 loggedInSessionCookie);
     }
 
 
@@ -80,12 +80,12 @@ public class Wso2EventTestCase extends CEPIntegrationTest {
 
         //Add StreamDefinition
         String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
-                "org.wso2.event.sensor.stream_1.0.0.json");
+                                                                       "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
         String streamDefinitionMapAsString = getJSONArtifactConfiguration(samplePath,
-                "org.wso2.mapped.sensor.data_1.0.0.json");
+                                                                          "org.wso2.mapped.sensor.data_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionMapAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 2);
 
@@ -95,7 +95,8 @@ public class Wso2EventTestCase extends CEPIntegrationTest {
         Thread.sleep(2000);
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startActiveERCount + 1);
         Assert.assertEquals(eventReceiverAdminServiceClient.getEventReceiverCount(), startAllERCount + 1);
-        EventReceiverConfigurationDto eventReceiverConfigurationDto = eventReceiverAdminServiceClient.getActiveEventReceiverConfiguration(eventReceiverName);
+        EventReceiverConfigurationDto eventReceiverConfigurationDto = eventReceiverAdminServiceClient.
+                getActiveEventReceiverConfiguration(eventReceiverName);
         Assert.assertTrue(eventReceiverConfigurationDto.getCustomMappingEnabled());
         String deployedEventReceiverConfig = eventReceiverAdminServiceClient.getEventReceiverConfigurationContent(eventReceiverName);
         Assert.assertNotNull(deployedEventReceiverConfig);

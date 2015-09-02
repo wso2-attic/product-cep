@@ -55,7 +55,7 @@ public class Wso2EventTestCase extends CEPIntegrationTest {
 
 
         //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration("Wso2EventTestCase","testWso2EventStream.json");
+        String streamDefinitionAsString = getJSONArtifactConfiguration("Wso2EventTestCase", "testWso2EventStream.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
@@ -79,8 +79,9 @@ public class Wso2EventTestCase extends CEPIntegrationTest {
         // Let the server start
         Thread.sleep(1000);
 
-        Wso2EventClient.publish("thrift", "localhost", String.valueOf(CEPIntegrationTestConstants.TCP_PORT), "admin", "admin", streamDefinition.getStreamId(),
-                                "testWso2EventStreamData.csv", "Wso2EventTestCase", streamDefinition, 5, 1000);
+        Wso2EventClient.publish("thrift", "localhost", String.valueOf(CEPIntegrationTestConstants.TCP_PORT), "admin",
+                                "admin", streamDefinition.getStreamId(), "testWso2EventStreamData.csv",
+                                "Wso2EventTestCase", streamDefinition, 5, 1000);
 
         //wait while all stats are published
         Thread.sleep(30000);
@@ -88,7 +89,7 @@ public class Wso2EventTestCase extends CEPIntegrationTest {
         try {
             Assert.assertEquals(agentServer.getMsgCount(), messageCount, "Incorrect number of messages consumed!");
 
-            eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.sample.pizza.order","1.0.0");
+            eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.sample.pizza.order", "1.0.0");
             eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("sendWso2EventsPublisher");
             eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("wso2EventReceiver");
             Thread.sleep(2000);

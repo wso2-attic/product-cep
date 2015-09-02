@@ -63,25 +63,26 @@ public class UIAdapterTestCase extends CEPIntegrationTest {
 
         //Add StreamDefinition
         String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
-                "org.wso2.event.sensor.stream_1.0.0.json");
+                                                                       "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
         //Add UI wso2event EventPublisher
         String eventPublisherConfig = getXMLArtifactConfiguration(samplePath,
-                "uiPublisher.xml");
+                                                                  "uiPublisher.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         WebSocketClient webSocketClient = new WebSocketClient();
-        webSocketClient.receive("ws://localhost:" + CEPIntegrationTestConstants.HTTP_PORT + "/outputui/org.wso2.event.sensor" +
-                                ".stream/1.0.0", 30);
+        webSocketClient.receive("ws://localhost:" + CEPIntegrationTestConstants.HTTP_PORT +
+                                "/outputui/org.wso2.event.sensor.stream/1.0.0", 30);
 
         Thread.sleep(1000);
 
         EventDto eventDto = new EventDto();
         eventDto.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
-        eventDto.setAttributeValues(new String[]{"199008131245", "false", "100", "temperature", "23.45656", "7.12324", "100.34", "23.4545"});
+        eventDto.setAttributeValues(new String[]{"199008131245", "false", "100", "temperature", "23.45656",
+                                                 "7.12324", "100.34", "23.4545"});
 
         eventSimulatorAdminServiceClient.sendEvent(eventDto);
         Thread.sleep(1000);
@@ -101,19 +102,20 @@ public class UIAdapterTestCase extends CEPIntegrationTest {
 
         //Add StreamDefinition
         String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
-                "org.wso2.event.sensor.stream_1.0.0.json");
+                                                                       "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
         //Add UI wso2event EventPublisher
         String eventPublisherConfig = getXMLArtifactConfiguration(samplePath,
-                "uiPublisher.xml");
+                                                                  "uiPublisher.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         EventDto eventDto = new EventDto();
         eventDto.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
-        eventDto.setAttributeValues(new String[]{"199008131245", "false", "100", "temperature", "23.45656", "7.12324", "100.34", "23.4545"});
+        eventDto.setAttributeValues(new String[]{"199008131245", "false", "100", "temperature", "23.45656",
+                                                 "7.12324", "100.34", "23.4545"});
 
         eventSimulatorAdminServiceClient.sendEvent(eventDto);
         Thread.sleep(1000);
@@ -121,7 +123,7 @@ public class UIAdapterTestCase extends CEPIntegrationTest {
         HttpEventReceiverClient httpEventReceiverClient = new HttpEventReceiverClient();
         httpEventReceiverClient.receive("http://localhost:" + CEPIntegrationTestConstants.HTTP_PORT + "/outputui/org.wso2" +
                                         ".event.sensor.stream/1.0" +
-                ".0?lastUpdatedTime=-1", "GET");
+                                        ".0?lastUpdatedTime=-1", "GET");
 
         Thread.sleep(1000);
 

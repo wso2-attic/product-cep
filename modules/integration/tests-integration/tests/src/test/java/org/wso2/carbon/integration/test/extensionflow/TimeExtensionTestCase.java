@@ -29,6 +29,7 @@ import org.wso2.carbon.integration.test.client.Wso2EventServer;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTestConstants;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -59,20 +60,22 @@ public class TimeExtensionTestCase extends CEPIntegrationTest {
         int startEXPCount = eventProcessorAdminServiceClient.getExecutionPlanConfigurationCount();
 
         //Add StreamDefinition
-        String streamDefinitionAsString1 = getJSONArtifactConfiguration("extensionflows/time", "org.wso2.sample.stock.quote.stream_1.0.0.json");
+        String streamDefinitionAsString1 = getJSONArtifactConfiguration("extensionflows" + File.separator + "time",
+                                                                        "org.wso2.sample.stock.quote.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString1);
-        String streamDefinitionAsString2 = getJSONArtifactConfiguration("extensionflows/time", "org.wso2.sample.stockPriceWithTimeStream_1.0.0.json");
+        String streamDefinitionAsString2 = getJSONArtifactConfiguration("extensionflows" + File.separator + "time",
+                                                                        "org.wso2.sample.stockPriceWithTimeStream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString2);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 2);
 
 
         //Add Execution Plan
-        String executionPlanAsString = getExecutionPlanFromFile("extensionflows/time", "ExecutionPlan.siddhiql");
+        String executionPlanAsString = getExecutionPlanFromFile("extensionflows" + File.separator + "time", "ExecutionPlan.siddhiql");
         eventProcessorAdminServiceClient.addExecutionPlan(executionPlanAsString);
         Assert.assertEquals(eventProcessorAdminServiceClient.getActiveExecutionPlanConfigurationCount(), startEXPCount + 1);
 
         //Add RDBMS publisher
-        String eventPublisherConfig = getXMLArtifactConfiguration("extensionflows/time", "Wso2EventPublisher.xml");
+        String eventPublisherConfig = getXMLArtifactConfiguration("extensionflows" + File.separator + "time", "Wso2EventPublisher.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 

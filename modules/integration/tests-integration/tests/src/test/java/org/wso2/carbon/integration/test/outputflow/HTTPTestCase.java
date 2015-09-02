@@ -62,11 +62,11 @@ public class HTTPTestCase extends CEPIntegrationTest {
         EventDto eventDto = new EventDto();
         eventDto.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
         eventDto.setAttributeValues(new String[]{"199008131245", "false", "100", "temperature", "23.45656", "7.12324",
-                "100.34", "23.4545"});
+                                                 "100.34", "23.4545"});
 
         //Add StreamDefinition
         String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
-                "org.wso2.event.sensor.stream_1.0.0.json");
+                                                                       "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
@@ -92,8 +92,8 @@ public class HTTPTestCase extends CEPIntegrationTest {
         log.info(receivedEvent);
 
         String sentEvent = "{\"event\":{\"metaData\":{\"timestamp\":199008131245,\"isPowerSaverEnabled\":false," +
-                "\"sensorId\":100,\"sensorName\":\"temperature\"},\"correlationData\":{\"longitude\":23.45656," +
-                "\"latitude\":7.12324},\"payloadData\":{\"humidity\":100.34,\"sensorValue\":23.4545}}}";
+                           "\"sensorId\":100,\"sensorName\":\"temperature\"},\"correlationData\":{\"longitude\":23.45656," +
+                           "\"latitude\":7.12324},\"payloadData\":{\"humidity\":100.34,\"sensorValue\":23.4545}}}";
 
         eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
         eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("httpJson.xml");
@@ -120,7 +120,7 @@ public class HTTPTestCase extends CEPIntegrationTest {
 
         //Add StreamDefinition
         String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
-                "org.wso2.event.message.stream_1.0.0.json");
+                                                                       "org.wso2.event.message.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
@@ -146,7 +146,7 @@ public class HTTPTestCase extends CEPIntegrationTest {
         log.info(receivedEvent);
 
         String sentEvent = "Hello Lasantha Fernando, " +
-                "You have done transaction with your credit card for an amount Rs. 2321.56 with vendor: BATA.";
+                           "You have done transaction with your credit card for an amount Rs. 2321.56 with vendor: BATA.";
 
         eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.message.stream", "1.0.0");
         eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("httpText.xml");
@@ -170,11 +170,11 @@ public class HTTPTestCase extends CEPIntegrationTest {
         EventDto eventDto = new EventDto();
         eventDto.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
         eventDto.setAttributeValues(new String[]{"199008131245", "false", "100", "temperature", "23.45656", "7.12324",
-                "100.34", "23.4545"});
+                                                 "100.34", "23.4545"});
 
         //Add StreamDefinition
         String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
-                "org.wso2.event.sensor.stream_1.0.0.json");
+                                                                       "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
@@ -200,10 +200,10 @@ public class HTTPTestCase extends CEPIntegrationTest {
         log.info(receivedEvent);
 
         String sentEvent = "<events><event><metaData><timestamp>199008131245</timestamp>" +
-                "<isPowerSaverEnabled>false</isPowerSaverEnabled><sensorId>100</sensorId>" +
-                "<sensorName>temperature</sensorName></metaData><correlationData><longitude>23.45656</longitude>" +
-                "<latitude>7.12324</latitude></correlationData><payloadData><humidity>100.34</humidity>" +
-                "<sensorValue>23.4545</sensorValue></payloadData></event></events>";
+                           "<isPowerSaverEnabled>false</isPowerSaverEnabled><sensorId>100</sensorId>" +
+                           "<sensorName>temperature</sensorName></metaData><correlationData><longitude>23.45656</longitude>" +
+                           "<latitude>7.12324</latitude></correlationData><payloadData><humidity>100.34</humidity>" +
+                           "<sensorValue>23.4545</sensorValue></payloadData></event></events>";
 
         eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
         eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("httpXml.xml");
@@ -251,9 +251,9 @@ public class HTTPTestCase extends CEPIntegrationTest {
                 {url, username, password, headers, proxyHost, proxyPort, clientMethod};
 
         try {
-            eventPublisherAdminServiceClient.testConnection("httpJson","http",outputPropertyConfiguration,"json");
+            eventPublisherAdminServiceClient.testConnection("httpJson", "http", outputPropertyConfiguration, "json");
         } catch (AxisFault e) {
-            throw new AxisFault(e.getMessage(),e);
+            throw new AxisFault(e.getMessage(), e);
         } catch (RemoteException e) {
             log.error("Exception thrown: " + e.getMessage(), e);
             Assert.fail("Exception: " + e.getMessage());

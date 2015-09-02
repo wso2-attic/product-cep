@@ -13,6 +13,7 @@ import org.wso2.carbon.integration.test.client.Wso2EventServer;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTestConstants;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,27 +50,27 @@ public class GeoExtensionTestCase extends CEPIntegrationTest {
         int startEXPCount = eventProcessorAdminServiceClient.getExecutionPlanConfigurationCount();
 
         //Add StreamDefinition
-        String streamDefinitionAsString1 = getJSONArtifactConfiguration("extensionflows/geo",
-                "geocodeInputStream_1.0.0.json");
+        String streamDefinitionAsString1 = getJSONArtifactConfiguration("extensionflows" + File.separator + "geo",
+                                                                        "geocodeInputStream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString1);
-        String streamDefinitionAsString2 = getJSONArtifactConfiguration("extensionflows/geo",
-                "geocodeOutputStream_1.0.0.json");
+        String streamDefinitionAsString2 = getJSONArtifactConfiguration("extensionflows" + File.separator + "geo",
+                                                                        "geocodeOutputStream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString2);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(),
-                startESCount + 2);
+                            startESCount + 2);
 
         //Add Execution Plan
         String executionPlanAsString =
-                getExecutionPlanFromFile("extensionflows/geo", "geoCodeStreamExecutionPlan.siddhiql");
+                getExecutionPlanFromFile("extensionflows" + File.separator + "geo", "geoCodeStreamExecutionPlan.siddhiql");
         eventProcessorAdminServiceClient.addExecutionPlan(executionPlanAsString);
         Assert.assertEquals(eventProcessorAdminServiceClient.getActiveExecutionPlanConfigurationCount(), startEXPCount + 1);
 
         //Add WSO2Event publisher
         String eventPublisherConfig =
-                getXMLArtifactConfiguration("extensionflows/geo", "WSo2EventPublisher.xml");
+                getXMLArtifactConfiguration("extensionflows" + File.separator + "geo", "WSo2EventPublisher.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(),
-                startEPCount + 1);
+                            startEPCount + 1);
 
         EventDto eventDto = new EventDto();
         eventDto.setEventStreamId("geocodeInputStream:1.0.0");
@@ -82,7 +83,8 @@ public class GeoExtensionTestCase extends CEPIntegrationTest {
         eventDto3.setAttributeValues(new String[]{"mt lavinia", "Regular", "Sun Nov 10 13:36:05 +0000 2014"});
 
         // The data-bridge receiver
-        Wso2EventServer agentServer = new Wso2EventServer("extensionflows/geo", CEPIntegrationTestConstants.TCP_PORT, true);
+        Wso2EventServer agentServer = new Wso2EventServer("extensionflows" + File.separator + "geo", CEPIntegrationTestConstants
+                .TCP_PORT, true);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start
@@ -121,13 +123,13 @@ public class GeoExtensionTestCase extends CEPIntegrationTest {
 
         try {
             Assert.assertEquals(agentServer.getMsgCount(), messageCount,
-                    "Incorrect number of messages consumed!");
+                                "Incorrect number of messages consumed!");
             List<Event> preservedEventList = agentServer.getPreservedEventList();
             for (Event aEvent : preservedEventList) {
                 aEvent.setTimeStamp(0);
             }
             Assert.assertEquals(preservedEventList, eventList,
-                    "Mismatch of geocode processed data with assertion");
+                                "Mismatch of geocode processed data with assertion");
         } catch (Throwable e) {
             log.error("Exception occurred: " + e.getMessage(), e);
             Assert.fail("Exception e: " + e.getMessage());
