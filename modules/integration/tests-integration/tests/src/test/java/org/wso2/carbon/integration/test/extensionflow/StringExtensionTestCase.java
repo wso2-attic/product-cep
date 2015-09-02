@@ -27,6 +27,7 @@ import org.wso2.carbon.databridge.commons.Event;
 import org.wso2.carbon.event.simulator.stub.types.EventDto;
 import org.wso2.carbon.integration.test.client.Wso2EventServer;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
+import org.wso2.cep.integration.common.utils.CEPIntegrationTestConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,7 +100,7 @@ public class StringExtensionTestCase extends CEPIntegrationTest {
         eventDto3.setAttributeValues(new String[]{"003", "Humidity", "23.4545"});
 
         // The data-bridge receiver
-        Wso2EventServer agentServer = new Wso2EventServer("extensionflows/string", 7661, true);
+        Wso2EventServer agentServer = new Wso2EventServer("extensionflows/string", CEPIntegrationTestConstants.TCP_PORT, true);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start
@@ -199,7 +200,7 @@ public class StringExtensionTestCase extends CEPIntegrationTest {
         eventDto3.setAttributeValues(new String[]{"003", "Humidity", "23.4545"});
 
         // The data-bridge receiver
-        Wso2EventServer agentServer = new Wso2EventServer("extensionflows/string", 7661, true);
+        Wso2EventServer agentServer = new Wso2EventServer("extensionflows/string", CEPIntegrationTestConstants.TCP_PORT, true);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start

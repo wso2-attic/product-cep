@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.wso2.carbon.integration.test.admin;
 
 import org.apache.commons.logging.Log;
@@ -12,9 +28,9 @@ import org.wso2.carbon.event.publisher.stub.types.EventMappingPropertyDto;
 import org.wso2.carbon.event.publisher.stub.types.EventPublisherConfigurationDto;
 import org.wso2.carbon.event.publisher.stub.types.EventPublisherConfigurationInfoDto;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
+import org.wso2.cep.integration.common.utils.CEPIntegrationTestConstants;
 
 import java.io.File;
-import java.rmi.RemoteException;
 
 public class EventPublisherAdminServiceTestCase extends CEPIntegrationTest {
 
@@ -108,7 +124,7 @@ public class EventPublisherAdminServiceTestCase extends CEPIntegrationTest {
         publishingMode.setValue("blocking");
         BasicOutputAdapterPropertyDto receiverURL = new BasicOutputAdapterPropertyDto();
         receiverURL.setKey("receiverURL");
-        receiverURL.setValue("tcp://localhost:7661");
+        receiverURL.setValue("tcp://localhost:" + CEPIntegrationTestConstants.TCP_PORT);
         BasicOutputAdapterPropertyDto password = new BasicOutputAdapterPropertyDto();
         password.setKey("password");
         password.setValue("admin");

@@ -24,6 +24,7 @@ import org.apache.axis2.client.Options;
 import org.apache.axis2.client.ServiceClient;
 import org.apache.log4j.Logger;
 import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
+import org.wso2.cep.integration.common.utils.CEPIntegrationTestConstants;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.*;
@@ -110,9 +111,8 @@ public class SOAPEventPublisherClient {
      * @param dataFileName       Text file to be read
      */
     public static String getTestDataFileLocation(String testCaseFolderName, String dataFileName) throws Exception {
-        String relativeFilePath =
-                FrameworkPathUtil.getSystemResourceLocation() + "/artifacts/CEP/" + testCaseFolderName + File.separator
-                        + dataFileName;
+        String relativeFilePath = FrameworkPathUtil.getSystemResourceLocation() + CEPIntegrationTestConstants
+                .RELATIVE_PATH_TO_TEST_ARTIFACTS + testCaseFolderName + File.separator + dataFileName;
         relativeFilePath = relativeFilePath.replaceAll("[\\\\/]", Matcher.quoteReplacement(File.separator));
         return relativeFilePath;
     }

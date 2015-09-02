@@ -29,6 +29,7 @@ import org.wso2.carbon.event.receiver.stub.types.EventMappingPropertyDto;
 import org.wso2.carbon.event.stream.stub.types.EventStreamAttributeDto;
 import org.wso2.carbon.event.stream.stub.types.EventStreamDefinitionDto;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
+import org.wso2.cep.integration.common.utils.CEPIntegrationTestConstants;
 
 /**
  * Deploying artifacts through API. They are deployed in typical order.
@@ -174,7 +175,7 @@ public class DeployArtifactsViaAPITestCase extends CEPIntegrationTest {
 
         BasicOutputAdapterPropertyDto url = new BasicOutputAdapterPropertyDto();
         url.setKey("http.url");
-        url.setValue("http://localhost:9763/GenericLogService/log");
+        url.setValue("http://localhost:" + CEPIntegrationTestConstants.HTTP_PORT + "/GenericLogService/log");
         url.set_static(false);
         BasicOutputAdapterPropertyDto username = new BasicOutputAdapterPropertyDto();
         username.setKey("http.username");

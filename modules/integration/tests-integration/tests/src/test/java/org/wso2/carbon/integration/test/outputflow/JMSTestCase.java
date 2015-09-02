@@ -36,6 +36,7 @@ import org.wso2.carbon.event.simulator.stub.types.EventDto;
 import org.wso2.carbon.integration.common.utils.mgt.ServerConfigurationManager;
 import org.wso2.carbon.integration.test.client.JMSConsumerClient;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
+import org.wso2.cep.integration.common.utils.CEPIntegrationTestConstants;
 
 import java.io.File;
 import java.io.IOException;
@@ -52,7 +53,6 @@ public class JMSTestCase extends CEPIntegrationTest {
     private static final Log log = LogFactory.getLog(JMSTestCase.class);
     private final String GERONIMO_J2EE_MANAGEMENT = "geronimo-j2ee-management_1.1_spec-1.0.1.jar";
     private final String ACTIVEMQ_CORE = "activemq-core-5.7.0.jar";
-    private final String JAR_LOCATION = "/artifacts/CEP/jar";
     private JMSBrokerController activeMqBroker = null;
     private ServerConfigurationManager serverManager = null;
 
@@ -71,6 +71,7 @@ public class JMSTestCase extends CEPIntegrationTest {
         setupActiveMQBroker();
         //copying dependency activemq jar files to component/lib
         try {
+            String JAR_LOCATION = CEPIntegrationTestConstants.RELATIVE_PATH_TO_TEST_ARTIFACTS + "jar";
             serverManager.copyToComponentLib(new File(getClass().getResource(JAR_LOCATION + File.separator +
                     ACTIVEMQ_CORE).toURI()));
             serverManager.copyToComponentLib(new File(getClass().getResource(JAR_LOCATION + File.separator +

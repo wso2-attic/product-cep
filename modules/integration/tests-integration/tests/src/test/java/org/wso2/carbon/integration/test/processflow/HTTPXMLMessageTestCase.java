@@ -29,6 +29,7 @@ import org.wso2.carbon.integration.common.utils.LoginLogoutClient;
 import org.wso2.carbon.integration.common.utils.mgt.ServerConfigurationManager;
 import org.wso2.carbon.integration.test.client.PizzaOrderClient;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
+import org.wso2.cep.integration.common.utils.CEPIntegrationTestConstants;
 
 import java.io.File;
 import java.rmi.RemoteException;
@@ -90,7 +91,7 @@ public class HTTPXMLMessageTestCase extends CEPIntegrationTest {
         //Send events
         Thread.sleep(2000);
         try {
-            PizzaOrderClient.sendPizzaOrder("http://localhost:9763/endpoints/httpInputEventAdaptor/PizzaOrder");
+            PizzaOrderClient.sendPizzaOrder("http://localhost:" + CEPIntegrationTestConstants.HTTP_PORT + "/endpoints/httpInputEventAdaptor/PizzaOrder");
             Thread.sleep(2000);
         } catch (Throwable e) {
             log.error("Exception thrown: " + e.getMessage(), e);

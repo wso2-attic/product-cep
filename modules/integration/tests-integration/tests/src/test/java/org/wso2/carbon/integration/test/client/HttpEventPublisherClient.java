@@ -23,6 +23,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.SystemDefaultHttpClient;
 import org.apache.log4j.Logger;
 import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
+import org.wso2.cep.integration.common.utils.CEPIntegrationTestConstants;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class HttpEventPublisherClient {
 	private static Logger log = Logger.getLogger(HttpEventPublisherClient.class);
 
 	public static void publish(String url, String username, String password, String testCaseFolderName, String dataFileName) {
-		System.out.println("Starting WSO2 HttpEventPublisher Client");
+		log.info("Starting WSO2 HttpEventPublisher Client");
 		KeyStoreUtil.setTrustStoreParams();
 		HttpClient httpClient = new SystemDefaultHttpClient();
 		try {
@@ -44,9 +45,8 @@ public class HttpEventPublisherClient {
 			List<String> messagesList = readMsg(getTestDataFileLocation(testCaseFolderName, dataFileName));
 			for (String message : messagesList) {
 				StringEntity entity = new StringEntity(message);
-				System.out.println("Sending message:");
-				System.out.println(message);
-				System.out.println();
+				log.info("Sending message:");
+				log.info(message + "\n");
 				method.setEntity(entity);
 				if (url.startsWith("https")) {
 					processAuthentication(method, username, password);
@@ -115,9 +115,8 @@ public class HttpEventPublisherClient {
 	 * @param dataFileName           Text file to be read
 	 */
 	public static String getTestDataFileLocation(String testCaseFolderName, String dataFileName) throws Exception {
-		String relativeFilePath =
-				FrameworkPathUtil.getSystemResourceLocation() + "/artifacts/CEP/" + testCaseFolderName + File.separator
-						+ dataFileName;
+		String relativeFilePath = FrameworkPathUtil.getSystemResourceLocation() + CEPIntegrationTestConstants
+				.RELATIVE_PATH_TO_TEST_ARTIFACTS + testCaseFolderName + File.separator+ dataFileName;
 		relativeFilePath = relativeFilePath.replaceAll("[\\\\/]", Matcher.quoteReplacement(File.separator));
 		return relativeFilePath;
 	}

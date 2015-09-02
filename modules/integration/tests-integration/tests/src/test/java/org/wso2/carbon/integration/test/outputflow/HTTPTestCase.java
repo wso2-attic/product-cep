@@ -28,6 +28,7 @@ import org.wso2.carbon.event.publisher.stub.types.BasicOutputAdapterPropertyDto;
 import org.wso2.carbon.event.simulator.stub.types.EventDto;
 import org.wso2.carbon.integration.test.client.WireMonitorServer;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
+import org.wso2.cep.integration.common.utils.CEPIntegrationTestConstants;
 
 import java.io.File;
 import java.rmi.RemoteException;
@@ -75,7 +76,7 @@ public class HTTPTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         Thread.sleep(10000);
-        WireMonitorServer wireMonitorServer = new WireMonitorServer(9445);
+        WireMonitorServer wireMonitorServer = new WireMonitorServer(CEPIntegrationTestConstants.WIRE_MONITOR_PORT);
         Thread wireMonitorServerThread = new Thread(wireMonitorServer);
         wireMonitorServerThread.start();
 
@@ -129,7 +130,7 @@ public class HTTPTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         Thread.sleep(10000);
-        WireMonitorServer wireMonitorServer = new WireMonitorServer(9445);
+        WireMonitorServer wireMonitorServer = new WireMonitorServer(CEPIntegrationTestConstants.WIRE_MONITOR_PORT);
         Thread wireMonitorServerThread = new Thread(wireMonitorServer);
         wireMonitorServerThread.start();
 
@@ -183,7 +184,7 @@ public class HTTPTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         Thread.sleep(10000);
-        WireMonitorServer wireMonitorServer = new WireMonitorServer(9445);
+        WireMonitorServer wireMonitorServer = new WireMonitorServer(CEPIntegrationTestConstants.WIRE_MONITOR_PORT);
         Thread wireMonitorServerThread = new Thread(wireMonitorServer);
         wireMonitorServerThread.start();
 
@@ -220,7 +221,7 @@ public class HTTPTestCase extends CEPIntegrationTest {
     public void testConnection() throws AxisFault {
         BasicOutputAdapterPropertyDto url = new BasicOutputAdapterPropertyDto();
         url.setKey("http.url");
-        url.setValue("http://localhost:9763/GenericLogService/log");
+        url.setValue("http://localhost:" + CEPIntegrationTestConstants.HTTP_PORT + "/GenericLogService/log");
         url.set_static(false);
         BasicOutputAdapterPropertyDto username = new BasicOutputAdapterPropertyDto();
         username.setKey("http.username");

@@ -33,6 +33,7 @@ import org.wso2.carbon.event.receiver.stub.types.EventReceiverConfigurationInfoD
 import org.wso2.carbon.integration.test.client.Wso2EventClient;
 import org.wso2.carbon.integration.test.client.Wso2EventServer;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
+import org.wso2.cep.integration.common.utils.CEPIntegrationTestConstants;
 
 import javax.xml.namespace.QName;
 import java.io.File;
@@ -127,7 +128,7 @@ public class Wso2EventTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         // The data-bridge receiver
-        Wso2EventServer agentServer = new Wso2EventServer(samplePath, 7661, true);
+        Wso2EventServer agentServer = new Wso2EventServer(samplePath, CEPIntegrationTestConstants.TCP_PORT, true);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start
@@ -136,11 +137,12 @@ public class Wso2EventTestCase extends CEPIntegrationTest {
         StreamDefinition streamDefinition = EventDefinitionConverterUtils
                 .convertFromJson(streamDefinitionAsString);
 
-        Wso2EventClient.publish("thrift", "localhost", "7661", "admin", "admin", "org.wso2.event.sensor.stream:1.0.0",
-                "wso2eventReceiver.csv", samplePath, streamDefinition, 3, 1000);
+        Wso2EventClient.publish("thrift", "localhost", String.valueOf(CEPIntegrationTestConstants.TCP_PORT),
+                                "admin", "admin", "org.wso2.event.sensor.stream:1.0.0", "wso2eventReceiver.csv",
+                                samplePath, streamDefinition, 3, 1000);
 
         eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
-        eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("fileReceiver.xml");
+        eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("wso2eventReceiver.xml");
         eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("wso2eventPublisher.xml");
 
         Thread.sleep(1000);

@@ -30,6 +30,7 @@ import org.wso2.carbon.event.simulator.stub.types.EventDto;
 import org.wso2.carbon.integration.common.utils.mgt.ServerConfigurationManager;
 import org.wso2.carbon.integration.test.client.Wso2EventServer;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
+import org.wso2.cep.integration.common.utils.CEPIntegrationTestConstants;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -64,7 +65,7 @@ public class Wso2EventTestCase extends CEPIntegrationTest {
     public void wso2EventPublisherMapTestWithCustomMappingScenario() throws Exception {
         final int messageCount = 3;
         String samplePath = "outputflows" + File.separator + "sample0058";
-        Wso2EventServer wso2EventServer = new Wso2EventServer(samplePath, 7661, true);
+        Wso2EventServer wso2EventServer = new Wso2EventServer(samplePath, CEPIntegrationTestConstants.TCP_PORT, true);
         int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
 

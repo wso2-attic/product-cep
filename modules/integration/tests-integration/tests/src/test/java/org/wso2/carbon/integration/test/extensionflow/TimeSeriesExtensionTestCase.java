@@ -27,6 +27,7 @@ import org.wso2.carbon.databridge.commons.Event;
 import org.wso2.carbon.event.simulator.stub.types.EventDto;
 import org.wso2.carbon.integration.test.client.Wso2EventServer;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
+import org.wso2.cep.integration.common.utils.CEPIntegrationTestConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,7 +100,7 @@ public class TimeSeriesExtensionTestCase extends CEPIntegrationTest {
         eventDto3.setAttributeValues(new String[]{"3300", "31"});
 
         //The data-bridge receiver
-        Wso2EventServer agentServer = new Wso2EventServer("extensionflows/timeseries", 7661, true);
+        Wso2EventServer agentServer = new Wso2EventServer("extensionflows/timeseries", CEPIntegrationTestConstants.TCP_PORT, true);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start

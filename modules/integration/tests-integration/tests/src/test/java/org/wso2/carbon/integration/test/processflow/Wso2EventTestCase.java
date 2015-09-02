@@ -28,6 +28,7 @@ import org.wso2.carbon.databridge.commons.utils.EventDefinitionConverterUtils;
 import org.wso2.carbon.integration.test.client.Wso2EventServer;
 import org.wso2.carbon.integration.test.client.Wso2EventClient;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
+import org.wso2.cep.integration.common.utils.CEPIntegrationTestConstants;
 
 public class Wso2EventTestCase extends CEPIntegrationTest {
 
@@ -72,14 +73,14 @@ public class Wso2EventTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         // The data-bridge receiver
-        Wso2EventServer agentServer = new Wso2EventServer("Wso2EventTestCase",7661, false);
+        Wso2EventServer agentServer = new Wso2EventServer("Wso2EventTestCase", CEPIntegrationTestConstants.TCP_PORT, false);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start
         Thread.sleep(1000);
 
-        Wso2EventClient.publish("thrift","localhost","7661","admin","admin",streamDefinition.getStreamId(),
-                "testWso2EventStreamData.csv","Wso2EventTestCase",streamDefinition,5,1000);
+        Wso2EventClient.publish("thrift", "localhost", String.valueOf(CEPIntegrationTestConstants.TCP_PORT), "admin", "admin", streamDefinition.getStreamId(),
+                                "testWso2EventStreamData.csv", "Wso2EventTestCase", streamDefinition, 5, 1000);
 
         //wait while all stats are published
         Thread.sleep(30000);

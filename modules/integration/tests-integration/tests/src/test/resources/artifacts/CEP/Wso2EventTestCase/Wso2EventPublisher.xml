@@ -24,7 +24,7 @@
         <property name="protocol">thrift</property>
         <property name="stream">org.wso2.sample.pizza.order</property>
         <property name="publishingMode">blocking</property>
-        <property name="receiverURL">tcp://localhost:7661</property>
+        <property name="receiverURL">tcp://localhost:8461</property>
         <property encrypted="false" name="password">admin</property>
         <property name="version">1.0.0</property>
     </to>

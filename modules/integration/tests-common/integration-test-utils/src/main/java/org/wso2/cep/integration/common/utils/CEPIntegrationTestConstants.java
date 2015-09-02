@@ -16,6 +16,16 @@
 
 package org.wso2.cep.integration.common.utils;
 
+import java.io.File;
+
 public class CEPIntegrationTestConstants {
-    public static final String RELATIVE_PATH_TO_TEST_ARTIFACTS = "/artifacts/CEP//";
+    public static final String RELATIVE_PATH_TO_TEST_ARTIFACTS = File.separator + "artifacts" + File.separator + "CEP" +
+                                                                 File.separator;
+    public static final int TCP_PORT = 8461;
+    public static final int HTTP_PORT = 10563;
+    public static final int HTTPS_PORT = 10243;
+    public static final int WIRE_MONITOR_PORT = 10245;
+    public static final int WEB_SOCKET_SERVER_PORT = 9899;
+    public static final int STORM_WSO2EVENT_SERVER_PORT = 8621;
+    public static final int THRIFT_RECEIVER_PORT = 8411;
 }

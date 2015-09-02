@@ -27,6 +27,7 @@ import org.wso2.carbon.databridge.commons.Event;
 import org.wso2.carbon.integration.test.client.SOAPEventPublisherClient;
 import org.wso2.carbon.integration.test.client.Wso2EventServer;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
+import org.wso2.cep.integration.common.utils.CEPIntegrationTestConstants;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -79,14 +80,14 @@ public class SOAPTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         // The data-bridge receiver
-        Wso2EventServer agentServer = new Wso2EventServer(samplePath, 7661, true);
+        Wso2EventServer agentServer = new Wso2EventServer(samplePath, CEPIntegrationTestConstants.TCP_PORT, true);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start
         Thread.sleep(10000);
 
-        SOAPEventPublisherClient.publish("http://localhost:9763/services/soapReceiver/receive", samplePath,
-                "soapReceiver.txt");
+        SOAPEventPublisherClient.publish("http://localhost:" + CEPIntegrationTestConstants.HTTP_PORT +
+                                         "/services/soapReceiver/receive", samplePath, "soapReceiver.txt");
 
         //wait while all stats are published
         Thread.sleep(30000);

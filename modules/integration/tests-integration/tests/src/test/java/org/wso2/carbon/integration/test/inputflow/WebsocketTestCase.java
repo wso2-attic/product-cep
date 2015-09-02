@@ -27,6 +27,7 @@ import org.wso2.carbon.integration.test.client.Wso2EventServer;
 import org.wso2.carbon.integration.test.client.WebSocketClient;
 import org.wso2.carbon.integration.test.client.WebSocketServer;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
+import org.wso2.cep.integration.common.utils.CEPIntegrationTestConstants;
 
 import java.io.File;
 
@@ -71,14 +72,15 @@ public class WebsocketTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         // The data-bridge receiver
-        Wso2EventServer agentServer = new Wso2EventServer(samplePath, 7661, true);
+        Wso2EventServer agentServer = new Wso2EventServer(samplePath, CEPIntegrationTestConstants.TCP_PORT, true);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start
         Thread.sleep(1000);
 
         WebSocketClient webSocketClient = new WebSocketClient();
-        webSocketClient.send("ws://localhost:9763/inputwebsocket/WebsocketLocalReceiver", "<events>\n" +
+        webSocketClient.send("ws://localhost:" + CEPIntegrationTestConstants.HTTP_PORT +
+                             "/inputwebsocket/WebsocketLocalReceiver", "<events>\n" +
                 "    <event>\n" +
                 "        <metaData>\n" +
                 "            <timestamp>56783</timestamp>\n" +
@@ -139,7 +141,7 @@ public class WebsocketTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         // The data-bridge receiver
-        Wso2EventServer agentServer = new Wso2EventServer(samplePath, 7661, true);
+        Wso2EventServer agentServer = new Wso2EventServer(samplePath, CEPIntegrationTestConstants.TCP_PORT, true);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start

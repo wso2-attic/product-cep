@@ -20,6 +20,6 @@
   <from streamName="org.wso2.event.sensor.stream" version="1.0.0"/>
   <mapping customMapping="disable" type="xml"/>
   <to eventAdapterType="soap">
-    <property name="url">http://localhost:9445/services/Axis2LogService/log</property>
+    <property name="url">http://localhost:10245/services/Axis2LogService/log</property>
   </to>
 </eventPublisher>

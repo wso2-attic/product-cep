@@ -32,6 +32,7 @@ import org.wso2.carbon.integration.test.client.AnalyticStatClient;
 import org.wso2.carbon.integration.test.client.StockQuoteClient;
 import org.wso2.carbon.integration.test.client.Wso2EventServer;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
+import org.wso2.cep.integration.common.utils.CEPIntegrationTestConstants;
 
 import java.rmi.RemoteException;
 import java.util.HashMap;
@@ -67,16 +68,17 @@ public class StormTestCase extends CEPIntegrationTest {
     public void testSingleQueryTopologyOneMember() throws Exception {
 
         configureNode(contextMap.get("cep001"));
-        Wso2EventServer wso2EventServer = new Wso2EventServer("StormTestCase",7821, true);
+        Wso2EventServer wso2EventServer = new Wso2EventServer("StormTestCase", CEPIntegrationTestConstants
+                .STORM_WSO2EVENT_SERVER_PORT, true);
         Thread thread = new Thread(wso2EventServer);
         thread.start();
 
         Thread.sleep(5000);
 
         AnalyticStatClient.publish(contextMap.get("cep001").getInstance().getHosts().get("default"),
-                "7611", "admin", "admin", 100);
+                                   String.valueOf(CEPIntegrationTestConstants.THRIFT_RECEIVER_PORT), "admin", "admin", 100);
         StockQuoteClient.publish(contextMap.get("cep001").getInstance().getHosts().get("default"),
-                "7611", "admin", "admin", 100);
+                                 String.valueOf(CEPIntegrationTestConstants.THRIFT_RECEIVER_PORT), "admin", "admin", 100);
 
         Thread.sleep(60000);
         Assert.assertTrue(wso2EventServer.getMsgCount()>0);
@@ -88,7 +90,8 @@ public class StormTestCase extends CEPIntegrationTest {
         configureNode(contextMap.get("cep002"));
         configureNode(contextMap.get("cep003"));
 
-        Wso2EventServer wso2EventServer = new Wso2EventServer("StormTestCase",7821, true);
+        Wso2EventServer wso2EventServer = new Wso2EventServer("StormTestCase", CEPIntegrationTestConstants
+                .STORM_WSO2EVENT_SERVER_PORT, true);
         Thread thread = new Thread(wso2EventServer);
         thread.start();
 
@@ -260,5 +263,10 @@ public class StormTestCase extends CEPIntegrationTest {
         eventStreamManagerAdminServiceClient.removeEventStream("analytics_Statistics","1.3.0");
         eventStreamManagerAdminServiceClient.removeEventStream("stock_quote","1.3.0");
         eventStreamManagerAdminServiceClient.removeEventStream("fortuneCompanyStream","1.0.0");
+    }
+
+    @AfterClass(alwaysRun = true)
+    public void destroy() throws Exception {
+        super.cleanup();
     }
 }

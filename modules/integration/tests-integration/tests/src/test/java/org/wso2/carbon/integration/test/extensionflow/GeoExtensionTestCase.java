@@ -11,6 +11,7 @@ import org.wso2.carbon.databridge.commons.Event;
 import org.wso2.carbon.event.simulator.stub.types.EventDto;
 import org.wso2.carbon.integration.test.client.Wso2EventServer;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
+import org.wso2.cep.integration.common.utils.CEPIntegrationTestConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,7 +82,7 @@ public class GeoExtensionTestCase extends CEPIntegrationTest {
         eventDto3.setAttributeValues(new String[]{"mt lavinia", "Regular", "Sun Nov 10 13:36:05 +0000 2014"});
 
         // The data-bridge receiver
-        Wso2EventServer agentServer = new Wso2EventServer("extensionflows/geo", 7661, true);
+        Wso2EventServer agentServer = new Wso2EventServer("extensionflows/geo", CEPIntegrationTestConstants.TCP_PORT, true);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
         // Let the server start

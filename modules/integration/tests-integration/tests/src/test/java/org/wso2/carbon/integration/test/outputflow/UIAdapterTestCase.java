@@ -31,6 +31,7 @@ import org.wso2.carbon.event.simulator.stub.types.EventDto;
 import org.wso2.carbon.integration.test.client.HttpEventReceiverClient;
 import org.wso2.carbon.integration.test.client.WebSocketClient;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
+import org.wso2.cep.integration.common.utils.CEPIntegrationTestConstants;
 
 import java.io.File;
 
@@ -73,7 +74,8 @@ public class UIAdapterTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         WebSocketClient webSocketClient = new WebSocketClient();
-        webSocketClient.receive("ws://localhost:9763/outputui/org.wso2.event.sensor.stream/1.0.0", 30);
+        webSocketClient.receive("ws://localhost:" + CEPIntegrationTestConstants.HTTP_PORT + "/outputui/org.wso2.event.sensor" +
+                                ".stream/1.0.0", 30);
 
         Thread.sleep(1000);
 
@@ -117,7 +119,8 @@ public class UIAdapterTestCase extends CEPIntegrationTest {
         Thread.sleep(1000);
 
         HttpEventReceiverClient httpEventReceiverClient = new HttpEventReceiverClient();
-        httpEventReceiverClient.receive("http://localhost:9763/outputui/org.wso2.event.sensor.stream/1.0" +
+        httpEventReceiverClient.receive("http://localhost:" + CEPIntegrationTestConstants.HTTP_PORT + "/outputui/org.wso2" +
+                                        ".event.sensor.stream/1.0" +
                 ".0?lastUpdatedTime=-1", "GET");
 
         Thread.sleep(1000);
