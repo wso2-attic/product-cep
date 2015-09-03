@@ -29,7 +29,6 @@ public class Util {
 	static String sampleFilPath =
 			".." + File.separator + ".." + File.separator + ".." + File.separator + "samples" +
 			File.separator + "artifacts" + File.separator + "sampleNumber" + File.separator;
-	static String fileExtension = ".txt";
 
 
 	/**
@@ -38,7 +37,7 @@ public class Util {
 	 * @param filePath     Text file to be read
 	 * @param sampleNumber Number of the http sample
 	 */
-	public static String getMessageFilePath(String sampleNumber, String filePath, String url) throws Exception {
+	public static String getMessageFilePath(String sampleNumber, String filePath) throws Exception {
 		if (sampleNumber != null && sampleNumber.length() == 0) {
 			sampleNumber = null;
 		}
@@ -51,8 +50,7 @@ public class Util {
 		if (filePath != null && sampleNumber == null) {
 			resultingFilePath = filePath;
 		} else if (filePath == null && sampleNumber != null) {
-			String urlSplitter[] = url.split("/");
-			resultingFilePath = sampleFilPath.replace("sampleNumber", sampleNumber)+urlSplitter[urlSplitter.length-1]+fileExtension;
+			resultingFilePath = sampleFilPath.replace("sampleNumber", sampleNumber) + "sensorStreamEvents.txt";
 		} else {
 			throw new Exception("In sampleNumber:'" + sampleNumber + "' and filePath:'" + filePath +
 			                    "' only one should be null");
