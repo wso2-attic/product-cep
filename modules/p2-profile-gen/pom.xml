@@ -659,11 +659,11 @@
                                 <!--</feature>-->
 
                                 <feature>
-                                    <id>org.wso2.carbon.tenant.common.feature.group</id>
+                                    <id>org.wso2.carbon.tenant.common.server.feature.group</id>
                                     <version>${carbon.multitenancy.version}</version>
                                 </feature>
                                 <feature>
-                                    <id>org.wso2.carbon.tenant.mgt.common.feature.group</id>
+                                    <id>org.wso2.carbon.tenant.mgt.common.server.feature.group</id>
                                     <version>${carbon.commons.version}</version>
                                 </feature>
 
@@ -684,7 +684,7 @@
                                     <version>${carbon.commons.version}</version>
                                 </feature>
                                 <feature>
-                                    <id>org.wso2.carbon.logging.mgt.feature.group</id>
+                                    <id>org.wso2.carbon.logging.mgt.server.feature.group</id>
                                     <version>${carbon.commons.version}</version>
                                 </feature>
                                 <feature>
@@ -692,7 +692,7 @@
                                     <version>${carbon.commons.version}</version>
                                 </feature>
                                 <feature>
-                                    <id>org.wso2.carbon.application.mgt.feature.group</id>
+                                    <id>org.wso2.carbon.application.mgt.server.feature.group</id>
                                     <version>${carbon.commons.version}</version>
                                 </feature>
 
@@ -716,22 +716,22 @@
                                 <!--<version>${carbon.identity.version}</version>-->
                                 <!--</feature>-->
                                 <feature>
-                                    <id>org.wso2.carbon.security.mgt.feature.group</id>
+                                    <id>org.wso2.carbon.security.mgt.server.feature.group</id>
                                     <version>${carbon.identity.version}</version>
                                 </feature>
                                 <feature>
-                                    <id>org.wso2.carbon.user.mgt.feature.group</id>
+                                    <id>org.wso2.carbon.user.mgt.server.feature.group</id>
                                     <version>${carbon.identity.version}</version>
                                 </feature>
                                 <feature>
                                     <id>
-                                        org.wso2.carbon.identity.authenticator.saml2.sso.feature.group
+                                        org.wso2.carbon.identity.authenticator.saml2.sso.server.feature.group
                                     </id>
                                     <version>${carbon.identity.version}</version>
                                 </feature>
 
                                 <feature>
-                                    <id>org.wso2.carbon.registry.core.feature.group</id>
+                                    <id>org.wso2.carbon.registry.core.server.feature.group</id>
                                     <version>${carbon.registry.version}</version>
                                 </feature>
                                 <!--<feature>-->
@@ -745,15 +745,20 @@
                                 </feature>
 
                                 <feature>
-                                    <id>org.wso2.carbon.event.receiver.feature.group</id>
+                                    <id>org.wso2.carbon.event.receiver.server.feature.group</id>
                                     <version>${carbon.analytics-common.version}</version>
                                 </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.event.input.adapter.feature.group</id>
+                                    <version>${carbon.analytics-common.version}</version>
+                                </feature>
+                                <!-- Event publisher full feature is needed since dashboard uses the stub -->
                                 <feature>
                                     <id>org.wso2.carbon.event.publisher.feature.group</id>
                                     <version>${carbon.analytics-common.version}</version>
                                 </feature>
                                 <feature>
-                                    <id>org.wso2.carbon.event.processor.feature.group</id>
+                                    <id>org.wso2.carbon.event.processor.server.feature.group</id>
                                     <version>${carbon.event-processing.version}</version>
                                 </feature>
                                 <feature>
@@ -772,6 +777,7 @@
                                     <id>org.wso2.carbon.event.statistics.feature.group</id>
                                     <version>${carbon.analytics-common.version}</version>
                                 </feature>
+                                <!-- Event stream full feature is needed since dashboard uses the stub -->
                                 <feature>
                                     <id>org.wso2.carbon.event.stream.feature.group</id>
                                     <version>${carbon.analytics-common.version}</version>
@@ -780,11 +786,11 @@
                                 <!--<id>org.wso2.carbon.event.simulator.feature.group</id>-->
                                 <!--<version>${carbon.event-processing.version}</version>-->
                                 <!--</feature>-->
-                                <!--<feature>-->
-                                <!--<id>org.wso2.carbon.event.application.deployer.feature.group-->
-                                <!--</id>-->
-                                <!--<version>${carbon.analytics-common.version}</version>-->
-                                <!--</feature>-->
+                                <feature>
+                                    <id>org.wso2.carbon.event.application.deployer.feature.group
+                                    </id>
+                                    <version>${carbon.analytics-common.version}</version>
+                                </feature>
                                 <!--<feature>-->
                                 <!--<id>org.wso2.carbon.event.execution.manager.feature.group</id>-->
                                 <!--<version>${carbon.event-processing.version}</version>-->
@@ -807,7 +813,8 @@
 
                                 <!-- START - JMX agent -->
                                 <feature>
-                                    <id>org.wso2.carbon.analytics.common.jmx.agent.feature.group
+                                    <id>
+                                        org.wso2.carbon.analytics.common.jmx.agent.server.feature.group
                                     </id>
                                     <version>${carbon.analytics-common.version}</version>
                                 </feature>
@@ -845,7 +852,9 @@
 
                                 <!-- depsync related features -->
                                 <feature>
-                                    <id>org.wso2.carbon.deployment.synchronizer.feature.group</id>
+                                    <id>
+                                        org.wso2.carbon.deployment.synchronizer.server.feature.group
+                                    </id>
                                     <version>${carbon.commons.version}</version>
                                 </feature>
                                 <feature>
