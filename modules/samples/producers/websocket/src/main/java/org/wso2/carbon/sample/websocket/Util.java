@@ -29,15 +29,17 @@ public class Util {
 	static String sampleFilPath =
 			".." + File.separator + ".." + File.separator + ".." + File.separator + "samples" +
 			File.separator + "artifacts" + File.separator + "sampleNumber" + File.separator;
+	static String fileExtension = ".txt";
 
 
 	/**
 	 * File path will be created for the file to be read with respect to the arguments passed. If sample number given file path will be created accordingly
 	 *
-	 * @param filePath     Text file to be read
 	 * @param sampleNumber Number of the http sample
+     * @param filePath     Text file to be read
+     * @param url          URL of the Websocket server connecting to (in client mode).
 	 */
-	public static String getMessageFilePath(String sampleNumber, String filePath) throws Exception {
+	public static String getMessageFilePath(String sampleNumber, String filePath, String url) throws Exception {
 		if (sampleNumber != null && sampleNumber.length() == 0) {
 			sampleNumber = null;
 		}
@@ -50,7 +52,12 @@ public class Util {
 		if (filePath != null && sampleNumber == null) {
 			resultingFilePath = filePath;
 		} else if (filePath == null && sampleNumber != null) {
-			resultingFilePath = sampleFilPath.replace("sampleNumber", sampleNumber) + "sensorStreamEvents.txt";
+            if (url.isEmpty()) {
+                resultingFilePath = sampleFilPath.replace("sampleNumber", sampleNumber) + "Events" + fileExtension;
+            } else {
+                String urlSplitter[] = url.split("/");
+                resultingFilePath = sampleFilPath.replace("sampleNumber", sampleNumber) + urlSplitter[urlSplitter.length-1] + fileExtension;
+            }
 		} else {
 			throw new Exception("In sampleNumber:'" + sampleNumber + "' and filePath:'" + filePath +
 			                    "' only one should be null");
