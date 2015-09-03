@@ -57,7 +57,7 @@ public class Websocket {
             WebSocketServer webSocketServer = new WebSocketServer();
 
             try {
-                filePath = Util.getMessageFilePath(sampleNumber, filePath, url);
+                filePath = Util.getMessageFilePath(sampleNumber, filePath);
                 webSocketServer.start(Integer.parseInt(port),host);
 
                 readMsg(filePath);
@@ -82,7 +82,7 @@ public class Websocket {
             try {
                 webSocketClient.connect(url);
 
-                filePath = Util.getMessageFilePath(sampleNumber, filePath, url);
+                filePath = Util.getMessageFilePath(sampleNumber, filePath);
                 readMsg(filePath);
 
                 for (String message : messagesList) {
