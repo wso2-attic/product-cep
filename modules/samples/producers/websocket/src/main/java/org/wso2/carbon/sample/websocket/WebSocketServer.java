@@ -33,7 +33,7 @@ public class WebSocketServer {
     private static Logger log = Logger.getLogger(WebSocketServer.class);
     private Server server = null;
 
-    public void start(int port,String host) {
+    public void start(int port, String host) {
         server = new Server();
         ServerConnector connector = new ServerConnector(server);
         connector.setPort(port);
