@@ -56,7 +56,7 @@ public class Util {
                 resultingFilePath = sampleFilPath.replace("sampleNumber", sampleNumber) + "Events" + fileExtension;
             } else {
                 String urlSplitter[] = url.split("/");
-                resultingFilePath = sampleFilPath.replace("sampleNumber", sampleNumber) + urlSplitter[urlSplitter.length-1] + fileExtension;
+                resultingFilePath = sampleFilPath.replace("sampleNumber", sampleNumber) + urlSplitter[urlSplitter.length - 1] + fileExtension;
             }
 		} else {
 			throw new Exception("In sampleNumber:'" + sampleNumber + "' and filePath:'" + filePath +
