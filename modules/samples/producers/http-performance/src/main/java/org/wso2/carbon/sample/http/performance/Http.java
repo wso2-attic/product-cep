@@ -30,10 +30,8 @@ import java.text.DecimalFormat;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-
 public class Http implements Runnable {
     private static Logger log = Logger.getLogger(Http.class);
-
     static String url;
     static String username;
     static String password;
@@ -47,7 +45,6 @@ public class Http implements Runnable {
     }
 
     public static void main(String args[]) {
-
         log.info("Starting WSO2 Http Client");
         url = args[0];
         username = args[1];
@@ -76,28 +73,21 @@ public class Http implements Runnable {
     }
 
     private static JsonObject getRandomEvent(long count) {
-
         JsonObject event = new JsonObject();
-
         JsonObject metaData = new JsonObject();
         JsonObject correlationData = new JsonObject();
         JsonObject payLoadData = new JsonObject();
-
         metaData.addProperty("timestamp", System.currentTimeMillis());
         metaData.addProperty("isPowerSaverEnabled", false);
         metaData.addProperty("sensorId", count);
         metaData.addProperty("sensorName", "temperature");
-
         correlationData.addProperty("longitude", 2332.424);
         correlationData.addProperty("latitude", 2323.23232);
-
         payLoadData.addProperty("humidity", 2.3f);
         payLoadData.addProperty("sensorValue", 23423.234);
-
         event.add("metaData", metaData);
         event.add("correlationData", correlationData);
         event.add("payloadData", payLoadData);
-
         return event;
     }
 
@@ -111,18 +101,14 @@ public class Http implements Runnable {
             DecimalFormat decimalFormat = new DecimalFormat("#");
             while (count < noOfEvents) {
                 count++;
-
                 String temp = "{\"event\": " + getRandomEvent(count).toString() + "}";
-
                 StringEntity entity = new StringEntity(temp);
                 method.setEntity(entity);
                 if (url.startsWith("https")) {
                     processAuthentication(method, username, password);
                 }
                 httpClient.execute(method).getEntity().getContent().close();
-
                 if (count % elapsedCount == 0) {
-
                     long currentTime = System.currentTimeMillis();
                     long elapsedTime = currentTime - lastTime;
                     double throughputPerSecond = (((double) elapsedCount) / elapsedTime) * 1000;
@@ -131,9 +117,7 @@ public class Http implements Runnable {
                              " milliseconds with total throughput of " + decimalFormat.format(throughputPerSecond) +
                              " events per second.");
                 }
-
             }
-
         } catch (Throwable t) {
             log.error("Error when sending the messages", t);
         }
