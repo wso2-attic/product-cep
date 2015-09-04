@@ -1,22 +1,25 @@
 /*
  * Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
+ * WSO2 Inc. licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
  */
 package org.wso2.carbon.sample.consumer;
 
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import javax.jms.*;
 import java.util.Enumeration;
@@ -28,12 +31,13 @@ public class TopicConsumer implements Runnable {
     private TopicConnectionFactory topicConnectionFactory;
     private String topicName;
     private boolean active = true;
-    private static Logger log = Logger.getLogger(TopicConsumer.class);
+    private static Log log = LogFactory.getLog(TopicConsumer.class);
 
-    public TopicConsumer(TopicConnectionFactory topicConnectionFactory, String topicName){
+    public TopicConsumer(TopicConnectionFactory topicConnectionFactory, String topicName) {
         this.topicConnectionFactory = topicConnectionFactory;
         this.topicName = topicName;
     }
+
     public void run() {
         // create topic connection
         TopicConnection topicConnection = null;
@@ -46,7 +50,6 @@ public class TopicConsumer implements Runnable {
         }
         Session session = null;
         try {
-
             session = topicConnection.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
             Destination destination = session.createTopic(topicName);
             MessageConsumer consumer = session.createConsumer(destination);
@@ -55,7 +58,7 @@ public class TopicConsumer implements Runnable {
                 Message message = consumer.receive(1000);
                 if (message != null) {
                     if (message instanceof MapMessage) {
-                        MapMessage mapMessage=(MapMessage)message;
+                        MapMessage mapMessage = (MapMessage) message;
                         Map<String, Object> map = new HashMap<String, Object>();
                         Enumeration enumeration = mapMessage.getMapNames();
                         while (enumeration.hasMoreElements()) {
@@ -63,7 +66,7 @@ public class TopicConsumer implements Runnable {
                             map.put(key, mapMessage.getObject(key));
                         }
                         log.info("Received Map Message : " + map);
-                    } else if(message instanceof TextMessage) {
+                    } else if (message instanceof TextMessage) {
                         log.info("Received Text Message : " + ((TextMessage) message).getText());
                     } else {
                         log.info("Received message : " + message.toString());
@@ -78,6 +81,7 @@ public class TopicConsumer implements Runnable {
             log.error("Can not subscribe." + e.getMessage(), e);
         }
     }
+
     public void shutdown() {
         active = false;
     }

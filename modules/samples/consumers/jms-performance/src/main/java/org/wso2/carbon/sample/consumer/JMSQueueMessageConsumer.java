@@ -18,14 +18,15 @@
 
 package org.wso2.carbon.sample.consumer;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import javax.jms.*;
 import javax.naming.NamingException;
 
 
 public class JMSQueueMessageConsumer implements Runnable {
-    private static Logger log = Logger.getLogger(JMSQueueMessageConsumer.class);
+    private static Log log = LogFactory.getLog(JMSQueueMessageConsumer.class);
 
     private QueueConnectionFactory queueConnectionFactory = null;
     private String queueName = "";
