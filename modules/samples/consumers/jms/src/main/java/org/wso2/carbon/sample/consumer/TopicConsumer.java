@@ -49,7 +49,6 @@ public class TopicConsumer implements Runnable {
         }
         Session session = null;
         try {
-
             session = topicConnection.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
             Destination destination = session.createTopic(topicName);
             MessageConsumer consumer = session.createConsumer(destination);

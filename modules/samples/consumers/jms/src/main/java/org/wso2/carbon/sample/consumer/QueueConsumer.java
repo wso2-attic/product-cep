@@ -48,7 +48,6 @@ public class QueueConsumer implements Runnable {
         }
         Session session = null;
         try {
-
             session = queueConnection.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
             Destination destination = session.createQueue(queueName);
             MessageConsumer consumer = session.createConsumer(destination);

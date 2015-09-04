@@ -48,7 +48,6 @@ public class JMSClient {
         if (broker == null || broker.equalsIgnoreCase("")) {
             broker = "activemq";
         }
-
         Session session = null;
         Properties properties = new Properties();
         if (!broker.equalsIgnoreCase("activemq") && !broker.equalsIgnoreCase("mb") && !broker.equalsIgnoreCase("qpid")) {
@@ -108,7 +107,6 @@ public class JMSClient {
                 filePath = JMSClientUtil.getEventFilePath(sampleNumber, format, queueName, filePath);
                 QueueConnection queueConnection;
                 QueueConnectionFactory connFactory = null;
-
                 if (broker.equalsIgnoreCase("activemq")) {
                     properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("activemq.properties"));
                     Context context = new InitialContext(properties);
@@ -126,12 +124,10 @@ public class JMSClient {
                     queueConnection = connFactory.createQueueConnection();
                     queueConnection.start();
                     session = queueConnection.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
-
                     if (session != null) {
                         Queue queue = session.createQueue(queueName);
                         MessageProducer producer = session.createProducer(queue);
                         List<String> messagesList = JMSClientUtil.readFile(filePath);
-
                         try {
                             if (format.equalsIgnoreCase("csv")) {
                                 log.info("Sending Map messages on '" + queueName + "' queue");
