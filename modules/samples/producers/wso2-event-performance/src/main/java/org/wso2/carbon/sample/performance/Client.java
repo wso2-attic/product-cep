@@ -16,7 +16,8 @@
 
 package org.wso2.carbon.sample.performance;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.databridge.agent.AgentHolder;
 import org.wso2.carbon.databridge.agent.DataPublisher;
 import org.wso2.carbon.databridge.commons.Event;
@@ -26,7 +27,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class Client {
-    private static Logger log = Logger.getLogger(Client.class);
+    private static Log log = LogFactory.getLog(Client.class);
 
     public static void main(String[] args) {
         log.info(Arrays.deepToString(args));

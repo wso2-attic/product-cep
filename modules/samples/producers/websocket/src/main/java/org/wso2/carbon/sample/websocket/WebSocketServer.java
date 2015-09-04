@@ -16,7 +16,8 @@
 
 package org.wso2.carbon.sample.websocket;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.servlet.ServletContextHandler;
@@ -30,7 +31,7 @@ import java.io.IOException;
 public class WebSocketServer {
 
     private static Session session;
-    private static Logger log = Logger.getLogger(WebSocketServer.class);
+    private static Log log = LogFactory.getLog(WebSocketServer.class);
     private Server server = null;
 
     public void start(int port,String host) {

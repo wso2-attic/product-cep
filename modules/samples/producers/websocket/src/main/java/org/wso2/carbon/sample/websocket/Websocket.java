@@ -17,7 +17,8 @@
 package org.wso2.carbon.sample.websocket;
 
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -30,7 +31,7 @@ import java.util.List;
  * Websocket client reads a text file with multiple xml messages and post it to the given url.
  */
 public class Websocket {
-    private static Logger log = Logger.getLogger(Websocket.class);
+    private static Log log = LogFactory.getLog(Websocket.class);
     private static List<String> messagesList = new ArrayList<String>();
     private static BufferedReader bufferedReader = null;
     private static StringBuffer message = new StringBuffer("");

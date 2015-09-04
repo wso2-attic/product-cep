@@ -16,7 +16,8 @@
 
 package org.wso2.carbon.sample.wso2event;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.databridge.commons.StreamDefinition;
 import org.wso2.carbon.databridge.commons.exception.MalformedStreamDefinitionException;
 import org.wso2.carbon.databridge.commons.utils.EventDefinitionConverterUtils;
@@ -27,7 +28,7 @@ import java.util.Map;
 
 public class DataPublisherUtil {
 
-    private static Logger log = Logger.getLogger(DataPublisherUtil.class);
+    private static Log log = LogFactory.getLog(DataPublisherUtil.class);
 
     static File securityFile = new File(".." + File.separator + ".." + File.separator + ".." + File.separator + "repository" + File.separator + "resources" + File.separator + "security");
     static String configDirectoryPath = ".." + File.separator + ".." + File.separator + ".." + File.separator + "repository" + File.separator + "deployment" + File.separator + "server" + File.separator + "eventstreams";

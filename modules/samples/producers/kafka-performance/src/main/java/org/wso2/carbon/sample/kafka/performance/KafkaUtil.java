@@ -30,6 +30,8 @@ package org.wso2.carbon.sample.kafka.performance;/*
  * limitations under the License.
  */
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.Logger;
 
 import java.io.File;
@@ -39,7 +41,7 @@ import java.io.File;
  */
 public class KafkaUtil {
 
-	private static Logger log = Logger.getLogger(KafkaUtil.class);
+	private static Log log = LogFactory.getLog(KafkaUtil.class);
 
 	static String sampleDirectoryPath = ".." + File.separator + ".." + File.separator + ".." + File.separator +
 			"samples" + File.separator + "artifacts" + File.separator + "sampleNumber" + File.separator;

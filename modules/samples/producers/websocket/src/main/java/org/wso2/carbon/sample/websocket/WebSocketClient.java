@@ -16,14 +16,15 @@
 
 package org.wso2.carbon.sample.websocket;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.eclipse.jetty.util.component.LifeCycle;
 
 import javax.websocket.*;
 import java.net.URI;
 
 public class WebSocketClient {
-    private static Logger log = Logger.getLogger(WebSocketClient.class);
+    private static Log log = LogFactory.getLog(WebSocketClient.class);
     private WebSocketContainer container;
     private Session session;
 

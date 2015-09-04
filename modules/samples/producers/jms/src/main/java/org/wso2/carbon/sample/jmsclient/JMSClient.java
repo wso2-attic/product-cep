@@ -17,7 +17,8 @@
  */
 package org.wso2.carbon.sample.jmsclient;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import javax.jms.*;
 import javax.naming.Context;
@@ -32,7 +33,7 @@ import java.util.Properties;
  */
 public class JMSClient {
 
-    private static Logger log = Logger.getLogger(JMSClient.class);
+    private static Log log = LogFactory.getLog(JMSClient.class);
 
     public static void main(String[] args) {
 

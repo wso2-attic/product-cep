@@ -20,6 +20,8 @@ import com.google.gson.JsonObject;
 import kafka.javaapi.producer.Producer;
 import kafka.producer.KeyedMessage;
 import kafka.producer.ProducerConfig;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.Logger;
 
 import java.text.DecimalFormat;
@@ -31,7 +33,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 
 public class KafkaClient {
-    private static Logger log = Logger.getLogger(KafkaClient.class);
+    private static Log log = LogFactory.getLog(KafkaClient.class);
 
     private static String url;
     private static String topic;
