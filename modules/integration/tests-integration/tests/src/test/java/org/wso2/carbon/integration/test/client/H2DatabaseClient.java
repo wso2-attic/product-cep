@@ -31,7 +31,7 @@ import java.sql.SQLException;
 
 public class H2DatabaseClient {
 
-    private static Log log = LogFactory.getLog(H2DatabaseClient.class);
+    private static final Log log = LogFactory.getLog(H2DatabaseClient.class);
 
     public static void main(String[] args) {
         getTableEntryCount("sensordata");

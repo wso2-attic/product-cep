@@ -33,7 +33,7 @@ import org.openqa.selenium.WebDriver;
  * login page class - contains methods to login to wso2 products.
  */
 public class LoginPage {
-    private static Log log = LogFactory.getLog(LoginPage.class);
+    private static final Log log = LogFactory.getLog(LoginPage.class);
     private WebDriver driver;
     private boolean isCloudEnvironment = false;
 

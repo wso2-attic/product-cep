@@ -29,7 +29,7 @@ import java.util.regex.Matcher;
  * FilePublisherClient client reads a text file with multiple events and post it to the given url.
  */
 public class FilePublisherClient {
-    private static Log log = LogFactory.getLog(FilePublisherClient.class);
+    private static final Log log = LogFactory.getLog(FilePublisherClient.class);
 
     public static void publish(String destinationFilePath, String testCaseFolderName, String dataFileName) {
         log.info("Starting File EventPublisher Client");

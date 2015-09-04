@@ -39,7 +39,7 @@ import java.util.List;
 public class HomePage {
 
 
-    private static Log log = LogFactory.getLog(HomePage.class);
+    private static final Log log = LogFactory.getLog(HomePage.class);
     private WebDriver driver;
     private boolean isCloudEnvironment = false;
     private boolean isTenant = false;
