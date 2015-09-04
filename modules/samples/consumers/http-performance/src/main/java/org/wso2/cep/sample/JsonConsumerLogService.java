@@ -87,7 +87,6 @@ public class JsonConsumerLogService extends HttpServlet {
                          " events per second.");
                 log.info("Receiving Latency: " + (double) latency.get() / elapsedCount);
                 latency = new AtomicLong(0);
-
             }
         } else {
             log.error("unable to extract timestamp from received event");
