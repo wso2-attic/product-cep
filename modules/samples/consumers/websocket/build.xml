@@ -26,6 +26,7 @@
     <property name="main-class" value="org.wso2.carbon.sample.websocket.Websocket"/>
     <property name="lib.dir" value="../../lib"/>
 
+    <property name="host" value="localhost"/>
     <property name="port" value="9099"/>
     <property name="url" value=""/>
 
@@ -64,9 +65,13 @@
     </target>
 
     <target name="run" depends="compile">
-        <echo> Configure -Dport='server port' or -Durl='client url'</echo>
-        <java classname="${main-class}"
+        <echo>For server mode, configure -Dhost='server host' (optional), -Dport='server port'
+            (optional)
+        </echo>
+        <echo>For client mode, configure -Durl='server url'</echo>
+        <java classname="${main-class}" fork="true"
               classpathref="javac.classpath">
+            <arg value="${host}"/>
             <arg value="${port}"/>
             <arg value="${url}"/>
         </java>

@@ -35,9 +35,10 @@ public class WebSocketServer {
     private Server server = null;
 
 
-    public void start(int port) {
+    public void start(int port, String host) {
         server = new Server();
         ServerConnector connector = new ServerConnector(server);
+        connector.setHost(host);
         connector.setPort(port);
         server.addConnector(connector);
 

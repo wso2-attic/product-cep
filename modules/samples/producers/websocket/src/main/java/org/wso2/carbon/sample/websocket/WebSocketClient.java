@@ -38,8 +38,8 @@ public class WebSocketClient {
             // Attempt Connect
             session = container.connectToServer(EventSocketClient.class, uri);
 
-            if(session==null){
-                throw new RuntimeException("Cannot connect to url :"+url);
+            if (session == null) {
+                throw new RuntimeException("Cannot connect to url :" + url);
             }
         } catch (Throwable t) {
             log.error(t);

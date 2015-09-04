@@ -32,10 +32,11 @@ public class Websocket {
 
 
         //for server
-        String port = args[0];
+        String host = args[0];
+        String port = args[1];
 
         //for client
-        String url = args[1];
+        String url = args[2];
 
         if (url.isEmpty()) {
             System.out.println("Starting Websocket receiver on Server Mode");
@@ -43,7 +44,7 @@ public class Websocket {
             WebSocketServer webSocketServer = new WebSocketServer();
 
             try {
-                webSocketServer.start(Integer.parseInt(port));
+                webSocketServer.start(Integer.parseInt(port), host);
 
                 //To receive all the messages
                 Thread.sleep(5000000);
@@ -53,7 +54,7 @@ public class Websocket {
             } finally {
                 webSocketServer.stop();
             }
-        } else  {
+        } else {
             System.out.println("Starting Websocket receiver on Client Mode");
 
             WebSocketClient webSocketClient = new WebSocketClient();
