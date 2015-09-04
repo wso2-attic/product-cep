@@ -91,7 +91,7 @@ public class JMSClient {
                             }
                             log.info("All Order Messages sent");
                         } catch (JMSException e) {
-                            log.error("Can not subscribe." + e.getMessage(), e);
+                            log.error("Cannot subscribe." + e.getMessage(), e);
                         } catch (IOException e) {
                             log.error("Error when reading the data file." + e.getMessage(), e);
                         } finally {
@@ -138,7 +138,7 @@ public class JMSClient {
                                 JMSClientUtil.publishTextMessage(producer, session, messagesList);
                             }
                         } catch (JMSException e) {
-                            log.error("Can not subscribe." + e.getMessage(), e);
+                            log.error("Cannot subscribe." + e.getMessage(), e);
                         } catch (IOException e) {
                             log.error("Error when reading the data file." + e.getMessage(), e);
                         } finally {
@@ -154,7 +154,7 @@ public class JMSClient {
                 log.error("Enter queue name or topic name to be published!");
             }
         } catch (Exception e) {
-            log.error("Error when publishing");
+            log.error("Error when publishing" + e.getMessage(), e);
         }
     }
 }
