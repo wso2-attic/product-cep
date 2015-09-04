@@ -51,6 +51,10 @@
                 <hostName>localhost</hostName>
                 <port>8904</port>
             </manager>
+	    <presenter enable="true">
+                <hostName>localhost</hostName>
+                <port>11000</port>
+            </presenter>
         </nodeType>
 
         <management>
