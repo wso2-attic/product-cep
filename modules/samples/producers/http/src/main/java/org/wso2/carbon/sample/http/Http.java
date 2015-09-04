@@ -18,12 +18,13 @@
 
 package org.wso2.carbon.sample.http;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.http.client.HttpClient;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.SystemDefaultHttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.axiom.om.util.Base64;
-import org.apache.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -36,7 +37,7 @@ import java.util.List;
  * Http client reads a text file with multiple xml messages and post it to the given url.
  */
 public class Http {
-    private static Logger log = Logger.getLogger(Http.class);
+    private static Log log = LogFactory.getLog(Http.class);
     private static List<String> messagesList = new ArrayList<String>();
     private static BufferedReader bufferedReader = null;
     private static StringBuffer message = new StringBuffer("");

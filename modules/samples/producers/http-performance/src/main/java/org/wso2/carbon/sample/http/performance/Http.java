@@ -18,12 +18,13 @@
 
 package org.wso2.carbon.sample.http.performance;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.http.client.HttpClient;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.SystemDefaultHttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.axiom.om.util.Base64;
-import org.apache.log4j.Logger;
 import com.google.gson.JsonObject;
 
 import java.text.DecimalFormat;
@@ -31,7 +32,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Http implements Runnable {
-    private static Logger log = Logger.getLogger(Http.class);
+    private static Log log = LogFactory.getLog(Http.class);
     static String url;
     static String username;
     static String password;
