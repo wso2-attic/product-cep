@@ -32,7 +32,7 @@ import java.util.regex.Pattern;
 
 public class XmlConsumerLogService extends HttpServlet {
 
-    private static Logger log = Logger.getLogger(XmlConsumerLogService.class);
+    private static Log log = LogFactory.getLog(XmlConsumerLogService.class);
 
     private DecimalFormat decimalFormat = new DecimalFormat("#");
     private static int elapsedCount = 50000;

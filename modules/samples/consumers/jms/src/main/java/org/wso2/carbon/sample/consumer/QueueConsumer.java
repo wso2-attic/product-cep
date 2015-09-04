@@ -17,7 +17,8 @@
  */
 package org.wso2.carbon.sample.consumer;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import javax.jms.*;
 import java.util.Enumeration;
@@ -29,7 +30,7 @@ public class QueueConsumer implements Runnable {
     private QueueConnectionFactory queueConnectionFactory;
     private String queueName;
     private boolean active = true;
-    private static Logger log = Logger.getLogger(QueueConsumer.class);
+    private static Log log = LogFactory.getLog(QueueConsumer.class);
 
     public QueueConsumer(QueueConnectionFactory queueConnectionFactory, String queueName) {
         this.queueConnectionFactory = queueConnectionFactory;

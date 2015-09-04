@@ -18,7 +18,8 @@
 
 package org.wso2.cep.sample;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -34,7 +35,7 @@ import java.util.regex.Pattern;
 
 public class JsonConsumerLogService extends HttpServlet {
 
-    private static Logger log = Logger.getLogger(JsonConsumerLogService.class);
+    private static Log log = LogFactory.getLog(JsonConsumerLogService.class);
 
     private DecimalFormat decimalFormat = new DecimalFormat("#");
     private static int elapsedCount = 50000;

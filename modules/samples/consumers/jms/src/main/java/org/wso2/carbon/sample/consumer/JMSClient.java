@@ -17,6 +17,8 @@
  */
 package org.wso2.carbon.sample.consumer;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.Logger;
 
 import javax.jms.QueueConnectionFactory;
@@ -29,7 +31,7 @@ import java.util.Properties;
 
 public class JMSClient {
 
-    private static Logger log = Logger.getLogger(JMSClient.class);
+    private static Log log = LogFactory.getLog(JMSClient.class);
 
     public static void main(String[] args) throws InterruptedException {
 
