@@ -45,29 +45,29 @@ public class JMSClient {
         if (format == null || "map".equals(format)) {
             format = "csv";
         }
-        if (broker == null || broker.equalsIgnoreCase("")) {
+        if ("".equalsIgnoreCase(broker)) {
             broker = "activemq";
         }
         Session session = null;
         Properties properties = new Properties();
-        if (!broker.equalsIgnoreCase("activemq") && !broker.equalsIgnoreCase("mb") && !broker.equalsIgnoreCase("qpid")) {
+        if (!"activemq".equalsIgnoreCase(broker) && !"mb".equalsIgnoreCase(broker) && !"qpid".equalsIgnoreCase(broker)) {
             log.error("Please enter a valid JMS message broker. (ex: activemq, mb, qpid");
             return;
         }
         try {
-            if (topicName != null && !topicName.equalsIgnoreCase("")) {
+            if (topicName != null && !"".equalsIgnoreCase(topicName)) {
                 filePath = JMSClientUtil.getEventFilePath(sampleNumber, format, topicName, filePath);
                 TopicConnection topicConnection;
                 TopicConnectionFactory connFactory = null;
-                if (broker.equalsIgnoreCase("activemq")) {
+                if ("activemq".equalsIgnoreCase(broker)) {
                     properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("activemq.properties"));
                     Context context = new InitialContext(properties);
                     connFactory = (TopicConnectionFactory) context.lookup("ConnectionFactory");
-                } else if (broker.equalsIgnoreCase("mb")) {
+                } else if ("mb".equalsIgnoreCase(broker)) {
                     properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("mb.properties"));
                     Context context = new InitialContext(properties);
                     connFactory = (TopicConnectionFactory) context.lookup("qpidConnectionFactory");
-                } else if (broker.equalsIgnoreCase("qpid")) {
+                } else if ("qpid".equalsIgnoreCase(broker)) {
                     properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("qpid.properties"));
                     Context context = new InitialContext(properties);
                     connFactory = (TopicConnectionFactory) context.lookup("qpidConnectionFactory");
@@ -81,7 +81,7 @@ public class JMSClient {
                         MessageProducer producer = session.createProducer(topic);
                         List<String> messagesList = JMSClientUtil.readFile(filePath);
                         try {
-                            if (format.equalsIgnoreCase("csv")) {
+                            if ("csv".equalsIgnoreCase(format)) {
                                 log.info("Sending Map messages on '" + topicName + "' topic");
                                 JMSClientUtil.publishMapMessage(producer, session, messagesList);
 
@@ -107,15 +107,15 @@ public class JMSClient {
                 filePath = JMSClientUtil.getEventFilePath(sampleNumber, format, queueName, filePath);
                 QueueConnection queueConnection;
                 QueueConnectionFactory connFactory = null;
-                if (broker.equalsIgnoreCase("activemq")) {
+                if ("activemq".equalsIgnoreCase(broker)) {
                     properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("activemq.properties"));
                     Context context = new InitialContext(properties);
                     connFactory = (QueueConnectionFactory) context.lookup("ConnectionFactory");
-                } else if (broker.equalsIgnoreCase("mb")) {
+                } else if ("mb".equalsIgnoreCase(broker)) {
                     properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("mb.properties"));
                     Context context = new InitialContext(properties);
                     connFactory = (QueueConnectionFactory) context.lookup("qpidConnectionFactory");
-                } else if (broker.equalsIgnoreCase("qpid")) {
+                } else if ("qpid".equalsIgnoreCase(broker)) {
                     properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("qpid.properties"));
                     Context context = new InitialContext(properties);
                     connFactory = (QueueConnectionFactory) context.lookup("qpidConnectionFactory");
@@ -129,7 +129,7 @@ public class JMSClient {
                         MessageProducer producer = session.createProducer(queue);
                         List<String> messagesList = JMSClientUtil.readFile(filePath);
                         try {
-                            if (format.equalsIgnoreCase("csv")) {
+                            if ("csv".equalsIgnoreCase(format)) {
                                 log.info("Sending Map messages on '" + queueName + "' queue");
                                 JMSClientUtil.publishMapMessage(producer, session, messagesList);
 
