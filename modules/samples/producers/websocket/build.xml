@@ -65,9 +65,9 @@
     </target>
 
     <target name="run" depends="compile">
-        <echo> For server mode, configure -Dport='server port', -DfilePath=xxxx and/or -Dhost='host'</echo>
-        <echo> For client mode, configure -Durl='client url', -DfilePath=xxxx and/or -Dhost='host'</echo>
-        <java classname="${main-class}"
+        <echo> For server mode, configure -Dsn='sample number' or -DfilePath=xxxx, -Dhost='host' (optional), -Dport='server port' (optional)</echo>
+        <echo> For client mode, configure -Durl='server url', -Dsn='sample number' or -DfilePath=xxxx</echo>
+        <java classname="${main-class}" fork="true"
               classpathref="javac.classpath">
             <arg value="${port}"/>
             <arg value="${url}"/>
