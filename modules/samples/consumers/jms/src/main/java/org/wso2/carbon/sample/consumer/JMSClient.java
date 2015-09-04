@@ -36,43 +36,41 @@ public class JMSClient {
         String broker = args[0];
         String topic = args[1];
         String queue = args[2];
-
-
         Properties properties = new Properties();
 
         try {
             boolean validBroker = true;
-            if(broker.equalsIgnoreCase("qpid")){
+            if (broker.equalsIgnoreCase("qpid")) {
                 properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("qpid.properties"));
-            }else if(broker.equalsIgnoreCase("activemq")){
+            } else if (broker.equalsIgnoreCase("activemq")) {
                 properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("activemq.properties"));
-            }else if(broker.equalsIgnoreCase("mb")){
+            } else if (broker.equalsIgnoreCase("mb")) {
                 properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("mb.properties"));
-            }else{
+            } else {
                 validBroker = false;
                 log.error("Entered broker is invalid! ");
             }
-            if(validBroker){
-                if(topic == null && queue == null){
+            if (validBroker) {
+                if (topic == null && queue == null) {
                     log.error("Enter topic value or queue value! ");
-                }else if(topic != null){
+                } else if (topic != null) {
                     Context context = new InitialContext(properties);
                     TopicConnectionFactory topicConnectionFactory = (TopicConnectionFactory) context.lookup("ConnectionFactory");
                     TopicConsumer topicConsumer = new TopicConsumer(topicConnectionFactory, topic);
                     Thread consumerThread = new Thread(topicConsumer);
                     log.info("Starting" + broker + "consumerTopic thread...");
                     consumerThread.start();
-                    Thread.sleep(5*60000);
+                    Thread.sleep(5 * 60000);
                     log.info("Shutting down " + broker + " consumerTopic...");
                     topicConsumer.shutdown();
-                }else{
+                } else {
                     Context context = new InitialContext(properties);
                     QueueConnectionFactory queueConnectionFactory = (QueueConnectionFactory) context.lookup("ConnectionFactory");
                     QueueConsumer queueConsumer = new QueueConsumer(queueConnectionFactory, queue);
                     Thread consumerThread = new Thread(queueConsumer);
                     log.info("Starting" + broker + "consumerQueue thread...");
                     consumerThread.start();
-                    Thread.sleep(5*60000);
+                    Thread.sleep(5 * 60000);
                     log.info("Shutting down " + broker + " consumerQueue...");
                     queueConsumer.shutdown();
                 }

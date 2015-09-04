@@ -31,7 +31,7 @@ public class QueueConsumer implements Runnable {
     private boolean active = true;
     private static Logger log = Logger.getLogger(QueueConsumer.class);
 
-    public QueueConsumer(QueueConnectionFactory queueConnectionFactory, String queueName){
+    public QueueConsumer(QueueConnectionFactory queueConnectionFactory, String queueName) {
         this.queueConnectionFactory = queueConnectionFactory;
         this.queueName = queueName;
     }
@@ -80,6 +80,7 @@ public class QueueConsumer implements Runnable {
             log.error("Can not subscribe." + e.getMessage(), e);
         }
     }
+
     public void shutdown() {
         active = false;
     }

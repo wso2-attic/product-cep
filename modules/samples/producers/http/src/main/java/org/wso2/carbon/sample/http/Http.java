@@ -36,91 +36,82 @@ import java.util.List;
  * Http client reads a text file with multiple xml messages and post it to the given url.
  */
 public class Http {
-	private static Logger log = Logger.getLogger(Http.class);
-	private static List<String> messagesList = new ArrayList<String>();
-	private static BufferedReader bufferedReader = null;
-	private static StringBuffer message = new StringBuffer("");
-	private static final String asterixLine = "*****";
+    private static Logger log = Logger.getLogger(Http.class);
+    private static List<String> messagesList = new ArrayList<String>();
+    private static BufferedReader bufferedReader = null;
+    private static StringBuffer message = new StringBuffer("");
+    private static final String asterixLine = "*****";
 
-	public static void main(String args[]) {
+    public static void main(String args[]) {
+        log.info("Starting WSO2 Http Client");
+        HttpUtil.setTrustStoreParams();
+        String url = args[0];
+        String username = args[1];
+        String password = args[2];
+        String sampleNumber = args[3];
+        String filePath = args[4];
+        HttpClient httpClient = new SystemDefaultHttpClient();
+        try {
+            HttpPost method = new HttpPost(url);
+            filePath = HttpUtil.getMessageFilePath(sampleNumber, filePath, url);
+            readMsg(filePath);
+            for (String message : messagesList) {
+                StringEntity entity = new StringEntity(message);
+                log.info("Sending message:");
+                log.info(message + "\n");
+                method.setEntity(entity);
+                if (url.startsWith("https")) {
+                    processAuthentication(method, username, password);
+                }
+                httpClient.execute(method).getEntity().getContent().close();
+            }
+            Thread.sleep(500); // Waiting time for the message to be sent
+        } catch (Throwable t) {
+            log.error("Error when sending the messages", t);
+        }
+    }
 
-		System.out.println("Starting WSO2 Http Client");
-		HttpUtil.setTrustStoreParams();
-		String url = args[0];
-		String username = args[1];
-		String password = args[2];
-		String sampleNumber = args[3];
-		String filePath = args[4];
+    /**
+     * Xml messages will be read from the given filepath and stored in the array list (messagesList)
+     *
+     * @param filePath Text file to be read
+     */
+    private static void readMsg(String filePath) {
+        try {
+            String line;
+            bufferedReader = new BufferedReader(new FileReader(filePath));
+            while ((line = bufferedReader.readLine()) != null) {
+                if ((line.equals(asterixLine.trim()) && !"".equals(message.toString().trim()))) {
+                    messagesList.add(message.toString());
+                    message = new StringBuffer("");
+                } else {
+                    message = message.append(String.format("\n%s", line));
+                }
+            }
+            if (!"".equals(message.toString().trim())) {
+                messagesList.add(message.toString());
+            }
+        } catch (FileNotFoundException e) {
+            log.error("Error in reading file " + filePath, e);
+        } catch (IOException e) {
+            log.error("Error in reading file " + filePath, e);
+        } finally {
+            try {
+                if (bufferedReader != null) {
+                    bufferedReader.close();
+                }
+            } catch (IOException e) {
+                log.error("Error occurred when closing the file : " + e.getMessage(), e);
+            }
+        }
+    }
 
-		HttpClient httpClient = new SystemDefaultHttpClient();
-		try {
-			HttpPost method = new HttpPost(url);
-			filePath = HttpUtil.getMessageFilePath(sampleNumber, filePath, url);
-			readMsg(filePath);
-
-			for (String message : messagesList) {
-				StringEntity entity = new StringEntity(message);
-				System.out.println("Sending message:");
-				System.out.println(message);
-				System.out.println();
-				method.setEntity(entity);
-				if (url.startsWith("https")) {
-					processAuthentication(method, username, password);
-				}
-				httpClient.execute(method).getEntity().getContent().close();
-			}
-			Thread.sleep(500); // Waiting time for the message to be sent
-
-		} catch (Throwable t) {
-			log.error("Error when sending the messages", t);
-		}
-	}
-
-	/**
-	 * Xml messages will be read from the given filepath and stored in the array list (messagesList)
-	 *
-	 * @param filePath Text file to be read
-	 */
-	private static void readMsg(String filePath) {
-
-		try {
-
-			String line;
-			bufferedReader = new BufferedReader(new FileReader(filePath));
-			while ((line = bufferedReader.readLine()) != null) {
-				if ((line.equals(asterixLine.trim()) && !"".equals(message.toString().trim()))) {
-					messagesList.add(message.toString());
-					message = new StringBuffer("");
-				} else {
-					message = message.append(String.format("\n%s", line));
-				}
-			}
-			if (!"".equals(message.toString().trim())) {
-				messagesList.add(message.toString());
-			}
-
-		} catch (FileNotFoundException e) {
-			log.error("Error in reading file " + filePath, e);
-		} catch (IOException e) {
-			log.error("Error in reading file " + filePath, e);
-		} finally {
-			try {
-				if (bufferedReader != null) {
-					bufferedReader.close();
-				}
-			} catch (IOException e) {
-				log.error("Error occurred when closing the file : " + e.getMessage(), e);
-			}
-		}
-
-	}
-
-	private static void processAuthentication(HttpPost method, String username, String password) {
-		if (username != null && username.trim().length() > 0) {
-			method.setHeader("Authorization",
-			                 "Basic " + Base64.encode((username + ":" + password).getBytes()));
-		}
-	}
+    private static void processAuthentication(HttpPost method, String username, String password) {
+        if (username != null && username.trim().length() > 0) {
+            method.setHeader("Authorization",
+                             "Basic " + Base64.encode((username + ":" + password).getBytes()));
+        }
+    }
 
 }
 

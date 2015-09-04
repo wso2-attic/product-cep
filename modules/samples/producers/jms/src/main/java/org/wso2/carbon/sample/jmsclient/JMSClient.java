@@ -42,7 +42,6 @@ public class JMSClient {
         String format = args[3];
         String filePath = args[4];
         String broker = args[5];
-
         if (format == null || "map".equals(format)) {
             format = "csv";
         }
@@ -52,21 +51,15 @@ public class JMSClient {
 
         Session session = null;
         Properties properties = new Properties();
-
-        if(!broker.equalsIgnoreCase("activemq") && !broker.equalsIgnoreCase("mb") && !broker.equalsIgnoreCase("qpid")){
+        if (!broker.equalsIgnoreCase("activemq") && !broker.equalsIgnoreCase("mb") && !broker.equalsIgnoreCase("qpid")) {
             log.error("Please enter a valid JMS message broker. (ex: activemq, mb, qpid");
             return;
         }
-
         try {
-
-            if(topicName != null && !topicName.equalsIgnoreCase("")) {
-
+            if (topicName != null && !topicName.equalsIgnoreCase("")) {
                 filePath = JMSClientUtil.getEventFilePath(sampleNumber, format, topicName, filePath);
-
                 TopicConnection topicConnection;
                 TopicConnectionFactory connFactory = null;
-
                 if (broker.equalsIgnoreCase("activemq")) {
                     properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("activemq.properties"));
                     Context context = new InitialContext(properties);
@@ -80,16 +73,13 @@ public class JMSClient {
                     Context context = new InitialContext(properties);
                     connFactory = (TopicConnectionFactory) context.lookup("qpidConnectionFactory");
                 }
-
-                if(connFactory != null) {
+                if (connFactory != null) {
                     topicConnection = connFactory.createTopicConnection();
                     topicConnection.start();
                     session = topicConnection.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
-
                     if (session != null) {
                         Topic topic = session.createTopic(topicName);
                         MessageProducer producer = session.createProducer(topic);
-
                         List<String> messagesList = JMSClientUtil.readFile(filePath);
                         try {
                             if (format.equalsIgnoreCase("csv")) {
@@ -111,31 +101,28 @@ public class JMSClient {
                             topicConnection.stop();
                         }
                     }
-                }else{
+                } else {
                     log.error("Error when creating connection factory. Please check necessary jar files");
                 }
-            }else if(queueName != null && !queueName.equalsIgnoreCase("")){
-
+            } else if (queueName != null && !queueName.equalsIgnoreCase("")) {
                 filePath = JMSClientUtil.getEventFilePath(sampleNumber, format, queueName, filePath);
-
                 QueueConnection queueConnection;
                 QueueConnectionFactory connFactory = null;
 
-                if(broker.equalsIgnoreCase("activemq")){
+                if (broker.equalsIgnoreCase("activemq")) {
                     properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("activemq.properties"));
                     Context context = new InitialContext(properties);
                     connFactory = (QueueConnectionFactory) context.lookup("ConnectionFactory");
-                }else if(broker.equalsIgnoreCase("mb")){
+                } else if (broker.equalsIgnoreCase("mb")) {
                     properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("mb.properties"));
                     Context context = new InitialContext(properties);
                     connFactory = (QueueConnectionFactory) context.lookup("qpidConnectionFactory");
-                }else if(broker.equalsIgnoreCase("qpid")){
+                } else if (broker.equalsIgnoreCase("qpid")) {
                     properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("qpid.properties"));
                     Context context = new InitialContext(properties);
                     connFactory = (QueueConnectionFactory) context.lookup("qpidConnectionFactory");
                 }
-
-                if(connFactory != null) {
+                if (connFactory != null) {
                     queueConnection = connFactory.createQueueConnection();
                     queueConnection.start();
                     session = queueConnection.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
@@ -143,8 +130,8 @@ public class JMSClient {
                     if (session != null) {
                         Queue queue = session.createQueue(queueName);
                         MessageProducer producer = session.createProducer(queue);
-
                         List<String> messagesList = JMSClientUtil.readFile(filePath);
+
                         try {
                             if (format.equalsIgnoreCase("csv")) {
                                 log.info("Sending Map messages on '" + queueName + "' queue");
@@ -164,10 +151,10 @@ public class JMSClient {
                             queueConnection.stop();
                         }
                     }
-                }else{
+                } else {
                     log.error("Error when creating connection factory. Please check necessary jar files");
                 }
-            }else{
+            } else {
                 log.error("Enter queue name or topic name to be published!");
             }
         } catch (Exception e) {

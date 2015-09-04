@@ -32,10 +32,11 @@ public class TopicConsumer implements Runnable {
     private boolean active = true;
     private static Logger log = Logger.getLogger(TopicConsumer.class);
 
-    public TopicConsumer(TopicConnectionFactory topicConnectionFactory, String topicName){
+    public TopicConsumer(TopicConnectionFactory topicConnectionFactory, String topicName) {
         this.topicConnectionFactory = topicConnectionFactory;
         this.topicName = topicName;
     }
+
     public void run() {
         // create topic connection
         TopicConnection topicConnection = null;
@@ -57,7 +58,7 @@ public class TopicConsumer implements Runnable {
                 Message message = consumer.receive(1000);
                 if (message != null) {
                     if (message instanceof MapMessage) {
-                        MapMessage mapMessage=(MapMessage)message;
+                        MapMessage mapMessage = (MapMessage) message;
                         Map<String, Object> map = new HashMap<String, Object>();
                         Enumeration enumeration = mapMessage.getMapNames();
                         while (enumeration.hasMoreElements()) {
@@ -65,7 +66,7 @@ public class TopicConsumer implements Runnable {
                             map.put(key, mapMessage.getObject(key));
                         }
                         log.info("Received Map Message : " + map);
-                    } else if(message instanceof TextMessage) {
+                    } else if (message instanceof TextMessage) {
                         log.info("Received Text Message : " + ((TextMessage) message).getText());
                     } else {
                         log.info("Received message : " + message.toString());
@@ -80,6 +81,7 @@ public class TopicConsumer implements Runnable {
             log.error("Can not subscribe." + e.getMessage(), e);
         }
     }
+
     public void shutdown() {
         active = false;
     }
