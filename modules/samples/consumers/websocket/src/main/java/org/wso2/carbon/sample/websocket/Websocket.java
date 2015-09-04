@@ -51,7 +51,7 @@ public class Websocket {
             } finally {
                 webSocketServer.stop();
             }
-        } else  {
+        } else {
             System.out.println("Starting Websocket receiver on Client Mode");
 
             WebSocketClient webSocketClient = new WebSocketClient();

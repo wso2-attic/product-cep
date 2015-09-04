@@ -49,7 +49,7 @@ public class Websocket {
         String sampleNumber = args[3];
 
         //for host
-        String host=args[4];
+        String host = args[4];
 
         if (url.isEmpty()) {
             System.out.println("Starting Websocket publisher on Server Mode");
@@ -58,7 +58,7 @@ public class Websocket {
 
             try {
                 filePath = Util.getMessageFilePath(sampleNumber, filePath, url);
-                webSocketServer.start(Integer.parseInt(port),host);
+                webSocketServer.start(Integer.parseInt(port), host);
 
                 readMsg(filePath);
 
@@ -75,7 +75,7 @@ public class Websocket {
             } finally {
                 webSocketServer.stop();
             }
-        } else  {
+        } else {
             System.out.println("Starting Websocket publisher on Client Mode");
 
             WebSocketClient webSocketClient = new WebSocketClient();
