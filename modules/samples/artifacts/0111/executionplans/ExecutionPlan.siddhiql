@@ -26,6 +26,6 @@ deliveryEvent = deliveries_stream[arrivalEvent.trackingId == trackingId]
 select arrivalEvent.trackingId as trackingId, arrivalEvent.customerName as customerName, arrivalEvent.telephoneNo as telephoneNo, deliveryEvent.trackingId as deliveryId 
 insert into filter_stream;
 
-from filter_stream [ isNull(deliveryId)]  
+from filter_stream [ deliveryId is null]
 select trackingId, customerName, telephoneNo
 insert into alert_stream;

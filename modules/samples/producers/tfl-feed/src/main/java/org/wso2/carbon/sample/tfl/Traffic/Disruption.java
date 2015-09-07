@@ -55,27 +55,38 @@ public class Disruption {
 
     public void setCoordsPoly(String coords) {
         isMultiPolygon = false;
-        String[] temp = coords.split(",");
-        StringBuilder sb = new StringBuilder("{ \n 'type': 'Polygon', \n 'coordinates': [[");
-        for (int i = 0; i < temp.length - 1; i += 2) {
-            if (i != 0) {
-                sb.append(",");
+        StringBuilder sb = new StringBuilder();
+        if(coords != null){
+            String[] temp = coords.split(",");
+            sb.append("{ \n 'type': 'Polygon', \n 'coordinates': [[");
+            for (int i = 0; i < temp.length - 1; i += 2) {
+                if (i != 0) {
+                    sb.append(",");
+                }
+                sb.append("[").append(Double.parseDouble(temp[i])).append(",").append(Double.parseDouble(temp[i + 1])).append("]");
             }
-            sb.append("[").append(Double.parseDouble(temp[i])).append(",").append(Double.parseDouble(temp[i + 1])).append("]");
+            sb.append("]] \n }");
+        }else{
+            sb.append("{ \n 'type': 'Polygon', \n 'coordinates': [] \n }");
         }
-        sb.append("]] \n }");
         coordinates = sb.toString();
     }
 
     public void setCoordsPoly(Coordinate[] coords) {
-        StringBuilder sb = new StringBuilder("{ \n 'type': 'Polygon', \n 'coordinates': [[");
-        for (int i = 0; i < coords.length; i++) {
-            if (i != 0) {
-                sb.append(",");
+        StringBuilder sb = new StringBuilder();
+        if(coords.length != 0){
+            sb.append("{ \n 'type': 'Polygon', \n 'coordinates': [[");
+
+            for (int i = 0; i < coords.length; i++) {
+                if (i != 0) {
+                    sb.append(",");
+                }
+                sb.append("[").append(coords[i].x).append(",").append(coords[i].y).append("]");
             }
-            sb.append("[").append(coords[i].x).append(",").append(coords[i].y).append("]");
+            sb.append("]] \n }");
+        } else{
+            sb.append("{ \n 'type': 'Polygon', \n 'coordinates': [] \n }");
         }
-        sb.append("]] \n }");
         coordinates = sb.toString();
     }
 

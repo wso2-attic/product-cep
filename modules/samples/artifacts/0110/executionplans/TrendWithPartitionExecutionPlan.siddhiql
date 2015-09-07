@@ -16,7 +16,7 @@ define stream PeakStream (symbol string, priceInitial float, pricePeak float, pr
 partition with (symbol of StockStream)
 begin 
   from every e1=StockStream[price>20], 
-	  e2=StockStream[(isNull(e2[last].price) and price>=e1.price) or ((not isNull(e2[last].price)) and price>=e2[last].price)]+, 
+	  e2=StockStream[((e2[last].price is null) and price>=e1.price) or ((not (e2[last].price is null)) and price>=e2[last].price)]+,
 	  e3=StockStream[price<e2[last].price] 
   select e1.symbol as symbol, e1.price as priceInitial, e2[last].price as pricePeak, e3.price as priceAfterPeak 
   insert into PeakStream ;

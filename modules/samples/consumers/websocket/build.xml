@@ -65,9 +65,7 @@
     </target>
 
     <target name="run" depends="compile">
-        <echo>For server mode, configure -Dhost='server host' (optional), -Dport='server port'
-            (optional)
-        </echo>
+        <echo>For server mode, configure -Dhost='server host' (optional), -Dport='server port' (optional)</echo>
         <echo>For client mode, configure -Durl='server url'</echo>
         <java classname="${main-class}" fork="true"
               classpathref="javac.classpath">
