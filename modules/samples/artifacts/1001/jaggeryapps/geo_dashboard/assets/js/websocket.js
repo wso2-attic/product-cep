@@ -58,9 +58,9 @@ function SpatialObject(json) {
 
     this.marker = this.geoJson.getLayers()[0];
     this.marker.options.title = this.id;
-    if(this.type == "STOP"){
+    if (this.type == "STOP") {
         this.popupTemplate = $('#markerPopupStop');
-    }else {
+    } else {
         this.popupTemplate = $('#markerPopup');
     }
 
@@ -78,7 +78,7 @@ SpatialObject.prototype.update = function (geoJSON) {
     this.information = geoJSON.properties.information;
     this.type = geoJSON.properties.type;
 
-    if(this.type == "STOP"){
+    if (this.type == "STOP") {
         this.information = "Bus Stop";
     }
 
@@ -115,14 +115,14 @@ SpatialObject.prototype.update = function (geoJSON) {
     this.marker.setIconAngle(this.heading);
     this.marker.setIcon(this.stateIcon());
 
-    if(this.pathGeoJsons.length > 0){
+    if (this.pathGeoJsons.length > 0) {
         // To prevent conflicts in
         // Leaflet(http://leafletjs.com/reference.html#latlng) and geoJson standards(http://geojson.org/geojson-spec.html#id2),
         // have to do this swapping, but the resulting geoJson in not upto geoJson standards
         // TODO: write func to swap coordinates
         this.pathGeoJsons[this.pathGeoJsons.length - 1].geometry.coordinates.push([geoJSON.geometry.coordinates[1], geoJSON.geometry.coordinates[0]]);
     }
-    else{
+    else {
         newLineStringGeoJson = this.createLineStringFeature(this.state, this.information, [geoJSON.geometry.coordinates[1], geoJSON.geometry.coordinates[0]]);
         this.pathGeoJsons.push(newLineStringGeoJson);
     }
@@ -137,7 +137,7 @@ SpatialObject.prototype.update = function (geoJSON) {
     this.popupTemplate.find('#objectId').html(this.id);
     this.popupTemplate.find('#information').html(this.information);
 
-    this.popupTemplate.find('#speed').html(Math.round(this.speed*10)/10);
+    this.popupTemplate.find('#speed').html(Math.round(this.speed * 10) / 10);
     this.popupTemplate.find('#heading').html(angleToHeading(this.heading));
     this.marker.setPopupContent(this.popupTemplate.html())
 };
@@ -146,7 +146,7 @@ var headings = ["North", "NorthEast", "East", "SouthEast", "South", "SouthWest",
 
 function angleToHeading(angle) {
     var angle = (angle + 360 + 22.5 ) % 360;
-    angle = Math.floor(angle/45);
+    angle = Math.floor(angle / 45);
     return headings[angle];
 }
 
@@ -156,7 +156,8 @@ SpatialObject.prototype.removeFromMap = function () {
 };
 
 SpatialObject.prototype.createLineStringFeature = function (state, information, coordinates) {
-    return {"type": "Feature",
+    return {
+        "type": "Feature",
         "properties": {
             "state": state,
             "information": information
@@ -248,7 +249,7 @@ SpatialObject.prototype.getSectionStyles = function (state) {
 SpatialObject.prototype.stateIcon = function () {
     // Performance of if-else, switch or map based conditioning http://stackoverflow.com/questions/8624939/performance-of-if-else-switch-or-map-based-conditioning
 
-    if(this.type == "" || this.type == "VEHICLE"){
+    if (this.type == "" || this.type == "VEHICLE") {
         switch (this.state) {
             case "NORMAL":
                 return normalIcon;
@@ -262,8 +263,8 @@ SpatialObject.prototype.stateIcon = function () {
                 return defaultIcon;
         }
     }
-    else{
-        var customUrl = 'assets/img/markers/' + this.type +'.png';
+    else {
+        var customUrl = 'assets/img/markers/' + this.type + '.png';
         var customIcon = L.icon({
             iconUrl: customUrl,
             iconSize: [24, 24],
@@ -276,7 +277,7 @@ SpatialObject.prototype.stateIcon = function () {
 
 function processTrafficMessage(json) {
 
-    if(json.id in currentSpatialObjects){
+    if (json.id in currentSpatialObjects) {
         var existingObject = currentSpatialObjects[json.id];
         existingObject.update(json);
         console.log("existing area");
@@ -318,7 +319,7 @@ function processAlertMessage(json) {
  }*/
 
 function processPredictionMessage(json) {
-    setPropertySafe(currentPredictions,json.day,json.hour,json.longitude,json.latitude, json.traffic - 1);
+    setPropertySafe(currentPredictions, json.day, json.hour, json.longitude, json.latitude, json.traffic - 1);
     //console.log(json);
 }
 
@@ -438,7 +439,7 @@ function GeoAreaObject(json) {
         "fillOpacity": 0.75
     };
 
-    switch(json.properties.state){
+    switch (json.properties.state) {
         case "Moderate":
             myStyle["color"] = "#ffb13b";
             break;
@@ -543,7 +544,7 @@ function LocalStorageArray(id) {
             updatedStorageValue = currentStorageValue + DELIMITER + value;
         }
         sessionStorage.setItem(this.storageId, updatedStorageValue);
-        this.length +=1;
+        this.length += 1;
     };
     this.isEmpty = function () {
         return (this.getArray().length === 0);
@@ -572,15 +573,15 @@ var webSocketOnTrafficStreamOpen = function () {
 var webSocketOnTrafficStreamMessage = function processMessage(message) {
 
     var json = $.parseJSON(message.data);
-    if(json.messageType == "Traffic") {
+    if (json.messageType == "Traffic") {
         processTrafficMessage(json);
-    }else {
+    } else {
         console.log("Message type not supported.");
     }
 };
 
 var webSocketOnTrafficStreamClose = function (e) {
-    if(onTrafficStreamWebsocket.get_opened()) {
+    if (onTrafficStreamWebsocket.get_opened()) {
         $.UIkit.notify({
             message: 'Connection lost with Traffic Stream Stream !!',
             status: 'danger',
@@ -592,9 +593,9 @@ var webSocketOnTrafficStreamClose = function (e) {
 };
 
 var webSocketOnTrafficStreamError = function (e) {
-    if(!onTrafficStreamWebsocket.get_opened()) return;
+    if (!onTrafficStreamWebsocket.get_opened()) return;
     $.UIkit.notify({
-        message: 'Something went wrong when trying to connect to <b>'+trafficStreamWebSocketURL+'<b/>',
+        message: 'Something went wrong when trying to connect to <b>' + trafficStreamWebSocketURL + '<b/>',
         status: 'danger',
         timeout: ApplicationOptions.constance.NOTIFY_DANGER_TIMEOUT,
         pos: 'top-center'
@@ -616,15 +617,15 @@ var webSocketOnAlertOpen = function () {
 var webSocketOnAlertMessage = function processMessage(message) {
 
     var json = $.parseJSON(message.data);
-    if(json.messageType == "Alert") {
+    if (json.messageType == "Alert") {
         processAlertMessage(json);
-    }else {
+    } else {
         console.log("Message type not supported.");
     }
 };
 
 var webSocketOnAlertClose = function (e) {
-    if(onAlertWebsocket.get_opened()) {
+    if (onAlertWebsocket.get_opened()) {
         $.UIkit.notify({
             message: 'Connection lost with Alert Stream !!',
             status: 'danger',
@@ -636,9 +637,9 @@ var webSocketOnAlertClose = function (e) {
 };
 
 var webSocketOnAlertError = function (e) {
-    if(!onAlertWebsocket.get_opened()) return;
+    if (!onAlertWebsocket.get_opened()) return;
     $.UIkit.notify({
-        message: 'Something went wrong when trying to connect to <b>'+alertWebSocketURL+'<b/>',
+        message: 'Something went wrong when trying to connect to <b>' + alertWebSocketURL + '<b/>',
         status: 'danger',
         timeout: ApplicationOptions.constance.NOTIFY_DANGER_TIMEOUT,
         pos: 'top-center'
@@ -659,19 +660,18 @@ var webSocketOnOpen = function () {
 var webSocketOnMessage = function (message) {
     var json = $.parseJSON(message.data);
 
-    if(json.messageType == "Point") {
+    if (json.messageType == "Point") {
         processPointMessage(json);
-    } else if(json.messageType == "Prediction") {
+    } else if (json.messageType == "Prediction") {
         //processPredictionMessage(json);
     } else {
-        alert(json.messageType);
         console.log("Message type not supported.");
     }
 };
 
-var webSocketOnClose =function (e) {
+var webSocketOnClose = function (e) {
 
-    if(websocket.get_opened()) {
+    if (websocket.get_opened()) {
         $.UIkit.notify({
             message: 'Connection lost with server!!',
             status: 'danger',
@@ -684,9 +684,9 @@ var webSocketOnClose =function (e) {
 };
 
 var webSocketOnError = function (err) {
-    if(!websocket.get_opened()) return;
+    if (!websocket.get_opened()) return;
     $.UIkit.notify({
-        message: 'Something went wrong when trying to connect to <b>'+webSocketURL+'<b/>',
+        message: 'Something went wrong when trying to connect to <b>' + webSocketURL + '<b/>',
         status: 'danger',
         timeout: ApplicationOptions.constance.NOTIFY_DANGER_TIMEOUT,
         pos: 'top-center'
@@ -695,13 +695,13 @@ var webSocketOnError = function (err) {
 
 
 var waitTime = 1000;
-function waitForSocketConnection(socket, callback){
+function waitForSocketConnection(socket, callback) {
     setTimeout(
         function () {
             if (socket.readyState === 1) {
                 connectToSource();
                 console.log("Connection is made");
-                if(callback != null){
+                if (callback != null) {
                     callback();
                 }
                 return;
@@ -714,7 +714,7 @@ function waitForSocketConnection(socket, callback){
 }
 
 
-function initializeWebSocket(){
+function initializeWebSocket() {
     websocket = new WebSocket(webSocketURL);
     websocket.onopen = webSocketOnOpen;
     websocket.onmessage = webSocketOnMessage;
@@ -722,7 +722,7 @@ function initializeWebSocket(){
     websocket.onerror = webSocketOnError;
 }
 
-function initializeOnAlertWebSocket(){
+function initializeOnAlertWebSocket() {
     onAlertWebsocket = new WebSocket(alertWebSocketURL);
     onAlertWebsocket.onmessage = webSocketOnAlertMessage;
     onAlertWebsocket.onclose = webSocketOnAlertClose;
@@ -730,7 +730,7 @@ function initializeOnAlertWebSocket(){
     onAlertWebsocket.onopen = webSocketOnAlertOpen;
 }
 
-function initializeOnTrafficStreamWebSocket(){
+function initializeOnTrafficStreamWebSocket() {
     onTrafficStreamWebsocket = new WebSocket(trafficStreamWebSocketURL);
     onTrafficStreamWebsocket.onmessage = webSocketOnTrafficStreamMessage;
     onTrafficStreamWebsocket.onclose = webSocketOnTrafficStreamClose;
