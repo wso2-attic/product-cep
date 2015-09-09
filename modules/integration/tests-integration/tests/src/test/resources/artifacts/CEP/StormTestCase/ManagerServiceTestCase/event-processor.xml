@@ -75,11 +75,38 @@
                 <max>15100</max>
             </portRange>
             <reconnectionInterval>20000</reconnectionInterval>
+	    <cepReceiverOutputQueueSize>8192</cepReceiverOutputQueueSize>
+            <!--Size of the output queue of each "Storm Publisher" which stores events to be published into "CEP Publisher" .
+           This must be a power of two-->
+            <stormPublisherOutputQueueSize>8192</stormPublisherOutputQueueSize>
+            <!--Size of TCP event publishing client's send buffer in bytes-->
+            <tcpEventPublisherSendBufferSize>5242880</tcpEventPublisherSendBufferSize>
+            <!--Character encoding of TCP event publishing client-->
+            <tcpEventPublisherCharSet>UTF-8</tcpEventPublisherCharSet>
+            <!--Number of threads to be used by event receiving servers in "Storm Receivers" and "CEP Publishers"-->
+            <tcpEventReceiverThreadCount>10</tcpEventReceiverThreadCount>
+            <connectionStatusCheckInterval>20000</connectionStatusCheckInterval>
         </transport>
 
-        <stormJar>org.wso2.cep.storm.dependencies.jar</stormJar>
+       <presentation>
+            <presentationOutputQueueSize>1024</presentationOutputQueueSize>
+            <!--Size of TCP event publishing client's send buffer in bytes-->
+            <tcpEventPublisherSendBufferSize>5242880</tcpEventPublisherSendBufferSize>
+            <!--Character encoding of TCP event publishing client-->
+            <tcpEventPublisherCharSet>UTF-8</tcpEventPublisherCharSet>
+            <!--Number of threads to be used by event receiving servers in "Storm Receivers" and "CEP Publishers"-->
+            <tcpEventReceiverThreadCount>10</tcpEventReceiverThreadCount>
+            <connectionStatusCheckInterval>20000</connectionStatusCheckInterval>
+        </presentation>
 
+        <statusMonitor>
+            <lockTimeout>60000</lockTimeout>
+            <updateRate>60000</updateRate>
+        </statusMonitor>
+
+        <stormJar>org.wso2.cep.storm.dependencies.jar</stormJar>
         <distributedUIUrl></distributedUIUrl>
+	<memberUpdateCheckInterval>20000</memberUpdateCheckInterval>
 
     </mode>
 
