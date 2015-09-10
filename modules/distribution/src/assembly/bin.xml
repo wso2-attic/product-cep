@@ -42,6 +42,7 @@
                 <exclude>**/log4j.properties</exclude>
                 <exclude>**/bin/ciphertool.bat</exclude>
                 <exclude>**/bin/wso2server.sh</exclude>
+                <exclude>**/bin/wso2server.bat</exclude>
                 <exclude>**/conf/datasources/master-datasources.xml</exclude>
             </excludes>
         </fileSet>
@@ -159,6 +160,14 @@
             <outputDirectory>${pom.artifactId}-${pom.version}/bin</outputDirectory>
             <includes>
                 <include>wso2server.sh</include>
+            </includes>
+            <fileMode>755</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>scripts</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/bin</outputDirectory>
+            <includes>
+                <include>wso2server.bat</include>
             </includes>
             <fileMode>755</fileMode>
         </fileSet>
