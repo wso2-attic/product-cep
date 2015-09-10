@@ -37,6 +37,7 @@
                 <exclude>**/INSTALL.txt</exclude>
                 <exclude>**/release-notes.html</exclude>
                 <exclude>**/carbon.xml</exclude>
+                <exclude>**/registry.xml</exclude>
                 <exclude>**/FastMovingStockQuoteReceiver.aar</exclude>
                 <exclude>**/log4j.properties</exclude>
                 <exclude>**/bin/ciphertool.bat</exclude>
@@ -487,6 +488,12 @@
         <!-- Including jndi.properties file -->
         <file>
             <source>repository/conf/jndi.properties</source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/</outputDirectory>
+        </file>
+
+        <!-- Including product specific registry.xml -->
+        <file>
+            <source>repository/conf/registry.xml</source>
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/</outputDirectory>
         </file>
 
