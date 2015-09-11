@@ -15,11 +15,10 @@
   ~ limitations under the License.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <groupId>org.wso2.cep</groupId>
-    <version>4.0.1-SNAPSHOT</version>
+    <version>4.0.0</version>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>org.wso2.cep.storm.dependencies</artifactId>
     <name>WSO2 CEP - Storm Dependencies Jar</name>
@@ -353,7 +352,7 @@
         <url>https://github.com/wso2/product-cep.git</url>
         <developerConnection>scm:git:https://github.com/wso2/product-cep.git</developerConnection>
         <connection>scm:git:https://github.com/wso2/product-cep.git</connection>
-        <tag>HEAD</tag>
+        <tag>v4.0.0-RC1</tag>
     </scm>
 
 </project>
