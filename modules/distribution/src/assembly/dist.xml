@@ -30,6 +30,15 @@
                 <exclude>**/*.lock</exclude>
                 <exclude>**/.data</exclude>
                 <exclude>**/.settings</exclude>
+                <exclude>features/org.wso2.carbon.event.processor.server_*/*.jar</exclude>
+                <exclude>features/org.wso2.carbon.event.output.adapter.ui.server_*/*.war</exclude>
+                <exclude>features/org.wso2.carbon.dashboards.shindig_*/*.war</exclude>
+                <exclude>
+                    features/org.wso2.carbon.event.output.adapter.websocket.local.server_*/*.war
+                </exclude>
+                <exclude>
+                    features/org.wso2.carbon.event.input.adapter.websocket.local.server_*/*.war
+                </exclude>
             </excludes>
         </fileSet>
     </fileSets>

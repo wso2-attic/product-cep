@@ -304,6 +304,7 @@ do
     -Djava.net.preferIPv4Stack=true \
     -Dcom.ibm.cacheLocalHost=true \
     -DworkerNode=false \
-    org.wso2.carbon.bootstrap.Bootstrap "$*"
+    -Dtenant.idle.time=153722867280912 \
+    org.wso2.carbon.bootstrap.Bootstrap $*
     status=$?
 done

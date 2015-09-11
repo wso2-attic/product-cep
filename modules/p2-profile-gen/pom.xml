@@ -282,6 +282,11 @@
                                 <featureArtifactDef>
                                     org.wso2.carbon.commons:org.wso2.carbon.event.server.feature:${carbon.commons.version}
                                 </featureArtifactDef>
+
+                                <!-- Carbon metrics -->
+                                <featureArtifactDef>
+                                    org.wso2.carbon.metrics:org.wso2.carbon.metrics.feature:${carbon.metrics.version}
+                                </featureArtifactDef>
                             </featureArtifacts>
                         </configuration>
                     </execution>
@@ -581,6 +586,12 @@
                                     <id>org.wso2.carbon.event.server.feature.group</id>
                                     <version>${carbon.commons.version}</version>
                                 </feature>
+
+                                <!-- carbon metrics -->
+                                <feature>
+                                    <id>org.wso2.carbon.metrics.feature.group</id>
+                                    <version>${carbon.metrics.version}</version>
+                                </feature>
                             </features>
                         </configuration>
                     </execution>
@@ -861,7 +872,11 @@
                                     <id>org.wso2.carbon.event.server.feature.group</id>
                                     <version>${carbon.commons.version}</version>
                                 </feature>
-
+                                <!-- carbon metrics -->
+                                <feature>
+                                    <id>org.wso2.carbon.metrics.server.feature.group</id>
+                                    <version>${carbon.metrics.version}</version>
+                                </feature>
                             </features>
                         </configuration>
                     </execution>

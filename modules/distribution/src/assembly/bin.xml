@@ -37,10 +37,12 @@
                 <exclude>**/INSTALL.txt</exclude>
                 <exclude>**/release-notes.html</exclude>
                 <exclude>**/carbon.xml</exclude>
+                <exclude>**/registry.xml</exclude>
                 <exclude>**/FastMovingStockQuoteReceiver.aar</exclude>
                 <exclude>**/log4j.properties</exclude>
                 <exclude>**/bin/ciphertool.bat</exclude>
                 <exclude>**/bin/wso2server.sh</exclude>
+                <exclude>**/bin/wso2server.bat</exclude>
                 <exclude>**/conf/datasources/master-datasources.xml</exclude>
             </excludes>
         </fileSet>
@@ -158,6 +160,14 @@
             <outputDirectory>${pom.artifactId}-${pom.version}/bin</outputDirectory>
             <includes>
                 <include>wso2server.sh</include>
+            </includes>
+            <fileMode>755</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>scripts</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/bin</outputDirectory>
+            <includes>
+                <include>wso2server.bat</include>
             </includes>
             <fileMode>755</fileMode>
         </fileSet>
@@ -299,6 +309,17 @@
                 <include>inputwebsocket.war</include>
                 <include>outputwebsocket.war</include>
                 <include>outputui.war</include>
+            </includes>
+        </fileSet>
+
+        <!-- Copying dbscripts related to metrics feature -->
+        <fileSet>
+            <directory>
+                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/dbscripts/metrics/
+            </directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/dbscripts/metrics</outputDirectory>
+            <includes>
+                <include>**/*.sql</include>
             </includes>
         </fileSet>
 
@@ -479,6 +500,12 @@
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/</outputDirectory>
         </file>
 
+        <!-- Including product specific registry.xml -->
+        <file>
+            <source>repository/conf/registry.xml</source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/</outputDirectory>
+        </file>
+
         <!-- Cipher Tool Files -->
         <file>
             <source>
@@ -597,6 +624,37 @@
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/cep
             </outputDirectory>
             <filtered>true</filtered>
+        </file>
+
+        <!-- Copying metrics feature related files -->
+        <file>
+            <source>
+                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/metrics.xml
+            </source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/</outputDirectory>
+            <filtered>false</filtered>
+        </file>
+        <file>
+            <source>
+                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/metrics.properties
+            </source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/</outputDirectory>
+            <filtered>false</filtered>
+        </file>
+        <file>
+            <source>
+                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/datasources/metrics-datasources.xml
+            </source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/datasources/
+            </outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>
+                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/database/WSO2METRICS_DB.h2.db
+            </source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/database/</outputDirectory>
+            <fileMode>644</fileMode>
         </file>
 
         <!--Copying sample domain template file -->
