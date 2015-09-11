@@ -486,4 +486,25 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.scm.id>my-scm-server</project.scm.id>
     </properties>
+
+    <distributionManagement>
+        <repository>
+            <id>nexus-releases</id>
+            <name>WSO2 Nexus Release Repository</name>
+            <url>http://maven.wso2.org/nexus/service/local/staging/deploy/maven2/</url>
+        </repository>
+        <snapshotRepository>
+            <id>wso2.snapshots</id>
+            <name>WSO2 Snapshot Repository</name>
+            <url>http://maven.wso2.org/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <scm>
+        <url>https://github.com/wso2/product-cep.git</url>
+        <developerConnection>scm:git:https://github.com/wso2/product-cep.git</developerConnection>
+        <connection>scm:git:https://github.com/wso2/product-cep.git</connection>
+        <tag>HEAD</tag>
+    </scm>
+
 </project>
