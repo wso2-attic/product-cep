@@ -106,6 +106,7 @@
             </includes>
             <excludes>
                 <exclude>**/*.iml</exclude>
+                <exclude>**/*.releaseBackup</exclude>
                 <exclude>%regex[(?!.*utils/).*pom.xml]</exclude>
                 <exclude>**/target/**</exclude>
             </excludes>
