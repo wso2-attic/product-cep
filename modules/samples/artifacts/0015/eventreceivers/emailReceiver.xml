@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~ WSO2 Inc. licenses this file to you under the Apache License,
+  ~ Version 2.0 (the "License"); you may not use this file except
+  ~ in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied.  See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<eventReceiver name="emailReceiver" statistics="disable" trace="disable" xmlns="http://wso2.org/carbon/eventreceiver">
+    <from eventAdapterType="email">
+        <property name="transport.PollInterval">30</property>
+        <property name="mail.protocol.host">pop.gmail.com</property>
+        <property name="email.in.subject">cep</property>
+        <property encrypted="true" name="mail.protocol.password">
+            BYOyA2ru3Bl3btFHKLMeHex9KQbkm0tfPwO7Z1d6B67ks+bkx2UFlTSmI6VtuLiCuzNAGA1aX8HLAKVcuTHjrk87z3mAm0sluNQdK9wgvhkJqUj7nVach40SeDtwlKYi/nrbZJ6S4w5ksoVUKL4EW2kQssiAZQcaLRdrIR03Zqw=
+        </property>
+        <property name="mail.protocol.user">cep2015test</property>
+        <property name="transport.mail.Address">cep2015test@gmail.com</property>
+        <property name="transport.mail.Protocol">pop3</property>
+        <property name="mail.protocol.port">995</property>
+    </from>
+    <mapping customMapping="disable" type="text"/>
+    <to streamName="org.wso2.event.sensor.stream" version="1.0.0"/>
+</eventReceiver>
