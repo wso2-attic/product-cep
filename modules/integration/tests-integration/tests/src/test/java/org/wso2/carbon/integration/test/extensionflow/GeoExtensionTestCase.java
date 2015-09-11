@@ -97,7 +97,7 @@ public class GeoExtensionTestCase extends CEPIntegrationTest {
         eventList.add(event);
         Event event2 = new Event();
         event2.setStreamId("geocodeOutputStream:1.0.0");
-        event2.setPayloadData(new Object[]{6.9955449d, 79.8832741d, "Hendala Road, Wattala, Sri Lanka"});
+        event2.setPayloadData(new Object[]{6.9955449d, 79.8832741d, "Hendala Rd, Wattala, Sri Lanka"});
         eventList.add(event2);
         Event event3 = new Event();
         event3.setStreamId("geocodeOutputStream:1.0.0");
