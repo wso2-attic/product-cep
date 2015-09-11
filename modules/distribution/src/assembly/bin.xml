@@ -386,15 +386,6 @@
             <fileMode>644</fileMode>
         </file>
 
-        <!--Storm Config File -->
-        <file>
-            <source>
-                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/cep/storm/storm-deployment-config.xml
-            </source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/cep/storm/
-            </outputDirectory>
-            <filtered>true</filtered>
-        </file>
         <file>
             <source>
                 ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/event-processor.xml
