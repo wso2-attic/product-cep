@@ -10,7 +10,7 @@
 define stream arrivals_stream (trackingId string, customerName string, telephoneNo string, shippingAddress string);
 
 @Import('org.wso2.sample.package.deliveries:1.0.0')
-define stream deliveries_stream (trackingId string, shippingAddress string, time string, receivedBy string, deliveredBy string);
+define stream deliveries_stream (trackingId string, shippingAddress string, receivedBy string, deliveredBy string);
 
 
 @Export('org.wso2.sample.alerts:1.0.0')
