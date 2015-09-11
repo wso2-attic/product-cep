@@ -180,7 +180,7 @@
                 <version>${orbit.version.axiom}</version>
             </dependency>
             <dependency>
-                <groupId>org.apache.httpcomponents.wso2</groupId>
+                <groupId>org.wso2.orbit.org.apache.httpcomponents</groupId>
                 <artifactId>httpclient</artifactId>
                 <version>${httpclient.wso2.version}</version>
             </dependency>
@@ -470,6 +470,44 @@
         </dependencies>
     </dependencyManagement>
 
+    <repositories>
+        <repository>
+            <id>wso2-nexus</id>
+            <name>WSO2 internal Repository</name>
+            <url>http://maven.wso2.org/nexus/content/groups/wso2-public/</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+                <checksumPolicy>ignore</checksumPolicy>
+            </releases>
+        </repository>
+
+        <repository>
+            <id>wso2.releases</id>
+            <name>WSO2 internal Repository</name>
+            <url>http://maven.wso2.org/nexus/content/repositories/releases/</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+                <checksumPolicy>ignore</checksumPolicy>
+            </releases>
+        </repository>
+
+        <repository>
+            <id>wso2.snapshots</id>
+            <name>Apache Snapshot Repository</name>
+            <url>http://maven.wso2.org/nexus/content/repositories/snapshots/</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+
+    </repositories>
+
     <pluginRepositories>
         <pluginRepository>
             <id>wso2.releases</id>
@@ -657,8 +695,8 @@
     <properties>
         <!--CEP versions-->
         <jaggery.version>0.11.0</jaggery.version>
-        <jaggery.modules.version>1.4.1</jaggery.modules.version>
-        <carbon.deployment.version>4.5.2</carbon.deployment.version>
+        <jaggery.modules.version>1.4.2</jaggery.modules.version>
+        <carbon.deployment.version>4.5.3</carbon.deployment.version>
         <carbon.commons.version>4.4.7</carbon.commons.version>
         <carbon.analytics-common.version>5.0.1-SNAPSHOT</carbon.analytics-common.version>
         <carbon.dashboards.version>1.0.1-SNAPSHOT</carbon.dashboards.version>
@@ -687,7 +725,7 @@
         <orbit.version.axiom>1.2.11.wso2v6</orbit.version.axiom>
         <version.commons.logging>1.1</version.commons.logging>
         <log4j.wso2.version>1.2.17.wso2v1</log4j.wso2.version>
-        <httpclient.wso2.version>4.2.5.wso2v1</httpclient.wso2.version>
+        <httpclient.wso2.version>4.3.1.wso2v2</httpclient.wso2.version>
         <httpcore.wso2.version>4.3.3.wso2v1</httpcore.wso2.version>
         <cipher.tool.version>1.0.0-wso2v3</cipher.tool.version>
 
