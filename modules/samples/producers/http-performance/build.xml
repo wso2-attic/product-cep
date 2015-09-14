@@ -43,8 +43,8 @@
             <include name="httpcore_*.jar"/>
             <include name="commons-httpclient_*.jar"/>
             <include name="commons-codec_*.jar"/>
-            <include name="slf4j.log4j12_*.jar"/>
-            <include name="slf4j.api_*.jar"/>
+            <include name="slf4j.log4j12_1.7.12.jar"/>
+            <include name="slf4j.api_1.7.12.jar"/>
             <include name="axis2_*.jar"/>
             <include name="axiom_*.jar"/>
             <include name="wsdl4j_*.jar"/>

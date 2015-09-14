@@ -42,8 +42,8 @@
             <include name="com.google.gson_*.jar"/>
             <include name="httpclient_*.jar"/>
             <include name="libthrift_*.jar"/>
-            <include name="slf4j.log4j12_*.jar"/>
-            <include name="slf4j.api_*.jar"/>
+            <include name="slf4j.log4j12_1.7.12.jar"/>
+            <include name="slf4j.api_1.7.12.jar"/>
             <include name="json_*.jar"/>
             <include name="disruptor_*.jar"/>
             <include name="org.wso2.carbon.databridge.agent_*.jar"/>
