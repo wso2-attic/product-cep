@@ -5,7 +5,7 @@
 Welcome to the WSO2 CEP 4.0.0 release
 
 WSO2 CEP is a lightweight and easy-to-use Open Source Complex Event Processing
-Server (CEP) is available under the Apache Software License v2.0.WSO2 Complex
+Server (CEP) is available under the Apache Software License v2.0. WSO2 Complex
 Event Processor identifies the most meaningful events within the event cloud,
 analyzes their impacts, and acts on them in real time. Its built to be extremely
 high performing and massively scalable.
@@ -16,7 +16,6 @@ have been developed as pluggable Carbon components.
 New Features In This Release
 ==================================
 
-[CEP-148] - Activity Mediator for ESB
 [CEP-635] - Integrate Apache Storm into CEP
 [CEP-852] - Event Simulator with sending multiple events using uploaded files
 [CEP-879] - MQTT input Event Adapter for CEP
@@ -30,7 +29,11 @@ New Features In This Release
 [CEP-909] - Input Websocket (with local websocket server) Adapter for CEP
 [CEP-910] - Output Websocket Adapter for CEP
 [CEP-911] - Output Websocket Adapter (using local websocket server) for CEP
+[CEP-942] - Siddhi partition implementation
 [CEP-945] - Improved Siddhi Query API and Compiler
+[CEP-958] - Siddhi-core adding support for aggregated attributes
+[CEP-959] - Siddhi-core supporting extensions
+[CEP-985] - Stationery Alert is one of the Geo Dashboard features which enable users to recieve alerts if a spatial object stayes in a specified area for a given specified time.
 [CEP-993] - Exchangeable views between form view and source view when creating event streams
 [CEP-1017] - cApp support for CEP components
 [CEP-1018] - Encrypting password fields of Input and Output Adapters
@@ -40,6 +43,13 @@ New Features In This Release
 [CEP-1032] - Integrating Siddhi 3.0.0
 [CEP-1033] - Adding annotation,partitioning and query grouping support in Storm
 [CEP-1062] - Cron TimeWindow for Siddhi
+[CEP-1095] - Domain Specific Execution Manager
+[CEP-1132] - Improving HA support
+[CEP-1141] - Geo Dashboard Integration
+[CEP-1355] - Analytics Dashboard
+[CEP-1356] - Siddhi Try It Feature
+[CEP-1357] - JMX monitoring support for CEP
+[CEP-1358] - Adding Metrics support for CEP
 
 Key Features of WSO2 CEP
 ==================================
@@ -61,23 +71,13 @@ Key Features of WSO2 CEP
 * Easily Integrates with Enterprise System - by RESTful HTTP protocol with JSON, JMS MAP/XML/Text messages, SOAP and Email
 * Support for Long Duration Queries - Supports periodic snapshots to a scalable persistence store (Apache Cassandra).
 * Tightly Integrates with WSO2 Data Analytics Server - for recording and post processing of events.
-* Realtime Dashboard using the inbuilt Analytics Dashboard
+* Realtime Dashboard using the inbuilt Realtime Analytics Gadgets
+* Geo Dashboard with geo fencing capabilities
 * Siddhi Extensions
+* Siddhi query autocompletion
 * Event Adaptor Extension
 * Configuration based class loading mechanism for Siddhi
 * Arbitrary key values pair support for WSO2 Events
-
-System Requirements
-==================================
-
-1. Minimum memory - 2 GB
-2. Processor      - Intel Dual-Core 1GHz or equivalent at minimum
-3. Java SE Development Kit 1.6.0_21 or higher
-4. To build WSO2 CEP from the Source distribution, it is necessary that you have
-   JDK 1.7 or 1.8 and Maven 3
-
-For more details see
-    http://docs.wso2.org/wiki/display/CEP400/Installation+Prerequisites
 
 Installation & Running
 ==================================
@@ -240,7 +240,7 @@ Training
 ==================================
 
 WSO2 Inc. offers a variety of professional Training Programs, including
-training on general Web services as well as WSO2 CEP, Siddhi, WSO2 BAM,
+training on general Web services as well as WSO2 CEP, Siddhi, WSO2 DAS,
 Data Services and a number of other products.
 
 For additional support information please refer to
@@ -298,7 +298,7 @@ Crypto Notice
 
 
 For further details, see theWSO2 Complex Event Processor documentation at
-http://docs.wso2.org/wiki/display/CEP400/
+https://docs.wso2.com/display/CEP400/WSO2+Complex+Event+Processor+Documentation
 
 ---------------------------------------------------------------------------
 (c) Copyright 2015 WSO2 Inc.
