@@ -136,10 +136,9 @@
                                 <featureArtifactDef>
                                     org.wso2.carbon.deployment:org.wso2.carbon.module.mgt.server.feature:${carbon.deployment.version}
                                 </featureArtifactDef>
-                                <!--<featureArtifactDef>-->
-                                <!--org.wso2.carbon.deployment:org.wso2.carbon.as.runtimes.cxf.feature:${carbon.deployment.version}-->
-                                <!--</featureArtifactDef>-->
-
+                                <featureArtifactDef>
+                                   org.wso2.carbon.deployment:org.wso2.carbon.as.runtimes.cxf.feature:${carbon.deployment.version}
+                                </featureArtifactDef>
                                 <featureArtifactDef>
                                     org.wso2.carbon.multitenancy:org.wso2.carbon.tenant.common.feature:${carbon.multitenancy.version}
                                 </featureArtifactDef>
@@ -387,11 +386,10 @@
                                     <id>org.wso2.carbon.module.mgt.server.feature.group</id>
                                     <version>${carbon.deployment.version}</version>
                                 </feature>
-                                <!--<feature>-->
-                                <!--<id>org.wso2.carbon.as.runtimes.cxf.feature.group</id>-->
-                                <!--<version>${carbon.deployment.version}</version>-->
-                                <!--</feature>-->
-
+                                <feature>
+                                   <id>org.wso2.carbon.as.runtimes.cxf.feature.group</id>
+                                   <version>${carbon.deployment.version}</version>
+                                </feature>
                                 <feature>
                                     <id>org.wso2.carbon.tenant.common.feature.group</id>
                                     <version>${carbon.multitenancy.version}</version>
@@ -664,11 +662,10 @@
                                     <id>org.wso2.carbon.module.mgt.server.feature.group</id>
                                     <version>${carbon.deployment.version}</version>
                                 </feature>
-                                <!--<feature>-->
-                                <!--<id>org.wso2.carbon.as.runtimes.cxf.feature.group</id>-->
-                                <!--<version>${carbon.deployment.version}</version>-->
-                                <!--</feature>-->
-
+                                <feature>
+                                    <id>org.wso2.carbon.as.runtimes.cxf.feature.group</id>
+                                    <version>${carbon.deployment.version}</version>
+                                </feature>
                                 <feature>
                                     <id>org.wso2.carbon.tenant.common.server.feature.group</id>
                                     <version>${carbon.multitenancy.version}</version>
