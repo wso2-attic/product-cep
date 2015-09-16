@@ -23,8 +23,11 @@
     <fileSets>
         <!-- Copying p2 profile and osgi bundles-->
         <fileSet>
-            <directory>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/components</directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/components</outputDirectory>
+            <directory>
+                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/components
+            </directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/components
+            </outputDirectory>
             <excludes>
                 <exclude>**/eclipse.ini</exclude>
                 <exclude>**/*.lock</exclude>
@@ -39,6 +42,7 @@
                 <exclude>
                     features/org.wso2.carbon.event.input.adapter.websocket.local.server_*/*.war
                 </exclude>
+                <exclude>features/org.wso2.carbon.as.runtimes.cxf_*/cxf/*.jar</exclude>
             </excludes>
         </fileSet>
     </fileSets>
