@@ -55,14 +55,6 @@ System Requirements
 5. To build WSO2 CEP from the Source distribution, it is necessary that you have
    JDK 1.7 version or later and Maven 3.0.4 or later
 
-
-System Requirements
-=======================
-1. JDK - 1.6.x (1.6.0_24 onwards recommended for production)
-2. Minimum memory - 2 GB
-3. Processor      - Intel Dual-Core 1GHz or equivalent at minimum
-4. The Management Console requires full Javascript enabling of the Web browser
-
 For more details see
 http://docs.wso2.com/display/CEP400/Installation+Prerequisites
 
