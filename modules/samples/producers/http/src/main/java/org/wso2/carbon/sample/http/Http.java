@@ -110,7 +110,7 @@ public class Http {
     private static void processAuthentication(HttpPost method, String username, String password) {
         if (username != null && username.trim().length() > 0) {
             method.setHeader("Authorization",
-                             "Basic " + Base64.encode((username + ":" + password).getBytes()));
+                    "Basic " + Base64.encode((username + ":" + password).getBytes()));
         }
     }
 
