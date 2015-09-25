@@ -87,7 +87,7 @@ Example, to run sample 0001: ./wso2cep-samples.sh -sn 0001
 
 For more details see https://docs.wso2.com/display/CEP400/Samples+Guide .
 
-_For further details, see the WSO2 Complex Event Processor documentation at http://docs.wso2.com/complex-event-processor_
+**For further details, see the WSO2 Complex Event Processor documentation at http://docs.wso2.com/complex-event-processor**
 
 ## Buriling the product 
 If snapshot versions of dependent jars are not available or out of date, build the following repositories first before building this repository .
