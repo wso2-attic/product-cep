@@ -45,7 +45,7 @@ public class TestWso2EventServer {
 
 
     public static void main(String[] args) throws DataBridgeException, StreamDefinitionStoreException {
-        testServer.start(args[0], Integer.parseInt(args[1]), args[2],args[3]);
+        testServer.start(args[0], Integer.parseInt(args[1]), args[2], args[3]);
         synchronized (testServer) {
             try {
                 testServer.wait();
@@ -95,7 +95,7 @@ public class TestWso2EventServer {
 
         for (StreamDefinition streamDefinition : WSO2EventServerUtil.loadStreamDefinitions(sampleNumber)) {
             streamDefinitionStore.saveStreamDefinitionToStore(streamDefinition, -1234);
-            log.info("StreamDefinition of '"+streamDefinition.getStreamId()+"' added to store");
+            log.info("StreamDefinition of '" + streamDefinition.getStreamId() + "' added to store");
         }
 
         databridge.subscribe(new AgentCallback() {
@@ -122,8 +122,7 @@ public class TestWso2EventServer {
             binaryDataReceiver = new BinaryDataReceiver(new BinaryDataReceiverConfiguration(receiverPort + 100, receiverPort), databridge);
             try {
                 binaryDataReceiver.start();
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 log.error("Error occurred when reading the file : " + e.getMessage(), e);
             }
         } else {
