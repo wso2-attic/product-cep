@@ -25,8 +25,6 @@
     <property name="lib.dir" value="../../lib"/>
     <property name="class.dir" value="${temp.dir}/classes"/>
     <property name="main-class" value="org.wso2.carbon.sample.kafka.performance.KafkaClient"/>
-    <property name="username" value="admin"/>
-    <property name="password" value="admin"/>
 
     <property name="url" value="localhost:9092"/>
     <property name="topic" value="kafkaTopicProduce"/>
