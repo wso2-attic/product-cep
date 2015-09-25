@@ -11,7 +11,7 @@
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
+ * KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations
  * under the License.
  */
@@ -28,46 +28,41 @@ import java.io.File;
  */
 public class KafkaUtil {
 
-	private static Log log = LogFactory.getLog(KafkaUtil.class);
+    private static Log log = LogFactory.getLog(KafkaUtil.class);
+    private static String sampleDirectoryPath = ".." + File.separator + ".." + File.separator + ".." + File.separator +
+            "samples" + File.separator + "artifacts" + File.separator + "sampleNumber" + File.separator;
 
-	static String sampleDirectoryPath = ".." + File.separator + ".." + File.separator + ".." + File.separator +
-			"samples" + File.separator + "artifacts" + File.separator + "sampleNumber" + File.separator;
+    /**
+     * This method will construct the directory path of the data file
+     *
+     * @param sampleNumber Number of the sample which is running currently
+     * @param topic        topic of the message to be sent (the data file should be named with the topic)
+     * @param filePath     file path if a sample if not running
+     */
+    public static String getEventFilePath(String sampleNumber, String topic, String filePath)
+            throws Exception {
+        if (sampleNumber != null && sampleNumber.length() == 0) {
+            sampleNumber = null;
+        }
 
-	/**
-	 * This method will construct the directory path of the data file
-	 *
-	 * @param sampleNumber  Number of the sample which is running currently
-	 * @param topic         topic of the message to be sent (the data file should be named with the topic)
-	 * @param filePath      file path if a sample if not running
-	 *
-	 */
-	public static String getEventFilePath(String sampleNumber, String topic, String filePath)
-			throws Exception {
-		if (sampleNumber != null && sampleNumber.length() == 0) {
-			sampleNumber = null;
-		}
+        if (filePath != null && filePath.length() == 0) {
+            filePath = null;
+        }
 
-		if (filePath != null && filePath.length() == 0) {
-			filePath = null;
-		}
+        String resultingFilePath;
+        if (filePath != null && sampleNumber == null) {
+            resultingFilePath = filePath;
+        } else if (filePath == null && sampleNumber != null) {
+            resultingFilePath = sampleDirectoryPath.replace("sampleNumber", sampleNumber) + topic + ".txt";
+        } else {
+            throw new Exception("In sampleNumber:'" + sampleNumber + "' and filePath:'" + filePath
+                    + "' one must be null and other not null");
+        }
 
-		String resultingFilePath;
-		if (filePath != null && sampleNumber == null) {
-			resultingFilePath = filePath;
-		} else if (filePath == null && sampleNumber != null) {
-			resultingFilePath = sampleDirectoryPath.replace("sampleNumber", sampleNumber) + topic + ".txt";
-		} else {
-			throw new Exception("In sampleNumber:'" + sampleNumber + "' and filePath:'" + filePath
-					+ "' one must be null and other not null");
-		}
-
-		File file = new File(resultingFilePath);
-		if (!file.isFile()) {
-			throw new Exception("'" + resultingFilePath + "' is not a file");
-		}
-		if (!file.exists()) {
-			throw new Exception("file '" + resultingFilePath + "' does not exist");
-		}
-		return resultingFilePath;
-	}
+        File file = new File(resultingFilePath);
+        if (!file.isFile()) {
+            throw new Exception("'" + resultingFilePath + "' is not a file");
+        }
+        return resultingFilePath;
+    }
 }

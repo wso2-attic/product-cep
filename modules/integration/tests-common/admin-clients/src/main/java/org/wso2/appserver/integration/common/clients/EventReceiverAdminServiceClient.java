@@ -109,7 +109,7 @@ public class EventReceiverAdminServiceClient {
                     fromStreamNameWithVersion);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
-            throw new RemoteException();
+            throw e;
         }
     }
 
@@ -127,7 +127,7 @@ public class EventReceiverAdminServiceClient {
                     eventAdapterType, parentXpath, namespaces, inputMappings, inputPropertyConfiguration, mappingEnabled);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
-            throw new RemoteException();
+            throw e;
         }
     }
 
@@ -142,7 +142,7 @@ public class EventReceiverAdminServiceClient {
                     streamNameWithVersion, eventAdapterType, inputMappings, inputPropertyConfiguration, mappingEnabled);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
-            throw new RemoteException();
+            throw e;
         }
     }
 
@@ -154,10 +154,10 @@ public class EventReceiverAdminServiceClient {
                                                     boolean mappingEnabled) throws RemoteException {
         try {
             return eventReceiverAdminServiceStub.deployMapEventReceiverConfiguration(eventReceiverName,
-                    streamNameWithVersion,eventAdapterType,inputMappings,inputPropertyConfiguration,mappingEnabled);
+                    streamNameWithVersion, eventAdapterType, inputMappings, inputPropertyConfiguration, mappingEnabled);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
-            throw new RemoteException();
+            throw e;
         }
     }
 
@@ -167,10 +167,10 @@ public class EventReceiverAdminServiceClient {
                                                      boolean mappingEnabled) throws RemoteException {
         try {
             return eventReceiverAdminServiceStub.deployJsonEventReceiverConfiguration(eventRecieverName,
-                    streamNameWithVersion, eventAdaptorType,inputMappings,inputPrortyConfiguration,mappingEnabled);
+                    streamNameWithVersion, eventAdaptorType, inputMappings, inputPrortyConfiguration, mappingEnabled);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
-            throw new RemoteException();
+            throw e;
         }
     }
 
@@ -181,7 +181,7 @@ public class EventReceiverAdminServiceClient {
             eventReceiverAdminServiceStub.deployEventReceiverConfiguration(eventReceiverConfigurationXml);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
-            throw new RemoteException();
+            throw e;
         }
     }
 
@@ -191,7 +191,7 @@ public class EventReceiverAdminServiceClient {
             eventReceiverAdminServiceStub.setTracingEnabled(eventReceiverConfiguration, flag);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
-            throw new RemoteException();
+            throw e;
         }
     }
 
@@ -201,7 +201,7 @@ public class EventReceiverAdminServiceClient {
             eventReceiverAdminServiceStub.setStatisticsEnabled(eventReceiverConfiguration, flag);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
-            throw new RemoteException();
+            throw e;
         }
     }
 
@@ -211,7 +211,7 @@ public class EventReceiverAdminServiceClient {
             eventReceiverAdminServiceStub.undeployActiveEventReceiverConfiguration(eventReceiverName);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
-            throw new RemoteException();
+            throw e;
         }
     }
 
@@ -221,7 +221,7 @@ public class EventReceiverAdminServiceClient {
             eventReceiverAdminServiceStub.undeployInactiveEventReceiverConfiguration(fileName);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
-            throw new RemoteException();
+            throw e;
         }
     }
 
@@ -231,7 +231,7 @@ public class EventReceiverAdminServiceClient {
             return eventReceiverAdminServiceStub.getActiveEventReceiverConfiguration(eventReceiverName);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
-            throw new RemoteException();
+            throw e;
         }
     }
 
@@ -242,7 +242,7 @@ public class EventReceiverAdminServiceClient {
             return eventReceiverAdminServiceStub.getActiveEventReceiverConfigurationContent(eventReceiverConfiguration);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
-            throw new RemoteException();
+            throw e;
         }
     }
 
@@ -253,7 +253,7 @@ public class EventReceiverAdminServiceClient {
             return eventReceiverAdminServiceStub.getAllStreamSpecificActiveEventReceiverConfigurations(streamId);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
-            throw new RemoteException();
+            throw e;
         }
     }
 
@@ -263,7 +263,7 @@ public class EventReceiverAdminServiceClient {
             return eventReceiverAdminServiceStub.getAllInputAdapterTypes();
         } catch (RemoteException e) {
             log.error("RemoteException", e);
-            throw new RemoteException();
+            throw e;
         }
     }
 
@@ -273,7 +273,7 @@ public class EventReceiverAdminServiceClient {
             return eventReceiverAdminServiceStub.editActiveEventReceiverConfiguration(eventReceiverConfiguration, eventReceiverName);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
-            throw new RemoteException();
+            throw e;
         }
     }
 

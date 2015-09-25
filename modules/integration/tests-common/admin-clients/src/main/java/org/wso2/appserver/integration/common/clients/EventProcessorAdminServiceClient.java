@@ -34,7 +34,7 @@ public class EventProcessorAdminServiceClient {
     private String endPoint;
 
     public EventProcessorAdminServiceClient(String backEndUrl, String sessionCookie) throws
-                                                                                     AxisFault {
+            AxisFault {
         this.endPoint = backEndUrl + serviceName;
         eventProcessorAdminServiceStub = new EventProcessorAdminServiceStub(endPoint);
         AuthenticateStubUtil.authenticateStub(sessionCookie, eventProcessorAdminServiceStub);
@@ -63,7 +63,7 @@ public class EventProcessorAdminServiceClient {
             }
         } catch (RemoteException e) {
             log.error("RemoteException", e);
-            throw new RemoteException();
+            throw e;
         }
     }
 
@@ -78,7 +78,7 @@ public class EventProcessorAdminServiceClient {
             }
         } catch (RemoteException e) {
             log.error("RemoteException", e);
-            throw new RemoteException();
+            throw e;
         }
     }
 
@@ -93,7 +93,7 @@ public class EventProcessorAdminServiceClient {
             }
         } catch (RemoteException e) {
             log.error("RemoteException", e);
-            throw new RemoteException();
+            throw e;
         }
     }
 
@@ -103,7 +103,7 @@ public class EventProcessorAdminServiceClient {
             return eventProcessorAdminServiceStub.getActiveExecutionPlanConfiguration(executionPlanName);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
-            throw new RemoteException();
+            throw e;
         }
     }
 
@@ -113,7 +113,7 @@ public class EventProcessorAdminServiceClient {
             eventProcessorAdminServiceStub.deployExecutionPlan(executionPlan);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
-            throw new RemoteException(e.getMessage(),e);
+            throw e;
         }
     }
 
@@ -123,7 +123,7 @@ public class EventProcessorAdminServiceClient {
             eventProcessorAdminServiceStub.undeployActiveExecutionPlan(planName);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
-            throw new RemoteException();
+            throw e;
         }
     }
 
@@ -133,7 +133,7 @@ public class EventProcessorAdminServiceClient {
             eventProcessorAdminServiceStub.undeployInactiveExecutionPlan(filePath);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
-            throw new RemoteException();
+            throw e;
         }
     }
 
@@ -143,7 +143,7 @@ public class EventProcessorAdminServiceClient {
             eventProcessorAdminServiceStub.editActiveExecutionPlan(executionPlan, executionPlanName);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
-            throw new RemoteException();
+            throw e;
         }
     }
 
@@ -152,7 +152,7 @@ public class EventProcessorAdminServiceClient {
             return eventProcessorAdminServiceStub.validateExecutionPlan(executionPlan);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
-            throw new RemoteException(e.getMessage(), e);
+            throw e;
         }
 
     }
@@ -162,7 +162,7 @@ public class EventProcessorAdminServiceClient {
             eventProcessorAdminServiceStub.setStatisticsEnabled(executionPlanName, isEnabled);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
-            throw new RemoteException(e.getMessage(), e);
+            throw e;
         }
     }
 
@@ -171,7 +171,7 @@ public class EventProcessorAdminServiceClient {
             eventProcessorAdminServiceStub.setTracingEnabled(executionPlanName, isEnabled);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
-            throw new RemoteException(e.getMessage(), e);
+            throw e;
         }
     }
 
@@ -180,17 +180,17 @@ public class EventProcessorAdminServiceClient {
             return eventProcessorAdminServiceStub.getSiddhiStreams(executionPlan);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
-            throw new RemoteException(e.getMessage(), e);
+            throw e;
         }
     }
 
-        public ExecutionPlanConfigurationDto[] getAllExportedStreamSpecificActiveExecutionPlanConfiguration(
+    public ExecutionPlanConfigurationDto[] getAllExportedStreamSpecificActiveExecutionPlanConfiguration(
             String streamId) throws RemoteException {
         try {
             return eventProcessorAdminServiceStub.getAllExportedStreamSpecificActiveExecutionPlanConfiguration(streamId);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
-            throw new RemoteException(e.getMessage(), e);
+            throw e;
         }
     }
 }
