@@ -113,7 +113,7 @@ public class EventProcessorAdminServiceClient {
             eventProcessorAdminServiceStub.deployExecutionPlan(executionPlan);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
-            throw new RemoteException(e.getMessage(), e);
+            throw e;
         }
     }
 
