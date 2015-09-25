@@ -43,9 +43,9 @@ public class Kafka {
     private static final String asteriskLine = "*****";
 
     public static void main(String args[]) {
+        log.info("Command line arguments passed: " + Arrays.deepToString(args));
+        log.info("Starting Kafka Client");
 
-        log.info(Arrays.deepToString(args));
-        System.out.println("Starting Kafka Client");
         String url = args[0];
         String topic = args[1];
         String filePath = args[2];
