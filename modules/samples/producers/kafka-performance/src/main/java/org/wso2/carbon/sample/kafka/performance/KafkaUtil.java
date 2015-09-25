@@ -29,7 +29,7 @@ import java.io.File;
 public class KafkaUtil {
 
     private static Log log = LogFactory.getLog(KafkaUtil.class);
-    static String sampleDirectoryPath = ".." + File.separator + ".." + File.separator + ".." + File.separator +
+    private static String sampleDirectoryPath = ".." + File.separator + ".." + File.separator + ".." + File.separator +
             "samples" + File.separator + "artifacts" + File.separator + "sampleNumber" + File.separator;
 
     /**
@@ -62,9 +62,6 @@ public class KafkaUtil {
         File file = new File(resultingFilePath);
         if (!file.isFile()) {
             throw new Exception("'" + resultingFilePath + "' is not a file");
-        }
-        if (!file.exists()) {
-            throw new Exception("file '" + resultingFilePath + "' does not exist");
         }
         return resultingFilePath;
     }
