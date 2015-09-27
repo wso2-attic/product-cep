@@ -68,18 +68,18 @@ public class MathExtensionTestCase extends CEPIntegrationTest {
         int startEXPCount = eventProcessorAdminServiceClient.getExecutionPlanConfigurationCount();
 
         //Add StreamDefinition
-        String streamDefinitionAsString1 = getJSONArtifactConfiguration("extensionflows" + File.separator + "math",
+        String sensorStreamDefinitionAsString = getJSONArtifactConfiguration("extensionflows" + File.separator + "math",
                 "org.wso2.event.sensor.stream_1.0.0.json");
-        eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString1);
-        String streamDefinitionAsString2 = getJSONArtifactConfiguration("extensionflows" + File.separator + "math",
+        eventStreamManagerAdminServiceClient.addEventStreamAsString(sensorStreamDefinitionAsString);
+        String sensorClassifyCeilStreamDefinitionAsString = getJSONArtifactConfiguration("extensionflows" + File.separator + "math",
                 "org.wso2.event.sensorClassifyCeil.stream_1.0.0.json");
-        eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString2);
+        eventStreamManagerAdminServiceClient.addEventStreamAsString(sensorClassifyCeilStreamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(),
                 startESCount + 2);
 
         //Add Execution Plan
         String executionPlanAsString =
-                getExecutionPlanFromFile("extensionflows" + File.separator + "math", "ExecutionPlan.siddhiql");
+                getExecutionPlanFromFile("extensionflows" + File.separator + "math", "MathSiddhiExtensionExecutionPlan.siddhiql");
         eventProcessorAdminServiceClient.addExecutionPlan(executionPlanAsString);
         Assert.assertEquals(
                 eventProcessorAdminServiceClient.getActiveExecutionPlanConfigurationCount(),
@@ -135,7 +135,7 @@ public class MathExtensionTestCase extends CEPIntegrationTest {
                 .removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
         eventStreamManagerAdminServiceClient
                 .removeEventStream("org.wso2.event.sensorClassifyCeil.stream", "1.0.0");
-        eventProcessorAdminServiceClient.removeInactiveExecutionPlan("ExecutionPlan.siddhiql");
+        eventProcessorAdminServiceClient.removeInactiveExecutionPlan("MathSiddhiExtensionExecutionPlan.siddhiql");
         eventPublisherAdminServiceClient
                 .removeInactiveEventPublisherConfiguration("Wso2Publisher.xml");
 
