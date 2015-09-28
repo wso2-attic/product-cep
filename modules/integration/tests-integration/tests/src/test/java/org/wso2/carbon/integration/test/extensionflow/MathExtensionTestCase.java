@@ -62,6 +62,8 @@ public class MathExtensionTestCase extends CEPIntegrationTest {
     public void siddhiMathExtensionTestScenario()
             throws Exception {
         final int messageCount = 3;
+        final String sensorStreamId = "org.wso2.event.sensor.stream:1.0.0";
+        final String sensorClassifyStreamId = "org.wso2.event.sensorClassifyCeil.stream:1.0.0";
 
         int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
@@ -93,13 +95,13 @@ public class MathExtensionTestCase extends CEPIntegrationTest {
                 startEPCount + 1);
 
         EventDto eventDto = new EventDto();
-        eventDto.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
+        eventDto.setEventStreamId(sensorStreamId);
         eventDto.setAttributeValues(new String[]{"001", "Temperature", "23.4545"});
         EventDto eventDto2 = new EventDto();
-        eventDto2.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
+        eventDto2.setEventStreamId(sensorStreamId);
         eventDto2.setAttributeValues(new String[]{"002", "Wind", "100.5"});
         EventDto eventDto3 = new EventDto();
-        eventDto3.setEventStreamId("org.wso2.event.sensor.stream:1.0.0");
+        eventDto3.setEventStreamId(sensorStreamId);
         eventDto3.setAttributeValues(new String[]{"003", "Temperature", "23.4545"});
 
         //The data-bridge receiver
@@ -112,15 +114,15 @@ public class MathExtensionTestCase extends CEPIntegrationTest {
 
         List<Event> eventList = new ArrayList<>();
         Event event = new Event();
-        event.setStreamId("org.wso2.event.sensorClassifyCeil.stream:1.0.0");
+        event.setStreamId(sensorClassifyStreamId);
         event.setPayloadData(new Object[]{24.0});
         eventList.add(event);
         Event event2 = new Event();
-        event2.setStreamId("org.wso2.event.sensorClassifyCeil.stream:1.0.0");
+        event2.setStreamId(sensorClassifyStreamId);
         event2.setPayloadData(new Object[]{101.0});
         eventList.add(event2);
         Event event3 = new Event();
-        event3.setStreamId("org.wso2.event.sensorClassifyCeil.stream:1.0.0");
+        event3.setStreamId(sensorClassifyStreamId);
         event3.setPayloadData(new Object[]{24.0});
         eventList.add(event3);
 
