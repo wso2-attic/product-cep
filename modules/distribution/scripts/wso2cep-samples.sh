@@ -86,8 +86,6 @@ do
         `rm -r "$CARBON_HOME"/samples/artifacts/$c/jaggeryapps/portal/store/*`
         `cp -r "$CARBON_HOME"/repository/deployment/server/jaggeryapps/portal/store/carbon.super "$CARBON_HOME"/samples/artifacts/$c/jaggeryapps/portal/store/`
         `rm -r "$CARBON_HOME"/samples/artifacts/$c/jaggeryapps/portal/store/carbon.super/gadget/*`
-        `cp -r "$CARBON_HOME"/repository/deployment/server/jaggeryapps/portal/store/wso2.com "$CARBON_HOME"/samples/artifacts/$c/jaggeryapps/portal/store/`
-        `rm -r "$CARBON_HOME"/samples/artifacts/$c/jaggeryapps/portal/store/wso2.com/gadget/*`
       fi
    else
       echo "*** Specified sample number is not a number *** Please specify a valid sample number with the -sn option"

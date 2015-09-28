@@ -76,11 +76,7 @@ rmdir ..\samples\artifacts\%cn%\jaggeryapps\portal\store /s /q > nul
 mkdir ..\samples\artifacts\%cn%\jaggeryapps\portal\store\carbon.super > nul
 xcopy ..\repository\deployment\server\jaggeryapps\portal\store\carbon.super ..\samples\artifacts\%cn%\jaggeryapps\portal\store\carbon.super /s /q > nul
 rmdir ..\samples\artifacts\%cn%\jaggeryapps\portal\store\carbon.super\gadget /s /q > nul
-mkdir ..\samples\artifacts\%cn%\jaggeryapps\portal\store\carbon.super\gadget > nul
-mkdir ..\samples\artifacts\%cn%\jaggeryapps\portal\store\wso2.com > nul
-xcopy ..\repository\deployment\server\jaggeryapps\portal\store\wso2.com ..\samples\artifacts\%cn%\jaggeryapps\portal\store\wso2.com /s /q > nul
-rmdir ..\samples\artifacts\%cn%\jaggeryapps\portal\store\wso2.com\gadget /s /q > nul
-mkdir ..\samples\artifacts\%cn%\jaggeryapps\portal\store\wso2.com\gadget > nul )
+mkdir ..\samples\artifacts\%cn%\jaggeryapps\portal\store\carbon.super\gadget > nul)
 goto run
 
 :invalid_number
