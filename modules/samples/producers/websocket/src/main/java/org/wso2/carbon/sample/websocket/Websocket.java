@@ -11,7 +11,7 @@
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
+ * KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations
  * under the License.
  */
@@ -41,7 +41,6 @@ public class Websocket {
 
     public static void main(String args[]) {
 
-
         //for server
         String port = args[0];
 
@@ -55,7 +54,7 @@ public class Websocket {
         String host = args[4];
 
         if (url.isEmpty()) {
-            System.out.println("Starting Websocket publisher on Server Mode");
+            log.info("Starting Websocket publisher on Server Mode");
 
             WebSocketServer webSocketServer = new WebSocketServer();
 
@@ -66,9 +65,8 @@ public class Websocket {
                 readMsg(filePath);
 
                 for (String message : messagesList) {
-                    System.out.println("Sending message:");
-                    System.out.println(message);
-                    System.out.println();
+                    log.info("Sending message:");
+                    log.info(message);
                     webSocketServer.send(message, 50);
                 }
                 Thread.sleep(500); // Waiting time for the message to be sent
@@ -79,7 +77,7 @@ public class Websocket {
                 webSocketServer.stop();
             }
         } else {
-            System.out.println("Starting Websocket publisher on Client Mode");
+            log.info("Starting Websocket publisher on Client Mode");
 
             WebSocketClient webSocketClient = new WebSocketClient();
             try {
@@ -89,9 +87,8 @@ public class Websocket {
                 readMsg(filePath);
 
                 for (String message : messagesList) {
-                    System.out.println("Sending message:");
-                    System.out.println(message);
-                    System.out.println();
+                    log.info("Sending message:");
+                    log.info(message);
                     webSocketClient.send(message);
                 }
                 Thread.sleep(500); // Waiting time for the message to be sent

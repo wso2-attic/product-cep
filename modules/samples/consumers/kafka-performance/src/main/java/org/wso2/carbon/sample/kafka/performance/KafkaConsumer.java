@@ -45,7 +45,6 @@ public class KafkaConsumer {
         String groupId = args[1];
         String topic = args[2];
         int noOfConsumers = Integer.parseInt(args[3]);
-
         KafkaConsumer kafkaConsumer = new KafkaConsumer(zookeeperUrl, groupId, topic);
         kafkaConsumer.start(noOfConsumers);
     }
