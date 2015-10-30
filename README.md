@@ -89,7 +89,7 @@ For more details see https://docs.wso2.com/display/CEP400/Samples+Guide .
 
 **For further details, see the WSO2 Complex Event Processor documentation at http://docs.wso2.com/complex-event-processor**
 
-## Buriling the product 
+## Building the product 
 If snapshot versions of dependent jars are not available or out of date, build the following repositories first before building this repository .
 
 * siddhi - https://github.com/wso2/siddhi
