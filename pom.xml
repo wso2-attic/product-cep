@@ -697,20 +697,20 @@
         <jaggery.version>0.11.0</jaggery.version>
         <jaggery.modules.version>1.4.2</jaggery.modules.version>
         <carbon.deployment.version>4.5.3</carbon.deployment.version>
-        <carbon.commons.version>4.4.7</carbon.commons.version>
-        <carbon.analytics-common.version>5.0.3</carbon.analytics-common.version>
+        <carbon.commons.version>4.4.8</carbon.commons.version>
+        <carbon.analytics-common.version>5.0.6</carbon.analytics-common.version>
         <carbon.dashboards.version>1.0.2</carbon.dashboards.version>
         <carbon.identity.version>4.5.6</carbon.identity.version>
         <carbon.registry.version>4.4.8</carbon.registry.version>
         <carbon.multitenancy.version>4.4.3</carbon.multitenancy.version>
         <carbon.metrics.version>1.1.0</carbon.metrics.version>
 
-        <siddhi.version>3.0.2</siddhi.version>
-        <carbon.event-processing.version>2.0.6</carbon.event-processing.version>
+        <siddhi.version>3.0.3</siddhi.version>
+        <carbon.event-processing.version>2.0.9</carbon.event-processing.version>
         <cep.version>4.0.1-SNAPSHOT</cep.version>
         
         <!-- Carbon kernel version-->
-        <carbon.kernel.version>4.4.1</carbon.kernel.version>
+        <carbon.kernel.version>4.4.2</carbon.kernel.version>
         <!--<carbon.kernel.imp.pkg.version>[4.3.0, 4.4.0)</carbon.kernel.imp.pkg.version>-->
         <!--<carbon.kernel.registry.imp.pkg.version>[1.0.1, 2.0.0)</carbon.kernel.registry.imp.pkg.version>-->
         <test.framework.version>4.4.2</test.framework.version>
