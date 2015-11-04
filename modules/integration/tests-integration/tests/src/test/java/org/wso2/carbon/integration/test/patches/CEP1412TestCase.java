@@ -79,8 +79,6 @@ public class CEP1412TestCase extends CEPIntegrationTest {
                 backendURL, loggedInSessionCookie);
         eventStreamManagerAdminServiceClient = configurationUtil.getEventStreamManagerAdminServiceClient(
                 backendURL, loggedInSessionCookie);
-        eventPublisherAdminServiceClient = configurationUtil.getEventPublisherAdminServiceClient(
-                backendURL, loggedInSessionCookie);
         Thread.sleep(45000);
     }
 
@@ -106,7 +104,6 @@ public class CEP1412TestCase extends CEPIntegrationTest {
 
             //Publish data
             JMSPublisherClient.publishQueue("queueMap", "csv", samplePath, "queueMap.csv");
-            //wait while all stats are published
 
             //Get maximum thread count for jms consumers
             threadCount = JMXAnalyzerClient.getThreadCount("localhost", "10799");

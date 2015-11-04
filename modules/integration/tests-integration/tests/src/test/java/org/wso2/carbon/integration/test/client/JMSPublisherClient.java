@@ -102,13 +102,22 @@ public class JMSPublisherClient {
         log.info("All Order Messages sent");
     }
 
+    /**
+     * This method will publish the data in the test data file to the given queue via ActiveMQ message broker
+     *
+     * @param queueName             the queue which the messages should be published under
+     * @param format                format of the test data file (csv or text)
+     * @param testCaseFolderName    Testcase folder name which is in the test artifacts folder
+     * @param dataFileName          data file name with the extension to be read
+     *
+     */
     public static void publishQueue(String queueName, String format, String testCaseFolderName, String dataFileName) {
 
         if (format == null || "map".equals(format)) {
             format = "csv";
         }
 
-        try{
+        try {
             Properties properties = new Properties();
 
             String filePath = getTestDataFileLocation(testCaseFolderName, dataFileName);
@@ -117,19 +126,19 @@ public class JMSPublisherClient {
             QueueConnectionFactory connFactory = (QueueConnectionFactory) context.lookup("ConnectionFactory");
             QueueConnection queueConnection = connFactory.createQueueConnection();
             queueConnection.start();
-            Session session  = queueConnection.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
+            Session session = queueConnection.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
 
-            Queue queue  = session.createQueue(queueName);
-            MessageProducer producer  = session.createProducer(queue);
+            Queue queue = session.createQueue(queueName);
+            MessageProducer producer = session.createProducer(queue);
 
             List<String> messagesList = readFile(filePath);
             try {
 
-                if(format.equalsIgnoreCase("csv")){
+                if (format.equalsIgnoreCase("csv")) {
                     log.info("Sending Map messages on '" + queueName + "' queue");
                     publishMapMessage(producer, session, messagesList);
 
-                }else{
+                } else {
                     log.info("Sending  " + format + " messages on '" + queueName + "' queue");
                     publishTextMessage(producer, session, messagesList);
                 }
@@ -137,13 +146,13 @@ public class JMSPublisherClient {
                 log.error("Error when reading the data file." + e.getMessage(), e);
             } catch (JMSException e) {
                 log.error("Can not subscribe." + e.getMessage(), e);
-            } finally{
+            } finally {
                 producer.close();
                 session.close();
                 queueConnection.stop();
                 queueConnection.close();
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             log.error("Error when publishing messages" + e.getMessage(), e);
         }
         log.info("All Order Messages sent");
