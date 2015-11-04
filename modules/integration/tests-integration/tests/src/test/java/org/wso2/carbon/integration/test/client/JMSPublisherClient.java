@@ -102,6 +102,53 @@ public class JMSPublisherClient {
         log.info("All Order Messages sent");
     }
 
+    public static void publishQueue(String queueName, String format, String testCaseFolderName, String dataFileName) {
+
+        if (format == null || "map".equals(format)) {
+            format = "csv";
+        }
+
+        try{
+            Properties properties = new Properties();
+
+            String filePath = getTestDataFileLocation(testCaseFolderName, dataFileName);
+            properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("activemq.properties"));
+            Context context = new InitialContext(properties);
+            QueueConnectionFactory connFactory = (QueueConnectionFactory) context.lookup("ConnectionFactory");
+            QueueConnection queueConnection = connFactory.createQueueConnection();
+            queueConnection.start();
+            Session session  = queueConnection.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
+
+            Queue queue  = session.createQueue(queueName);
+            MessageProducer producer  = session.createProducer(queue);
+
+            List<String> messagesList = readFile(filePath);
+            try {
+
+                if(format.equalsIgnoreCase("csv")){
+                    log.info("Sending Map messages on '" + queueName + "' queue");
+                    publishMapMessage(producer, session, messagesList);
+
+                }else{
+                    log.info("Sending  " + format + " messages on '" + queueName + "' queue");
+                    publishTextMessage(producer, session, messagesList);
+                }
+            } catch (IOException e) {
+                log.error("Error when reading the data file." + e.getMessage(), e);
+            } catch (JMSException e) {
+                log.error("Can not subscribe." + e.getMessage(), e);
+            } finally{
+                producer.close();
+                session.close();
+                queueConnection.stop();
+                queueConnection.close();
+            }
+        }catch(Exception e){
+            log.error("Error when publishing messages" + e.getMessage(), e);
+        }
+        log.info("All Order Messages sent");
+    }
+
     /**
      * Each message will be divided into groups and create the map message
      *
