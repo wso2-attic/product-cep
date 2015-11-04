@@ -69,13 +69,13 @@ public class GeoExtensionTestCase extends CEPIntegrationTest {
 
         //Add StreamDefinition
         String streamDefinitionAsString1 = getJSONArtifactConfiguration("extensionflows" + File.separator + "geo",
-                                                                        "geocodeInputStream_1.0.0.json");
+                "geocodeInputStream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString1);
         String streamDefinitionAsString2 = getJSONArtifactConfiguration("extensionflows" + File.separator + "geo",
-                                                                        "geocodeOutputStream_1.0.0.json");
+                "geocodeOutputStream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString2);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(),
-                            startESCount + 2);
+                startESCount + 2);
 
         //Add Execution Plan
         String executionPlanAsString =
@@ -88,7 +88,7 @@ public class GeoExtensionTestCase extends CEPIntegrationTest {
                 getXMLArtifactConfiguration("extensionflows" + File.separator + "geo", "WSo2EventPublisher.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(),
-                            startEPCount + 1);
+                startEPCount + 1);
 
         EventDto eventDto = new EventDto();
         eventDto.setEventStreamId("geocodeInputStream:1.0.0");
@@ -115,7 +115,7 @@ public class GeoExtensionTestCase extends CEPIntegrationTest {
         eventList.add(event);
         Event event2 = new Event();
         event2.setStreamId("geocodeOutputStream:1.0.0");
-        event2.setPayloadData(new Object[]{6.9955449d, 79.8832741d, "Hendala Rd, Wattala, Sri Lanka"});
+        event2.setPayloadData(new Object[]{6.9954258d, 79.88272810000001d, "Hendala Rd, Wattala, Sri Lanka"});
         eventList.add(event2);
         Event event3 = new Event();
         event3.setStreamId("geocodeOutputStream:1.0.0");
@@ -141,13 +141,19 @@ public class GeoExtensionTestCase extends CEPIntegrationTest {
 
         try {
             Assert.assertEquals(agentServer.getMsgCount(), messageCount,
-                                "Incorrect number of messages consumed!");
+                    "Incorrect number of messages consumed!");
             List<Event> preservedEventList = agentServer.getPreservedEventList();
             for (Event aEvent : preservedEventList) {
-                aEvent.setTimeStamp(0);
+                for (Event expectedEvent : eventList) {
+                    if (aEvent.getPayloadData().length == 3 &&
+                            ((String) aEvent.getPayloadData()[2]).equalsIgnoreCase((String) expectedEvent.getPayloadData()[2])) {
+                        Assert.assertEquals((double) aEvent.getPayloadData()[0], (double) expectedEvent.getPayloadData()[0],
+                                0.0001d, "Latitude mismatch of geocode processed data");
+                        Assert.assertEquals((double) aEvent.getPayloadData()[1], (double) expectedEvent.getPayloadData()[1],
+                                0.0001d, "Longitude mismatch of geocode processed data");
+                    }
+                }
             }
-            Assert.assertEquals(preservedEventList, eventList,
-                                "Mismatch of geocode processed data with assertion");
         } catch (Throwable e) {
             log.error("Exception occurred: " + e.getMessage(), e);
             Assert.fail("Exception e: " + e.getMessage());
