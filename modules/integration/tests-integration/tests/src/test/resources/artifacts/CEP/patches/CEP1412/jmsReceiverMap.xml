@@ -26,7 +26,7 @@
         <property name="transport.jms.Destination">queueMap</property>
         <property name="transport.jms.ConnectionFactoryJNDIName">QueueConnectionFactory</property>
         <property name="jms.properties">
-            transport.jms.ConcurrentConsumers:10,transport.jms.MaxConcurrentConsumers:25,jobQueueSize:10
+            transport.jms.ConcurrentConsumers:10,transport.jms.MaxConcurrentConsumers:25
         </property>
     </from>
     <mapping customMapping="disable" type="map"/>

@@ -20,13 +20,13 @@ package org.wso2.carbon.integration.test.client;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.log4j.Logger;
 import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTestConstants;
 
 import javax.jms.*;
 import javax.naming.Context;
 import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -79,14 +79,12 @@ public class JMSPublisherClient {
 
                 if(format.equalsIgnoreCase("csv")){
                     log.info("Sending Map messages on '" + topicName + "' topic");
-                    publishMapMessage(producer, session, messagesList);
+                    publishMapMessages(producer, session, messagesList);
 
                 }else{
                     log.info("Sending  " + format + " messages on '" + topicName + "' topic");
                     publishTextMessage(producer, session, messagesList);
                 }
-            } catch (IOException e) {
-                log.error("Error when reading the data file." + e.getMessage(), e);
             } catch (JMSException e) {
                 log.error("Can not subscribe." + e.getMessage(), e);
             } finally{
@@ -106,56 +104,38 @@ public class JMSPublisherClient {
      * This method will publish the data in the test data file to the given queue via ActiveMQ message broker
      *
      * @param queueName             the queue which the messages should be published under
-     * @param format                format of the test data file (csv or text)
+     * @param messageFormat         messageFormat of the test data file
      * @param testCaseFolderName    Testcase folder name which is in the test artifacts folder
      * @param dataFileName          data file name with the extension to be read
      *
      */
-    public static void publishQueue(String queueName, String format, String testCaseFolderName, String dataFileName) {
+    public static void publishToQueue(String queueName, String messageFormat, String testCaseFolderName, String dataFileName) throws JMSException, IOException, NamingException {
 
-        if (format == null || "map".equals(format)) {
-            format = "csv";
+        //create connection
+        Properties properties = new Properties();
+        properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("activemq.properties"));
+        Context context = new InitialContext(properties);
+        QueueConnectionFactory connFactory = (QueueConnectionFactory) context.lookup("ConnectionFactory");
+        QueueConnection queueConnection = connFactory.createQueueConnection();
+        queueConnection.start();
+        Session session = queueConnection.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
+        Queue queue = session.createQueue(queueName);
+        MessageProducer producer = session.createProducer(queue);
+
+        //publish data
+        String filePath = getTestDataFileLocation(testCaseFolderName, dataFileName);
+        List<String> messagesList = readFile(filePath);
+        if (messageFormat.equalsIgnoreCase("map")) {
+            publishMapMessages(producer, session, messagesList);
+        } else {
+            publishTextMessage(producer, session, messagesList);
         }
 
-        try {
-            Properties properties = new Properties();
-
-            String filePath = getTestDataFileLocation(testCaseFolderName, dataFileName);
-            properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("activemq.properties"));
-            Context context = new InitialContext(properties);
-            QueueConnectionFactory connFactory = (QueueConnectionFactory) context.lookup("ConnectionFactory");
-            QueueConnection queueConnection = connFactory.createQueueConnection();
-            queueConnection.start();
-            Session session = queueConnection.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
-
-            Queue queue = session.createQueue(queueName);
-            MessageProducer producer = session.createProducer(queue);
-
-            List<String> messagesList = readFile(filePath);
-            try {
-
-                if (format.equalsIgnoreCase("csv")) {
-                    log.info("Sending Map messages on '" + queueName + "' queue");
-                    publishMapMessage(producer, session, messagesList);
-
-                } else {
-                    log.info("Sending  " + format + " messages on '" + queueName + "' queue");
-                    publishTextMessage(producer, session, messagesList);
-                }
-            } catch (IOException e) {
-                log.error("Error when reading the data file." + e.getMessage(), e);
-            } catch (JMSException e) {
-                log.error("Can not subscribe." + e.getMessage(), e);
-            } finally {
-                producer.close();
-                session.close();
-                queueConnection.stop();
-                queueConnection.close();
-            }
-        } catch (Exception e) {
-            log.error("Error when publishing messages" + e.getMessage(), e);
-        }
-        log.info("All Order Messages sent");
+        //close connection
+        producer.close();
+        session.close();
+        queueConnection.stop();
+        queueConnection.close();
     }
 
     /**
@@ -167,7 +147,7 @@ public class JMSPublisherClient {
      *                      "attributeName(attributeType):attributeValue" format
      *
      */
-    public static void publishMapMessage(MessageProducer producer, Session session, List<String> messagesList) throws IOException, JMSException {
+    public static void publishMapMessages(MessageProducer producer, Session session, List<String> messagesList) throws JMSException {
         String regexPattern = "(.*)\\((.*)\\):(.*)";
         Pattern pattern = Pattern.compile(regexPattern);
         for(String message: messagesList){

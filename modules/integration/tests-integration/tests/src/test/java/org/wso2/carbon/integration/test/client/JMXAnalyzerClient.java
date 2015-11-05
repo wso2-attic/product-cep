@@ -27,23 +27,25 @@ import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
+import java.lang.management.ThreadInfo;
 import java.lang.management.ThreadMXBean;
 import java.util.HashMap;
 import java.util.Map;
 
 public class JMXAnalyzerClient {
 
-    private static final Log log = LogFactory.getLog(JMXAnalyzerClient.class);
-
-    public static int getThreadCount(String host, String port) throws IOException, MalformedObjectNameException,
-            MBeanException, AttributeNotFoundException, InstanceNotFoundException, ReflectionException {
+    public static int getThreadCount(String host, String port) throws IOException {
+        String username = "admin";
+        String password = "admin";
+        int threadCount = 0;
+        String threadName = "JMSThreads";
         JMXServiceURL url =
                 new JMXServiceURL("service:jmx:rmi:///jndi/rmi://" + host + ":" + port + "/jmxrmi");
-
         Map<String, String[]> env = new HashMap<String, String[]>();
-        String[] credentials = {"admin", "admin"};
+        ThreadInfo threadIDInfo;
+
+        String[] credentials = {username, password};
         env.put(JMXConnector.CREDENTIALS, credentials);
-        int threadCount = 0;
         JMXConnector jmxConnector = JMXConnectorFactory.connect(url, env);
         MBeanServerConnection mbeanServerConnection = jmxConnector.getMBeanServerConnection();
         final ThreadMXBean remoteThread =
@@ -51,12 +53,13 @@ public class JMXAnalyzerClient {
                         mbeanServerConnection,
                         ManagementFactory.THREAD_MXBEAN_NAME,
                         ThreadMXBean.class);
-        long[] allthreadIDsArray = remoteThread.getAllThreadIds();
+        long[] allThreadIDsArray = remoteThread.getAllThreadIds();
 
         //get jms thread count
-        for (long threadID : allthreadIDsArray) {
-            if (remoteThread.getThreadInfo(threadID) != null && remoteThread.getThreadInfo(threadID).getThreadName() != null
-                    && remoteThread.getThreadInfo(threadID).getThreadName().startsWith("JMSThreads")) {
+        for (long threadID : allThreadIDsArray) {
+            threadIDInfo = remoteThread.getThreadInfo(threadID);
+            if (threadIDInfo != null && threadIDInfo.getThreadName() != null
+                    && threadIDInfo.getThreadName().startsWith(threadName)) {
                 threadCount++;
             }
         }
@@ -64,5 +67,4 @@ public class JMXAnalyzerClient {
         jmxConnector.close();
         return threadCount;
     }
-
 }

@@ -79,6 +79,7 @@ public class CEP1412TestCase extends CEPIntegrationTest {
                 backendURL, loggedInSessionCookie);
         eventStreamManagerAdminServiceClient = configurationUtil.getEventStreamManagerAdminServiceClient(
                 backendURL, loggedInSessionCookie);
+        //wait for the adapter to poll
         Thread.sleep(45000);
     }
 
@@ -100,26 +101,22 @@ public class CEP1412TestCase extends CEPIntegrationTest {
             String eventReceiverConfig = getXMLArtifactConfiguration(samplePath, "jmsReceiverMap.xml");
             eventReceiverAdminServiceClient.addEventReceiverConfiguration(eventReceiverConfig);
             Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
-            Thread.sleep(1000);
 
             //Publish data
-            JMSPublisherClient.publishQueue("queueMap", "csv", samplePath, "queueMap.csv");
+            JMSPublisherClient.publishToQueue("queueMap", "map", samplePath, "queueMap.txt");
 
-            //Get maximum thread count for jms consumers
+            //Get thread count for jms consumers
             threadCount = JMXAnalyzerClient.getThreadCount("localhost", "10799");
             log.info("Thread count for jms consumers: " + threadCount);
-            if (threadCount < 10) {
-                log.warn("Thread count:" + threadCount);
-                Assert.fail("Thread count less than number of concurrent consumers");
-            }
+            Assert.assertTrue(threadCount >= 10, "Thread count less than number of concurrent consumers");
         } catch (Throwable e) {
             log.error("Exception thrown: " + e.getMessage(), e);
             Assert.fail("Exception: " + e.getMessage());
+        } finally {
+            //Remove artifacts
+            eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
+            eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("jmsReceiverMap.xml");
         }
-
-        //Remove artifacts
-        eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
-        eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("jmsReceiverMap.xml");
     }
 
     @AfterClass(alwaysRun = true)
@@ -138,8 +135,8 @@ public class CEP1412TestCase extends CEPIntegrationTest {
                 serverManager.removeFromComponentLib(GERONIMO_J2EE_MANAGEMENT);
                 serverManager.restoreToLastConfiguration();
             }
+            super.cleanup();
         }
-        super.cleanup();
     }
 
     //---- private methods --------
