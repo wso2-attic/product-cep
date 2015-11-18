@@ -116,18 +116,17 @@ public class CEP1412TestCase extends CEPIntegrationTest {
             //Remove artifacts
             eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
             eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("jmsReceiverMap.xml");
+            //let server to clear the artifact un-deployment
+            Thread.sleep(60000);
         }
     }
 
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
         try {
-            Thread.sleep(5000);
             if (activeMqBroker != null) {
                 activeMqBroker.stop();
             }
-            //let server to clear the artifact un-deployment
-            Thread.sleep(5000);
         } finally {
             //reverting the changes done to cep sever
             if (serverManager != null) {
