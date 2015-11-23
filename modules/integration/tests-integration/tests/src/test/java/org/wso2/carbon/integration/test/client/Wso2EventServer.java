@@ -63,12 +63,8 @@ public class Wso2EventServer implements Runnable {
     }
 
     public void startServer() throws DataBridgeException, StreamDefinitionStoreException {
-        try {
-            msgCount.set(0);
-            start(listeningPort);
-        } catch (Throwable t) {
-            t.printStackTrace();
-        }
+        msgCount.set(0);
+        start(listeningPort);
     }
 
     public void start(int receiverPort) throws DataBridgeException, StreamDefinitionStoreException {
@@ -142,19 +138,19 @@ public class Wso2EventServer implements Runnable {
         if (!eventReceived) {
             log.warn("Events did not received.");
         }
-        try {
-            thriftDataReceiver.stop();
-            log.info("Test Server Stopped.");
-        } catch (Throwable t) {
-            t.printStackTrace();
-        }
+        thriftDataReceiver.stop();
+        log.info("Test Server Stopped.");
     }
 
     @Override
     public void run() {
         try {
             startServer();
-        } catch (DataBridgeException | StreamDefinitionStoreException e) {
+        } catch (DataBridgeException e) {
+            e.printStackTrace();
+        } catch (StreamDefinitionStoreException e) {
+            e.printStackTrace();
+        } catch (Throwable e) {
             e.printStackTrace();
         }
     }
