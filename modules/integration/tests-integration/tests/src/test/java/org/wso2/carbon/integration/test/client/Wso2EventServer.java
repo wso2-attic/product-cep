@@ -150,8 +150,6 @@ public class Wso2EventServer implements Runnable {
             e.printStackTrace();
         } catch (StreamDefinitionStoreException e) {
             e.printStackTrace();
-        } catch (Throwable e) {
-            e.printStackTrace();
         }
     }
 
