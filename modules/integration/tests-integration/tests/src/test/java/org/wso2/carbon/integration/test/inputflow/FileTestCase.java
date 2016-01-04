@@ -110,36 +110,33 @@ public class FileTestCase extends CEPIntegrationTest {
 
         Thread.sleep(2000);
 
-        List<Event> eventList = new ArrayList<>();
+        List<String> eventList = new ArrayList<>();
         Event event = new Event();
         event.setStreamId("org.wso2.event.sensor.stream:1.0.0");
         event.setMetaData(new Object[]{4354643, true, 100, "temperature"});
         event.setCorrelationData(new Object[]{90.34344, 5.443435});
         event.setPayloadData(new Object[]{8.9f, 20.44345});
-        eventList.add(event);
+        eventList.add(event.toString());
         Event event2 = new Event();
         event2.setStreamId("org.wso2.event.sensor.stream:1.0.0");
         event2.setMetaData(new Object[]{4354653, false, 101, "temperature"});
         event2.setCorrelationData(new Object[]{90.34344, 5.443435});
         event2.setPayloadData(new Object[]{8.9f, 20.44345});
-        eventList.add(event2);
+        eventList.add(event2.toString());
         Event event3 = new Event();
         event3.setStreamId("org.wso2.event.sensor.stream:1.0.0");
         event3.setMetaData(new Object[]{4354343, true, 102, "temperature"});
         event3.setCorrelationData(new Object[]{90.34344, 5.443435});
         event3.setPayloadData(new Object[]{8.9f, 20.44345});
-        eventList.add(event3);
+        eventList.add(event3.toString());
 
         try {
             Assert.assertEquals(agentServer.getMsgCount(), eventList.size(), "Incorrect number of messages consumed!");
 
-            int counter = 0;
             for (Event currentEvent : agentServer.getPreservedEventList()) {
                 currentEvent.setTimeStamp(0);
-                Assert.assertEquals(currentEvent.toString(), eventList.get(counter).toString(), "Mapping is incorrect!");
-                counter++;
+                Assert.assertTrue(eventList.contains(currentEvent.toString()), "Mapping is incorrect!" );
             }
-
 
         } catch (Throwable e) {
             log.error("Exception thrown: " + e.getMessage(), e);
