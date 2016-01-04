@@ -37,7 +37,7 @@
         </nodeType>
         <checkMemberUpdateInterval>10000</checkMemberUpdateInterval>
         <eventSync>
-            <hostName>10.100.4.11</hostName>
+            <hostName>host-ip-address</hostName>
             <port>11225</port>
             <reconnectionInterval>20000</reconnectionInterval>
             <serverThreads>20000</serverThreads>
@@ -57,7 +57,7 @@
             <publisherQueueMaxSizeMb>10</publisherQueueMaxSizeMb>
         </eventSync>
         <management>
-            <hostName>10.100.4.11</hostName>
+            <hostName>host-ip-address</hostName>
             <port>10006</port>
             <tryStateChangeInterval>15000</tryStateChangeInterval>
             <stateSyncRetryInterval>10000</stateSyncRetryInterval>
@@ -159,3 +159,4 @@
     </mode>
 
 </eventProcessorConfiguration>
+

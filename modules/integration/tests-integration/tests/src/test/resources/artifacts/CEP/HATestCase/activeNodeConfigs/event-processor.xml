@@ -1,4 +1,4 @@
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
   ~ Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
   ~
   ~ WSO2 Inc. licenses this file to you under the Apache License,
@@ -14,11 +14,9 @@
   ~ KIND, either express or implied.  See the License for the
   ~ specific language governing permissions and limitations
   ~ under the License.
-  -->
+  --><eventProcessorConfiguration>
 
-<eventProcessorConfiguration>
-
-    <mode name="SingleNode" enable="false">
+    <mode enable="false" name="SingleNode">
         <persistence enable="false">
             <persistenceIntervalInMinutes>15</persistenceIntervalInMinutes>
             <persisterSchedulerPoolSize>10</persisterSchedulerPoolSize>
@@ -30,14 +28,14 @@
 
 
     <!-- HA Mode Config -->
-    <mode name="HA" enable="true">
+    <mode enable="true" name="HA">
         <nodeType>
             <worker enable="true"/>
             <presenter enable="false"/>
         </nodeType>
         <checkMemberUpdateInterval>10000</checkMemberUpdateInterval>
         <eventSync>
-            <hostName>10.100.4.11</hostName>
+            <hostName>host-ip-address</hostName>
             <port>11224</port>
             <reconnectionInterval>20000</reconnectionInterval>
             <serverThreads>20000</serverThreads>
@@ -57,7 +55,7 @@
             <publisherQueueMaxSizeMb>10</publisherQueueMaxSizeMb>
         </eventSync>
         <management>
-            <hostName>10.100.4.11</hostName>
+            <hostName>host-ip-address</hostName>
             <port>10005</port>
             <tryStateChangeInterval>15000</tryStateChangeInterval>
             <stateSyncRetryInterval>10000</stateSyncRetryInterval>
@@ -77,7 +75,7 @@
 
     <!-- Distributed Mode Config -->
 
-    <mode name="Distributed" enable="false">
+    <mode enable="false" name="Distributed">
         <nodeType>
             <worker enable="true"/>
             <manager enable="true">
@@ -152,7 +150,7 @@
 
         <stormJar>org.wso2.cep.storm.dependencies.jar</stormJar>
 
-        <distributedUIUrl></distributedUIUrl>
+        <distributedUIUrl/>
 
         <memberUpdateCheckInterval>20000</memberUpdateCheckInterval>
 
