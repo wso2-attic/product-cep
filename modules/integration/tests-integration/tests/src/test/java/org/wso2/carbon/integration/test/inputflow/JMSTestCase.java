@@ -502,9 +502,14 @@ public class JMSTestCase extends CEPIntegrationTest {
         // The data-bridge receiver
         Wso2EventServer agentServer = new Wso2EventServer(samplePath, CEPIntegrationTestConstants.TCP_PORT, true);
         Thread agentServerThread = new Thread(agentServer);
-        agentServerThread.start();
-        // Let the server start
-        Thread.sleep(5000);
+        try {
+            agentServerThread.start();
+            // Let the server start
+            Thread.sleep(5000);
+        } catch (Throwable t) {
+            // just to diagnose
+            t.printStackTrace();
+        }
 
         //Edit receiver by adding JMS properties
         String eventReceiverNewConfig = getXMLArtifactConfiguration(samplePath, "jmsPropertiesReceiver.xml");
@@ -552,7 +557,12 @@ public class JMSTestCase extends CEPIntegrationTest {
             log.error("Exception thrown: " + e.getMessage(), e);
             Assert.fail("Exception: " + e.getMessage());
         } finally {
-            agentServer.stop();
+            try {
+                agentServer.stop();
+            } catch (Throwable t) {
+                // just to diagnose
+                t.printStackTrace();
+            }
         }
     }
 
