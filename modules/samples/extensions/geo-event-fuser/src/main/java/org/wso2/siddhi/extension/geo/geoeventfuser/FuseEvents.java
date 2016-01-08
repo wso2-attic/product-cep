@@ -1,26 +1,23 @@
 /*
+ * Copyright (c)  2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
- *   Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
- *
- *   WSO2 Inc. licenses this file to you under the Apache License,
- *   Version 2.0 (the "License"); you may not use this file except
- *   in compliance with the License.
- *   You may obtain a copy of the License at
+ * WSO2 Inc. licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License.
+ * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- *  Unless required by applicable law or agreed to in writing,
- *  software distributed under the License is distributed on an
- *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- *  KIND, either express or implied.  See the License for the
- *  specific language governing permissions and limitations
- *  under the License.
- * /
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
  */
 
 package org.wso2.siddhi.extension.geo.geoeventfuser;
 
-import org.apache.commons.logging.LogFactory;
 import org.wso2.siddhi.core.config.ExecutionPlanContext;
 import org.wso2.siddhi.core.event.ComplexEventChunk;
 import org.wso2.siddhi.core.event.stream.StreamEvent;
@@ -29,66 +26,68 @@ import org.wso2.siddhi.core.executor.ExpressionExecutor;
 import org.wso2.siddhi.core.executor.VariableExpressionExecutor;
 import org.wso2.siddhi.core.query.processor.Processor;
 import org.wso2.siddhi.core.query.processor.stream.window.WindowProcessor;
+import org.wso2.siddhi.query.api.definition.Attribute;
 import org.wso2.siddhi.query.api.exception.ExecutionPlanValidationException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import org.apache.commons.logging.Log;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class FuseEvents extends WindowProcessor {
-
-    private String variable = "";
-    private int variablePosition = 0;
-    private HashMap<String, ArrayList<StreamEvent>> eventsBuffer = null;
-
-    private static final Log log = LogFactory.getLog(FuseEvents.class);
-
-    @Override
+    private final String[] statesArray = new String[]{"OFFLINE", "NORMAL", "WARNING", "ALERTED"};
+    private ConcurrentHashMap<String, ArrayList<StreamEvent>> eventsBuffer =
+            new ConcurrentHashMap<String, ArrayList<StreamEvent>>();
+    private int eventIdPosition;
+    private int statePosition;
+    private int informationPosition;
 
     /**
      * Method called when initialising the extension
+     *
+     * @param attributeExpressionExecutors Array of {@link ExpressionExecutor}
+     * @param executionPlanContext         {@link ExecutionPlanContext}
      */
-
-    protected void init(ExpressionExecutor[] attributeExpressionExecutors,
-            ExecutionPlanContext executionPlanContext) {
-
-        if (attributeExpressionExecutors.length != 1) {
-            throw new ExecutionPlanValidationException("Invalid no of arguments passed to geo:fuseEvents(eventId) " +
-                    "function, required 1, but found " + attributeExpressionExecutors.length);
+    @Override
+    protected void init(ExpressionExecutor[] attributeExpressionExecutors, ExecutionPlanContext executionPlanContext) {
+        if (attributeExpressionExecutors.length != 3) {
+            throw new ExecutionPlanValidationException("Invalid no of arguments passed to geo:eventsFusion(<string> " +
+                    "eventId, <string> finalState, <string> information) function, required 3 arguments, but " +
+                    "found " + attributeExpressionExecutors.length);
         }
-        variable = ((VariableExpressionExecutor) attributeExpressionExecutors[0]).getAttribute().getName();
-        eventsBuffer = new HashMap<String, ArrayList<StreamEvent>>();
-        variablePosition = inputDefinition.getAttributePosition(variable);
+        Attribute eventIdAttr = ((VariableExpressionExecutor) attributeExpressionExecutors[0]).getAttribute();
+        eventIdPosition = inputDefinition.getAttributePosition(eventIdAttr.getName());
+        Attribute finalStateAttr = ((VariableExpressionExecutor) attributeExpressionExecutors[1]).getAttribute();
+        statePosition = inputDefinition.getAttributePosition(finalStateAttr.getName());
+        Attribute informationAttr = ((VariableExpressionExecutor) attributeExpressionExecutors[2]).getAttribute();
+        informationPosition = inputDefinition.getAttributePosition(informationAttr.getName());
     }
 
-    @Override
     /**
-     *This method called when processing an event list
+     * This method called when processing an event list
+     *
+     * @param streamEventChunk  {@link ComplexEventChunk<StreamEvent>}
+     * @param nextProcessor     {@link Processor}
+     * @param streamEventCloner {@link StreamEventCloner}
      */
-
+    @Override
     protected void process(ComplexEventChunk<StreamEvent> streamEventChunk, Processor nextProcessor,
-            StreamEventCloner streamEventCloner) {
-
+                           StreamEventCloner streamEventCloner) {
         while (streamEventChunk.hasNext()) {
             StreamEvent streamEvent = streamEventChunk.next();
-            String eventId = (String) streamEvent.getOutputData()[variablePosition];
-
+            String eventId = (String) streamEvent.getOutputData()[eventIdPosition];
             if (eventsBuffer.containsKey(eventId)) {
                 eventsBuffer.get(eventId).add(streamEvent);
-
                 if (eventsBuffer.get(eventId).size() == getDeployedExecutionPlansCount()) {
                     // Do the fusion here and return combined event
                     fuseEvent(streamEvent);
                     eventsBuffer.remove(eventId);
-                } else{
+                } else {
                     streamEventChunk.remove();
                 }
-
             } else if (getDeployedExecutionPlansCount().equals(1)) {
-                // This is a special case,
-                // where we do not need to fuse(combine) multiple events(because actually we don't get multiple events) so just doing a pass through
+                // Here we do not need to fuse(combine) multiple events
+                // Since we don't get multiple events, just pass through
                 nextProcessor.process(streamEventChunk);
             } else {
                 ArrayList<StreamEvent> buffer = new ArrayList<StreamEvent>();
@@ -100,46 +99,38 @@ public class FuseEvents extends WindowProcessor {
         nextProcessor.process(streamEventChunk);
     }
 
+    /**
+     * Get number of deployed execution plans
+     *
+     * @return number of deployed execution plans
+     */
     public Integer getDeployedExecutionPlansCount() {
         return ExecutionPlansCount.getNumberOfExecutionPlans();
     }
 
+    /**
+     * Fuse given {@link StreamEvent}.
+     * -Precedence of states when fusing-
+     * goes low to high from LHS to RHS
+     * OFFLINE < NORMAL < WARNING < ALERT
+     * States will be in all caps to mimics
+     * that states not get on the way
+     *
+     * @param event {@link StreamEvent} to fuse
+     */
     public void fuseEvent(StreamEvent event) {
-
-    /*
-        * --For reference--
-        * -Precedence of states-
-        * goes low to high from LHS to RHS
-        *
-        * OFFLINE < NORMAL < WARNING < ALERT
-        * */
-
-
-    /*
-        * --For reference--
-        *   Higher the index higher the Precedence
-        *   States are in all caps to mimics that states not get on the way
-        *
-        * */
-
-        String[] statesArray = new String[] { "OFFLINE", "NORMAL", "WARNING", "ALERTED" };
+        String eventId = (String) event.getOutputData()[eventIdPosition];
+        ArrayList<StreamEvent> receivedEvents = eventsBuffer.get(eventId);
         List<String> states = Arrays.asList(statesArray);
-
-        Object[] data = event.getOutputData();
-
+        Object[] outputData = event.getOutputData();
         String finalState = "";
         String information = "";
-
-        String eventId = (String) event.getOutputData()[variablePosition];
-        ArrayList<StreamEvent> receivedEvents = eventsBuffer.get(eventId);
-
         String alertStrings = "";
         String warningStrings = "";
 
         Integer currentStateIndex = -1;
-
         for (StreamEvent receivedEvent : receivedEvents) {
-            String thisState = (String) receivedEvent.getOutputData()[8];
+            String thisState = (String) receivedEvent.getOutputData()[statePosition];
             Integer thisStateIndex = states.indexOf(thisState);
 
             if (thisStateIndex > currentStateIndex) {
@@ -147,14 +138,14 @@ public class FuseEvents extends WindowProcessor {
                 currentStateIndex = thisStateIndex;
             }
 
-            if (thisState.equals("ALERTED")) {
-                alertStrings += "," + receivedEvent.getOutputData()[9];
-            } else if (thisState.equals("WARNING")) {
-                warningStrings += "," + receivedEvent.getOutputData()[9];
+            if ("ALERTED".equals(thisState)) {
+                alertStrings += "," + receivedEvent.getOutputData()[informationPosition];
+            } else if ("WARNING".equals(thisState)) {
+                warningStrings += "," + receivedEvent.getOutputData()[informationPosition];
             }
         }
 
-        if (finalState.equals("NORMAL")) {
+        if ("NORMAL".equals(finalState)) {
             information = "Normal driving pattern";
         } else {
             if (!alertStrings.isEmpty()) {
@@ -164,43 +155,28 @@ public class FuseEvents extends WindowProcessor {
                 information += " | " + "Warnings: " + warningStrings;
             }
         }
-
-        Object[] dataOut = new Object[] {
-                data[0], // id
-                Double.parseDouble(data[1].toString()), // Latitude
-                Double.parseDouble(data[2].toString()), // Longitude
-                Long.parseLong(data[3].toString()), // TimeStamp
-                data[4],//type
-                Float.parseFloat(data[5].toString()), // Speed
-                Float.parseFloat(data[6].toString()), // Heading
-                eventId,
-                finalState,
-                information
-        };
-
-        event.setOutputData(dataOut);
+        outputData[statePosition] = finalState;
+        outputData[informationPosition] = information;
+        event.setOutputData(outputData);
     }
 
     @Override
     public void start() {
-
+        // Do nothing
     }
 
     @Override
     public void stop() {
-
+        // Do nothing
     }
 
     @Override
     public Object[] currentState() {
-        return new Object[] { eventsBuffer };
-
+        return new Object[]{eventsBuffer};
     }
 
     @Override
     public void restoreState(Object[] state) {
-
+        // Do nothing
     }
 }
-
-
