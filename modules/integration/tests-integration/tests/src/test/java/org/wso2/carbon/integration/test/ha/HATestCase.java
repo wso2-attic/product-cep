@@ -89,7 +89,18 @@ public class HATestCase extends CEPIntegrationTest {
     private static String machineIP;
 
     /*
-
+        1. Start Server1 as an Active Member and Server2 as a Passive Member
+        2. Publish 3 events to Server2(Passive node) -> 3 events were received by Server1(Active Node)
+        3. Shutdown Server1(Active Node) -> Server2(Passive node) became Active Member
+        4. Publish another 6 events to Server2(Active node) -> 6 events were received by Server2(Active node)
+        5. Start Server1 again -> Server1 became Passive Member
+        6. Publish another 3 events to Server1(Passive node) -> 3 events were received by Server2(Active node)
+        7. Publish 3 events to Server2(Active node) -> 3 events were received by Server2(Active Node)
+        8. Shutdown Server2(Active Node) -> Server1(Passive node) became Active Member
+        9. Publish another 6 events to Server1(Active node) -> 6 events were received by Server1(Active node)
+       10. Start Server2 again -> Server2 became Passive Member
+       11. Publish another 3 events to Server2(Passive node) -> 3 events were received by Server1(Active node)
+       12. Shutdown Server1 and Server2
      */
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
@@ -101,8 +112,8 @@ public class HATestCase extends CEPIntegrationTest {
         cepServer1 = new AutomationContext("CEP", "cep002", TestUserMode.SUPER_TENANT_ADMIN);
         cepServer2 = new AutomationContext("CEP", "cep003", TestUserMode.SUPER_TENANT_ADMIN);
 
-        log.info("Sever1 https Port : "+cepServer1.getInstance().getPorts().get("https"));
-        log.info("Sever2 https Port : "+cepServer2.getInstance().getPorts().get("https"));
+        log.info("Sever1 https Port : " + cepServer1.getInstance().getPorts().get("https"));
+        log.info("Sever2 https Port : " + cepServer2.getInstance().getPorts().get("https"));
 
         server1 = new CarbonTestServerManager(cepServer1, 801);
         server2 = new CarbonTestServerManager(cepServer2, 802);
@@ -181,8 +192,8 @@ public class HATestCase extends CEPIntegrationTest {
         int startERCount2 = eventReceiverAdminServiceClient2.getActiveEventReceiverCount();
         int startEPCount2 = eventPublisherAdminServiceClient2.getActiveEventPublisherCount();
 
-        int activeMsgCount = 9;
-        int passiveMsgCount = 9;
+        int server1MsgCount = 12;
+        int server2MsgCount = 12;
 
         //Add StreamDefinition
         String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath, "org.wso2.event.sensor.stream_1.0.0.json");
@@ -207,14 +218,14 @@ public class HATestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventPublisherAdminServiceClient2.getActiveEventPublisherCount(), startEPCount2 + 1);
 
         // The data-bridge receiver
-        Wso2EventServer agentServer1 = new Wso2EventServer(samplePath, Integer.parseInt(cepServer1.getInstance().getPorts().get("thrift_publisher")), false);
+        Wso2EventServer agentServer1 = new Wso2EventServer(samplePath, Integer.parseInt(cepServer1.getInstance().getPorts().get("thrift_publisher"))+1, false);
         Thread agentServerThread = new Thread(agentServer1);
         agentServerThread.start();
         // Let the server start
         Thread.sleep(10000);
 
         // The data-bridge receiver
-        Wso2EventServer agentServer2 = new Wso2EventServer(samplePath, Integer.parseInt(cepServer2.getInstance().getPorts().get("thrift_publisher")), false);
+        Wso2EventServer agentServer2 = new Wso2EventServer(samplePath, Integer.parseInt(cepServer2.getInstance().getPorts().get("thrift_publisher"))+2, false);
         Thread agentServerThread2 = new Thread(agentServer2);
         agentServerThread2.start();
         // Let the server start
@@ -222,34 +233,40 @@ public class HATestCase extends CEPIntegrationTest {
 
         for (int i = 0; i < 3; i++) {
             if (i == 1) {
-                log.info("Shutdown Active Server");
+                log.info("Shutdown Server1(Active Node)");
                 server1.stopServer();
             }
-            log.info("Event No  : " + i);
             HttpEventPublisherClient.publish("http://localhost:" + cepServer2.getInstance().getPorts().get("http") +
                     "/endpoints/httpReceiver", "admin", "admin", samplePath, "httpReceiver.txt");
             Thread.sleep(30000);
         }
-        log.info("Start Active Server Again");
+        log.info("Start Server1 Again");
         server1.startServer();
+        HttpEventPublisherClient.publish("http://localhost:" + cepServer1.getInstance().getPorts().get("http") +
+                "/endpoints/httpReceiver", "admin", "admin", samplePath, "httpReceiver.txt");
+        Thread.sleep(30000);
         for (int i = 0; i < 3; i++) {
             if (i == 1) {
-                log.info("Shutdown Passive Server");
+                log.info("Shutdown Server2(Active Node)");
                 server2.stopServer();
             }
-            log.info("Event No  : " + i);
             HttpEventPublisherClient.publish("http://localhost:" + cepServer1.getInstance().getPorts().get("http") +
                     "/endpoints/httpReceiver", "admin", "admin", samplePath, "httpReceiver.txt");
             Thread.sleep(30000);
         }
+        log.info("Start Server2 Again");
+        server2.startServer();
+        HttpEventPublisherClient.publish("http://localhost:" + cepServer2.getInstance().getPorts().get("http") +
+                "/endpoints/httpReceiver", "admin", "admin", samplePath, "httpReceiver.txt");
+        Thread.sleep(30000);
 
-        log.info("Total Event Send Count : "+(activeMsgCount+passiveMsgCount));
-        log.info("Test Run Active Event Count : " + agentServer1.getMsgCount());
-        log.info("Test Run Passive Event Count : " + agentServer2.getMsgCount());
+        log.info("Total Event Send Count : " + (server1MsgCount + server2MsgCount));
+        log.info("Test Run Server1 Event Count : " + agentServer1.getMsgCount());
+        log.info("Test Run Server2 Event Count : " + agentServer2.getMsgCount());
 
         try {
-            Assert.assertEquals(agentServer1.getMsgCount(), activeMsgCount, "Incorrect number of messages consumed by Active Node!");
-            Assert.assertEquals(agentServer2.getMsgCount(), passiveMsgCount, "Incorrect number of messages consumed by Passive Node!");
+            Assert.assertEquals(agentServer1.getMsgCount(), server1MsgCount, "Incorrect number of messages consumed by Server1!");
+            Assert.assertEquals(agentServer2.getMsgCount(), server2MsgCount, "Incorrect number of messages consumed by server2!");
         } catch (Throwable e) {
             log.error("Exception thrown: " + e.getMessage(), e);
             Assert.fail("Exception: " + e.getMessage());
