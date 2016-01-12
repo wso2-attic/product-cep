@@ -511,6 +511,7 @@ public class JMSTestCase extends CEPIntegrationTest {
         eventReceiverAdminServiceClient.editEventReceiverConfiguration(eventReceiverNewConfig, "jmsReceiver");
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
 
+        Thread.sleep(10000);
         JMSPublisherClient.publish("topicMap", "csv", samplePath, "topicMap.csv");
         //wait while all stats are published
         Thread.sleep(5000);
