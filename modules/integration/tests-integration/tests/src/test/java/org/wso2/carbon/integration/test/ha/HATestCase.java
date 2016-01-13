@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -58,34 +58,20 @@ public class HATestCase extends CEPIntegrationTest {
     private MultipleServersManager manager = new MultipleServersManager();
     private static final String EVENT_PROCESSING_FILE = "event-processor.xml";
     private static final String AXIS2_XML_FILE = "axis2.xml";
-
     private static final String RESOURCE_LOCATION1 = TestConfigurationProvider.getResourceLocation()  + "artifacts" + File.separator + "CEP"
             + File.separator + "HATestCase" + File.separator + "activeNodeConfigs";
     private static final String RESOURCE_LOCATION2 = TestConfigurationProvider.getResourceLocation()  + "artifacts" + File.separator + "CEP"
             + File.separator + "HATestCase" + File.separator + "passiveNodeConfigs";
-
-    private static String CARBON_HOME1;
-    private static String CARBON_HOME2;
-
-    private ServerConfigurationManager serverConfigManager1;
-    private ServerConfigurationManager serverConfigManager2;
-
     private AutomationContext cepServer1;
     private AutomationContext cepServer2;
-
     private CarbonTestServerManager server1;
     private CarbonTestServerManager server2;
-
     private EventStreamManagerAdminServiceClient eventStreamManagerAdminServiceClient1;
     private EventReceiverAdminServiceClient eventReceiverAdminServiceClient1;
     private EventPublisherAdminServiceClient eventPublisherAdminServiceClient1;
-    private static String backendURL1;
-
     private EventStreamManagerAdminServiceClient eventStreamManagerAdminServiceClient2;
     private EventReceiverAdminServiceClient eventReceiverAdminServiceClient2;
     private EventPublisherAdminServiceClient eventPublisherAdminServiceClient2;
-    private static String backendURL2;
-
     private static String machineIP;
 
     /*
@@ -104,36 +90,23 @@ public class HATestCase extends CEPIntegrationTest {
      */
     @BeforeClass(alwaysRun = true)
     public void init() throws Exception {
-        log.info("--------Initialization Start--------");
         super.init(TestUserMode.SUPER_TENANT_ADMIN);
-
         machineIP = findAddress("localhost");
-
         cepServer1 = new AutomationContext("CEP", "cep002", TestUserMode.SUPER_TENANT_ADMIN);
         cepServer2 = new AutomationContext("CEP", "cep003", TestUserMode.SUPER_TENANT_ADMIN);
-
-        log.info("Sever1 https Port : " + cepServer1.getInstance().getPorts().get("https"));
-        log.info("Sever2 https Port : " + cepServer2.getInstance().getPorts().get("https"));
-
         server1 = new CarbonTestServerManager(cepServer1, 801);
         server2 = new CarbonTestServerManager(cepServer2, 802);
-
-        serverConfigManager1 = new ServerConfigurationManager(cepServer1);
-        serverConfigManager2 = new ServerConfigurationManager(cepServer2);
-
+        ServerConfigurationManager serverConfigManager1 = new ServerConfigurationManager(cepServer1);
+        ServerConfigurationManager serverConfigManager2 = new ServerConfigurationManager(cepServer2);
         manager.startServers(server1, server2);
+        String CARBON_HOME1 = server1.getCarbonHome();
+        String CARBON_HOME2 = server2.getCarbonHome();
 
-        CARBON_HOME1 = server1.getCarbonHome();
-        CARBON_HOME2 = server2.getCarbonHome();
-
-        log.info("Server 1 Replacing " + EVENT_PROCESSING_FILE);
         String eventProcessingFileLocation = RESOURCE_LOCATION1 + File.separator + EVENT_PROCESSING_FILE;
         String cepEventProcessorFileLocation = CARBON_HOME1 + File.separator + "repository" + File.separator
                 + "conf" + File.separator + EVENT_PROCESSING_FILE;
         serverConfigManager1.applyConfigurationWithoutRestart(new File(eventProcessingFileLocation), new File(cepEventProcessorFileLocation), true);
         replaceIP(cepEventProcessorFileLocation);
-
-        log.info("Server 1 Replacing " + AXIS2_XML_FILE);
         String axis2FileLocation = RESOURCE_LOCATION1 + File.separator + AXIS2_XML_FILE;
         String cepAxis2FileLocation = CARBON_HOME1 + File.separator + "repository" + File.separator + "conf"
                 + File.separator + "axis2" + File.separator + AXIS2_XML_FILE;
@@ -145,53 +118,42 @@ public class HATestCase extends CEPIntegrationTest {
         // Waiting for the server to restart
         Thread.sleep(5000);
 
-        log.info("Server 2 Replacing " + EVENT_PROCESSING_FILE);
         String eventProcessingFileLocation2 = RESOURCE_LOCATION2 + File.separator + EVENT_PROCESSING_FILE;
         String cepEventProcessorFileLocation2 = CARBON_HOME2 + File.separator + "repository" + File.separator
                 + "conf" + File.separator + EVENT_PROCESSING_FILE;
         serverConfigManager2.applyConfigurationWithoutRestart(new File(eventProcessingFileLocation2), new File(cepEventProcessorFileLocation2), true);
         replaceIP(cepEventProcessorFileLocation2);
-
-        log.info("Server 2 Replacing " + AXIS2_XML_FILE);
         String axis2FileLocation2 = RESOURCE_LOCATION2 + File.separator + AXIS2_XML_FILE;
         String cepAxis2FileLocation2 = CARBON_HOME2 + File.separator + "repository" + File.separator + "conf"
                 + File.separator + "axis2" + File.separator + AXIS2_XML_FILE;
         serverConfigManager2.applyConfigurationWithoutRestart(new File(axis2FileLocation2), new File(cepAxis2FileLocation2), true);
         replaceIP(cepAxis2FileLocation2);
 
-        log.info("Restarting CEP server2");
         serverConfigManager2.restartGracefully();
         // Waiting for the server to restart
         Thread.sleep(5000);
 
-        backendURL1 = cepServer1.getContextUrls().getBackEndUrl();
+        String backendURL1 = cepServer1.getContextUrls().getBackEndUrl();
         String loggedInSessionCookie = getSessionCookie(cepServer1);
         eventReceiverAdminServiceClient1 = configurationUtil.getEventReceiverAdminServiceClient(backendURL1, loggedInSessionCookie);
         eventStreamManagerAdminServiceClient1 = configurationUtil.getEventStreamManagerAdminServiceClient(backendURL1, loggedInSessionCookie);
         eventPublisherAdminServiceClient1 = configurationUtil.getEventPublisherAdminServiceClient(backendURL1, loggedInSessionCookie);
-
-        backendURL2 = cepServer2.getContextUrls().getBackEndUrl();
+        String backendURL2 = cepServer2.getContextUrls().getBackEndUrl();
         String loggedInSessionCookie2 = getSessionCookie(cepServer2);
         eventReceiverAdminServiceClient2 = configurationUtil.getEventReceiverAdminServiceClient(backendURL2, loggedInSessionCookie2);
         eventStreamManagerAdminServiceClient2 = configurationUtil.getEventStreamManagerAdminServiceClient(backendURL2, loggedInSessionCookie2);
         eventPublisherAdminServiceClient2 = configurationUtil.getEventPublisherAdminServiceClient(backendURL2, loggedInSessionCookie2);
-
-        log.info("--------Initialization End--------");
     }
 
     @Test(groups = {"wso2.cep"}, description = "Testing CEP HA for two cluster nodes")
     public void test1() throws Exception {
-
         String samplePath = "HATestCase" + File.separator + "HAArtifacts";
-
         int startESCount1 = eventStreamManagerAdminServiceClient1.getEventStreamCount();
         int startERCount1 = eventReceiverAdminServiceClient1.getActiveEventReceiverCount();
         int startEPCount1 = eventPublisherAdminServiceClient1.getActiveEventPublisherCount();
-
         int startESCount2 = eventStreamManagerAdminServiceClient2.getEventStreamCount();
         int startERCount2 = eventReceiverAdminServiceClient2.getActiveEventReceiverCount();
         int startEPCount2 = eventPublisherAdminServiceClient2.getActiveEventPublisherCount();
-
         int server1MsgCount = 12;
         int server2MsgCount = 12;
 
@@ -233,40 +195,36 @@ public class HATestCase extends CEPIntegrationTest {
 
         for (int i = 0; i < 3; i++) {
             if (i == 1) {
-                log.info("Shutdown Server1(Active Node)");
+                log.info("Shutting down CEP Server1(Active Node)");
                 server1.stopServer();
             }
             HttpEventPublisherClient.publish("http://localhost:" + cepServer2.getInstance().getPorts().get("http") +
-                    "/endpoints/httpReceiver", "admin", "admin", samplePath, "httpReceiver.txt");
-            Thread.sleep(30000);
+                    File.separator+"endpoints"+File.separator+"httpReceiver", "admin", "admin", samplePath, "httpReceiver.txt");
+            Thread.sleep(5000);
         }
-        log.info("Start Server1 Again");
+        log.info("Starting CEP Server1");
         server1.startServer();
         HttpEventPublisherClient.publish("http://localhost:" + cepServer1.getInstance().getPorts().get("http") +
-                "/endpoints/httpReceiver", "admin", "admin", samplePath, "httpReceiver.txt");
-        Thread.sleep(30000);
+                File.separator + "endpoints" + File.separator + "httpReceiver", "admin", "admin", samplePath, "httpReceiver.txt");
+        Thread.sleep(5000);
         for (int i = 0; i < 3; i++) {
             if (i == 1) {
-                log.info("Shutdown Server2(Active Node)");
+                log.info("Shutting down CEP Server2(Active Node)");
                 server2.stopServer();
             }
             HttpEventPublisherClient.publish("http://localhost:" + cepServer1.getInstance().getPorts().get("http") +
-                    "/endpoints/httpReceiver", "admin", "admin", samplePath, "httpReceiver.txt");
-            Thread.sleep(30000);
+                    File.separator+"endpoints"+File.separator+"httpReceiver", "admin", "admin", samplePath, "httpReceiver.txt");
+            Thread.sleep(5000);
         }
-        log.info("Start Server2 Again");
+        log.info("Starting CEP Server2");
         server2.startServer();
         HttpEventPublisherClient.publish("http://localhost:" + cepServer2.getInstance().getPorts().get("http") +
-                "/endpoints/httpReceiver", "admin", "admin", samplePath, "httpReceiver.txt");
-        Thread.sleep(30000);
-
-        log.info("Total Event Send Count : " + (server1MsgCount + server2MsgCount));
-        log.info("Test Run Server1 Event Count : " + agentServer1.getMsgCount());
-        log.info("Test Run Server2 Event Count : " + agentServer2.getMsgCount());
+                File.separator + "endpoints" + File.separator + "httpReceiver", "admin", "admin", samplePath, "httpReceiver.txt");
+        Thread.sleep(5000);
 
         try {
-            Assert.assertEquals(agentServer1.getMsgCount(), server1MsgCount, "Incorrect number of messages consumed by Server1!");
-            Assert.assertEquals(agentServer2.getMsgCount(), server2MsgCount, "Incorrect number of messages consumed by server2!");
+            Assert.assertEquals(agentServer1.getMsgCount(), server1MsgCount, "Incorrect number of messages consumed by CEP Server1!");
+            Assert.assertEquals(agentServer2.getMsgCount(), server2MsgCount, "Incorrect number of messages consumed by CEP server2!");
         } catch (Throwable e) {
             log.error("Exception thrown: " + e.getMessage(), e);
             Assert.fail("Exception: " + e.getMessage());
