@@ -26,7 +26,6 @@
         <!--</packages>-->
 
         <classes>
-            <class name="org.wso2.carbon.integration.test.ha.HATestCase"/>
             <!--<class name="org.wso2.carbon.integration.test.services.JMSBrokerStartupTestCase"/>-->
             <!--<class name="org.wso2.carbon.integration.test.processflow.ProcessFlowCreationTestCase"/>-->
             <!--<class name="org.wso2.carbon.integration.test.processflow.XMLBasedDeploymentTestCase"/>-->
@@ -80,6 +79,9 @@
 
             <!-- Adding patch CEP1412 test case-->
             <class name="org.wso2.carbon.integration.test.patches.CEP1412TestCase"/>
+
+            <!-- Adding HA test case-->
+            <class name="org.wso2.carbon.integration.test.ha.HATestCase"/>
         </classes>
 
     </test>
