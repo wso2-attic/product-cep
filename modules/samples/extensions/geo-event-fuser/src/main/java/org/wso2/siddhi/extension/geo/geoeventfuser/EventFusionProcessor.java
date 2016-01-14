@@ -33,17 +33,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
-public class FuseEvents extends WindowProcessor {
+public class EventFusionProcessor extends WindowProcessor {
     private final String[] statesArray = new String[]{"OFFLINE", "NORMAL", "WARNING", "ALERTED"};
-    private ConcurrentHashMap<String, ArrayList<StreamEvent>> eventsBuffer =
-            new ConcurrentHashMap<String, ArrayList<StreamEvent>>();
+    private ConcurrentMap<String, List<StreamEvent>> eventsBuffer = new ConcurrentHashMap<String, List<StreamEvent>>();
     private int eventIdPosition;
     private int statePosition;
     private int informationPosition;
 
     /**
-     * Method called when initialising the extension
+     * Method called when initialising the extension.
      *
      * @param attributeExpressionExecutors Array of {@link ExpressionExecutor}
      * @param executionPlanContext         {@link ExecutionPlanContext}
@@ -64,7 +64,7 @@ public class FuseEvents extends WindowProcessor {
     }
 
     /**
-     * This method called when processing an event list
+     * This method called when processing an event list.
      *
      * @param streamEventChunk  {@link ComplexEventChunk<StreamEvent>}
      * @param nextProcessor     {@link Processor}
@@ -79,18 +79,18 @@ public class FuseEvents extends WindowProcessor {
             if (eventsBuffer.containsKey(eventId)) {
                 eventsBuffer.get(eventId).add(streamEvent);
                 if (eventsBuffer.get(eventId).size() == getDeployedExecutionPlansCount()) {
-                    // Do the fusion here and return combined event
+                    // Do the fusion here and return combined event.
                     fuseEvent(streamEvent);
                     eventsBuffer.remove(eventId);
                 } else {
                     streamEventChunk.remove();
                 }
             } else if (getDeployedExecutionPlansCount().equals(1)) {
-                // Here we do not need to fuse(combine) multiple events
-                // Since we don't get multiple events, just pass through
+                // Here we do not need to fuse(combine) multiple events.
+                // Since we don't get multiple events, just pass through.
                 nextProcessor.process(streamEventChunk);
             } else {
-                ArrayList<StreamEvent> buffer = new ArrayList<StreamEvent>();
+                List<StreamEvent> buffer = new ArrayList<StreamEvent>();
                 buffer.add(streamEvent);
                 eventsBuffer.put(eventId, buffer);
                 streamEventChunk.remove();
@@ -100,9 +100,9 @@ public class FuseEvents extends WindowProcessor {
     }
 
     /**
-     * Get number of deployed execution plans
+     * Get number of deployed execution plans.
      *
-     * @return number of deployed execution plans
+     * @return number of deployed execution plans.
      */
     public Integer getDeployedExecutionPlansCount() {
         return ExecutionPlansCount.getNumberOfExecutionPlans();
@@ -114,13 +114,13 @@ public class FuseEvents extends WindowProcessor {
      * goes low to high from LHS to RHS
      * OFFLINE < NORMAL < WARNING < ALERT
      * States will be in all caps to mimics
-     * that states not get on the way
+     * that states not get on the way.
      *
      * @param event {@link StreamEvent} to fuse
      */
     public void fuseEvent(StreamEvent event) {
         String eventId = (String) event.getOutputData()[eventIdPosition];
-        ArrayList<StreamEvent> receivedEvents = eventsBuffer.get(eventId);
+        List<StreamEvent> receivedEvents = eventsBuffer.get(eventId);
         List<String> states = Arrays.asList(statesArray);
         Object[] outputData = event.getOutputData();
         String finalState = "";
@@ -130,17 +130,15 @@ public class FuseEvents extends WindowProcessor {
 
         Integer currentStateIndex = -1;
         for (StreamEvent receivedEvent : receivedEvents) {
-            String thisState = (String) receivedEvent.getOutputData()[statePosition];
-            Integer thisStateIndex = states.indexOf(thisState);
-
-            if (thisStateIndex > currentStateIndex) {
-                finalState = thisState;
-                currentStateIndex = thisStateIndex;
+            String eventState = (String) receivedEvent.getOutputData()[statePosition];
+            Integer eventStateIndex = states.indexOf(eventState);
+            if (eventStateIndex > currentStateIndex) {
+                finalState = eventState;
+                currentStateIndex = eventStateIndex;
             }
-
-            if ("ALERTED".equals(thisState)) {
+            if ("ALERTED".equals(eventState)) {
                 alertStrings += "," + receivedEvent.getOutputData()[informationPosition];
-            } else if ("WARNING".equals(thisState)) {
+            } else if ("WARNING".equals(eventState)) {
                 warningStrings += "," + receivedEvent.getOutputData()[informationPosition];
             }
         }
@@ -162,12 +160,12 @@ public class FuseEvents extends WindowProcessor {
 
     @Override
     public void start() {
-        // Do nothing
+        // Do nothing.
     }
 
     @Override
     public void stop() {
-        // Do nothing
+        // Do nothing.
     }
 
     @Override
@@ -177,6 +175,6 @@ public class FuseEvents extends WindowProcessor {
 
     @Override
     public void restoreState(Object[] state) {
-        // Do nothing
+        // Do nothing.
     }
 }
