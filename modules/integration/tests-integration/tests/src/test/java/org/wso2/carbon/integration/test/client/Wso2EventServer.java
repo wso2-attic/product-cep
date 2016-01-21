@@ -38,7 +38,11 @@ import org.wso2.carbon.databridge.receiver.thrift.ThriftDataReceiver;
 import org.wso2.carbon.user.api.UserStoreException;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTestConstants;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FilenameFilter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
@@ -47,7 +51,7 @@ import java.util.regex.Matcher;
 public class Wso2EventServer implements Runnable {
     private static Log log = LogFactory.getLog(Wso2EventServer.class);
     private final String FILE_STREAM_DEFINITION_EXT = ".json";
-    AbstractStreamDefinitionStore streamDefinitionStore = new InMemoryStreamDefinitionStore();
+    private AbstractStreamDefinitionStore streamDefinitionStore = new InMemoryStreamDefinitionStore();
     private ThriftDataReceiver thriftDataReceiver;
     private boolean eventReceived = false;
     private AtomicLong msgCount = new AtomicLong(0);
@@ -72,7 +76,8 @@ public class Wso2EventServer implements Runnable {
         DataBridge databridge = new DataBridge(new AuthenticationHandler() {
             @Override
             public boolean authenticate(String userName, String password) {
-                return true; // always authenticate to true
+                // Always authenticate to true.
+                return true;
             }
 
             @Override
@@ -128,7 +133,6 @@ public class Wso2EventServer implements Runnable {
                     preservedEventList.addAll(eventList);
                 }
             }
-
         });
         thriftDataReceiver.start("0.0.0.0");
         log.info("Test Server Started.");
@@ -147,9 +151,9 @@ public class Wso2EventServer implements Runnable {
         try {
             startServer();
         } catch (DataBridgeException e) {
-            e.printStackTrace();
+            log.error("Cannot start the test server.", e);
         } catch (StreamDefinitionStoreException e) {
-            e.printStackTrace();
+            log.error("StreamDefinition cannot be added to the store.", e);
         }
     }
 
@@ -165,7 +169,6 @@ public class Wso2EventServer implements Runnable {
         String relativeFilePath = FrameworkPathUtil.getSystemResourceLocation() + CEPIntegrationTestConstants
                 .RELATIVE_PATH_TO_TEST_ARTIFACTS + testCaseResourceFolderName;
         String directoryPath = relativeFilePath.replaceAll("[\\\\/]", Matcher.quoteReplacement(File.separator));
-
         GenericExtFilter filter = new GenericExtFilter(FILE_STREAM_DEFINITION_EXT);
         File directory = new File(directoryPath);
         List<StreamDefinition> streamDefinitions = new ArrayList<StreamDefinition>();
@@ -178,14 +181,13 @@ public class Wso2EventServer implements Runnable {
             return streamDefinitions;
         }
 
-        // list out all the file names and filter by the extension
+        // List out all the file names and filter by the extension.
         String[] listStreamDefinitionFiles = directory.list(filter);
-
         if (listStreamDefinitionFiles != null) {
             for (final String fileEntry : listStreamDefinitionFiles) {
                 BufferedReader bufferedReader = null;
                 StringBuilder stringBuilder = new StringBuilder();
-                String fullPathToStreamDefinitionFile = directoryPath + "/" + fileEntry;
+                String fullPathToStreamDefinitionFile = directoryPath + File.separator + fileEntry;
                 try {
                     bufferedReader = new BufferedReader(new FileReader(fullPathToStreamDefinitionFile));
                     String line;
@@ -196,9 +198,9 @@ public class Wso2EventServer implements Runnable {
                             .convertFromJson(stringBuilder.toString().trim());
                     streamDefinitions.add(streamDefinition);
                 } catch (IOException e) {
-                    log.error("Error in reading file " + fullPathToStreamDefinitionFile, e);
+                    log.error("Error in reading file : " + fullPathToStreamDefinitionFile, e);
                 } catch (MalformedStreamDefinitionException e) {
-                    log.error("Error in converting Stream definition " + e.getMessage(), e);
+                    log.error("Error in converting Stream definition : " + e.getMessage(), e);
                 } finally {
                     try {
                         if (bufferedReader != null) {
@@ -215,11 +217,11 @@ public class Wso2EventServer implements Runnable {
 
     public String getResourceFilePath(String testCaseFolderName, String resourceFileName) {
         String relativeFilePath = FrameworkPathUtil.getSystemResourceLocation() + CEPIntegrationTestConstants
-                .RELATIVE_PATH_TO_TEST_ARTIFACTS + testCaseFolderName + "/" + resourceFileName;
+                .RELATIVE_PATH_TO_TEST_ARTIFACTS + testCaseFolderName + File.separator + resourceFileName;
         return relativeFilePath.replaceAll("[\\\\/]", Matcher.quoteReplacement(File.separator));
     }
 
-    // inner class, generic extension filter
+    // Inner class, generic extension filter
     public class GenericExtFilter implements FilenameFilter {
 
         private String ext;
