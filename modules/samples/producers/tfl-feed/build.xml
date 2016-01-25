@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~ Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
   ~
   ~ WSO2 Inc. licenses this file to you under the Apache License,
   ~ Version 2.0 (the "License"); you may not use this file except
@@ -17,18 +17,15 @@
   ~ under the License.
   -->
 <project name="dataagent" default="run">
-
     <property name="carbon.home" value="../../.."/>
     <property name="src.dir" value="src"/>
     <property name="temp.dir" value="temp"/>
     <property name="lib.dir" value="../../lib"/>
     <property name="class.dir" value="${temp.dir}/classes"/>
 
-
     <path id="javac.classpath">
         <pathelement path="${class.dir}"/>
         <fileset dir="${carbon.home}/repository/components/plugins/">
-            <!--<include name="gt-geojson-13.0.0-wso2v1.jar"/>-->
             <include name="httpcore_*.jar"/>
             <include name="httpclient_*.jar"/>
             <include name="commons-httpclient_*.jar"/>
