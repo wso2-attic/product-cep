@@ -211,6 +211,8 @@
                 <ports>
                     <port type="http">10563</port>
                     <port type="https">10243</port>
+                    <port type="jmxserver">11911</port>
+                    <port type="rmiregistry">10799</port>
                 </ports>
                 <properties>
                 </properties>

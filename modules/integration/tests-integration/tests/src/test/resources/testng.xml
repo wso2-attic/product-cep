@@ -79,6 +79,9 @@
 
             <!-- Adding patch CEP1412 test case-->
             <class name="org.wso2.carbon.integration.test.patches.CEP1412TestCase"/>
+
+            <!-- CEP metrics test case -->
+            <class name="org.wso2.carbon.integration.test.metrics.CarbonMetricsTestCase"/>
         </classes>
 
     </test>

@@ -223,6 +223,16 @@ public class EventPublisherAdminServiceClient {
         }
     }
 
+    public void setStatisticsEnabled(String eventPublisherConfiguration, boolean flag)
+            throws RemoteException {
+        try {
+            eventPublisherAdminServiceStub.setStatisticsEnabled(eventPublisherConfiguration, flag);
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw e;
+        }
+    }
+
     public EventPublisherConfigurationDto getActiveEventPublisherConfiguration(
             String eventPublisherName) throws RemoteException {
         try {

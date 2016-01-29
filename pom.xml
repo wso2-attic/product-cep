@@ -467,6 +467,26 @@
                 <version>${test.framework.util.version}</version>
                 <scope>test</scope>
             </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.metrics</groupId>
+                <artifactId>org.wso2.carbon.metrics.view.ui</artifactId>
+                <version>${carbon.metrics.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.metrics</groupId>
+                <artifactId>org.wso2.carbon.metrics.data.service.stub</artifactId>
+                <version>${carbon.metrics.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.metrics</groupId>
+                <artifactId>org.wso2.carbon.metrics.manager</artifactId>
+                <version>${carbon.metrics.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.metrics</groupId>
+                <artifactId>org.wso2.carbon.metrics.impl</artifactId>
+                <version>${carbon.metrics.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

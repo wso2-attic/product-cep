@@ -1,0 +1,47 @@
+{
+  "streamId": "rawBusStream:1.0.0",
+  "name": "rawBusStream",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "metaData": [],
+  "correlationData": [],
+  "payloadData": [
+    {
+      "name": "id",
+      "type": "STRING"
+    },
+    {
+      "name": "name",
+      "type": "STRING"
+    },
+    {
+      "name": "direction",
+      "type": "INT"
+    },
+    {
+      "name": "timeStamp",
+      "type": "LONG"
+    },
+    {
+      "name": "latitude",
+      "type": "DOUBLE"
+    },
+    {
+      "name": "longitude",
+      "type": "DOUBLE"
+    },
+    {
+      "name": "type",
+      "type": "STRING"
+    },
+    {
+      "name": "speed",
+      "type": "FLOAT"
+    },
+    {
+      "name": "heading",
+      "type": "FLOAT"
+    }
+  ]
+}
