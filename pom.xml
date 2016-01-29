@@ -698,7 +698,7 @@
         <jaggery.modules.version>1.4.2</jaggery.modules.version>
         <carbon.deployment.version>4.5.3</carbon.deployment.version>
         <carbon.commons.version>4.4.8</carbon.commons.version>
-        <carbon.analytics-common.version>5.0.9-SNAPSHOT</carbon.analytics-common.version>
+        <carbon.analytics-common.version>5.0.10-SNAPSHOT</carbon.analytics-common.version>
         <carbon.dashboards.version>1.0.7</carbon.dashboards.version>
         <carbon.identity.version>4.5.6</carbon.identity.version>
         <carbon.registry.version>4.4.8</carbon.registry.version>
@@ -706,7 +706,7 @@
         <carbon.metrics.version>1.2.0</carbon.metrics.version>
 
         <siddhi.version>3.0.5-SNAPSHOT</siddhi.version>
-        <carbon.event-processing.version>2.0.11-SNAPSHOT</carbon.event-processing.version>
+        <carbon.event-processing.version>2.0.12-SNAPSHOT</carbon.event-processing.version>
         <cep.version>4.0.1-SNAPSHOT</cep.version>
         
         <!-- Carbon kernel version-->
