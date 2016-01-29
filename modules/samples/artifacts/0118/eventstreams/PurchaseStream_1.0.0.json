@@ -1,0 +1,20 @@
+{
+  "name": "PurchaseStream",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "payloadData": [
+    {
+      "name": "price",
+      "type": "DOUBLE"
+    },
+    {
+      "name": "cardNo",
+      "type": "STRING"
+    },
+    {
+      "name": "place",
+      "type": "STRING"
+    }
+  ]
+}
