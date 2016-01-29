@@ -48,6 +48,10 @@ import java.util.List;
 public class JMSTestCase extends CEPIntegrationTest {
     private static final Log log = LogFactory.getLog(JMSTestCase.class);
     private final String GERONIMO_J2EE_MANAGEMENT = "geronimo-j2ee-management_1.1_spec-1.0.1.jar";
+    private final String SENSOR_STREAM_JSON = "org.wso2.event.sensor.stream_1.0.0.json";
+    private final String SENSOR_STREAM = "org.wso2.event.sensor.stream:1.0.0";
+    private final String JMS_RECEIVER_MAP = "jmsReceiverMap.xml";
+    private final String WSO2_EVENT_PUBLISHER = "wso2EventPublisher.xml";
     private final String ACTIVEMQ_CORE = "activemq-core-5.7.0.jar";
     private JMSBrokerController activeMqBroker = null;
     private ServerConfigurationManager serverManager = null;
@@ -99,17 +103,17 @@ public class JMSTestCase extends CEPIntegrationTest {
 
         // Add StreamDefinition.
         String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
-                "org.wso2.event.sensor.stream_1.0.0.json");
+                SENSOR_STREAM_JSON);
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
         // Add JMS Map EventReceiver without mapping.
-        String eventReceiverConfig = getXMLArtifactConfiguration(samplePath, "jmsReceiverMap.xml");
+        String eventReceiverConfig = getXMLArtifactConfiguration(samplePath, JMS_RECEIVER_MAP);
         eventReceiverAdminServiceClient.addEventReceiverConfiguration(eventReceiverConfig);
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
 
         // Add Wso2event EventPublisher.
-        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "wso2EventPublisher.xml");
+        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, WSO2_EVENT_PUBLISHER);
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
@@ -126,26 +130,26 @@ public class JMSTestCase extends CEPIntegrationTest {
         Thread.sleep(5000);
 
         eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
-        eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("jmsReceiverMap.xml");
-        eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("wso2EventPublisher.xml");
+        eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration(JMS_RECEIVER_MAP);
+        eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration(WSO2_EVENT_PUBLISHER);
 
         Thread.sleep(2000);
 
         List<Event> eventList = new ArrayList<>();
         Event event = new Event();
-        event.setStreamId("org.wso2.event.sensor.stream:1.0.0");
+        event.setStreamId(SENSOR_STREAM);
         event.setMetaData(new Object[]{19900813115534l, false, 601, "temperature"});
         event.setCorrelationData(new Object[]{90.34344, 20.44345});
         event.setPayloadData(new Object[]{2.3f, 20.44345});
         eventList.add(event);
         Event event2 = new Event();
-        event2.setStreamId("org.wso2.event.sensor.stream:1.0.0");
+        event2.setStreamId(SENSOR_STREAM);
         event2.setMetaData(new Object[]{19900813115534l, false, 602, "temperature"});
         event2.setCorrelationData(new Object[]{90.34344, 20.44345});
         event2.setPayloadData(new Object[]{2.3f, 20.44345});
         eventList.add(event2);
         Event event3 = new Event();
-        event3.setStreamId("org.wso2.event.sensor.stream:1.0.0");
+        event3.setStreamId(SENSOR_STREAM);
         event3.setMetaData(new Object[]{19900813115534l, false, 603, "temperature"});
         event3.setCorrelationData(new Object[]{90.34344, 20.44345});
         event3.setPayloadData(new Object[]{2.3f, 20.44345});
@@ -177,17 +181,17 @@ public class JMSTestCase extends CEPIntegrationTest {
 
         // Add StreamDefinition.
         String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
-                "org.wso2.event.sensor.stream_1.0.0.json");
+                SENSOR_STREAM_JSON);
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
         // Add JMS Map EventReceiver with mapping.
-        String eventReceiverConfig = getXMLArtifactConfiguration(samplePath, "jmsReceiverMap.xml");
+        String eventReceiverConfig = getXMLArtifactConfiguration(samplePath, JMS_RECEIVER_MAP);
         eventReceiverAdminServiceClient.addEventReceiverConfiguration(eventReceiverConfig);
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
 
         // Add Wso2event EventPublisher.
-        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "wso2EventPublisher.xml");
+        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, WSO2_EVENT_PUBLISHER);
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
@@ -204,26 +208,26 @@ public class JMSTestCase extends CEPIntegrationTest {
         Thread.sleep(5000);
 
         eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
-        eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("jmsReceiverMap.xml");
-        eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("wso2EventPublisher.xml");
+        eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration(JMS_RECEIVER_MAP);
+        eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration(WSO2_EVENT_PUBLISHER);
 
         Thread.sleep(2000);
 
         List<Event> eventList = new ArrayList<>();
         Event event = new Event();
-        event.setStreamId("org.wso2.event.sensor.stream:1.0.0");
+        event.setStreamId(SENSOR_STREAM);
         event.setMetaData(new Object[]{19900813115534l, false, 501, "temperature"});
         event.setCorrelationData(new Object[]{90.34344, 20.44345});
         event.setPayloadData(new Object[]{2.3f, 20.44345});
         eventList.add(event);
         Event event2 = new Event();
-        event2.setStreamId("org.wso2.event.sensor.stream:1.0.0");
+        event2.setStreamId(SENSOR_STREAM);
         event2.setMetaData(new Object[]{19900813115534l, false, 502, "temperature"});
         event2.setCorrelationData(new Object[]{90.34344, 20.44345});
         event2.setPayloadData(new Object[]{2.3f, 20.44345});
         eventList.add(event2);
         Event event3 = new Event();
-        event3.setStreamId("org.wso2.event.sensor.stream:1.0.0");
+        event3.setStreamId(SENSOR_STREAM);
         event3.setMetaData(new Object[]{19900813115534l, false, 503, "temperature"});
         event3.setCorrelationData(new Object[]{90.34344, 20.44345});
         event3.setPayloadData(new Object[]{2.3f, 20.44345});
@@ -255,7 +259,7 @@ public class JMSTestCase extends CEPIntegrationTest {
 
         // Add StreamDefinition.
         String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
-                "org.wso2.event.sensor.stream_1.0.0.json");
+                SENSOR_STREAM_JSON);
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
@@ -265,7 +269,7 @@ public class JMSTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
 
         // Add Wso2event EventPublisher.
-        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "wso2EventPublisher.xml");
+        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, WSO2_EVENT_PUBLISHER);
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
@@ -283,24 +287,24 @@ public class JMSTestCase extends CEPIntegrationTest {
 
         eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
         eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("jmsReceiverJSON.xml");
-        eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("wso2EventPublisher.xml");
+        eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration(WSO2_EVENT_PUBLISHER);
 
         Thread.sleep(2000);
         List<Event> eventList = new ArrayList<>();
         Event event = new Event();
-        event.setStreamId("org.wso2.event.sensor.stream:1.0.0");
+        event.setStreamId(SENSOR_STREAM);
         event.setMetaData(new Object[]{19900813115534l, false, 701, "temperature"});
         event.setCorrelationData(new Object[]{90.34344, 20.44345});
         event.setPayloadData(new Object[]{2.3f, 20.44345});
         eventList.add(event);
         Event event2 = new Event();
-        event2.setStreamId("org.wso2.event.sensor.stream:1.0.0");
+        event2.setStreamId(SENSOR_STREAM);
         event2.setMetaData(new Object[]{19900813115534l, false, 702, "temperature"});
         event2.setCorrelationData(new Object[]{90.34344, 20.44345});
         event2.setPayloadData(new Object[]{2.3f, 20.44345});
         eventList.add(event2);
         Event event3 = new Event();
-        event3.setStreamId("org.wso2.event.sensor.stream:1.0.0");
+        event3.setStreamId(SENSOR_STREAM);
         event3.setMetaData(new Object[]{19900813115534l, false, 703, "temperature"});
         event3.setCorrelationData(new Object[]{90.34344, 20.44345});
         event3.setPayloadData(new Object[]{2.3f, 20.44345});
@@ -332,7 +336,7 @@ public class JMSTestCase extends CEPIntegrationTest {
 
         // Add StreamDefinition.
         String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
-                "org.wso2.event.sensor.stream_1.0.0.json");
+                SENSOR_STREAM_JSON);
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
@@ -342,7 +346,7 @@ public class JMSTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
 
         // Add Wso2event EventPublisher.
-        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "wso2EventPublisher.xml");
+        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, WSO2_EVENT_PUBLISHER);
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
@@ -360,18 +364,18 @@ public class JMSTestCase extends CEPIntegrationTest {
 
         eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
         eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("jmsReceiverXML.xml");
-        eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("wso2EventPublisher.xml");
+        eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration(WSO2_EVENT_PUBLISHER);
 
         Thread.sleep(2000);
         List<Event> eventList = new ArrayList<>();
         Event event4 = new Event();
-        event4.setStreamId("org.wso2.event.sensor.stream:1.0.0");
+        event4.setStreamId(SENSOR_STREAM);
         event4.setMetaData(new Object[]{199008131245l, true, 801, "temperature"});
         event4.setCorrelationData(new Object[]{4.504343, 1.23434});
         event4.setPayloadData(new Object[]{6.6f, 20.44345});
         eventList.add(event4);
         Event event5 = new Event();
-        event5.setStreamId("org.wso2.event.sensor.stream:1.0.0");
+        event5.setStreamId(SENSOR_STREAM);
         event5.setMetaData(new Object[]{199008131245l, true, 802, "temperature"});
         event5.setCorrelationData(new Object[]{4.504343, 1.23434});
         event5.setPayloadData(new Object[]{6.6f, 20.44345});
@@ -403,7 +407,7 @@ public class JMSTestCase extends CEPIntegrationTest {
 
         // Add StreamDefinition.
         String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
-                "org.wso2.event.sensor.stream_1.0.0.json");
+                SENSOR_STREAM_JSON);
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
@@ -413,7 +417,7 @@ public class JMSTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
 
         // Add Wso2event EventPublisher.
-        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "wso2EventPublisher.xml");
+        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, WSO2_EVENT_PUBLISHER);
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
@@ -431,24 +435,24 @@ public class JMSTestCase extends CEPIntegrationTest {
 
         eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
         eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("jmsReceiverText.xml");
-        eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("wso2EventPublisher.xml");
+        eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration(WSO2_EVENT_PUBLISHER);
 
         Thread.sleep(2000);
         List<Event> eventList = new ArrayList<>();
         Event event6 = new Event();
-        event6.setStreamId("org.wso2.event.sensor.stream:1.0.0");
+        event6.setStreamId(SENSOR_STREAM);
         event6.setMetaData(new Object[]{19900813115534l, false, 901, "temperature"});
         event6.setCorrelationData(new Object[]{20.44345, 5.443435});
         event6.setPayloadData(new Object[]{8.9f, 1.23434});
         eventList.add(event6);
         Event event7 = new Event();
-        event7.setStreamId("org.wso2.event.sensor.stream:1.0.0");
+        event7.setStreamId(SENSOR_STREAM);
         event7.setMetaData(new Object[]{19900813115534l, false, 902, "temperature"});
         event7.setCorrelationData(new Object[]{20.44345, 5.443435});
         event7.setPayloadData(new Object[]{8.9f, 1.23434});
         eventList.add(event7);
         Event event8 = new Event();
-        event8.setStreamId("org.wso2.event.sensor.stream:1.0.0");
+        event8.setStreamId(SENSOR_STREAM);
         event8.setMetaData(new Object[]{19900813115534l, false, 903, "temperature"});
         event8.setCorrelationData(new Object[]{20.44345, 5.443435});
         event8.setPayloadData(new Object[]{8.9f, 1.23434});
@@ -480,7 +484,7 @@ public class JMSTestCase extends CEPIntegrationTest {
 
         // Add StreamDefinition.
         String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
-                "org.wso2.event.sensor.stream_1.0.0.json");
+                SENSOR_STREAM_JSON);
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
@@ -490,7 +494,7 @@ public class JMSTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
 
         // Add Wso2event EventPublisher.
-        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "wso2EventPublisher.xml");
+        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, WSO2_EVENT_PUBLISHER);
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
@@ -519,24 +523,24 @@ public class JMSTestCase extends CEPIntegrationTest {
         Thread.sleep(5000);
         eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
         eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("jmsReceiver.xml");
-        eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("wso2EventPublisher.xml");
+        eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration(WSO2_EVENT_PUBLISHER);
 
         Thread.sleep(2000);
         List<Event> eventList = new ArrayList<>();
         Event event = new Event();
-        event.setStreamId("org.wso2.event.sensor.stream:1.0.0");
+        event.setStreamId(SENSOR_STREAM);
         event.setMetaData(new Object[]{19900813115534l, false, 601, "temperature"});
         event.setCorrelationData(new Object[]{90.34344, 20.44345});
         event.setPayloadData(new Object[]{2.3f, 20.44345});
         eventList.add(event);
         Event event2 = new Event();
-        event2.setStreamId("org.wso2.event.sensor.stream:1.0.0");
+        event2.setStreamId(SENSOR_STREAM);
         event2.setMetaData(new Object[]{19900813115534l, false, 602, "temperature"});
         event2.setCorrelationData(new Object[]{90.34344, 20.44345});
         event2.setPayloadData(new Object[]{2.3f, 20.44345});
         eventList.add(event2);
         Event event3 = new Event();
-        event3.setStreamId("org.wso2.event.sensor.stream:1.0.0");
+        event3.setStreamId(SENSOR_STREAM);
         event3.setMetaData(new Object[]{19900813115534l, false, 603, "temperature"});
         event3.setCorrelationData(new Object[]{90.34344, 20.44345});
         event3.setPayloadData(new Object[]{2.3f, 20.44345});
