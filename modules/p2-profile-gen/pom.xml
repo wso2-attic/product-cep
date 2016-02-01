@@ -119,6 +119,9 @@
                                     org.jaggeryjs.modules:carbon.feature:${jaggery.modules.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
+                                    org.jaggeryjs.modules:i18n.feature:${jaggery.modules.version}
+                                </featureArtifactDef> 
+                                <featureArtifactDef>
                                     org.jaggeryjs.modules:process.feature:${jaggery.modules.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
@@ -178,6 +181,9 @@
 
                                 <featureArtifactDef>
                                     org.wso2.carbon.identity:org.wso2.carbon.identity.core.ui.feature:${carbon.identity.version}
+                                </featureArtifactDef>
+                                <featureArtifactDef>
+                                    org.wso2.carbon.identity:org.wso2.carbon.identity.core.server.feature:${carbon.identity.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
                                     org.wso2.carbon.identity:org.wso2.carbon.security.mgt.feature:${carbon.identity.version}
@@ -364,6 +370,10 @@
                                     <version>${jaggery.modules.version}</version>
                                 </feature>
                                 <feature>
+                                    <id>org.jaggeryjs.modules.i18n.feature.group</id>
+                                    <version>${jaggery.modules.version}</version>
+                                </feature>
+                                <feature>
                                     <id>org.jaggeryjs.modules.process.feature.group</id>
                                     <version>${jaggery.modules.version}</version>
                                 </feature>
@@ -443,6 +453,10 @@
 
                                 <feature>
                                     <id>org.wso2.carbon.identity.core.ui.feature.group</id>
+                                    <version>${carbon.identity.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.identity.core.server.feature.group</id>
                                     <version>${carbon.identity.version}</version>
                                 </feature>
                                 <feature>
@@ -645,6 +659,10 @@
                                 </feature>
                                 <feature>
                                     <id>org.jaggeryjs.modules.ws.feature.group</id>
+                                    <version>${jaggery.modules.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.jaggeryjs.modules.i18n.feature.group</id>
                                     <version>${jaggery.modules.version}</version>
                                 </feature>
 
