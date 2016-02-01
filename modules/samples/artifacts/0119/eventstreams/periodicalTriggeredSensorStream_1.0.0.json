@@ -1,0 +1,48 @@
+{
+  "name": "periodicalTriggeredSensorStream",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "metaData": [
+    {
+      "name": "timestamp",
+      "type": "LONG"
+    },
+    {
+      "name": "isPowerSaverEnabled",
+      "type": "BOOL"
+    },
+    {
+      "name": "sensorId",
+      "type": "INT"
+    },
+    {
+      "name": "sensorName",
+      "type": "STRING"
+    }
+  ],
+  "correlationData": [
+    {
+      "name": "longitude",
+      "type": "DOUBLE"
+    },
+    {
+      "name": "latitude",
+      "type": "DOUBLE"
+    }
+  ],
+  "payloadData": [
+    {
+      "name": "triggered_time",
+      "type": "LONG"
+    },
+    {
+      "name": "humidity",
+      "type": "FLOAT"
+    },
+    {
+      "name": "sensorValue",
+      "type": "DOUBLE"
+    }
+  ]
+}
