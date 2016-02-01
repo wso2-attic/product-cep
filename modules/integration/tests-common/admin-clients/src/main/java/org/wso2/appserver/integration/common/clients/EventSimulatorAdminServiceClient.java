@@ -39,6 +39,7 @@ public class EventSimulatorAdminServiceClient {
         executionSimulatorAdminServiceStub = new EventSimulatorAdminServiceStub(endPoint);
         AuthenticateStubUtil.authenticateStub(sessionCookie, executionSimulatorAdminServiceStub);
     }
+
     public EventSimulatorAdminServiceClient(String backEndUrl, String userName, String password)
             throws AxisFault {
         this.endPoint = backEndUrl + serviceName;
@@ -113,6 +114,53 @@ public class EventSimulatorAdminServiceClient {
             throws RemoteException {
         try {
             return executionSimulatorAdminServiceStub.deleteDBConfigFile(fileName);
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException();
+        }
+    }
+
+    public boolean sendConfigDetails(String fileName, String streamId, String separateChar, long delayBetweenEventsInMilies) throws RemoteException {
+        try {
+            executionSimulatorAdminServiceStub.sendConfigDetails(fileName, streamId, separateChar, delayBetweenEventsInMilies);
+            return true;
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException();
+        }
+    }
+
+    public void sendEventsViaFile(String fileName) throws RemoteException{
+        try {
+            executionSimulatorAdminServiceStub.sendEventsViaFile(fileName);
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException();
+        }
+    }
+
+    public void pauseEventsViaFile(String fileName) throws RemoteException{
+        try {
+            executionSimulatorAdminServiceStub.pauseEventsViaFile(fileName);
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException();
+        }
+    }
+
+    public void resumeEventsViaFile(String fileName) throws RemoteException{
+        try {
+            executionSimulatorAdminServiceStub.resumeEventsViaFile(fileName);
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException();
+        }
+    }
+
+
+    public boolean deleteFile(String fileName) throws RemoteException{
+        try {
+            return executionSimulatorAdminServiceStub.deleteFile(fileName);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
             throw new RemoteException();
