@@ -42,33 +42,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Sending different formatted events to the MQTT Receiver according to the receivers mapping type
+ * Sending different formatted events to the MQTT Receiver
+ * according to the receivers mapping type and also
+ * test for the MQTTT persistent event queue.
  */
 public class MQTTTestCase extends CEPIntegrationTest {
 
     private static final Log log = LogFactory.getLog(MQTTTestCase.class);
     private final String MQTT_CLIENT = "mqtt-client-0.4.0.jar";
     private JMSBrokerController activeMqBroker = null;
-    private ServerConfigurationManager serverManager = null;
+    private ServerConfigurationManager serverConfigManager = null;
+    private String loggedInSessionCookie = null;
 
     @BeforeClass(alwaysRun = true)
-    public void init()
-            throws Exception {
-
+    public void init() throws Exception {
         super.init(TestUserMode.SUPER_TENANT_ADMIN);
-
         try {
-            serverManager = new ServerConfigurationManager(cepServer);
+            serverConfigManager = new ServerConfigurationManager(cepServer);
         } catch (MalformedURLException e) {
             throw new RemoteException("Malformed URL exception thrown when initializing Mqtt broker", e);
         }
 
         setupMQTTBroker();
-        //copying dependency mqtt jar files to component/lib
         try {
-            String JAR_LOCATION = File.separator + "artifacts" + File.separator + "CEP" + File.separator +"jar";;
-            serverManager.copyToComponentLib(new File(getClass().getResource(JAR_LOCATION + File.separator + MQTT_CLIENT).toURI()));
-            serverManager.restartGracefully();
+            // Copying dependency mqtt jar files to component/lib.
+            String JAR_LOCATION = File.separator + "artifacts" + File.separator + "CEP" + File.separator + "jar";
+            serverConfigManager.copyToComponentLib(
+                    new File(getClass().getResource(JAR_LOCATION + File.separator + MQTT_CLIENT).toURI()));
+            serverConfigManager.restartGracefully();
         } catch (IOException e) {
             throw new RemoteException("IOException when initializing Mqtt broker", e);
         } catch (URISyntaxException e) {
@@ -77,11 +78,13 @@ public class MQTTTestCase extends CEPIntegrationTest {
             throw new RemoteException("Exception caught when restarting server", e);
         }
 
-        String loggedInSessionCookie = getSessionCookie();
-
-        eventReceiverAdminServiceClient = configurationUtil.getEventReceiverAdminServiceClient(backendURL, loggedInSessionCookie);
-        eventStreamManagerAdminServiceClient = configurationUtil.getEventStreamManagerAdminServiceClient(backendURL, loggedInSessionCookie);
-        eventPublisherAdminServiceClient = configurationUtil.getEventPublisherAdminServiceClient(backendURL, loggedInSessionCookie);
+        loggedInSessionCookie = getSessionCookie();
+        eventReceiverAdminServiceClient = configurationUtil.getEventReceiverAdminServiceClient(backendURL,
+                loggedInSessionCookie);
+        eventStreamManagerAdminServiceClient = configurationUtil.getEventStreamManagerAdminServiceClient(backendURL,
+                loggedInSessionCookie);
+        eventPublisherAdminServiceClient = configurationUtil.getEventPublisherAdminServiceClient(backendURL,
+                loggedInSessionCookie);
     }
 
 
@@ -93,17 +96,18 @@ public class MQTTTestCase extends CEPIntegrationTest {
         int startERCount = eventReceiverAdminServiceClient.getActiveEventReceiverCount();
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
 
-        //Add StreamDefinition
-        String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath, "org.wso2.event.sensor.stream_1.0.0.json");
+        // Add StreamDefinition.
+        String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
+                "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
 
-        //Add MQTT JSON EventReceiver without mapping
+        // Add MQTT JSON EventReceiver without mapping.
         String eventReceiverConfig = getXMLArtifactConfiguration(samplePath, "mqttEventReceiver.xml");
         eventReceiverAdminServiceClient.addEventReceiverConfiguration(eventReceiverConfig);
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
 
-        //Add Wso2event EventPublisher
+        // Add Wso2event EventPublisher.
         String eventPublisherConfig2 = getXMLArtifactConfiguration(samplePath, "wso2EventPublisher.xml");
         eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig2);
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
@@ -112,53 +116,122 @@ public class MQTTTestCase extends CEPIntegrationTest {
         Wso2EventServer agentServer = new Wso2EventServer(samplePath, CEPIntegrationTestConstants.TCP_PORT, true);
         Thread agentServerThread = new Thread(agentServer);
         agentServerThread.start();
-        // Let the server start
-        Thread.sleep(10000);
 
-        MQTTEventPublisherClient.publish("tcp://localhost:1883", "sensordata", samplePath, "mqttEvents.txt");
-
-        //wait while all stats are published
-        Thread.sleep(30000);
-
-        eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
-        eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("mqttEventReceiver.xml");
-        eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("wso2EventPublisher.xml");
-
-        Thread.sleep(2000);
-
-        List<Event> eventList = new ArrayList<>();
-        Event event = new Event();
-        event.setStreamId("org.wso2.event.sensor.stream:1.0.0");
-        event.setMetaData(new Object[]{4354643l, false, 701, "temperature"});
-        event.setCorrelationData(new Object[]{4.504343, 20.44345});
-        event.setPayloadData(new Object[]{2.3f, 4.504343});
-        eventList.add(event);
-        Event event2 = new Event();
-        event2.setStreamId("org.wso2.event.sensor.stream:1.0.0");
-        event2.setMetaData(new Object[]{4354643l, false, 702, "temperature"});
-        event2.setCorrelationData(new Object[]{4.504343, 20.44345});
-        event2.setPayloadData(new Object[]{2.3f, 4.504343});
-        eventList.add(event2);
-        Event event3 = new Event();
-        event3.setStreamId("org.wso2.event.sensor.stream:1.0.0");
-        event3.setMetaData(new Object[]{4354643l, false, 703, "temperature"});
-        event3.setCorrelationData(new Object[]{4.504343, 20.44345});
-        event3.setPayloadData(new Object[]{2.3f, 4.504343});
-        eventList.add(event3);
-
+        // Wait till the server to completely start (until Starting polling event receivers & MQTT Connection).
+        Thread.sleep(60000);
         try {
+            MQTTEventPublisherClient.publish("tcp://localhost:1883", "sensordata", samplePath, "mqttEvents.txt");
+
+            // Wait while all stats are published
+            Thread.sleep(10000);
+
+            List<Event> eventList = new ArrayList<>();
+            Event event = new Event();
+            event.setStreamId("org.wso2.event.sensor.stream:1.0.0");
+            event.setMetaData(new Object[]{4354643l, false, 701, "temperature"});
+            event.setCorrelationData(new Object[]{4.504343, 20.44345});
+            event.setPayloadData(new Object[]{2.3f, 4.504343});
+            eventList.add(event);
+            Event event2 = new Event();
+            event2.setStreamId("org.wso2.event.sensor.stream:1.0.0");
+            event2.setMetaData(new Object[]{4354643l, false, 702, "temperature"});
+            event2.setCorrelationData(new Object[]{4.504343, 20.44345});
+            event2.setPayloadData(new Object[]{2.3f, 4.504343});
+            eventList.add(event2);
+            Event event3 = new Event();
+            event3.setStreamId("org.wso2.event.sensor.stream:1.0.0");
+            event3.setMetaData(new Object[]{4354643l, false, 703, "temperature"});
+            event3.setCorrelationData(new Object[]{4.504343, 20.44345});
+            event3.setPayloadData(new Object[]{2.3f, 4.504343});
+            eventList.add(event3);
+
             Assert.assertEquals(agentServer.getMsgCount(), messageCount, "Incorrect number of messages consumed!");
             List<Event> preservedEventList = agentServer.getPreservedEventList();
             for (Event aEvent : preservedEventList) {
                 aEvent.setTimeStamp(0);
             }
             Assert.assertEquals(preservedEventList, eventList, "Mapping is incorrect!");
+            eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
+            eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("mqttEventReceiver.xml");
+            eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("wso2EventPublisher.xml");
         } catch (Throwable e) {
             log.error("Exception thrown: " + e.getMessage(), e);
             Assert.fail("Exception: " + e.getMessage());
         } finally {
             agentServer.stop();
+        }
+    }
 
+    @Test(groups = {"wso2.cep"}, description = "Testing mqtt persistent event queue")
+    public void MQTTPersistentEventQueueTestScenario() throws Exception {
+        final int initialMessagesCount = 3;
+        String samplePath = "inputflows" + File.separator + "sample0016";
+        int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
+        int startERCount = eventReceiverAdminServiceClient.getActiveEventReceiverCount();
+        int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
+
+        // Add StreamDefinition.
+        String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
+                "org.wso2.event.sensor.stream_1.0.0.json");
+        eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
+        Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
+
+        // Add MQTT JSON EventReceiver without mapping.
+        String eventReceiverConfig = getXMLArtifactConfiguration(samplePath, "mqttPersistentReceiver.xml");
+        eventReceiverAdminServiceClient.addEventReceiverConfiguration(eventReceiverConfig);
+        Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
+
+        // Add Wso2event EventPublisher.
+        String eventPublisherConfig2 = getXMLArtifactConfiguration(samplePath, "wso2EventPublisher.xml");
+        eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig2);
+        Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
+
+        // Wait till the data-bridge receiver to start.
+        Wso2EventServer agentServer = new Wso2EventServer(samplePath, CEPIntegrationTestConstants.TCP_PORT, true);
+        Thread agentServerThread = new Thread(agentServer);
+        agentServerThread.start();
+
+        // Wait till the server to completely start (until Starting polling event receivers & MQTT Connection).
+        Thread.sleep(60000);
+
+        try {
+            // Publish events while the cep server is running.
+            MQTTEventPublisherClient.publish("tcp://localhost:1883", "sensordata", samplePath, "mqttEvents.txt");
+            Thread.sleep(10000);
+
+            Assert.assertEquals(agentServer.getMsgCount(), initialMessagesCount,
+                    "Incorrect number of messages consumed!");
+
+            // Restart the server.
+            serverConfigManager.restartGracefully(loggedInSessionCookie);
+            Thread.sleep(10000);
+
+            // Publish events while cep server is restarting (before starting polling event receivers & MQTT Connection).
+            MQTTEventPublisherClient.publish("tcp://localhost:1883", "sensordata", samplePath, "mqttEvents.txt");
+
+            // Wait till polling event receivers & MQTT Connection to start and receive persistence queue events.
+            Thread.sleep(60000);
+
+            Assert.assertEquals(agentServer.getMsgCount(), initialMessagesCount * 2,
+                    "Incorrect number of messages consumed!");
+
+            // Un-deploy artifacts (Since the server restarted, use new session cookie here).
+            loggedInSessionCookie = getSessionCookie();
+            eventReceiverAdminServiceClient = configurationUtil.getEventReceiverAdminServiceClient(backendURL,
+                    loggedInSessionCookie);
+            eventStreamManagerAdminServiceClient = configurationUtil.getEventStreamManagerAdminServiceClient(backendURL,
+                    loggedInSessionCookie);
+            eventPublisherAdminServiceClient = configurationUtil.getEventPublisherAdminServiceClient(backendURL,
+                    loggedInSessionCookie);
+            eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
+            eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("mqttPersistentReceiver.xml");
+            eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("wso2EventPublisher.xml");
+            Thread.sleep(2000);
+        } catch (Throwable e) {
+            log.error("Exception thrown: " + e.getMessage(), e);
+            Assert.fail("Exception: " + e.getMessage());
+        } finally {
+            agentServer.stop();
         }
     }
 
@@ -169,23 +242,19 @@ public class MQTTTestCase extends CEPIntegrationTest {
             if (activeMqBroker != null) {
                 activeMqBroker.stop();
             }
-
-            //let server to clear the artifact undeployment
+            // Let server to clear the artifact un-deployment.
             Thread.sleep(5000);
         } finally {
-
-            //reverting the changes done to cep sever
-            if (serverManager != null) {
-                serverManager.removeFromComponentLib(MQTT_CLIENT);
-                serverManager.restoreToLastConfiguration();
+            // Reverting the changes done to cep sever.
+            if (serverConfigManager != null) {
+                serverConfigManager.removeFromComponentLib(MQTT_CLIENT);
+                serverConfigManager.restoreToLastConfiguration();
             }
-
         }
         super.cleanup();
     }
 
     //---- private methods --------
-
     private void setupMQTTBroker() {
         activeMqBroker = new JMSBrokerController("localhost", getJMSBrokerConfiguration());
         if (!JMSBrokerController.isBrokerStarted()) {
