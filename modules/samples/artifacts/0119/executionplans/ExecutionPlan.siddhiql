@@ -1,0 +1,30 @@
+/* Enter a unique ExecutionPlan */
+@Plan:name('ExecutionPlan')
+
+/* Enter a unique description for ExecutionPlan */
+-- @Plan:description('ExecutionPlan')
+
+/* define streams/tables and write queries here ... */
+
+
+@Import('org.wso2.event.sensor.stream:1.0.0')
+define stream sensorStream (meta_timestamp long, meta_isPowerSaverEnabled bool, meta_sensorId int, meta_sensorName string, correlation_longitude double, correlation_latitude double, humidity float, sensorValue double);
+
+
+@Export('cronTriggeredSensorStream:1.0.0')
+define stream cronTriggeredSensorStream (meta_timestamp long, meta_isPowerSaverEnabled bool, meta_sensorId int, meta_sensorName string, correlation_longitude double, correlation_latitude double, triggered_time long, humidity float, sensorValue double);
+
+@Export('periodicalTriggeredSensorStream:1.0.0')
+define stream periodicalTriggeredSensorStream (meta_timestamp long, meta_isPowerSaverEnabled bool, meta_sensorId int, meta_sensorName string, correlation_longitude double, correlation_latitude double, triggered_time long, humidity float, sensorValue double);
+
+define trigger periodicalTriggerStream at every 5 sec ;
+
+define trigger cronTriggerStream at '*/10 * * * * ?' ;
+
+from periodicalTriggerStream join sensorStream#window.time(10 sec)
+select meta_timestamp, meta_isPowerSaverEnabled, meta_sensorId, meta_sensorName, correlation_longitude, correlation_latitude, triggered_time, humidity, sensorValue
+insert into periodicalTriggeredSensorStream;
+
+from cronTriggerStream join sensorStream#window.time(10 sec)
+select meta_timestamp, meta_isPowerSaverEnabled, meta_sensorId, meta_sensorName, correlation_longitude, correlation_latitude, triggered_time, humidity, sensorValue
+insert into cronTriggeredSensorStream;

@@ -88,6 +88,9 @@
             <!-- Adding HA test case-->
             <class name="org.wso2.carbon.integration.test.ha.HATestCase"/>
 
+            <!-- Adding Event Simulator File Test -->
+            <class name="org.wso2.carbon.integration.test.inputflow.EventSimulatorTestCase"/>
+
         </classes>
 
     </test>
