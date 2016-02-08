@@ -26,7 +26,7 @@
     <groupId>org.wso2.cep</groupId>
     <artifactId>wso2cep-parent</artifactId>
     <packaging>pom</packaging>
-    <version>4.0.1-SNAPSHOT</version>
+    <version>4.1.0-SNAPSHOT</version>
     <name>WSO2 CEP - Parent</name>
     <url>http://wso2.com/products/complex-event-processor/</url>
     <description>WSO2 Complex Event Processor</description>
@@ -714,23 +714,23 @@
 	
     <properties>
         <!--CEP versions-->
-        <jaggery.version>0.11.0</jaggery.version>
-        <jaggery.modules.version>1.4.2</jaggery.modules.version>
+        <jaggery.version>0.12.1</jaggery.version>
+        <jaggery.modules.version>1.5.0</jaggery.modules.version>
         <carbon.deployment.version>4.5.3</carbon.deployment.version>
         <carbon.commons.version>4.4.8</carbon.commons.version>
         <carbon.analytics-common.version>5.0.10-SNAPSHOT</carbon.analytics-common.version>
-        <carbon.dashboards.version>1.0.7</carbon.dashboards.version>
-        <carbon.identity.version>4.5.6</carbon.identity.version>
+        <carbon.dashboards.version>1.0.11-SNAPSHOT</carbon.dashboards.version>
+        <carbon.identity.version>5.0.7</carbon.identity.version>
         <carbon.registry.version>4.4.8</carbon.registry.version>
-        <carbon.multitenancy.version>4.4.3</carbon.multitenancy.version>
+        <carbon.multitenancy.version>4.5.0</carbon.multitenancy.version>
         <carbon.metrics.version>1.2.0</carbon.metrics.version>
 
         <siddhi.version>3.0.5-SNAPSHOT</siddhi.version>
         <carbon.event-processing.version>2.0.12-SNAPSHOT</carbon.event-processing.version>
-        <cep.version>4.0.1-SNAPSHOT</cep.version>
+        <cep.version>4.1.0-SNAPSHOT</cep.version>
         
         <!-- Carbon kernel version-->
-        <carbon.kernel.version>4.4.2</carbon.kernel.version>
+        <carbon.kernel.version>4.4.3</carbon.kernel.version>
         <!--<carbon.kernel.imp.pkg.version>[4.3.0, 4.4.0)</carbon.kernel.imp.pkg.version>-->
         <!--<carbon.kernel.registry.imp.pkg.version>[1.0.1, 2.0.0)</carbon.kernel.registry.imp.pkg.version>-->
         <test.framework.version>4.4.2</test.framework.version>
