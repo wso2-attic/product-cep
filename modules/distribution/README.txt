@@ -1,8 +1,8 @@
 ================================================================================
-                        WSO2 Complex Event Processing Server 4.0.0
+                        WSO2 Complex Event Processing Server 4.1.0
 ================================================================================
 
-Welcome to the WSO2 CEP 4.0.0 release
+Welcome to the WSO2 CEP 4.1.0 release
 
 WSO2 CEP is a lightweight and easy-to-use Open Source Complex Event Processing
 Server (CEP) is available under the Apache Software License v2.0. WSO2 Complex
@@ -96,7 +96,7 @@ You can use the carbon Feature management Console and add the back end runtime f
 For more information on installation read INSTALL.txt.
    
 
-WSO2 CEP 4.0.0 Binary Distribution Directory Structure
+WSO2 CEP 4.1.0 Binary Distribution Directory Structure
 ==========================================================
 
 
@@ -196,7 +196,7 @@ WSO2 CEP 4.0.0 Binary Distribution Directory Structure
       This document contains information on installing WSO2 CEP
 
     - release-notes.html
-      Release information for WSO2 CEP 4.0.0
+      Release information for WSO2 CEP 4.1.0
 
 
 Secure sensitive information in carbon configuration files
@@ -298,7 +298,7 @@ Crypto Notice
 
 
 For further details, see theWSO2 Complex Event Processor documentation at
-https://docs.wso2.com/display/CEP400/WSO2+Complex+Event+Processor+Documentation
+https://docs.wso2.com/display/CEP410/WSO2+Complex+Event+Processor+Documentation
 
 ---------------------------------------------------------------------------
 (c) Copyright 2015 WSO2 Inc.
