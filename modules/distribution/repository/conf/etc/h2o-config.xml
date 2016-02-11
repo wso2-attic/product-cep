@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<h2oSettings>
+    <property name="enabled">false</property>
+    <property name="mode">local</property>
+    <property name="ip">127.0.0.1</property>
+    <property name="port">54345</property>
+    <property name="name">H2OCloud</property>
+</h2oSettings>

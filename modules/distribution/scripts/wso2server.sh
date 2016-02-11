@@ -305,6 +305,7 @@ do
     -Dcom.ibm.cacheLocalHost=true \
     -DworkerNode=false \
     -Dtenant.idle.time=153722867280912 \
+    -DdisableMLSparkCtx=true \
     org.wso2.carbon.bootstrap.Bootstrap $*
     status=$?
 done
