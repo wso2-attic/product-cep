@@ -15,7 +15,8 @@
   ~ limitations under the License.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <groupId>org.wso2.cep</groupId>
     <version>4.1.0-SNAPSHOT</version>
@@ -164,6 +165,37 @@
             <version>${geocoder.version}</version>
         </dependency>
 
+        <!-- Siddhi kalman filter extension -->
+        <dependency>
+            <groupId>org.wso2.siddhi</groupId>
+            <artifactId>siddhi-extension-kalman-filter</artifactId>
+            <version>${siddhi.version}</version>
+        </dependency>
+
+        <!-- Siddhi Map extension -->
+        <dependency>
+            <groupId>org.wso2.siddhi</groupId>
+            <artifactId>siddhi-extension-map</artifactId>
+            <version>${siddhi.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.ws.commons.axiom.wso2</groupId>
+            <artifactId>axiom</artifactId>
+            <version>${axiom.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.json.wso2</groupId>
+            <artifactId>json</artifactId>
+            <version>${json.version}</version>
+        </dependency>
+
+        <!-- Siddhi Reorder extension -->
+        <dependency>
+            <groupId>org.wso2.siddhi</groupId>
+            <artifactId>siddhi-extension-reorder</artifactId>
+            <version>${siddhi.version}</version>
+        </dependency>
+
         <!-- Siddhi Eval-Script extension -->
         <dependency>
             <groupId>org.wso2.siddhi</groupId>
@@ -188,11 +220,11 @@
 
         <!-- Uncomment the following depedency section if you want to include Siddhi ML extension as part of
             Storm dependencies -->
-        <!--<dependency>-->
-        <!--<groupId>org.wso2.carbon.ml</groupId>-->
-        <!--<artifactId>org.wso2.carbon.ml.siddhi.extension</artifactId>-->
-        <!--<version>${carbon.ml.version}</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.wso2.carbon.ml</groupId>
+            <artifactId>org.wso2.carbon.ml.siddhi.extension</artifactId>
+            <version>${carbon.ml.version}</version>
+        </dependency>
 
     </dependencies>
 
@@ -245,6 +277,11 @@
                                     <include>org.wso2.siddhi:siddhi-extension-timeseries</include>
                                     <include>org.apache.commons:commons-math3</include>
                                     <include>org.wso2.siddhi:siddhi-extension-geo</include>
+                                    <include>org.wso2.siddhi:siddhi-extension-kalman-filter</include>
+                                    <include>org.wso2.siddhi:siddhi-extension-map</include>
+                                    <include>org.wso2.siddhi:siddhi-extension-reorder</include>
+                                    <include>org.apache.ws.commons.axiom.wso2:axiom</include>
+                                    <include>org.json.wso2:json</include>
                                     <include>org.apache.servicemix.bundles:org.apache.servicemix.bundles.geocoder-java
                                     </include>
                                     <include>com.googlecode.scalascriptengine:scalascriptengine_2.11</include>
@@ -308,7 +345,7 @@
 
         <!-- Carbon component dependency versions -->
         <carbon.analytics.common.version>5.0.10-SNAPSHOT</carbon.analytics.common.version>
-        <!--<carbon.ml.version>1.0.1</carbon.ml.version>-->
+        <carbon.ml.version>1.1.1</carbon.ml.version>
 
         <!--CEP versions-->
         <siddhi.version>3.0.5-SNAPSHOT</siddhi.version>
@@ -329,6 +366,8 @@
         <hadoop.common.version>2.6.0</hadoop.common.version>
         <jdbc-pool.version>7.0.34.wso2v2</jdbc-pool.version>
         <geocoder.version>0.16_1</geocoder.version>
+        <axiom.version>1.2.11.wso2v6</axiom.version>
+        <json.version>3.0.0.wso2v1</json.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.scm.id>my-scm-server</project.scm.id>
