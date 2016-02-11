@@ -264,6 +264,9 @@
                                 <featureArtifactDef>
                                     org.wso2.carbon.dashboards:org.wso2.carbon.dashboards.portal.feature:${carbon.dashboards.version}
                                 </featureArtifactDef>
+                                <featureArtifactDef>
+                                    org.wso2.carbon.dashboards:org.wso2.carbon.dashboards.deployment.feature:${carbon.dashboards.version}
+                                </featureArtifactDef>
 
                                 <!-- cep ui features -->
                                 <featureArtifactDef>
@@ -568,6 +571,10 @@
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.dashboards.portal.feature.group</id>
+                                    <version>${carbon.dashboards.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.dashboard.deployment.feature.group</id>
                                     <version>${carbon.dashboards.version}</version>
                                 </feature>
 
