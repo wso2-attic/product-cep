@@ -1,0 +1,48 @@
+<%
+var dbRoot;
+var dest;
+var renderEngine = { };
+
+(function () {
+    var log = new Log();
+
+    var unauthorizedError;
+    var carbon = require('carbon');
+    var anonRole = String(carbon.user.anonRole);
+    var permissions = dashboard.permissions;
+    var anonymous = permissions.viewers.indexOf(anonRole) !== -1;
+    var db = require('/modules/dashboards.js');
+
+    if (user) {
+        if (utils.allowed(user.roles, permissions.editors)) {
+            user.isEditor = true;
+        } else {
+            user.isEditor = false;
+        }
+    }
+    if (!anonymous) {
+        if (!user && !dashboard.isanon) {
+            sendLogin();
+            return;
+        }
+
+        unauthorizedError = 'dashboard access not authorized';
+
+        if (userDomain !== (urlDomain || superDomain) && !dashboard.isanon) {
+            response.sendError(401, unauthorizedError);
+            return;
+        }
+
+        if (!dashboard.isanon && !utils.allowed(user.roles, permissions.editors) && !utils.allowed(user.roles, permissions.viewers)) {
+            response.sendError(401, unauthorizedError);
+            return;
+        }
+    }
+    dbRoot = tenantedUrlPrefix + 'dashboards/' + dashboard.id + '/';
+    var isCustomDB = dashboard.isUserCustom;
+
+    // global reference to getBootstrapLayout() function
+    renderEngine.getDashboardContent = db.getBootstrapLayout;
+   
+    include(utils.resolvePath('templates/dashboard.jag'));
+}()); %>

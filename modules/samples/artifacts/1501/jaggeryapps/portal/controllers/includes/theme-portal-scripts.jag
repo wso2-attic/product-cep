@@ -1,0 +1,6 @@
+<%
+    var scripts = utils.portalScripts();
+%>
+<% if(scripts) { %>
+<script src="<%=urlPrefix%><%=scripts%>"></script>
+<% } %>

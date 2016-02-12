@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
+    <link rel="icon" href="<%=urlPrefix%><%=utils.resolveUrl('images/favicon.png')%>" type="image/x-icon" />
+    <link rel="stylesheet" href="<%=urlPrefix%>css/bootstrap.min.css" />
+    <link rel="stylesheet" href="<%=urlPrefix%>css/fontwso2.css" />
+    <link rel="stylesheet" href="<%=urlPrefix%>css/fontwso2-extend.css" />
+    <link rel="stylesheet" href="<%=urlPrefix%>css/OpenSans.css" />
+    <link rel="stylesheet" href="<%=urlPrefix%>css/common.css" />
+    <link rel="stylesheet" href="<%=urlPrefix%>css/dashboard.css" />
+    <link rel="stylesheet" href="<%=urlPrefix%>css/bootstrap-modal-carousel.min.css" />
+
+    <link rel="stylesheet" href="<%=urlPrefix%><%=utils.dashboardStyles(dashboard.theme)%>">
+    <%
+        var i18n = require("i18n");
+        i18n.init(request, utils.getLocaleResourcePath());
+    %>
+    <title><%= i18n.localize("dashboard.server.label")%></title>
+</head>
+        
+<body class="lang_<%=request.getLocale()%>">
+    
+<%
+    var usr = require('/modules/user.js');
+    var user = usr.current();
+    var pages = dashboard.pages;
+    var isAnonView = request.getParameter('isAnonView');
+    if(!user) {
+        if(isAnonView){
+            response.sendRedirect(request.getRequestURL());
+        }
+        isAnonView = true;
+    } else{
+        isAnonView = JSON.parse(isAnonView);
+
+        if((user.domain != urlDomain && urlDomain) ||
+                (dashboard.isanon && !utils.allowed(user.roles, dashboard.permissions.editors) &&
+                !utils.allowed(user.roles, dashboard.permissions.viewers))){
+            isAnonView = true;
+        }
+    }
+   
+    // Check whether the layout is fluid
+    var isFluid = false;
+    pages.forEach(function(page) {
+        if(page.id == pageId) {     
+            isFluid = page.layout.fluidLayout;
+        }
+    });
+%>
+    
+<div id="navigation" role="navigation" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="<%= isFluid ? 'container-fluid': 'container'%>">
+        <div class="navbar-header">
+            <button data-target=".horizontal-bar" data-toggle="collapse" class="navbar-toggle" type="button">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="<%=dbRoot%>?isAnonView=<%=isAnonView%>" class="navbar-brand"><%=dashboard.title%></a>
+        </div>
+            
+        <div class="collapse navbar-collapse horizontal-bar">
+            <ul class="nav navbar-nav">
+
+                <!-- render home page link -->
+                <% if(dashboard.pages.length >= 2) { %>
+                    <li
+                        <% if (dashboard.landing === pageId) { %> class="active"<% } %>>
+                        <% var addingParam = isAnonView?'?isAnonView=true':'';%>
+                        <a href="<%=dbRoot%><%=addingParam%>"><%= i18n.localize("home")%></a>
+                    </li>
+                <% } %>
+
+                <!-- render links to other pages -->
+                <% pages.forEach(function (page) {
+                        if(isAnonView || !user) {
+                            if (page.isanon) {
+                                // Anonymous viewing. So render only anonymous pages links.
+                                renderPageLink(page);
+                            }
+                        } else {
+                            renderPageLink(page);
+                        }
+                    });
+
+                    function renderPageLink(page) {
+                        if (dashboard.landing !== page.id) { %>
+                            <li
+                                <% if (page.id === pageId) { %> class="active"<% } %>>
+                                <% var addingParam = isAnonView?'?isAnonView=true':''; %>
+                                <a href="<%=dbRoot%><%=page.id%><%=addingParam%>"><%=page.title%></a>
+                            </li>
+                        <% }
+                    };%>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            <% if (user) {
+                 if(!isAnonView && (urlDomain == user.domain || (user.domain == superDomain && (!urlDomain || urlDomain == superDomain)))){
+                    if (user.isEditor) { %>
+                        <li>
+                            <a class="ues-copy" href="<%=dbRoot%>?editor=true">
+                                <span class="fw-stack">
+                                    <i class="fw fw-ring fw-stack-2x"></i>
+                                    <i class="fw fw-settings fw-stack-1x"></i>
+                                </span>
+                                <%= i18n.localize("edit.button")%>
+                            </a>
+                        </li>
+                    <% } else {%>
+                            <li>
+                                <a class="ues-copy" href="<%=dbRoot%>?custom=true">
+                                    <span class="fw-stack">
+                                        <i class="fw fw-ring fw-stack-2x"></i>
+                                        <i class="fw fw-settings fw-stack-1x"></i>
+                                    </span>
+                                    <%= i18n.localize("personalize")%>
+                                </a>
+                            </li>
+                    <% }} %>
+                <li>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                               <%= user ? user.username : "anon" %> <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="<%=urlPrefix%>logout?destination=<%=dest%>">
+                                <%= i18n.localize("logout.lable")%>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            <% } else { %>
+                <li>
+                    <a href="<%=urlPrefix%>login-controller?destination=<%=dest%>">
+                        <%= i18n.localize("login.lable")%>
+                    </a>
+                </li>
+            <% } %>
+            </ul>
+        </div> <!--/.nav-collapse -->
+     </div>
+</div>
+
+<div id="wrapper"><%=renderEngine.getDashboardContent(pageId || dashboard.landing, isAnonView)%></div>
+
+<script id="ues-gadget-setting-hbs" type="text/x-handlebars-template">
+    <div class="ues-sandbox" data-component="{{id}}">
+        <div id="ues-gadget-options" class="ues-gadget-options ues-gadget-properties gadget-setting">
+                <form class="ues-component-properties">
+                    {{#has options}}
+                        <div class="ues-options ues-properties">
+                            <h4><%= i18n.localize("options") %></h4>
+                            {{#each options}}
+                                <div class="form-group">
+                                    {{#equals type "STRING"}}
+                                        <label>{{title}}
+                                            <input type="text" class="form-control" name="{{@key}}" placeholder="{{title}}" value="{{value}}">
+                                        </label>
+                                    {{/equals}}
+                                    {{#equals type "BOOL"}}
+                                        <label>
+                                            <input type="checkbox" name="{{title}}"{{#equals value true}} checked="checked"{{/equals}}> {{title}}
+                                        </label>
+                                    {{/equals}}
+                                    {{#equals type "ENUM"}}
+                                        <label>{{title}}
+                                            <select id={{title}} name={{title}} class="form-control ues-title-position">
+                                                 {{#each options}}
+                                                    <option value={{value}}{{#equals value ../value}} selected="selected"{{/equals}}>{{displayValue}}</option>
+                                                 {{/each}}
+                                            </select>
+                                        </label>
+                                    {{/equals}}
+                                    {{#equals type "LIST"}}
+                                        <label>{{title}}
+                                            <textarea name="{{@key}}" class="form-control" rows="4" placeholder='<%= i18n.localize("placeholder.item.list")%>'>{{value}}</textarea>
+                                            <label><%= i18n.localize("enter.your.list.entries.lable")%></label>
+                                        </label>
+                                    {{/equals}}
+                                    {{#equals type "text"}}
+                                        <label>{{title}}
+                                            <textarea name="{{@key}}" class="form-control" rows="4">{{value}}</textarea>
+                                        </label>
+                                    {{/equals}}
+                                </div>
+                            {{/each}}
+                        </div> 
+                        <hr/>
+                    {{/has}}
+                    {{#has options}}
+                    {{else}}
+                        No properties to configure.
+                    {{/has}}
+                </form>
+            </div>
+    </div>
+</script>
+<script id="ues-dashboard-banner-hbs" type="text/x-handlebars-template">
+    {{#if isBannerExists}}
+    <img src="<%=tenantedUrlPrefix%>banners/<%=dashboard.id%>" />
+    {{/if}}
+</script>
+
+<script id="ues-component-box-content-hbs" type="text/x-handlebars-template">
+    <div class="panel panel-default ues-component">
+        <div class="panel-heading ues-component-header">
+            <h4 class="ues-component-title"></h4>
+
+            <div class="ues-component-toolbar">
+                <ul class="list-inline pull-right">
+                </ul>
+            </div>  
+        </div>
+
+        <div class="ues-component-body panel-body"></div>
+    </div>
+</script>
+
+<script id="ues-component-toolbar-hbs" type="text/x-handlebars-template">
+    {{#has options}}
+    <li><a href="#" class="ues-component-settings-handle" title="<%= i18n.localize("properties.lable") %>"><i class="fw fw-settings ues-component-properties-toggle"></i></a></li>
+    {{/has}}
+    <li><a href="#" class="ues-component-full-handle" title="<%= i18n.localize("maximize.label") %>" 
+        data-maximize-title="<%= i18n.localize("maximize.label") %>" data-minimize-title="<%= i18n.localize("minimize.label") %>"><i class="fw fw-laptop"></i></a></li>
+</script>
+
+<script src="<%=urlPrefix%>js/jquery-1.10.2.js"></script>
+<script src="<%=urlPrefix%>js/bootstrap.min.js"></script>
+<script src="<%=urlPrefix%>js/handlebars-v4.0.2.js"></script>
+<!-- TODO fix shindig url -->
+<script src="/shindig/gadgets/js/container:open-views:opensearch:rpc:xmlutil:pubsub-2.js?c=1&debug=1&container=default"></script>
+<script src="<%=urlPrefix%>js/ues.js"></script>    
+<script src="<%=urlPrefix%>js/ues-prefs.js"></script>
+<% include('/controllers/includes/common-scripts.jag'); %>
+<% include('/controllers/includes/dashboard-scripts.jag'); %>
+<script src="<%=urlPrefix%>js/ues-gadgets.js"></script>
+<script src="<%=urlPrefix%>js/ues-dashboards.js"></script>
+<script src="<%=urlPrefix%>extensions/components/gadget/index.js"></script>
+<script src="<%=urlPrefix%>extensions/components/widget/index.js"></script>
+<script src="<%=urlPrefix%>extensions/uris/local/index.js"></script>
+<script src="<%=urlPrefix%>extensions/uris/store/index.js"></script>
+<script src="<%=urlPrefix%>js/bootstrap-modal-carousel.min.js"></script>
+<script src="<%=urlPrefix%>js/gadget-properties.js"></script>
+<script src="<%=urlPrefix%>js/ds-handlebar-helpers.js"></script>
+<script src="<%=urlPrefix%>js/ues-saml-at.js"></script>
+<script src="<%=urlPrefix%>js/dashboard.js"></script>
+<% include('/controllers/includes/theme-dashboard-scripts.jag'); %>
+    
+<script>
+    if (!ues.global.renderFromExtension) {
+        ues.dashboards.render($('#wrapper'), ues.global.dashboard, ues.global.page);
+    }
+                      
+    $(document).ready(function() {
+        var bannerHbs = Handlebars.compile($('#ues-dashboard-banner-hbs').html());
+        var banner = ues.global.dashboard.banner;
+        $('.ues-banner-placeholder').html(bannerHbs({ isBannerExists: banner.globalBannerExists || banner.customBannerExists }));
+    });
+    
+</script>
+</body>
+</html>

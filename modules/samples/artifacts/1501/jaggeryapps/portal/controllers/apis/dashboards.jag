@@ -1,0 +1,175 @@
+<%
+(function () {
+    var log = new Log();
+
+    var configs = require('/configs/designer.json');
+    var utils = require('/modules/utils.js');
+    var dashboards = require('/modules/dashboards.js');
+
+    response.contentType = 'application/json';
+
+    var DEFAULT_START = 0;
+    var DEFAULT_COUNT = 10;
+    var vars;
+    var start;
+    var count;
+    var permissions;
+    var viewers;
+    var editors;
+    var roles;
+    var allDashboards;
+    var userDashboards;
+    var carbon = require('carbon');
+    var anonRole = carbon.user.anonRole;
+    var method = request.getMethod();
+
+    var matcher = new URIMatcher(request.getRequestURI());
+    if (matcher.match('/dashboards/{id}')) {
+        vars = matcher.elements();
+        utils.sandbox(context, function () {
+            dashboard = dashboards.findOne(vars.id);
+        });
+        if (!dashboard) {
+            response.sendError(404, JSON.stringify({
+                error: true
+            }));
+            return;
+        }
+        permissions = dashboard.permissions;
+        viewers = permissions.viewers;
+        editors = permissions.editors;
+        if (method === 'GET') {
+            if (!user) {
+                if (viewers.indexOf(anonRole) === -1) {
+                    response.sendError(401, JSON.stringify({
+                        error: 'unauthorized to access the dashboard'
+                    }));
+                    return;
+                }
+                print(dashboard);
+                return;
+            }
+            if (!utils.allowed(user.roles, editors) && !utils.allowed(user.roles, viewers)) {
+                response.sendError(401, {
+                    error: 'unauthorized to access the dashboard'
+                });
+                return;
+            }
+            print(dashboard);
+            return;
+        }
+        if (method === 'PUT') {
+            var personalize = request.getParameter('personalize');
+            var dashboard = request.getContent();
+
+            if (personalize && !utils.allowed(user.roles, editors)) {
+                dashboard.isUserCustom = true;
+            }
+
+            if ((!user || !utils.allowed(user.roles, configs.designers) || !utils.allowed(user.roles,
+                            editors)) && !(utils.allowed(user.roles, viewers) && dashboard.isUserCustom)) {
+                response.sendError(401, JSON.stringify({
+                    error: 'unauthorized to access the dashboard'
+                }));
+                return;
+            }
+            utils.sandbox(context, function () {
+                dashboards.update(dashboard);
+            });
+            print({
+                error: false
+            });
+            return;
+        }
+        if (method === 'DELETE') {
+            if (!user || (!utils.allowed(user.roles, editors) && !utils.allowed(user.roles, viewers))) {
+                response.sendError(401, JSON.stringify({
+                    error: 'unauthorized to delete the dashboard'
+                }));
+                return;
+            }
+            utils.sandbox(context, function () {
+                dashboards.remove(dashboard.id);
+            });
+            print({
+                error: false
+            });
+            return;
+        }
+        response.sendError(405, JSON.stringify({
+            error: true
+        }));
+        return;
+    }
+
+    if (matcher.match('/dashboards')) {
+        if (!user) {
+            response.sendError(401, JSON.stringify({
+                error: 'unauthorized to access the dashboard'
+            }));
+            return;
+        }
+        if (method === 'GET') {
+            var startAsString = request.getParameter('start');
+            if (startAsString != null && startAsString != undefined) {
+                start = parseInt(startAsString, 10);
+            } else {
+                start = DEFAULT_START;
+            }
+            var countAsString = request.getParameter('count');
+            if (countAsString != null && countAsString != undefined) {
+                count = parseInt(countAsString, 10);
+            } else {
+                count = DEFAULT_COUNT;
+            }
+            utils.sandbox(context, function () {
+                allDashboards = dashboards.find({
+                    start: start,
+                    count: count
+                });
+            });
+            roles = user.roles;
+            userDashboards = [];
+            allDashboards.forEach(function (dashboard) {
+                var permissions = dashboard.permissions;
+                if (utils.allowed(roles, permissions.editors)) {
+                    userDashboards.push(dashboard);
+                    return;
+                }
+                if (utils.allowed(roles, permissions.viewers)) {
+                    userDashboards.push(dashboard);
+                }
+            });
+            print(userDashboards);
+            return;
+        }
+        if (method === 'POST') {
+            if (!user || !utils.allowed(user.roles, configs.designers)) {
+                response.sendError(401, JSON.stringify({
+                    error: 'unauthorized to access the dashboard'
+                }));
+                return;
+            }
+
+            dashboard = request.getContent();
+            utils.sandbox(context, function () {
+                dashboards.create(dashboard);
+            });
+
+            print({
+                error: false
+            });
+
+            return;
+        }
+        response.sendError(405, JSON.stringify({
+            error: true
+        }));
+        return;
+    }
+
+    response.sendError(404, JSON.stringify({
+        error: true
+    }));
+}());
+%>
