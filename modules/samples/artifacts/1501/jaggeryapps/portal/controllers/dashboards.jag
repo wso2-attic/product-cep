@@ -1,0 +1,103 @@
+<%
+var pageId;
+var dashboard;
+var fresh;
+
+(function () {
+    var vars;
+    var dashboardId;
+    var matcher = new URIMatcher(request.getRequestURI());
+
+    if (matcher.match('/dashboards/{id}') || matcher.match('/dashboards/{id}/{page}')) {
+        vars = matcher.elements();
+        dashboardId = vars.id;
+        pageId = vars.page;
+    }
+
+    // If User request for portal/dashboards, redirect user to dashboard list.
+    if (!dashboardId) {
+        if (!user) {
+            sendLogin();
+            return;
+        }
+
+        if (userDomain !== (urlDomain || superDomain)) {
+            response.sendError(401, 'designer access not authorized of this tenant');
+            return;
+        }
+
+        include(utils.resolvePath("templates/index.jag"));
+        return;
+    }
+
+    var dashboards;
+    var editor;
+    var isCustomize;
+    var toReset;
+    var method = request.getMethod();
+
+    if (method === 'GET') {
+        dashboards = require('/modules/dashboards.js');
+        utils.sandbox(context, function () {
+            dashboard = dashboards.findOne(dashboardId);
+        });
+
+        if (!dashboard) {
+            response.sendError(404, 'requested dashboard cannot be found');
+            return;
+        }
+
+        isCustomize = request.getParameter('custom');
+
+        if (isCustomize) {
+            for (var i = 0; i < dashboard.pages.length; i++) {
+                dashboard.pages[i].isanon = false;
+            }
+
+            dashboards.copy(dashboard);
+            response.sendRedirect(tenantedUrlPrefix + 'dashboards/' + dashboardId + '?editor=true');
+            return;
+        }
+
+        toReset = request.getParameter('reset');
+
+        if (toReset) {
+            dashboards.reset(dashboard.id);
+            response.sendRedirect(tenantedUrlPrefix + 'dashboards/' + dashboardId);
+            return;
+        }
+
+        if (user && !urlDomain && user.domain != superDomain) {
+            response.sendRedirect(utils.tenantedPrefix(urlPrefix, superDomain) + "dashboards/" + dashboardId);
+            return;
+        }
+
+        editor = request.getParameter('editor');
+        editor ? include('includes/designer.jag') : include('includes/renderer.jag');
+        return;
+    }
+
+    if (method === 'POST') {
+        dashboard = {
+            id: dashboardId,
+            title: request.getParameter('title'),
+            description: request.getParameter('description'),
+            permissions: {
+                viewers: ['Internal/everyone'],
+                editors: ['Internal/everyone']
+            },
+            pages: [],
+            identityServerUrl: "",
+            accessTokenUrl: "",
+            apiKey: "",
+            apiSecret: "",
+            theme: ""
+        };
+        fresh = true;
+        include('includes/designer.jag');
+        return;
+    }
+
+    response.sendError(400, 'bad dashboard request');
+}());
+%>

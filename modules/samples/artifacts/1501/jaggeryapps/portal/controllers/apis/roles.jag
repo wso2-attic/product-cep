@@ -1,0 +1,36 @@
+<%
+(function () {
+    if (!user) {
+        response.sendError(401, 'unauthorized to access roles');
+        return;
+    }
+
+    var utils = require('/modules/utils.js');
+    var configs = require('/configs/designer.json');
+    var log = new Log();
+    if (!utils.allowed(user.roles, configs.designers)) {
+        response.sendError(401, 'roles access not authorized');
+        return;
+    }
+
+    var usr = require('/modules/user.js');
+    response.contentType = 'application/json';
+
+    var matcher = new URIMatcher(request.getRequestURI());
+    if (matcher.match('/roles/search')){
+        var query = request.getParameter('query');
+        if (query === undefined){
+            query = '';
+        }
+        var maxRolesLimit = request.getParameter('maxLimit');
+        if (maxRolesLimit === undefined){
+            maxRolesLimit = 100;
+        }
+        print(usr.searchRoles(query+'*', maxRolesLimit));
+    } else if (matcher.match('/roles/maxLimit')){
+        print(usr.maxRolesLimit());
+    } else{
+        print(usr.roles());
+    }
+}());
+%>

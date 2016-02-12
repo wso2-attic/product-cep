@@ -1,0 +1,6 @@
+<%
+    var scripts = utils.dashboardScripts();
+%>
+<% if(scripts) { %>
+<script src="<%=urlPrefix%><%=scripts%>"></script>
+<% } %>
