@@ -1,5 +1,5 @@
 <%--
-  ~ Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~ Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -250,7 +250,7 @@
 					<div class="powered">
 						<span>Powered by</span><a target="_blank" href="http://wso2.org/projects/cep"><img src="../tenant-login/images/powered.gif"/></a>
 					</div>
-					&copy; appserver.stratoslive.wso2.com copyright 2015 WSO2, Inc. &nbsp;
+					&copy; appserver.stratoslive.wso2.com copyright 2016 WSO2, Inc. &nbsp;
 					<a target="_blank" href="http://www.wso2.com/cloud/services/terms-of-use">Terms of Service</a>
 					|
 					<a target="_blank"  href="http://www.wso2.com/cloud/services/privacy-policy">Privacy Policy</a>

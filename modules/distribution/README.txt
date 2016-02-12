@@ -16,40 +16,17 @@ have been developed as pluggable Carbon components.
 New Features In This Release
 ==================================
 
-[CEP-635] - Integrate Apache Storm into CEP
-[CEP-852] - Event Simulator with sending multiple events using uploaded files
-[CEP-879] - MQTT input Event Adapter for CEP
-[CEP-880] - MQTT output Event Adapter for CEP
-[CEP-881] - Input Websocket adapter for CEP
-[CEP-885] - Time Series Regression Extension to Siddhi
-[CEP-886] - Time Series Forecaster for Siddhi
-[CEP-887] - Outlier Detection Extension for Siddhi
-[CEP-888] - Initial storm solution for CEP
-[CEP-903] - Siddhi - Remove callback from stream functionality
-[CEP-909] - Input Websocket (with local websocket server) Adapter for CEP
-[CEP-910] - Output Websocket Adapter for CEP
-[CEP-911] - Output Websocket Adapter (using local websocket server) for CEP
-[CEP-942] - Siddhi partition implementation
-[CEP-945] - Improved Siddhi Query API and Compiler
-[CEP-958] - Siddhi-core adding support for aggregated attributes
-[CEP-959] - Siddhi-core supporting extensions
-[CEP-985] - Stationery Alert is one of the Geo Dashboard features which enable users to recieve alerts if a spatial object stayes in a specified area for a given specified time.
-[CEP-993] - Exchangeable views between form view and source view when creating event streams
-[CEP-1017] - cApp support for CEP components
-[CEP-1018] - Encrypting password fields of Input and Output Adapters
-[CEP-1028] - File Based Stream Definition Store
-[CEP-1029] - String Extension for Siddhi
-[CEP-1030] - Math Extension for Siddhi
-[CEP-1032] - Integrating Siddhi 3.0.0
-[CEP-1033] - Adding annotation,partitioning and query grouping support in Storm
-[CEP-1062] - Cron TimeWindow for Siddhi
-[CEP-1095] - Domain Specific Execution Manager
-[CEP-1132] - Improving HA support
-[CEP-1141] - Geo Dashboard Integration
-[CEP-1355] - Analytics Dashboard
-[CEP-1356] - Siddhi Try It Feature
-[CEP-1357] - JMX monitoring support for CEP
-[CEP-1358] - Adding Metrics support for CEP
+[CEP-101] - Indexing for Hazelcast table
+[CEP-105] - Time length window implementation for Siddhi
+[CEP-644] - add insertOrUpdate to event table
+[CEP-1365] - Add a function to extract 'DAY OF WEEK' from time/timestamp
+[CEP-1423] - Support outer/left joins in Siddhi
+[CEP-1439] - Map extension support
+[CEP-1440] - Geo Closest function
+[CEP-1441] - External Batch window for siddhi
+[CEP-1448] - Hazelcast Event Table for Siddhi
+[CEP-1457] - Minima and Maxima detection on Siddhi
+[CEP-1459] - Instrumentation & Monitoring support for CEP and Siddhi
 
 Key Features of WSO2 CEP
 ==================================
@@ -69,7 +46,7 @@ Key Features of WSO2 CEP
 * Execution Manager - A user friendly dashboard to customize preconfigured domain-specific execution parameters.
 * Analytics Dashboard - An inbuilt dashboard, capable of visualizing event streams in real-time
 * Easily Integrates with Enterprise System - by RESTful HTTP protocol with JSON, JMS MAP/XML/Text messages, SOAP and Email
-* Support for Long Duration Queries - Supports periodic snapshots to a scalable persistence store (Apache Cassandra).
+* Support for Long Duration Queries - Supports periodic snapshots to a scalable persistence store.
 * Tightly Integrates with WSO2 Data Analytics Server - for recording and post processing of events.
 * Realtime Dashboard using the inbuilt Realtime Analytics Gadgets
 * Geo Dashboard with geo fencing capabilities
@@ -301,4 +278,4 @@ For further details, see theWSO2 Complex Event Processor documentation at
 https://docs.wso2.com/display/CEP410/WSO2+Complex+Event+Processor+Documentation
 
 ---------------------------------------------------------------------------
-(c) Copyright 2015 WSO2 Inc.
+(c) Copyright 2016 WSO2 Inc.

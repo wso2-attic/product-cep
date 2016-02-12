@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~ Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@
 <h1>WSO2 Complex Event Processor(WSO2 CEP) 4.1.0
     Release Notes</h1>
 
-<h3>18 Sep 2015</h3>
+<h3>13 Feb 2016</h3>
 
 <p>WSO2 CEP is a lightweight and easy-to-use Open Source Complex Event Processing
     Server (CEP) is available under the Apache Software License v2.0.WSO2 Complex
@@ -68,14 +68,17 @@
 <h2>Key Features</h2>
 <ul>
 
-    <li>Support Multiple Input Event Adapter Types - WSO2 CEP supports WSO2Event, SOAP, HTTP, JMS, Email, File-tail, Kafka, MQTT, Websocket
+    <li>Support Multiple Input Event Adapter Types - WSO2 CEP supports WSO2Event, SOAP, HTTP, JMS, Email, File-tail,
+        Kafka, MQTT, Websocket
         input adapter types
     </li>
     <li>Support Multiple Output Event Adapter Types - WSO2 CEP supports WSO2Event, SOAP, HTTP, JMS, Email, SMS, Logger,
         Kafka, RDBMS, Cassandra, MQTT, Websocket, UI output adapter types
     </li>
     <li>Support for multiple event formats such as XML, JSON, Map, Text & WSO2Event</li>
-    <li>Distributed processing support - WSO2 CEP can be integrated with Apache Storm to perform distributed processing</li>
+    <li>Distributed processing support - WSO2 CEP can be integrated with Apache Storm to perform distributed
+        processing
+    </li>
     <li>Siddhi Query Partitioning</li>
     <li>Siddhi Event Tables to use historical data within real time processing</li>
     <li>High Availability Deployment</li>
@@ -85,13 +88,13 @@
     <li>Event Flow Support - WSO2 CEP supports visualizing the event flow within the system.</li>
     <li>Event Simulator - WSO2 CEP supports an easy gui to send sample events to test the event flow.</li>
     <li>Siddhi Try It Tool - A tool for experimenting with Siddhi Query Language.</li>
-    <li>Execution Manager - A user friendly dashboard to customize preconfigured domain-specific execution parameters.</li>
+    <li>Execution Manager - A user friendly dashboard to customize preconfigured domain-specific execution parameters.
+    </li>
     <li>Analytics Dashboard - An inbuilt dashboard, capable of visualizing event streams in real-time</li>
     <li>Easily Integrates with Enterprise System - by RESTful HTTP protocol with JSON, JMS MAP/XML/Text messages, SOAP
         and Email
     </li>
-    <li>Support for Long Duration Queries - Supports periodic snapshots to a scalable persistence store (Apache
-        Cassandra).
+    <li>Support for Long Duration Queries - Supports periodic snapshots to a scalable persistence store.
     </li>
     <li>Tightly Integrates with WSO2 Data Analytics Server - for recording and post processing of events.
     </li>
@@ -106,21 +109,26 @@
 
 <h2>New Features In This Release</h2>
 <ul>
-    <li> Distributed processing with Apache Storm</li>
-    <li> Analytics Dashboard</li>
-    <li> Execution Manager</li>
-    <li> Siddhi Try It Tool</li>
-    <li> MQTT Input and Output Event Adapters</li>
-    <li> Websocket Input and Output Event Adapters</li>
-    <li> Encrypting password fields of Input and Output Adaptors</li>
-    <li> Cron TimeWindow for Siddhi</li>
-    <li> Time Series Extensions for Siddhi</li>
-    <li> Outlier Detection Extension for Siddhi</li>
-    <li> String and Math extensions for Siddhi</li>
-    <li> Hot deployment support for all CEP artifacts</li>
-    <li> File Based Stream Definition Store</li>
-    <li> Activity Mediator for ESB</li>
-    <li> Event simulation using given CSV files</li>
+    <li>[<a href='https://wso2.org/jira/browse/CEP-927'>CEP-927</a>] -         Fix UI compatibility issues in IE browsers
+    </li>
+    <li>[<a href='https://wso2.org/jira/browse/CEP-1178'>CEP-1178</a>] -         Deactivate Event Receiver
+    </li>
+    <li>[<a href='https://wso2.org/jira/browse/CEP-1406'>CEP-1406</a>] -         Need to have tool tips for icons in the Dashboard
+    </li>
+    <li>[<a href='https://wso2.org/jira/browse/CEP-1419'>CEP-1419</a>] -         Provide &quot;insert or update&quot; functionality to event tables
+    </li>
+    <li>[<a href='https://wso2.org/jira/browse/CEP-1426'>CEP-1426</a>] -         When passing parameters to function allow the syntax func(*) if all the attributes of the inputstream have to be passed
+    </li>
+    <li>[<a href='https://wso2.org/jira/browse/CEP-1445'>CEP-1445</a>] -         Improve user-friendliness by sorting drop-down lists
+    </li>
+    <li>[<a href='https://wso2.org/jira/browse/CEP-1447'>CEP-1447</a>] -         Instrumentation &amp; Monitoring support for CEP and Siddhi
+    </li>
+    <li>[<a href='https://wso2.org/jira/browse/CEP-1450'>CEP-1450</a>] -         Adding Arbitrary Map support for Receiver Components
+    </li>
+    <li>[<a href='https://wso2.org/jira/browse/CEP-1453'>CEP-1453</a>] -         Pause, Resume and Stop support for Event Simulator
+    </li>
+    <li>[<a href='https://wso2.org/jira/browse/CEP-1458'>CEP-1458</a>] -         Support for more then 2 nodes in HA deployment
+    </li>
 </ul>
 
 <h2>Reporting Problems</h2>
