@@ -1,0 +1,16 @@
+{
+  "name": "attributeStream",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "payloadData": [
+    {
+      "name": "name",
+      "type": "STRING"
+    },
+    {
+      "name": "temperature",
+      "type": "STRING"
+    }
+  ]
+}

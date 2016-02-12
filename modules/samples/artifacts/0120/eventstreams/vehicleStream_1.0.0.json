@@ -1,0 +1,20 @@
+{
+  "name": "vehicleStream",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "payloadData": [
+    {
+      "name": "name",
+      "type": "STRING"
+    },
+    {
+      "name": "numOfWheels",
+      "type": "INT"
+    },
+    {
+      "name": "specificAttributesObj",
+      "type": "STRING"
+    }
+  ]
+}
