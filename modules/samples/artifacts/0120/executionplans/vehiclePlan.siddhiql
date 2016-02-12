@@ -1,0 +1,27 @@
+/* Enter a unique ExecutionPlan */
+@Plan:name('vehiclePlan')
+
+/* Enter a unique description for ExecutionPlan */
+-- @Plan:description('ExecutionPlan')
+
+/* define streams/tables and write queries here ... */
+
+@Import('vehicleStream:1.0.0')
+define stream dataIn (name string, numOfWheels int, specificAttributesObj string);
+
+@Export('attributeStream:1.0.0')
+define stream dataOut (name string, temperature string);
+
+from dataIn
+select name,map:createFromJSON(specificAttributesObj) as specAttrObjMap
+insert into innerStream;
+
+from innerStream
+select name,map:get(specAttrObjMap,'temperature') as temp
+insert into innerStreamTwo;
+
+from innerStreamTwo[not(temp is null)]
+select name, cast(temp, 'string') as temperature
+insert into dataOut;
+
+

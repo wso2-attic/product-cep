@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventReceiver name="httpReceiver" statistics="disable" trace="disable" xmlns="http://wso2.org/carbon/eventreceiver">
+    <from eventAdapterType="http">
+        <property name="transports">all</property>
+    </from>
+    <mapping customMapping="enable" type="json">
+        <property>
+            <from jsonPath="$.name"/>
+            <to name="name" type="string"/>
+        </property>
+        <property>
+            <from jsonPath="$.numOfWheels"/>
+            <to name="numOfWheels" type="int"/>
+        </property>
+        <property>
+            <from jsonPath="$.specificAttributesObj"/>
+            <to name="specificAttributesObj" type="string"/>
+        </property>
+    </mapping>
+    <to streamName="vehicleStream" version="1.0.0"/>
+</eventReceiver>
