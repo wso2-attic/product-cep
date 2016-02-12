@@ -220,11 +220,11 @@
 
         <!-- Uncomment the following depedency section if you want to include Siddhi ML extension as part of
             Storm dependencies -->
-        <dependency>
-            <groupId>org.wso2.carbon.ml</groupId>
-            <artifactId>org.wso2.carbon.ml.siddhi.extension</artifactId>
-            <version>${carbon.ml.version}</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.wso2.carbon.ml</groupId>-->
+            <!--<artifactId>org.wso2.carbon.ml.siddhi.extension</artifactId>-->
+            <!--<version>${carbon.ml.version}</version>-->
+        <!--</dependency>-->
 
     </dependencies>
 
@@ -345,7 +345,7 @@
 
         <!-- Carbon component dependency versions -->
         <carbon.analytics.common.version>5.0.10-SNAPSHOT</carbon.analytics.common.version>
-        <carbon.ml.version>1.1.1</carbon.ml.version>
+        <!--<carbon.ml.version>1.1.1</carbon.ml.version>-->
 
         <!--CEP versions-->
         <siddhi.version>3.0.5-SNAPSHOT</siddhi.version>

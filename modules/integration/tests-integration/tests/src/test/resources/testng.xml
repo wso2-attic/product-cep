@@ -66,31 +66,27 @@
             <class name="org.wso2.carbon.integration.test.extensionflow.TimeSeriesExtensionTestCase"/>
             <class name="org.wso2.carbon.integration.test.extensionflow.GeoExtensionTestCase"/>
             <class name="org.wso2.carbon.integration.test.extensionflow.EvalScriptExtensionTestCase"/>
+            <!-- Adding Event Simulator File Test -->
+            <class name="org.wso2.carbon.integration.test.inputflow.EventSimulatorTestCase"/>
+            <!--Event processor admin service test case -->
+            <class name="org.wso2.carbon.integration.test.admin.EventProcessorAdminServiceTestCase"/>
+            <class name="org.wso2.carbon.integration.test.admin.EventPublisherAdminServiceTestCase"/>
+            <class name="org.wso2.carbon.integration.test.admin.EventSimulatorAdminServiceTestCase"/>
+            <class name="org.wso2.carbon.integration.test.admin.EventReceiverAdminServiceTestCase"/>
+            <!-- CEP metrics test case -->
+            <class name="org.wso2.carbon.integration.test.metrics.CarbonMetricsTestCase"/>
+
+            <class name="org.wso2.carbon.integration.test.storm.StormManagerServiceTestCase"/>
+
+            <!-- Adding patch CEP1412 test case-->
+            <class name="org.wso2.carbon.integration.test.patches.CEP1412TestCase"/>
 
             <!--added jms together to reduce server restart-->
             <class name="org.wso2.carbon.integration.test.inputflow.JMSTestCase"/>
             <class name="org.wso2.carbon.integration.test.outputflow.JMSTestCase"/>
 
-            <class name="org.wso2.carbon.integration.test.storm.StormManagerServiceTestCase"/>
-
-            <class name="org.wso2.carbon.integration.test.admin.EventReceiverAdminServiceTestCase"/>
-            <!--Event processor admin service test case -->
-            <class name="org.wso2.carbon.integration.test.admin.EventProcessorAdminServiceTestCase"/>
-            <class name="org.wso2.carbon.integration.test.admin.EventPublisherAdminServiceTestCase"/>
-            <class name="org.wso2.carbon.integration.test.admin.EventSimulatorAdminServiceTestCase"/>
-
-            <!-- Adding patch CEP1412 test case-->
-            <class name="org.wso2.carbon.integration.test.patches.CEP1412TestCase"/>
-
-            <!-- CEP metrics test case -->
-            <class name="org.wso2.carbon.integration.test.metrics.CarbonMetricsTestCase"/>
-
             <!-- Adding HA test case-->
             <class name="org.wso2.carbon.integration.test.ha.HATestCase"/>
-
-            <!-- Adding Event Simulator File Test -->
-            <class name="org.wso2.carbon.integration.test.inputflow.EventSimulatorTestCase"/>
-
         </classes>
 
     </test>

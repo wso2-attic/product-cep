@@ -295,21 +295,21 @@
                                 </featureArtifactDef>
 
                                 <!-- ML features -->
-                                <featureArtifactDef>
-                                    org.wso2.carbon.ml:org.wso2.carbon.ml.commons.feature:${carbon.ml.version}
-                                </featureArtifactDef>
-                                <featureArtifactDef>
-                                    org.wso2.carbon.ml:org.wso2.carbon.ml.core.feature:${carbon.ml.version}
-                                </featureArtifactDef>
-                                <featureArtifactDef>
-                                    org.wso2.carbon.ml:org.wso2.carbon.ml.database.feature:${carbon.ml.version}
-                                </featureArtifactDef>
-                                <featureArtifactDef>
-                                    org.wso2.carbon.analytics-common:org.wso2.carbon.spark.commons.feature:${carbon.analytics-common.version}
-                                </featureArtifactDef>
-                                <featureArtifactDef>
-                                    org.wso2.carbon.ml:org.wso2.carbon.ml.siddhi.extension.feature:${carbon.ml.version}
-                                </featureArtifactDef>
+                                <!--<featureArtifactDef>-->
+                                    <!--org.wso2.carbon.ml:org.wso2.carbon.ml.commons.feature:${carbon.ml.version}-->
+                                <!--</featureArtifactDef>-->
+                                <!--<featureArtifactDef>-->
+                                    <!--org.wso2.carbon.ml:org.wso2.carbon.ml.core.feature:${carbon.ml.version}-->
+                                <!--</featureArtifactDef>-->
+                                <!--<featureArtifactDef>-->
+                                    <!--org.wso2.carbon.ml:org.wso2.carbon.ml.database.feature:${carbon.ml.version}-->
+                                <!--</featureArtifactDef>-->
+                                <!--<featureArtifactDef>-->
+                                    <!--org.wso2.carbon.analytics-common:org.wso2.carbon.spark.commons.feature:${carbon.analytics-common.version}-->
+                                <!--</featureArtifactDef>-->
+                                <!--<featureArtifactDef>-->
+                                    <!--org.wso2.carbon.ml:org.wso2.carbon.ml.siddhi.extension.feature:${carbon.ml.version}-->
+                                <!--</featureArtifactDef>-->
 
 
                             </featureArtifacts>
@@ -630,26 +630,26 @@
                                 </feature>
 
                                 <!-- ML features -->
-                                <feature>
-                                    <id>org.wso2.carbon.ml.commons.feature.group</id>
-                                    <version>${carbon.ml.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.ml.core.feature.group</id>
-                                    <version>${carbon.ml.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.ml.database.feature.group</id>
-                                    <version>${carbon.ml.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.spark.commons.feature.group</id>
-                                    <version>${carbon.analytics-common.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.ml.siddhi.extension.feature.group</id>
-                                    <version>${carbon.ml.version}</version>
-                                </feature>
+                                <!--<feature>-->
+                                    <!--<id>org.wso2.carbon.ml.commons.feature.group</id>-->
+                                    <!--<version>${carbon.ml.version}</version>-->
+                                <!--</feature>-->
+                                <!--<feature>-->
+                                    <!--<id>org.wso2.carbon.ml.core.feature.group</id>-->
+                                    <!--<version>${carbon.ml.version}</version>-->
+                                <!--</feature>-->
+                                <!--<feature>-->
+                                    <!--<id>org.wso2.carbon.ml.database.feature.group</id>-->
+                                    <!--<version>${carbon.ml.version}</version>-->
+                                <!--</feature>-->
+                                <!--<feature>-->
+                                    <!--<id>org.wso2.carbon.spark.commons.feature.group</id>-->
+                                    <!--<version>${carbon.analytics-common.version}</version>-->
+                                <!--</feature>-->
+                                <!--<feature>-->
+                                    <!--<id>org.wso2.carbon.ml.siddhi.extension.feature.group</id>-->
+                                    <!--<version>${carbon.ml.version}</version>-->
+                                <!--</feature>-->
                             </features>
                         </configuration>
                     </execution>

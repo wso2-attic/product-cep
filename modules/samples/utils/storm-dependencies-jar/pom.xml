@@ -452,7 +452,7 @@
 
         <!-- Carbon component dependency versions -->
         <carbon.analytics.common.version>5.0.3</carbon.analytics.common.version>
-        <carbon.ml.version>1.0.1</carbon.ml.version>
+        <!--<carbon.ml.version>1.0.1</carbon.ml.version>-->
         <carbon.metrics.version>1.1.0</carbon.metrics.version>
 
         <!--CEP versions-->
