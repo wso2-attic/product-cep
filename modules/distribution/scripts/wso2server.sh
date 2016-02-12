@@ -306,6 +306,6 @@ do
     -DworkerNode=false \
     -Dtenant.idle.time=153722867280912 \
     -DdisableMLSparkCtx=true \
-    org.wso2.carbon.bootstrap.Bootstrap $*
+    org.wso2.carbon.bootstrap.Bootstrap "$*"
     status=$?
 done
