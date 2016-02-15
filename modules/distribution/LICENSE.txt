@@ -71,8 +71,8 @@ disruptor_3.3.2.wso2v2.jar                                                      
 dom4j-1.6.1.jar                                                                 jarinbundle    bsd       1177      
 ehcache-core-2.5.1.jar                                                          jar            apache2   267       
 encoder_1.2.0.wso2v1.jar                                                        bundle         apache2   4030      
-geo-event-fuser-4.1.0-RC1.jar                                                   bundle         apache2   1647      
-geo-event-notifier-4.1.0-RC1.jar                                                bundle         apache2   1646      
+geo-event-fuser-4.1.0.jar                                                       bundle         apache2   1647      
+geo-event-notifier-4.1.0.jar                                                    bundle         apache2   1646      
 geronimo-jaxws_2.2_spec-1.0.jar                                                 bundle         apache2   395       
 geronimo-jms_1.1_spec-1.1.0.wso2v1.jar                                          bundle         apache2   661       
 geronimo-jta_1.1_spec-1.1.jar                                                   jar            apache2   1066      
@@ -453,10 +453,10 @@ org.wso2.carbon.webapp.deployer_4.5.3.jar                                       
 org.wso2.carbon.webapp.mgt_4.5.3.jar                                            bundle         apache2   5269      
 org.wso2.carbon.wsdl2form-4.4.8.jar                                             bundle         apache2   5722      
 org.wso2.cep.storm.dependencies.jar                                             bundle         apache2   5376      
-org.wso2.cep.styles_4.1.0.RC1.jar                                               bundle         apache2   7217      
+org.wso2.cep.styles_4.1.0.jar                                                   bundle         apache2   7217      
 org.wso2.ciphertool-1.0.0-wso2v3.jar                                            bundle         apache2   4038      
 org.wso2.securevault_1.0.0.wso2v2.jar                                           bundle         apache2   768       
-org.wso2.stratos.cep.dashboard.ui_4.1.0.RC1.jar                                 bundle         apache2   7216      
+org.wso2.stratos.cep.dashboard.ui_4.1.0.jar                                     bundle         apache2   7216      
 org.yaml.snakeyaml_1.11.0.jar                                                   bundle         apache2   1222      
 patch.jar                                                                       jarinbundle    epl1      1137      
 pdepublishing-ant.jar                                                           jar            epl1      524       
@@ -567,4 +567,3 @@ bsd3           BSD-3
                http://opensource.org/licenses/BSD-3-Clause
 epl1           Eclipse Public License
                http://www.eclipse.org/legal/epl-v10.html
-
