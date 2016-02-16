@@ -44,7 +44,6 @@
                 <exclude>**/bin/wso2server.sh</exclude>
                 <exclude>**/bin/wso2server.bat</exclude>
                 <exclude>**/conf/datasources/master-datasources.xml</exclude>
-                <exclude>**/repository/deployment/server/jaggeryapps/portal/configs/designer.json</exclude>
             </excludes>
         </fileSet>
 
@@ -350,6 +349,9 @@
             <includes>
                 <include>**/*</include>
             </includes>
+            <excludes>
+                <exclude>**/configs/designer.json</exclude>
+            </excludes>
         </fileSet>
 
         <!--ml features -->
