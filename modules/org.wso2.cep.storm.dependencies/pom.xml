@@ -88,6 +88,21 @@
             <artifactId>quartz</artifactId>
             <version>${quartz.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>${joda.time.version}</version>
+        </dependency>
 
         <!--siddhi extension with dependencies-->
 
@@ -127,6 +142,16 @@
             <groupId>org.apache.tomcat.wso2</groupId>
             <artifactId>jdbc-pool</artifactId>
             <version>${jdbc-pool.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.orbit.com.hazelcast</groupId>
+            <artifactId>hazelcast</artifactId>
+            <version>${hazelcast.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon</groupId>
+            <artifactId>javax.cache.wso2</artifactId>
+            <version>${carbon.kernel.version}</version>
         </dependency>
 
         <!-- Siddhi Time extension -->
@@ -217,6 +242,11 @@
             <artifactId>scala-reflect</artifactId>
             <version>${scala.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-library</artifactId>
+            <version>${scala.version}</version>
+        </dependency>
 
         <!-- Uncomment the following depedency section if you want to include Siddhi ML extension as part of
             Storm dependencies -->
@@ -251,6 +281,9 @@
                                     <include>org.antlr:antlr4-runtime</include>
                                     <include>com.google.guava:guava</include>
                                     <include>org.quartz-scheduler.wso2:quartz</include>
+                                    <include>org.slf4j:slf4j-api</include>
+                                    <include>org.slf4j:slf4j-log4j12</include>
+                                    <include>joda-time:joda-time</include>
 
                                     <include>
                                         org.wso2.carbon.analytics-common:org.wso2.carbon.event.processor.manager.commons
@@ -287,6 +320,9 @@
                                     <include>com.googlecode.scalascriptengine:scalascriptengine_2.11</include>
                                     <include>org.scala-lang:scala-compiler</include>
                                     <include>org.scala-lang:scala-reflect</include>
+                                    <include>org.scala-lang:scala-library</include>
+                                    <include>org.wso2.orbit.com.hazelcast:hazelcast</include>
+                                    <include>org.wso2.carbon:javax.cache.wso2</include>
                                 </includes>
                             </artifactSet>
                         </configuration>
@@ -368,6 +404,9 @@
         <geocoder.version>0.16_1</geocoder.version>
         <axiom.version>1.2.11.wso2v6</axiom.version>
         <json.version>3.0.0.wso2v1</json.version>
+        <hazelcast.version>3.5.2.wso2v1</hazelcast.version>
+        <slf4j.version>1.7.12</slf4j.version>
+        <joda.time.version>2.2</joda.time.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.scm.id>my-scm-server</project.scm.id>
