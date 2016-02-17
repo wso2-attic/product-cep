@@ -189,6 +189,11 @@
             <artifactId>org.apache.servicemix.bundles.geocoder-java</artifactId>
             <version>${geocoder.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>${gson.version}</version>
+        </dependency>
 
         <!-- Siddhi kalman filter extension -->
         <dependency>
@@ -281,9 +286,9 @@
                                     <include>org.antlr:antlr4-runtime</include>
                                     <include>com.google.guava:guava</include>
                                     <include>org.quartz-scheduler.wso2:quartz</include>
-                                    <include>org.slf4j:slf4j-api</include>
-                                    <include>org.slf4j:slf4j-log4j12</include>
-                                    <include>joda-time:joda-time</include>
+                                    <!--<include>org.slf4j:slf4j-api</include>-->
+                                    <!--<include>org.slf4j:slf4j-log4j12</include>-->
+                                    <!--<include>joda-time:joda-time</include>-->
 
                                     <include>
                                         org.wso2.carbon.analytics-common:org.wso2.carbon.event.processor.manager.commons
@@ -323,6 +328,7 @@
                                     <include>org.scala-lang:scala-library</include>
                                     <include>org.wso2.orbit.com.hazelcast:hazelcast</include>
                                     <include>org.wso2.carbon:javax.cache.wso2</include>
+                                    <include>com.google.code.gson:gson</include>
                                 </includes>
                             </artifactSet>
                         </configuration>
@@ -407,6 +413,7 @@
         <hazelcast.version>3.5.2.wso2v1</hazelcast.version>
         <slf4j.version>1.7.12</slf4j.version>
         <joda.time.version>2.2</joda.time.version>
+        <gson.version>2.5</gson.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.scm.id>my-scm-server</project.scm.id>
