@@ -351,6 +351,8 @@
             </includes>
             <excludes>
                 <exclude>**/configs/designer.json</exclude>
+                <exclude>**/controllers/includes/common-scripts.jag</exclude>
+                <exclude>**/extensions/components/gadget/index.js</exclude>
                 <exclude>**/js/VizGrammar.min.js</exclude>
                 <exclude>**/templates/gadgets/igviz/js/VizGrammar.min.js</exclude>
             </excludes>
@@ -687,6 +689,24 @@
         <file>
             <source>repository/resources/jaggery/config/designer.json</source>
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/portal/configs
+            </outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+
+        <!--Copying jaggery file for hostname fix -->
+        <file>
+            <source>repository/resources/jaggery/config/common-scripts.jag</source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/portal/controllers/includes
+            </outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+
+        <!--Copying jaggery file for hostname fix -->
+        <file>
+            <source>repository/resources/jaggery/config/index.js</source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/portal/extensions/components/gadget
             </outputDirectory>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
