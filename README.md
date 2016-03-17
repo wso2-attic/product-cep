@@ -27,7 +27,7 @@ WSO2 Complex Event Processor (CEP)
 
 ---
 
-Latest Released Version 4.0.0.
+Latest Released Version 4.1.0.
 
 Welcome to the WSO2 Complex Event Processor.
 
