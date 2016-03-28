@@ -51,7 +51,7 @@ public class ExecutionManagerTestCase extends CEPIntegrationTest {
                 + File.separator + "execution" + File.separator + "manager" + File.separator
                 + "TestDomain.xml").toURI());
         FileUtils.copyFileToDirectory(newFile, new File(ServerConfigurationManager.getCarbonHome() + File.separator
-                + "repository" + File.separator + "conf" + File.separator + "cep" + File.separator
+                + "repository" + File.separator + "conf" + File.separator + "execution-manager" + File.separator
                 + "domain-template" + File.separator));
         serverManager.restartForcefully();
 
@@ -90,7 +90,6 @@ public class ExecutionManagerTestCase extends CEPIntegrationTest {
             configuration.setFrom(testDomain.getName());
             configuration.setType(testDomain.getTemplateDTOs()[0].getName());
             configuration.setDescription("This is a test description");
-
 
             for (ParameterDTO parameterDTO : testDomain.getTemplateDTOs()[0].getParameterDTOs()) {
                 ParameterDTOE parameterDTOE = new ParameterDTOE();
