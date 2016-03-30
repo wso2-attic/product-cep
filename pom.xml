@@ -729,7 +729,7 @@
         <jaggery.modules.version>1.5.0</jaggery.modules.version>
         <carbon.deployment.version>4.5.3</carbon.deployment.version>
         <carbon.commons.version>4.4.8</carbon.commons.version>
-        <carbon.analytics-common.version>5.0.11-SNAPSHOT</carbon.analytics-common.version>
+        <carbon.analytics-common.version>5.0.12-SNAPSHOT</carbon.analytics-common.version>
         <carbon.dashboards.version>1.0.11</carbon.dashboards.version>
         <carbon.identity.version>5.0.7</carbon.identity.version>
         <carbon.registry.version>4.4.8</carbon.registry.version>
@@ -754,7 +754,7 @@
         <stratos.ui.version>2.2.0</stratos.ui.version>
         <rampart.wso2.version>1.6.1-wso2v14</rampart.wso2.version>
         <axis2.version>1.6.1.wso2v12</axis2.version>
-        <orbit.version.axiom>1.2.11.wso2v9</orbit.version.axiom>
+        <orbit.version.axiom>1.2.11.wso2v10</orbit.version.axiom>
         <version.commons.logging>1.1</version.commons.logging>
         <log4j.wso2.version>1.2.17.wso2v1</log4j.wso2.version>
         <httpclient.wso2.version>4.3.1.wso2v2</httpclient.wso2.version>
