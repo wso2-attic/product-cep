@@ -115,11 +115,6 @@
             </dependency>
             <dependency>
                 <groupId>org.wso2.carbon.event-processing</groupId>
-                <artifactId>org.wso2.carbon.event.execution.manager.stub</artifactId>
-                <version>${carbon.event-processing.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.carbon.event-processing</groupId>
                 <artifactId>org.wso2.carbon.event.simulator.stub</artifactId>
                 <version>${carbon.event-processing.version}</version>
             </dependency>
@@ -245,6 +240,11 @@
             </dependency>
 
             <!--Carbon analytics common-->
+            <dependency>
+                <groupId>org.wso2.carbon.analytics-common</groupId>
+                <artifactId>org.wso2.carbon.event.execution.manager.stub</artifactId>
+                <version>${carbon.analytics-common.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.wso2.carbon.analytics-common</groupId>
                 <artifactId>org.wso2.carbon.databridge.agent</artifactId>
