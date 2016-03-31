@@ -729,7 +729,7 @@
         <jaggery.modules.version>1.5.0</jaggery.modules.version>
         <carbon.deployment.version>4.5.3</carbon.deployment.version>
         <carbon.commons.version>4.4.8</carbon.commons.version>
-        <carbon.analytics-common.version>5.0.11-SNAPSHOT</carbon.analytics-common.version>
+        <carbon.analytics-common.version>5.0.12-SNAPSHOT</carbon.analytics-common.version>
         <carbon.dashboards.version>1.0.11</carbon.dashboards.version>
         <carbon.identity.version>5.0.7</carbon.identity.version>
         <carbon.registry.version>4.4.8</carbon.registry.version>
