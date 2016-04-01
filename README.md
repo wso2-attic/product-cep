@@ -24,6 +24,7 @@ WSO2 Complex Event Processor (CEP)
 | Branch | Build Status |
 | :------------ |:-------------
 | master | [![Build Status](https://wso2.org/jenkins/job/product-cep/badge/icon)](https://wso2.org/jenkins/job/product-cep) |
+| master-java8 | [![Build Status](https://wso2.org/jenkins/job/product-cep/badge/icon)] (https://wso2.org/jenkins/job/product-cep__java8)
 
 ---
 
