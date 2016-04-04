@@ -20,8 +20,10 @@
     <templates>
         <template name="Maximum Temperature">
             <description>To check maximum room temperature of all rooms</description>
-            <executionPlan>
-                <![CDATA[
+            <executionType>realtime</executionType>
+            <script>
+
+            <![CDATA[
                 /* Enter a unique ExecutionPlan */
                 @Plan:name('testPlan')
 
@@ -40,7 +42,7 @@
                 select meta_temperature,meta_roomNumber
                 insert into outStream;
                  ]]>
-            </executionPlan>
+            </script>
             <parameters>
                 <parameter name="maxVal" type="int">
                     <displayName>Maximum Temperature</displayName>
@@ -52,8 +54,11 @@
 
         <template name="Maximum Temperature By Room">
             <description>To check maximum room temperature of specified room</description>
-            <executionPlan>
-                <![CDATA[
+            <executionType>realtime</executionType>
+
+            <script>
+
+            <![CDATA[
                 /* Enter a unique ExecutionPlan */
                 @Plan:name('testPlan')
 
@@ -72,7 +77,7 @@
                 select meta_temperature,meta_roomNumber
                 insert into outStream;
                  ]]>
-            </executionPlan>
+            </script>
             <parameters>
                 <parameter name="maxVal" type="int">
                     <displayName>Maximum Temperature</displayName>
@@ -93,7 +98,9 @@
 
         <template name="Average Temperature For Specified Time">
             <description>To check average room temperature within specified time window of all rooms</description>
-            <executionPlan>
+            <executionType>realtime</executionType>
+            <script>
+
                 <![CDATA[
                 /* Enter a unique ExecutionPlan */
                 @Plan:name('testPlan')
@@ -116,7 +123,7 @@
 				insert into outStream;
 
                  ]]>
-            </executionPlan>
+            </script>
             <parameters>
                 <parameter name="maxVal" type="int">
                     <displayName>Maximum Temperature</displayName>

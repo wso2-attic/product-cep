@@ -20,7 +20,8 @@
     <templates>
         <template name="Template1">
             <description>This is template 1</description>
-            <executionPlan>
+            <executionType>realtime</executionType>
+            <script>
                 <![CDATA[
                 /* Enter a unique ExecutionPlan */
                 @Plan:name('testPlan')
@@ -40,7 +41,7 @@
                 select *
                 insert into outStream;
                  ]]>
-            </executionPlan>
+            </script>
             <parameters>
                 <parameter name="maxVal" type="int">
                     <displayName>Testing Parameter</displayName>
@@ -51,7 +52,8 @@
         </template>
         <template name="Template2">
             <description>This is template 2</description>
-            <executionPlan>
+            <executionType>realtime</executionType>
+            <script>
                 <![CDATA[
                 /* Enter a unique ExecutionPlan */
                 -- @Plan:name('testPlan')
@@ -71,7 +73,7 @@
                 select *
                 insert into outStream;
                  ]]>
-            </executionPlan>
+            </script>
             <parameters>
                 <parameter name="maxVal" type="int">
                     <displayName>Testing Parameter</displayName>
@@ -82,7 +84,8 @@
         </template>
         <template name="Template3">
             <description>This is template 3</description>
-            <executionPlan>
+            <executionType>realtime</executionType>
+            <script>
                 <![CDATA[
                 /* Enter a unique ExecutionPlan */
 
@@ -101,7 +104,7 @@
                 select *
                 insert into outStream;
                  ]]>
-            </executionPlan>
+            </script>
             <parameters>
                 <parameter name="maxVal" type="int">
                     <displayName>Testing Parameter</displayName>
