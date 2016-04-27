@@ -44,6 +44,7 @@
                 <exclude>**/bin/wso2server.sh</exclude>
                 <exclude>**/bin/wso2server.bat</exclude>
                 <exclude>**/conf/datasources/master-datasources.xml</exclude>
+                <exclude>**/repository/components/plugins/com.google.guava_15.0.0.jar</exclude>
             </excludes>
         </fileSet>
 
