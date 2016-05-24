@@ -1,0 +1,36 @@
+{
+  "name": "org.wso2.event.current.statistics.stream",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "payloadData": [
+    {
+      "name": "sensor_type",
+      "type": "STRING"
+    },
+    {
+      "name": "sensor_id_distinct_count",
+      "type": "LONG"
+    },
+    {
+      "name": "count",
+      "type": "LONG"
+    },
+    {
+      "name": "sum",
+      "type": "DOUBLE"
+    },
+    {
+      "name": "average",
+      "type": "DOUBLE"
+    },
+    {
+      "name": "max",
+      "type": "DOUBLE"
+    },
+    {
+      "name": "min",
+      "type": "DOUBLE"
+    }
+  ]
+}

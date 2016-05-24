@@ -1,0 +1,16 @@
+{
+  "name": "DeviceStream",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "payloadData": [
+    {
+      "name": "id",
+      "type": "STRING"
+    },
+    {
+      "name": "reading",
+      "type": "DOUBLE"
+    }
+  ]
+}
