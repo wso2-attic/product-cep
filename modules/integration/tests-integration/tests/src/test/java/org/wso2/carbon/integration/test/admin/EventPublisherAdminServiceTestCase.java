@@ -303,7 +303,7 @@ public class EventPublisherAdminServiceTestCase extends CEPIntegrationTest {
                             "- {{meta_sensorName}}: {{sensorValue}}\n" +
                             "- humidity: {{humidity}}",
                     new BasicOutputAdapterPropertyDto[]{initial, duplicated, startFromEnd, destinationType, destination,
-                            connectionFactory },"inline" ,true);
+                            connectionFactory },"inline" , 0, true);
             eventPublisherAdminServiceClient.removeActiveEventPublisherConfiguration("textPublisher");
             eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream","1.0.0");
         } catch (Exception e) {
@@ -387,7 +387,7 @@ public class EventPublisherAdminServiceTestCase extends CEPIntegrationTest {
                             "- {{meta_sensorName}}: {{sensorValue}}\n" +
                             "- humidity: {{humidity}}",
                     new BasicOutputAdapterPropertyDto[]{initial, duplicated, startFromEnd, destinationType, destination,
-                            connectionFactory}, "inline" ,true);
+                            connectionFactory}, "inline", 0, true);
             eventPublisherAdminServiceClient.removeActiveEventPublisherConfiguration("jmsPublisherCustomJSON");
             eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream","1.0.0");
         } catch (Exception e) {
@@ -471,7 +471,7 @@ public class EventPublisherAdminServiceTestCase extends CEPIntegrationTest {
                             "- {{meta_sensorName}}: {{sensorValue}}\n" +
                             "- humidity: {{humidity}}",
                     new BasicOutputAdapterPropertyDto[]{initial, duplicated, startFromEnd, destinationType, destination,
-                            connectionFactory}, "inline", true);
+                            connectionFactory}, "inline", 0, true);
             EventPublisherConfigurationInfoDto[] allStreamSpecificActiveEventPublisherConfiguration
                     = eventPublisherAdminServiceClient
                     .getAllStreamSpecificActiveEventPublisherConfigurations("org.wso2.event.sensor.stream:1.0.0");

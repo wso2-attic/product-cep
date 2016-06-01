@@ -207,7 +207,7 @@ public class DeployArtifactsViaAPITestCase extends CEPIntegrationTest {
                 new BasicOutputAdapterPropertyDto[]{url, username, password, headers, proxyHost, proxyPort, clientMethod};
 
         eventPublisherAdminServiceClient.addXMLEventPublisherConfiguration("PizzaDeliveryNotification", "outStream:1.0.0", "http",
-                textData, outputPropertyConfiguration, "inline", true);
+                textData, outputPropertyConfiguration, "inline", 0, true);
 
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), ++eventPublisherCount);
     }
