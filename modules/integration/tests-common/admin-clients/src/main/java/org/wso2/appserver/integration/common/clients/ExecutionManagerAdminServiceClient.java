@@ -51,45 +51,6 @@ public class ExecutionManagerAdminServiceClient {
         return executionManagerAdminServiceStub._getServiceClient();
     }
 
-//
-//    public TemplateDomainDTO[] getAllDomains() throws RemoteException {
-//        try {
-//            return executionManagerAdminServiceStub.getAllDomains();
-//        } catch (RemoteException e) {
-//            log.error("RemoteException", e);
-//            throw new RemoteException(e.getMessage(), e);
-//        }
-//    }
-//
-//    public TemplateDomainDTO getDomain(String domainName) throws RemoteException {
-//        try {
-//            return executionManagerAdminServiceStub.getDomain(domainName);
-//        } catch (RemoteException e) {
-//            log.error("RemoteException", e);
-//            throw new RemoteException(e.getMessage(), e);
-//        }
-//    }
-//
-//
-//    public TemplateConfigurationDTO getConfiguration(String domainName, String configurationName)
-//            throws RemoteException {
-//        try {
-//            return executionManagerAdminServiceStub.getConfiguration(domainName, configurationName);
-//        } catch (RemoteException e) {
-//            log.error("RemoteException", e);
-//            throw new RemoteException(e.getMessage(), e);
-//        }
-//    }
-//
-//    public TemplateConfigurationDTO[] getConfigurations(String domainName) throws RemoteException {
-//        try {
-//            return executionManagerAdminServiceStub.getConfigurations(domainName);
-//        } catch (RemoteException e) {
-//            log.error("RemoteException", e);
-//            throw new RemoteException(e.getMessage(), e);
-//        }
-//    }
-
     public String[] saveConfiguration(ScenarioConfigurationDTO scenarioConfigurationDTO) throws RemoteException {
         try {
             return executionManagerAdminServiceStub.saveConfiguration(scenarioConfigurationDTO);
@@ -100,7 +61,7 @@ public class ExecutionManagerAdminServiceClient {
     }
 
     public boolean saveStreamMapping(StreamMappingDTO[]
-                                              streamMappingDTOs, String configName, String domainName) throws RemoteException {
+                                             streamMappingDTOs, String configName, String domainName) throws RemoteException {
         try {
             return executionManagerAdminServiceStub.saveStreamMapping(streamMappingDTOs, configName, domainName);
         } catch (RemoteException e) {
@@ -126,6 +87,15 @@ public class ExecutionManagerAdminServiceClient {
                 count = configs.length;
             }
             return count;
+        } catch (RemoteException e) {
+            log.error("RemoteException", e);
+            throw new RemoteException(e.getMessage(), e);
+        }
+    }
+
+    public ExecutionManagerTemplateInfoDTO getExecutionManagerTemplateInfo(String domainName) throws RemoteException {
+        try {
+            return executionManagerAdminServiceStub.getExecutionManagerTemplateInfo(domainName);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
             throw new RemoteException(e.getMessage(), e);
