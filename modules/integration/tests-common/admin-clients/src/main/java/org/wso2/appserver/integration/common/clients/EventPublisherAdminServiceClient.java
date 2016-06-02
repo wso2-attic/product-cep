@@ -134,7 +134,7 @@ public class EventPublisherAdminServiceClient {
                                                   String dataFrom, boolean mappingEnabled)
             throws RemoteException {
         try {
-            eventPublisherAdminServiceStub.deployXmlEventPublisherConfiguration(eventPublisherName, streamNameWithVersion, eventAdapterType, textData, outputPropertyConfiguration, dataFrom, mappingEnabled);
+            eventPublisherAdminServiceStub.deployXmlEventPublisherConfiguration(eventPublisherName, streamNameWithVersion, eventAdapterType, textData, outputPropertyConfiguration, dataFrom, 0, mappingEnabled);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
             throw new RemoteException();
@@ -150,7 +150,7 @@ public class EventPublisherAdminServiceClient {
                                                          boolean mappingEnabled) throws RemoteException {
         try {
             return eventPublisherAdminServiceStub.deployTextEventPublisherConfiguration(eventPublisherName
-                    ,streamNameWithVersion,eventAdapterType,textData,outputPropertyConfiguration,dataFrom,
+                    ,streamNameWithVersion,eventAdapterType,textData,outputPropertyConfiguration,dataFrom, 0,
                     mappingEnabled);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
@@ -166,7 +166,7 @@ public class EventPublisherAdminServiceClient {
                                                    String dataFrom, boolean mappingEnabled)
             throws RemoteException {
         try {
-            eventPublisherAdminServiceStub.deployJsonEventPublisherConfiguration(eventPublisherName, streamNameWithVersion, eventAdapterType, jsonData, outputPropertyConfiguration, dataFrom, mappingEnabled);
+            eventPublisherAdminServiceStub.deployJsonEventPublisherConfiguration(eventPublisherName, streamNameWithVersion, eventAdapterType, jsonData, outputPropertyConfiguration, dataFrom, 0, mappingEnabled);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
             throw new RemoteException();
