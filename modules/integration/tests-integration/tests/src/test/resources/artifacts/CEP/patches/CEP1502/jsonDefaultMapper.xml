@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventReceiver name="jsonDefaultMapper" statistics="disable"
+               trace="disable" xmlns="http://wso2.org/carbon/eventreceiver">
+    <from eventAdapterType="http">
+        <property name="transports">all</property>
+    </from>
+    <mapping customMapping="enable" type="json">
+        <property>
+            <from jsonPath="$.JSONEvent.PacketType"/>
+            <to name="meta_PacketType" type="string"/>
+        </property>
+        <property>
+            <from jsonPath="$.JSONEvent.Version"/>
+            <to name="meta_Version" type="int"/>
+        </property>
+        <property>
+            <from jsonPath="$.JSONEvent.Equipment.EquipmentHeader.OBU_ID"/>
+            <to name="correlation_OBU_ID" type="string"/>
+        </property>
+        <property>
+            <from jsonPath="$.JSONEvent.Equipment.EquipmentHeader.PacketSequenceId"/>
+            <to name="correlation_PacketSequenceId" type="int"/>
+        </property>
+        <property>
+            <from jsonPath="$.JSONEvent.Equipment.SampleData[0].EventUTC"/>
+            <to name="EventUTC1" type="string"/>
+        </property>
+        <property>
+            <from jsonPath="$.JSONEvent.Equipment.SampleData[0].EngineSpeed"/>
+            <to name="EngineSpeed1" type="int"/>
+        </property>
+        <property>
+            <from jsonPath="$.JSONEvent.Equipment.SampleData[0].GpsSpeed"/>
+            <to name="GpsSpeed1" type="int"/>
+        </property>
+        <property>
+            <from jsonPath="$.JSONEvent.Equipment.SampleData[1].EventUTC"/>
+            <to name="EventUTC2" type="string"/>
+        </property>
+        <property>
+            <from jsonPath="$.JSONEvent.Equipment.SampleData[1].EngineSpeed"/>
+            <to name="EngineSpeed2" type="int"/>
+        </property>
+        <property>
+            <from jsonPath="$.JSONEvent.Equipment.SampleData[1].GpsSpeed"/>
+            <to name="GpsSpeed2" type="int"/>
+        </property>
+        <property>
+            <from jsonPath="$.JSONEvent.Equipment.SampleData[2].EventUTC"/>
+            <to default="2016-04-08 11:53:20" name="EventUTC3" type="string"/>
+        </property>
+        <property>
+            <from jsonPath="$.JSONEvent.Equipment.SampleData[2].EngineSpeed"/>
+            <to default="0" name="EngineSpeed3" type="int"/>
+        </property>
+        <property>
+            <from jsonPath="$.JSONEvent.Equipment.SampleData[2].GpsSpeed"/>
+            <to default="20" name="GpsSpeed3" type="int"/>
+        </property>
+    </mapping>
+    <to streamName="org.wso2.event.json.mapped.stream" version="1.0.0"/>
+</eventReceiver>

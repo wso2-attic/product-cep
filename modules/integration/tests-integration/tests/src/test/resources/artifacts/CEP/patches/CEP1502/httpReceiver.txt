@@ -1,0 +1,100 @@
+{
+   "JSONEvent": {
+      "Equipment": {
+         "EquipmentHeader": {
+            "OBU_ID": "NF525004",
+            "PacketSequenceId": 4094
+         },
+         "SampleData": [
+            {
+               "EventUTC": "2016-04-08 11:52:42",
+               "EngineSpeed": 1356,
+               "GpsSpeed": 10,
+               "Reserve1": null,
+               "Reserve2": null
+            },
+            {
+               "EventUTC": "2016-04-08 11:52:48",
+               "EngineSpeed": 1356,
+               "GpsSpeed": 1,
+               "Reserve1": null,
+               "Reserve2": null
+            },
+            {
+               "EventUTC": "2016-04-08 11:52:54",
+               "EngineSpeed": 0,
+               "GpsSpeed": 0,
+               "Reserve1": null,
+               "Reserve2": null
+            }
+         ]
+      },
+      "PacketType": "P6",
+      "Version": 1
+   }
+}
+*****
+{
+   "JSONEvent": {
+      "Equipment": {
+         "EquipmentHeader": {
+            "OBU_ID": "NF525005",
+            "PacketSequenceId": 4094
+         },
+         "SampleData": [
+            {
+               "EventUTC": "2016-04-08 11:52:42",
+               "EngineSpeed": 1356,
+               "GpsSpeed": 10,
+               "Reserve1": null,
+               "Reserve2": null
+            },
+            {
+               "EventUTC": "2016-04-08 11:52:48",
+               "EngineSpeed": 1356,
+               "GpsSpeed": 1,
+               "Reserve1": null,
+               "Reserve2": null
+            },
+            {
+               "EventUTC": "2016-04-08 11:52:54",
+               "EngineSpeed": 0,
+               "GpsSpeed": 0,
+               "Reserve1": null,
+               "Reserve2": null
+            }
+         ]
+      },
+      "PacketType": "P6",
+      "Version": 1
+   }
+}
+*****
+{
+   "JSONEvent": {
+      "Equipment": {
+         "EquipmentHeader": {
+            "OBU_ID": "NF525005",
+            "PacketSequenceId": 4096
+         },
+         "SampleData": [
+            {
+               "EventUTC": "2016-04-08 11:52:42",
+               "EngineSpeed": 1356,
+               "GpsSpeed": 10,
+               "Reserve1": null,
+               "Reserve2": null
+            },
+            {
+               "EventUTC": "2016-04-08 11:52:48",
+               "EngineSpeed": 1356,
+               "GpsSpeed": 1,
+               "Reserve1": null,
+               "Reserve2": null
+            }
+         ]
+      },
+      "PacketType": "P6",
+      "Version": 1
+   }
+}
