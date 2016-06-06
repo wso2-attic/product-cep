@@ -1,0 +1,64 @@
+{
+  "name": "org.wso2.event.json.mapped.stream",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "metaData": [
+    {
+      "name": "PacketType",
+      "type": "STRING"
+    },
+    {
+      "name": "Version",
+      "type": "INT"
+    }
+  ],
+  "correlationData": [
+    {
+      "name": "OBU_ID",
+      "type": "STRING"
+    },
+    {
+      "name": "PacketSequenceId",
+      "type": "INT"
+    }
+  ],
+  "payloadData": [
+    {
+      "name": "EventUTC1",
+      "type": "STRING"
+    },
+    {
+      "name": "EngineSpeed1",
+      "type": "INT"
+    },
+    {
+      "name": "GpsSpeed1",
+      "type": "INT"
+    },
+    {
+      "name": "EventUTC2",
+      "type": "STRING"
+    },
+    {
+      "name": "EngineSpeed2",
+      "type": "INT"
+    },
+    {
+      "name": "GpsSpeed2",
+      "type": "INT"
+    },
+    {
+      "name": "EventUTC3",
+      "type": "STRING"
+    },
+    {
+      "name": "EngineSpeed3",
+      "type": "INT"
+    },
+    {
+      "name": "GpsSpeed3",
+      "type": "INT"
+    }
+  ]
+}

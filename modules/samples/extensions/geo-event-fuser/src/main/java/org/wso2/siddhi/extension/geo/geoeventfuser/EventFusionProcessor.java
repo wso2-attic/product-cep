@@ -49,7 +49,8 @@ public class EventFusionProcessor extends WindowProcessor {
      * @param executionPlanContext         {@link ExecutionPlanContext}
      */
     @Override
-    protected void init(ExpressionExecutor[] attributeExpressionExecutors, ExecutionPlanContext executionPlanContext) {
+    protected void init(ExpressionExecutor[] attributeExpressionExecutors, ExecutionPlanContext executionPlanContext,
+                        boolean outputExpectsExpiredEvents) {
         if (attributeExpressionExecutors.length != 3) {
             throw new ExecutionPlanValidationException("Invalid no of arguments passed to geo:eventsFusion(<string> " +
                     "eventId, <string> finalState, <string> information) function, required 3 arguments, but " +

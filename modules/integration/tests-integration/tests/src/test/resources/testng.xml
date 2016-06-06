@@ -80,6 +80,7 @@
 
             <!-- Adding patch CEP1412 test case-->
             <class name="org.wso2.carbon.integration.test.patches.CEP1412TestCase"/>
+            <class name="org.wso2.carbon.integration.test.patches.CEP1502TestCase"/>
 
             <!--added jms together to reduce server restart-->
             <class name="org.wso2.carbon.integration.test.inputflow.JMSTestCase"/>
