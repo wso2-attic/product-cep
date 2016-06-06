@@ -25,11 +25,11 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.event.execution.manager.admin.dto.configuration.xsd.AttributeMappingDTO;
-import org.wso2.carbon.event.execution.manager.admin.dto.configuration.xsd.ParameterDTOE;
+import org.wso2.carbon.event.execution.manager.admin.dto.configuration.xsd.ParameterDTO;
 import org.wso2.carbon.event.execution.manager.admin.dto.configuration.xsd.ScenarioConfigurationDTO;
 import org.wso2.carbon.event.execution.manager.admin.dto.configuration.xsd.StreamMappingDTO;
-import org.wso2.carbon.event.execution.manager.admin.dto.domain.xsd.ExecutionManagerTemplateInfoDTO;
-import org.wso2.carbon.event.execution.manager.admin.dto.domain.xsd.ParameterDTO;
+import org.wso2.carbon.event.execution.manager.admin.dto.domain.xsd.DomainInfoDTO;
+import org.wso2.carbon.event.execution.manager.admin.dto.domain.xsd.ParameterDTOE;
 import org.wso2.carbon.integration.common.utils.mgt.ServerConfigurationManager;
 import org.wso2.carbon.integration.test.processflow.DeployArtifactsBasicTestCase;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
@@ -97,10 +97,10 @@ public class ExecutionManagerTestCase extends CEPIntegrationTest {
     public void addTemplateConfigurationTestScenario1() throws Exception {
         String configName = "TestConfig";
 
-        ExecutionManagerTemplateInfoDTO executionManagerTemplate = executionManagerAdminServiceClient
-                .getExecutionManagerTemplateInfo("TestDomain");
+        DomainInfoDTO domainInfo = executionManagerAdminServiceClient
+                .getDomainInfo("TestDomain");
 
-        if (executionManagerTemplate == null) {
+        if (domainInfo == null) {
             Assert.fail("Domain is not loaded");
         } else {
 
@@ -113,16 +113,16 @@ public class ExecutionManagerTestCase extends CEPIntegrationTest {
             ScenarioConfigurationDTO configuration = new ScenarioConfigurationDTO();
 
             configuration.setName(configName);
-            configuration.setDomain(executionManagerTemplate.getDomain());
-            configuration.setScenario(executionManagerTemplate.getScenarioInfoDTOs()[0].getName());
+            configuration.setDomain(domainInfo.getDomain());
+            configuration.setType(domainInfo.getScenarioInfoDTOs()[0].getType());
             configuration.setDescription("This is a test description");
 
-            for (ParameterDTO parameterDTO : executionManagerTemplate.getScenarioInfoDTOs()[0].getParameterDTOs()) {
-                ParameterDTOE parameterDTOE = new ParameterDTOE();
-                parameterDTOE.setName(parameterDTO.getName());
-                parameterDTOE.setValue(parameterDTO.getDefaultValue());
+            for (ParameterDTOE parameterDTOE : domainInfo.getScenarioInfoDTOs()[0].getParameterDTOs()) {
+                ParameterDTO parameterDTO = new ParameterDTO();
+                parameterDTO.setName(parameterDTOE.getName());
+                parameterDTO.setValue(parameterDTOE.getDefaultValue());
 
-                configuration.addParameterDTOs(parameterDTOE);
+                configuration.addParameterDTOs(parameterDTO);
             }
 
             String[] streamIDsToBeMapped = executionManagerAdminServiceClient.saveConfiguration(configuration);
@@ -135,7 +135,7 @@ public class ExecutionManagerTestCase extends CEPIntegrationTest {
             //todo: After StreamTemplateDeployer is added, eventStreamCount should get incremented by one.
             Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), eventStreamCount);
             //Number of configurations should be incremented by one
-            Assert.assertEquals(executionManagerAdminServiceClient.getConfigurationsCount(executionManagerTemplate.getDomain()),
+            Assert.assertEquals(executionManagerAdminServiceClient.getConfigurationsCount(domainInfo.getDomain()),
                                 ++configurationCount);
 
             StreamMappingDTO streamMappingDTO = new StreamMappingDTO();
@@ -162,7 +162,7 @@ public class ExecutionManagerTestCase extends CEPIntegrationTest {
             StreamMappingDTO[] streamMappingDTOs = {streamMappingDTO};
 
 
-            boolean streamMappingSaved = executionManagerAdminServiceClient.saveStreamMapping(streamMappingDTOs, configName, executionManagerTemplate.getDomain());
+            boolean streamMappingSaved = executionManagerAdminServiceClient.saveStreamMapping(streamMappingDTOs, configName, domainInfo.getDomain());
             Assert.assertEquals(streamMappingSaved, true);
 
             //After saveStreamMapping() is called, the streamMapping exection plan should have being deployed.
@@ -176,7 +176,7 @@ public class ExecutionManagerTestCase extends CEPIntegrationTest {
             Assert.assertEquals(eventProcessorAdminServiceClient.getExecutionPlanConfigurationCount(),
                     executionPlanCount);
             Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), eventStreamCount);
-            Assert.assertEquals(executionManagerAdminServiceClient.getConfigurationsCount(executionManagerTemplate.getDomain()),
+            Assert.assertEquals(executionManagerAdminServiceClient.getConfigurationsCount(domainInfo.getDomain()),
                                 configurationCount);
 
 
@@ -189,8 +189,8 @@ public class ExecutionManagerTestCase extends CEPIntegrationTest {
             //todo: after StreamTemplateDeployer is implemented, this count should get decremented by one
             Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), eventStreamCount);
             //When configuration is deleted the configuration count should be decremented by one
-            Assert.assertEquals(executionManagerAdminServiceClient.getConfigurationsCount(executionManagerTemplate.getDomain()),
-                    --configurationCount);
+            Assert.assertEquals(executionManagerAdminServiceClient.getConfigurationsCount(domainInfo.getDomain()),
+                                --configurationCount);
         }
 
     }
