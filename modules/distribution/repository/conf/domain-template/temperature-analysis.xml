@@ -23,7 +23,7 @@
         <scenario type="Maximum Temperature">
             <description>To check maximum room temperature of all rooms</description>
             <templates>
-                <template type="realTime">
+                <template type="realtime">
                     <![CDATA[
                 /* Enter a unique ExecutionPlan */
                 @Plan:name('testPlan')
@@ -52,7 +52,7 @@
         <scenario type="Maximum Temperature By Room">
             <description>To check maximum room temperature of specified room</description>
             <templates>
-                <template type="realTime">
+                <template type="realtime">
                     <![CDATA[
                 /* Enter a unique ExecutionPlan */
                 @Plan:name('testPlan')
@@ -87,7 +87,7 @@
         <scenario type="Average Temperature For Specified Time">
             <description>To check average room temperature within specified time window of all rooms</description>
             <templates>
-                <template type="realTime">
+                <template type="realtime">
                     <![CDATA[
                 /* Enter a unique ExecutionPlan */
                 @Plan:name('testPlan')
@@ -122,7 +122,7 @@
 
     </scenarios>
     <commonArtifacts>
-        <artifact type="eventStream">
+        <artifact type="eventstream">
             {
             "streamId": "inStream:1.0.0",
             "name": "inStream",
@@ -143,7 +143,7 @@
             "payloadData": []
             }
         </artifact>
-        <artifact type="eventStream">
+        <artifact type="eventstream">
             {
             "streamId": "outStream:1.0.0",
             "name": "outStream",
