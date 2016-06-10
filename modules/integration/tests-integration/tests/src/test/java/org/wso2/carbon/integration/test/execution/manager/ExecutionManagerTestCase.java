@@ -113,7 +113,7 @@ public class ExecutionManagerTestCase extends CEPIntegrationTest {
             ScenarioConfigurationDTO configuration = new ScenarioConfigurationDTO();
 
             configuration.setName(configName);
-            configuration.setDomain(domainInfo.getDomain());
+            configuration.setDomain(domainInfo.getName());
             configuration.setType(domainInfo.getScenarioInfoDTOs()[0].getType());
             configuration.setDescription("This is a test description");
 
@@ -135,7 +135,7 @@ public class ExecutionManagerTestCase extends CEPIntegrationTest {
             //todo: After StreamTemplateDeployer is added, eventStreamCount should get incremented by one.
             Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), eventStreamCount);
             //Number of configurations should be incremented by one
-            Assert.assertEquals(executionManagerAdminServiceClient.getConfigurationsCount(domainInfo.getDomain()),
+            Assert.assertEquals(executionManagerAdminServiceClient.getConfigurationsCount(domainInfo.getName()),
                                 ++configurationCount);
 
             StreamMappingDTO streamMappingDTO = new StreamMappingDTO();
@@ -162,7 +162,7 @@ public class ExecutionManagerTestCase extends CEPIntegrationTest {
             StreamMappingDTO[] streamMappingDTOs = {streamMappingDTO};
 
 
-            boolean streamMappingSaved = executionManagerAdminServiceClient.saveStreamMapping(streamMappingDTOs, configName, domainInfo.getDomain());
+            boolean streamMappingSaved = executionManagerAdminServiceClient.saveStreamMapping(streamMappingDTOs, configName, domainInfo.getName());
             Assert.assertEquals(streamMappingSaved, true);
 
             //After saveStreamMapping() is called, the streamMapping exection plan should have being deployed.
@@ -176,7 +176,7 @@ public class ExecutionManagerTestCase extends CEPIntegrationTest {
             Assert.assertEquals(eventProcessorAdminServiceClient.getExecutionPlanConfigurationCount(),
                     executionPlanCount);
             Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), eventStreamCount);
-            Assert.assertEquals(executionManagerAdminServiceClient.getConfigurationsCount(domainInfo.getDomain()),
+            Assert.assertEquals(executionManagerAdminServiceClient.getConfigurationsCount(domainInfo.getName()),
                                 configurationCount);
 
 
@@ -189,7 +189,7 @@ public class ExecutionManagerTestCase extends CEPIntegrationTest {
             //todo: after StreamTemplateDeployer is implemented, this count should get decremented by one
             Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), eventStreamCount);
             //When configuration is deleted the configuration count should be decremented by one
-            Assert.assertEquals(executionManagerAdminServiceClient.getConfigurationsCount(domainInfo.getDomain()),
+            Assert.assertEquals(executionManagerAdminServiceClient.getConfigurationsCount(domainInfo.getName()),
                                 --configurationCount);
         }
 
