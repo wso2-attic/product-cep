@@ -134,7 +134,7 @@ public class EventPublisherAdminServiceClient {
                                                   String dataFrom, boolean mappingEnabled)
             throws RemoteException {
         try {
-            eventPublisherAdminServiceStub.deployXmlEventPublisherConfiguration(eventPublisherName, streamNameWithVersion, eventAdapterType, textData, outputPropertyConfiguration, dataFrom, 0, mappingEnabled);
+            eventPublisherAdminServiceStub.deployCacheableXmlEventPublisherConfiguration(eventPublisherName, streamNameWithVersion, eventAdapterType, textData, outputPropertyConfiguration, dataFrom, 0, mappingEnabled);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
             throw new RemoteException();
@@ -149,7 +149,7 @@ public class EventPublisherAdminServiceClient {
                                                          String dataFrom,
                                                          boolean mappingEnabled) throws RemoteException {
         try {
-            return eventPublisherAdminServiceStub.deployTextEventPublisherConfiguration(eventPublisherName
+            return eventPublisherAdminServiceStub.deployCacheableTextEventPublisherConfiguration(eventPublisherName
                     ,streamNameWithVersion,eventAdapterType,textData,outputPropertyConfiguration,dataFrom, 0,
                     mappingEnabled);
         } catch (RemoteException e) {
@@ -166,7 +166,7 @@ public class EventPublisherAdminServiceClient {
                                                    String dataFrom, boolean mappingEnabled)
             throws RemoteException {
         try {
-            eventPublisherAdminServiceStub.deployJsonEventPublisherConfiguration(eventPublisherName, streamNameWithVersion, eventAdapterType, jsonData, outputPropertyConfiguration, dataFrom, 0, mappingEnabled);
+            eventPublisherAdminServiceStub.deployCacheableJsonEventPublisherConfiguration(eventPublisherName, streamNameWithVersion, eventAdapterType, jsonData, outputPropertyConfiguration, dataFrom, 0, mappingEnabled);
         } catch (RemoteException e) {
             log.error("RemoteException", e);
             throw new RemoteException();
