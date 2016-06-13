@@ -61,13 +61,13 @@ public class ExecutionPlanSubscriber extends StreamFunctionProcessor {
     /**
      * The init method of the StreamProcessor, this method will be called before other methods
      *
-     * @param inputDefinition              the incoming stream definition
-     * @param attributeExpressionExecutors the executors of each function parameters
-     * @param executionPlanContext         the context of the execution plan
+     * @param abstractDefinition   the incoming stream definition
+     * @param expressionExecutors  the executors of each function parameters
+     * @param executionPlanContext the context of the execution plan
      * @return the additional output attributes introduced by the function
      */
     @Override
-    protected List<Attribute> init(AbstractDefinition inputDefinition, ExpressionExecutor[] attributeExpressionExecutors, ExecutionPlanContext executionPlanContext, boolean outputExpectsExpiredEvents) {
+    protected List<Attribute> init(AbstractDefinition abstractDefinition, ExpressionExecutor[] expressionExecutors, ExecutionPlanContext executionPlanContext) {
         if (!initialized) {
             upCount();
             this.initialized = true;
@@ -112,7 +112,7 @@ public class ExecutionPlanSubscriber extends StreamFunctionProcessor {
      * the element to the same state as if was on a previous point of time.
      *
      * @param objects the stateful objects of the element as an array on
-     *              the same order provided by currentState().
+     *                the same order provided by currentState().
      */
     @Override
     public void restoreState(Object[] objects) {
@@ -132,5 +132,4 @@ public class ExecutionPlanSubscriber extends StreamFunctionProcessor {
         log.info("downCountNumberOfExecutionPlans current count after update = " + ExecutionPlansCount
                 .getNumberOfExecutionPlans());
     }
-
 }
