@@ -25,11 +25,11 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.event.execution.manager.admin.dto.configuration.xsd.AttributeMappingDTO;
-import org.wso2.carbon.event.execution.manager.admin.dto.configuration.xsd.ParameterDTO;
+import org.wso2.carbon.event.execution.manager.admin.dto.configuration.xsd.ConfigurationParameterDTO;
 import org.wso2.carbon.event.execution.manager.admin.dto.configuration.xsd.ScenarioConfigurationDTO;
 import org.wso2.carbon.event.execution.manager.admin.dto.configuration.xsd.StreamMappingDTO;
 import org.wso2.carbon.event.execution.manager.admin.dto.domain.xsd.DomainInfoDTO;
-import org.wso2.carbon.event.execution.manager.admin.dto.domain.xsd.ParameterDTOE;
+import org.wso2.carbon.event.execution.manager.admin.dto.domain.xsd.DomainParameterDTO;
 import org.wso2.carbon.integration.common.utils.mgt.ServerConfigurationManager;
 import org.wso2.carbon.integration.test.processflow.DeployArtifactsBasicTestCase;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
@@ -117,12 +117,12 @@ public class ExecutionManagerTestCase extends CEPIntegrationTest {
             configuration.setType(domainInfo.getScenarioInfoDTOs()[0].getType());
             configuration.setDescription("This is a test description");
 
-            for (ParameterDTOE parameterDTOE : domainInfo.getScenarioInfoDTOs()[0].getParameterDTOs()) {
-                ParameterDTO parameterDTO = new ParameterDTO();
+            for (DomainParameterDTO parameterDTOE : domainInfo.getScenarioInfoDTOs()[0].getDomainParameterDTOs()) {
+                ConfigurationParameterDTO parameterDTO = new ConfigurationParameterDTO();
                 parameterDTO.setName(parameterDTOE.getName());
                 parameterDTO.setValue(parameterDTOE.getDefaultValue());
 
-                configuration.addParameterDTOs(parameterDTO);
+                configuration.addConfigurationParameterDTOs(parameterDTO);
             }
 
             String[] streamIDsToBeMapped = executionManagerAdminServiceClient.saveConfiguration(configuration);
