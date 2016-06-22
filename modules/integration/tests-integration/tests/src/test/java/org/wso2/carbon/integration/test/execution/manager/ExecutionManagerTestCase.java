@@ -57,7 +57,7 @@ public class ExecutionManagerTestCase extends CEPIntegrationTest {
                 + File.separator + "execution" + File.separator + "manager" + File.separator
                 + "TestDomain.xml").toURI());
         FileUtils.copyFileToDirectory(newFile, new File(ServerConfigurationManager.getCarbonHome() + File.separator
-                + "repository" + File.separator + "conf" + File.separator + "execution-manager" + File.separator
+                + "repository" + File.separator + "conf" + File.separator + "template-manager" + File.separator
                 + "domain-template" + File.separator));
         serverManager.restartForcefully();
 
