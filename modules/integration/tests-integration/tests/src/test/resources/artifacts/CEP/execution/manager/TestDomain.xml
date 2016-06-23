@@ -20,25 +20,85 @@
         <scenario type="addGadgetIoTScenario">
             <description>Configure a gadget to display stats, given a stream of your choice</description>
             <templates>
+                <template type="eventstream">
+                    <![CDATA[
+                    {
+                      "name": "org.wso2.event.sensor.stream",
+                      "version": "1.0.0",
+                      "nickName": "",
+                      "description": "",
+                      "payloadData": [
+                        {
+                          "name": "sensor_id",
+                          "type": "STRING"
+                        },
+                        {
+                          "name": "sensor_value",
+                          "type": "DOUBLE"
+                        }
+                      ]
+                    }
+                            ]]>
+                </template>
+                <template type="eventstream">
+                    <![CDATA[
+                        {
+                          "name": "org.wso2.event.current.statistics.stream",
+                          "version": "1.0.0",
+                          "nickName": "",
+                          "description": "",
+                          "payloadData": [
+                            {
+                              "name": "sensor_type",
+                              "type": "STRING"
+                            },
+                            {
+                              "name": "sensor_id_distinct_count",
+                              "type": "LONG"
+                            },
+                            {
+                              "name": "count",
+                              "type": "LONG"
+                            },
+                            {
+                              "name": "sum",
+                              "type": "DOUBLE"
+                            },
+                            {
+                              "name": "average",
+                              "type": "DOUBLE"
+                            },
+                            {
+                              "name": "max",
+                              "type": "DOUBLE"
+                            },
+                            {
+                              "name": "min",
+                              "type": "DOUBLE"
+                            }
+                          ]
+                        }
+                            ]]>
+                </template>
                 <template type="realtime">
                     <![CDATA[
-                /* Enter a unique ExecutionPlan */
-                @Plan:name('TemperatureAnalysisPlan')
+                        /* Enter a unique ExecutionPlan */
+                        @Plan:name('TemperatureAnalysisPlan')
 
-                /* Enter a unique description for ExecutionPlan */
-                -- @Plan:description('ExecutionPlan')
+                        /* Enter a unique description for ExecutionPlan */
+                        -- @Plan:description('ExecutionPlan')
 
-                /* define streams/tables and write queries here ... */
+                        /* define streams/tables and write queries here ... */
 
-                @Import('org.wso2.event.sensor.stream:1.0.0')
-                define stream InputStream (sensor_id string, sensor_value double);
+                        @Import('org.wso2.event.sensor.stream:1.0.0')
+                        define stream InputStream (sensor_id string, sensor_value double);
 
-		@Export('org.wso2.event.current.statistics.stream:1.0.0')
-		define stream OutputStream (sensor_type string, sensor_id_distinct_count long, count long, sum double, average double, max double, min double);
+                        @Export('org.wso2.event.current.statistics.stream:1.0.0')
+                        define stream OutputStream (sensor_type string, sensor_id_distinct_count long, count long, sum double, average double, max double, min double);
 
-		from InputStream#window.time($timeInMins min)
-		select '$sensorValue' as sensor_type, distinctcount(sensor_id) as sensor_id_distinct_count, count() as count, sum(sensor_value) as sum, avg(sensor_value) as average, max(sensor_value) as 			max, min(sensor_value) as min
-		insert into OutputStream;
+                        from InputStream#window.time($timeInMins min)
+                        select '$sensorValue' as sensor_type, distinctcount(sensor_id) as sensor_id_distinct_count, count() as count, sum(sensor_value) as sum, avg(sensor_value) as average, max(sensor_value) as 			max, min(sensor_value) as min
+                        insert into OutputStream;
                     ]]>
                 </template>
             </templates>

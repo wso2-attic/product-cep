@@ -21,22 +21,27 @@ import org.apache.axiom.om.impl.builder.StAXOMBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.simple.parser.JSONParser;
-import org.wso2.appserver.integration.common.clients.*;
+import org.wso2.appserver.integration.common.clients.EventProcessorAdminServiceClient;
+import org.wso2.appserver.integration.common.clients.EventPublisherAdminServiceClient;
+import org.wso2.appserver.integration.common.clients.EventReceiverAdminServiceClient;
+import org.wso2.appserver.integration.common.clients.EventSimulatorAdminServiceClient;
+import org.wso2.appserver.integration.common.clients.EventStreamManagerAdminServiceClient;
+import org.wso2.appserver.integration.common.clients.ExecutionManagerAdminServiceClient;
 import org.wso2.carbon.automation.engine.context.AutomationContext;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
 import org.wso2.carbon.integration.common.utils.LoginLogoutClient;
 import org.wso2.carbon.integration.common.utils.mgt.ServerConfigurationManager;
 
-
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.xpath.XPathExpressionException;
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.regex.Matcher;
 

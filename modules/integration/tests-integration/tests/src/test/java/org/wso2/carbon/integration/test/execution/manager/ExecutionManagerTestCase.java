@@ -35,6 +35,7 @@ import org.wso2.carbon.integration.test.processflow.DeployArtifactsBasicTestCase
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
 
 import java.io.File;
+import java.rmi.RemoteException;
 
 public class ExecutionManagerTestCase extends CEPIntegrationTest {
     private static final Log log = LogFactory.getLog(DeployArtifactsBasicTestCase.class);
@@ -57,7 +58,7 @@ public class ExecutionManagerTestCase extends CEPIntegrationTest {
                 + File.separator + "execution" + File.separator + "manager" + File.separator
                 + "TestDomain.xml").toURI());
         FileUtils.copyFileToDirectory(newFile, new File(ServerConfigurationManager.getCarbonHome() + File.separator
-                + "repository" + File.separator + "conf" + File.separator + "execution-manager" + File.separator
+                + "repository" + File.separator + "conf" + File.separator + "template-manager" + File.separator
                 + "domain-template" + File.separator));
         serverManager.restartForcefully();
 
@@ -70,25 +71,12 @@ public class ExecutionManagerTestCase extends CEPIntegrationTest {
         executionManagerAdminServiceClient = configurationUtil
                 .getExecutionManagerAdminServiceClient(backendURL, loggedInSessionCookie);
 
-        //~~Adding user's stream definition~~
+        //~~Adding fromStream (user's stream) definition~~
         //It is a pre-requisite to have this stream defined.
         //It should be in 'deployed' state when we add the scenario configuration in following tests.
         eventStreamCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
         String deviceStreamDefinition = getJSONArtifactConfiguration("execution" + File.separator + "manager", "DeviceStream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(deviceStreamDefinition);
-        Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), ++eventStreamCount);
-
-        //todo: remove this after the StreamTemplateDeployer has being implemented. Until it is implemented, toStream is deployed this way.
-        //~~Adding toStream definition~~
-        //It is a pre-requisite to have this stream defined.
-        //It should be in 'deployed' state when we save stream mappings in following tests.
-        String sensorStreamDefinition = getJSONArtifactConfiguration("execution" + File.separator + "manager", "org.wso2.event.sensor.stream_1.0.0.json");
-        eventStreamManagerAdminServiceClient.addEventStreamAsString(sensorStreamDefinition);
-        Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), ++eventStreamCount);
-
-        //todo: remove this after the StreamTemplateDeployer has being implemented.
-        String statStreamDefinition = getJSONArtifactConfiguration("execution" + File.separator + "manager", "org.wso2.event.current.statistics.stream_1.0.0.json");
-        eventStreamManagerAdminServiceClient.addEventStreamAsString(statStreamDefinition);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), ++eventStreamCount);
     }
 
@@ -107,7 +95,6 @@ public class ExecutionManagerTestCase extends CEPIntegrationTest {
             log.info("==================Testing the adding a configuration for a domain template==================== ");
             eventStreamCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
             executionPlanCount = eventProcessorAdminServiceClient.getExecutionPlanConfigurationCount();
-            eventStreamCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
 
             log.info("=======================Adding a configuration====================");
             ScenarioConfigurationDTO configuration = new ScenarioConfigurationDTO();
@@ -117,22 +104,23 @@ public class ExecutionManagerTestCase extends CEPIntegrationTest {
             configuration.setType(domainInfo.getScenarioInfoDTOs()[0].getType());
             configuration.setDescription("This is a test description");
 
-            for (DomainParameterDTO parameterDTOE : domainInfo.getScenarioInfoDTOs()[0].getDomainParameterDTOs()) {
-                ConfigurationParameterDTO parameterDTO = new ConfigurationParameterDTO();
-                parameterDTO.setName(parameterDTOE.getName());
-                parameterDTO.setValue(parameterDTOE.getDefaultValue());
-
-                configuration.addConfigurationParameterDTOs(parameterDTO);
+            for (DomainParameterDTO domainParameterDTO : domainInfo.getScenarioInfoDTOs()[0].getDomainParameterDTOs()) {
+                ConfigurationParameterDTO configParameterDTO = new ConfigurationParameterDTO();
+                configParameterDTO.setName(domainParameterDTO.getName());
+                configParameterDTO.setValue(domainParameterDTO.getDefaultValue());
+                configuration.addConfigurationParameterDTOs(configParameterDTO);
             }
 
             String[] streamIDsToBeMapped = executionManagerAdminServiceClient.saveConfiguration(configuration);
             Assert.assertEquals(TO_STREAM_ID, streamIDsToBeMapped[0]);
+            executionPlanCount++;
 
-            //After saveConfiguration() is called, the execution plan in the TestDomain.xml templated should have being deployed,
-            //hence count should get incremented bby one.
+            waitForExecutionPlanDeployment(executionPlanCount, 300, 20000);
+            //After saveConfiguration() is called, the execution plan in the TestDomain.xml template should have being deployed,
+            //hence count should have gotten incremented by one.
             Assert.assertEquals(eventProcessorAdminServiceClient.getExecutionPlanConfigurationCount(),
-                                ++executionPlanCount);
-            //todo: After StreamTemplateDeployer is added, eventStreamCount should get incremented by one.
+                                executionPlanCount);
+            eventStreamCount += 2;
             Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), eventStreamCount);
             //Number of configurations should be incremented by one
             Assert.assertEquals(executionManagerAdminServiceClient.getConfigurationsCount(domainInfo.getName()),
@@ -164,14 +152,18 @@ public class ExecutionManagerTestCase extends CEPIntegrationTest {
 
             boolean streamMappingSaved = executionManagerAdminServiceClient.saveStreamMapping(streamMappingDTOs, configName, domainInfo.getName());
             Assert.assertEquals(streamMappingSaved, true);
+            executionPlanCount++;
 
-            //After saveStreamMapping() is called, the streamMapping exection plan should have being deployed.
+            waitForExecutionPlanDeployment(executionPlanCount, 300, 20000);
+
+            //After saveStreamMapping() is called, the streamMapping execution plan should have being deployed.
             Assert.assertEquals(eventProcessorAdminServiceClient.getExecutionPlanConfigurationCount(),
-                    ++executionPlanCount);
+                    executionPlanCount);
 
             log.info("=======================Edit a configuration====================");
             configuration.setDescription("Description edited");
             executionManagerAdminServiceClient.saveConfiguration(configuration);
+            Thread.sleep(6000);
             //When existing configuration is been updated, the execution plan will be un-deployed and redeployed
             Assert.assertEquals(eventProcessorAdminServiceClient.getExecutionPlanConfigurationCount(),
                     executionPlanCount);
@@ -182,22 +174,36 @@ public class ExecutionManagerTestCase extends CEPIntegrationTest {
 
             log.info("=======================Delete a configuration====================");
             executionManagerAdminServiceClient.deleteConfiguration(configuration.getDomain(), configuration.getName());
-            //When configuration is deleted two execution plans will get un-deployed. 1. the one in the template and the stream mapping execution plan.
-            executionPlanCount = executionPlanCount -2;
+            //When configuration is deleted two execution plans will get un-deployed. 1. the one in the template 2. the stream mapping execution plan.
+            executionPlanCount -= 2;
+            waitForExecutionPlanDeployment(executionPlanCount, 300, 20000);
+
             Assert.assertEquals(eventProcessorAdminServiceClient.getExecutionPlanConfigurationCount(),
                     executionPlanCount);
-            //todo: after StreamTemplateDeployer is implemented, this count should get decremented by one
+            eventStreamCount -= 2;
             Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), eventStreamCount);
             //When configuration is deleted the configuration count should be decremented by one
             Assert.assertEquals(executionManagerAdminServiceClient.getConfigurationsCount(domainInfo.getName()),
                                 --configurationCount);
         }
-
     }
 
 
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
         super.cleanup();
+    }
+
+
+    private void waitForExecutionPlanDeployment(int expectedCount, long sleepTime, long timeout)
+            throws InterruptedException, RemoteException {
+        long currentWaitTime = 0;
+        long startTime = System.currentTimeMillis();
+        int currentCount = eventProcessorAdminServiceClient.getExecutionPlanConfigurationCount();
+        while ((expectedCount != currentCount) && (currentWaitTime <= timeout)) {
+            Thread.sleep(sleepTime);
+            currentCount = eventProcessorAdminServiceClient.getExecutionPlanConfigurationCount();
+            currentWaitTime = System.currentTimeMillis() - startTime;
+        }
     }
 }
