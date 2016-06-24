@@ -18,17 +18,6 @@
 
 <eventProcessorConfiguration>
 
-    <mode name="SingleNode" enable="false">
-        <persistence enable="false">
-            <persistenceIntervalInMinutes>15</persistenceIntervalInMinutes>
-            <persisterSchedulerPoolSize>10</persisterSchedulerPoolSize>
-            <persister class="org.wso2.carbon.event.processor.core.internal.persistence.FileSystemPersistenceStore">
-                <property key="persistenceLocation">cep_persistence</property>
-            </persister>
-        </persistence>
-    </mode>
-
-
     <!-- HA Mode Config -->
     <mode name="HA" enable="true">
         <nodeType>
@@ -38,7 +27,7 @@
         <checkMemberUpdateInterval>10000</checkMemberUpdateInterval>
         <eventSync>
             <hostName>host-ip-address</hostName>
-            <port>11225</port>
+            <port>11224</port>
             <reconnectionInterval>20000</reconnectionInterval>
             <serverThreads>20000</serverThreads>
             <!--Size of TCP event publishing client's send buffer in bytes-->
@@ -72,11 +61,17 @@
             <publisherBufferSize>1024</publisherBufferSize>
             <publisherConnectionStatusCheckInterval>30000</publisherConnectionStatusCheckInterval>
         </presentation>
+        <persistence enable="true">
+            <persistenceIntervalInMinutes>15</persistenceIntervalInMinutes>
+            <persisterSchedulerPoolSize>10</persisterSchedulerPoolSize>
+            <persister class="org.wso2.carbon.event.processor.core.internal.persistence.FileSystemPersistenceStore">
+                <property key="persistenceLocation">cep_persistence</property>
+            </persister>
+        </persistence>
     </mode>
 
 
     <!-- Distributed Mode Config -->
-
     <mode name="Distributed" enable="false">
         <nodeType>
             <worker enable="true"/>
