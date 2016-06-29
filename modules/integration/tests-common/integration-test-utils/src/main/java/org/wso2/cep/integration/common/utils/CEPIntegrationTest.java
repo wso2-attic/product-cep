@@ -26,7 +26,7 @@ import org.wso2.appserver.integration.common.clients.EventPublisherAdminServiceC
 import org.wso2.appserver.integration.common.clients.EventReceiverAdminServiceClient;
 import org.wso2.appserver.integration.common.clients.EventSimulatorAdminServiceClient;
 import org.wso2.appserver.integration.common.clients.EventStreamManagerAdminServiceClient;
-import org.wso2.appserver.integration.common.clients.ExecutionManagerAdminServiceClient;
+import org.wso2.appserver.integration.common.clients.TemplateManagerAdminServiceClient;
 import org.wso2.carbon.automation.engine.context.AutomationContext;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
@@ -56,7 +56,7 @@ public abstract class CEPIntegrationTest {
     protected EventReceiverAdminServiceClient eventReceiverAdminServiceClient;
     protected EventPublisherAdminServiceClient eventPublisherAdminServiceClient;
 
-    protected ExecutionManagerAdminServiceClient executionManagerAdminServiceClient;
+    protected TemplateManagerAdminServiceClient templateManagerAdminServiceClient;
     protected EventSimulatorAdminServiceClient eventSimulatorAdminServiceClient;
 
     private final String artifactDeploymentDir = FrameworkPathUtil.getCarbonHome() + File.separator + "repository" +
