@@ -34,7 +34,7 @@ public class ConfigurationUtil {
     private EventStreamManagerAdminServiceClient eventStreamManagerAdminServiceClient;
     private EventReceiverAdminServiceClient eventReceiverAdminServiceClient;
     private EventPublisherAdminServiceClient eventPublisherAdminServiceClient;
-    private ExecutionManagerAdminServiceClient executionManagerAdminServiceClient;
+    private TemplateManagerAdminServiceClient templateManagerAdminServiceClient;
     private EventSimulatorAdminServiceClient eventSimulatorAdminServiceClient;
 
     private ConfigurationUtil() {
@@ -78,13 +78,13 @@ public class ConfigurationUtil {
         return eventProcessorAdminServiceClient;
     }
 
-    public ExecutionManagerAdminServiceClient getExecutionManagerAdminServiceClient(
+    public TemplateManagerAdminServiceClient getTemplateManagerAdminServiceClient(
             String backendURL,
             String loggedInSessionCookie)
             throws AxisFault {
 
-        initExecutionManagerAdminServiceClient(backendURL, loggedInSessionCookie);
-        return executionManagerAdminServiceClient;
+        initTemplateManagerAdminServiceClient(backendURL, loggedInSessionCookie);
+        return templateManagerAdminServiceClient;
     }
 
     public EventSimulatorAdminServiceClient getEventSimulatorAdminServiceClient(
@@ -137,11 +137,11 @@ public class ConfigurationUtil {
         options.setProperty(org.apache.axis2.transport.http.HTTPConstants.COOKIE_STRING, loggedInSessionCookie);
     }
 
-    private void initExecutionManagerAdminServiceClient(String backendURL,
+    private void initTemplateManagerAdminServiceClient(String backendURL,
                                                         String loggedInSessionCookie)
             throws AxisFault {
-        executionManagerAdminServiceClient = new ExecutionManagerAdminServiceClient(backendURL, loggedInSessionCookie);
-        ServiceClient client = executionManagerAdminServiceClient._getServiceClient();
+        templateManagerAdminServiceClient = new TemplateManagerAdminServiceClient(backendURL, loggedInSessionCookie);
+        ServiceClient client = templateManagerAdminServiceClient._getServiceClient();
         Options options = client.getOptions();
         options.setManageSession(true);
         options.setProperty(org.apache.axis2.transport.http.HTTPConstants.COOKIE_STRING, loggedInSessionCookie);
