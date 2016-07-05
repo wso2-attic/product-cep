@@ -55,7 +55,7 @@
             <!--<class name="org.wso2.carbon.integration.test.processflow.PassThroughWithWso2Event"/>-->
             <!--<class name="org.wso2.carbon.integration.test.processflow.MQTTXMLMessageTestCase"/>-->
             <!--<class name="org.wso2.carbon.integration.test.storm.StormTestCase"/>-->
-            <class name="org.wso2.carbon.integration.test.execution.manager.ExecutionManagerTestCase"/>
+            <class name="org.wso2.carbon.integration.test.template.manager.TemplateManagerTestCase"/>
             <!--<class name="org.wso2.carbon.integration.test.inputflow.MQTTTestCase"/>-->
             <class name="org.wso2.carbon.integration.test.capp.CappTestCase"/>
             <class name="org.wso2.carbon.integration.test.extensionflow.RDBMSEventTableTestCase"/>
