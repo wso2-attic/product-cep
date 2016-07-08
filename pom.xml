@@ -26,7 +26,7 @@
     <groupId>org.wso2.cep</groupId>
     <artifactId>wso2cep-parent</artifactId>
     <packaging>pom</packaging>
-    <version>4.1.1-SNAPSHOT</version>
+    <version>4.2.0-SNAPSHOT</version>
     <name>WSO2 CEP - Parent</name>
     <url>http://wso2.com/products/complex-event-processor/</url>
     <description>WSO2 Complex Event Processor</description>
@@ -747,7 +747,7 @@
 
         <siddhi.version>3.1.0-SNAPSHOT</siddhi.version>
 
-        <cep.version>4.1.1-SNAPSHOT</cep.version>
+        <cep.version>4.2.0-SNAPSHOT</cep.version>
 
         <carbon.analytics.common.gadget.version>5.1.0.SNAPSHOT</carbon.analytics.common.gadget.version>
         
