@@ -725,19 +725,19 @@
 	
     <properties>
         <!--CEP versions-->
-        <jaggery.version>0.12.6-SNAPSHOT</jaggery.version>
-        <jaggery.modules.version>1.5.3-beta</jaggery.modules.version>
+        <jaggery.version>0.12.6</jaggery.version>
+        <jaggery.modules.version>1.5.3-SNAPSHOT</jaggery.modules.version>
 
         <!-- Carbon kernel version-->
-        <carbon.kernel.version>4.4.6</carbon.kernel.version>
+        <carbon.kernel.version>4.4.7</carbon.kernel.version>
         <!--<carbon.kernel.imp.pkg.version>[4.3.0, 4.4.0)</carbon.kernel.imp.pkg.version>-->
         <!--<carbon.kernel.registry.imp.pkg.version>[1.0.1, 2.0.0)</carbon.kernel.registry.imp.pkg.version>-->
         <carbon.deployment.version>4.6.2-SNAPSHOT</carbon.deployment.version>
         <carbon.commons.version>4.5.4</carbon.commons.version>
         <carbon.analytics-common.version>5.1.0-SNAPSHOT</carbon.analytics-common.version>
-        <carbon.dashboards.version>1.0.20-SNAPSHOT</carbon.dashboards.version>
+        <carbon.dashboards.version>2.0.0-SNAPSHOT</carbon.dashboards.version>
         <carbon.identity.version>5.1.1-SNAPSHOT</carbon.identity.version>
-        <carbon.registry.version>4.5.5-SNAPSHOT</carbon.registry.version>
+        <carbon.registry.version>4.5.5</carbon.registry.version>
         <carbon.multitenancy.version>4.5.3-SNAPSHOT</carbon.multitenancy.version>
         <carbon.metrics.version>1.2.2-SNAPSHOT</carbon.metrics.version>
         <!--<carbon.ml.version>1.1.1</carbon.ml.version>-->
