@@ -26,10 +26,10 @@
     <property name="main-class" value="org.wso2.carbon.sample.websocket.Websocket"/>
     <property name="lib.dir" value="../../lib"/>
 
-    <property name="sn" value=""/>
+    <property name="sn" value="&quot;&quot;"/>
     <property name="port" value="9099"/>
     <property name="url" value=""/>
-    <property name="filePath" value=""/>
+    <property name="filePath" value="&quot;&quot;"/>
     <property name="host" value="localhost"/>
 
     <path id="javac.classpath">

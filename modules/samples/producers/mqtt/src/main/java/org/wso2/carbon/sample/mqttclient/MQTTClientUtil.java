@@ -35,11 +35,11 @@ public class MQTTClientUtil {
      * @param sampleNumber Number of the http sample
      */
     public static String getMessageFilePath(String sampleNumber, String filePath, String topic) throws Exception {
-        if (sampleNumber != null && sampleNumber.length() == 0) {
+        if (sampleNumber != null && sampleNumber.isEmpty() || sampleNumber.equals("\"\"")) {
             sampleNumber = null;
         }
 
-        if (filePath != null && filePath.length() == 0) {
+        if (filePath != null && filePath.isEmpty() || filePath.equals("\"\"")) {
             filePath = null;
         }
 
