@@ -20,7 +20,7 @@
     <description>Temperature Analysis Description</description>
     <scenarios>
 
-        <scenario type="Maximum Temperature">
+        <scenario type="MaximumTemperature">
             <description>To check maximum room temperature of all rooms</description>
             <templates>
                 <template type="realtime">
