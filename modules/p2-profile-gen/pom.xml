@@ -120,12 +120,15 @@
                                 </featureArtifactDef>
                                 <featureArtifactDef>
                                     org.jaggeryjs.modules:i18n.feature:${jaggery.modules.version}
-                                </featureArtifactDef> 
+                                </featureArtifactDef>
                                 <featureArtifactDef>
                                     org.jaggeryjs.modules:process.feature:${jaggery.modules.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
                                     org.jaggeryjs.modules:ws.feature:${jaggery.modules.version}
+                                </featureArtifactDef>
+                                <featureArtifactDef>
+                                    org.jaggeryjs.modules:sso.feature:${sso.feature.version}
                                 </featureArtifactDef>
 
                                 <featureArtifactDef>
@@ -297,6 +300,10 @@
                                     org.wso2.carbon.metrics:org.wso2.carbon.metrics.feature:${carbon.metrics.version}
                                 </featureArtifactDef>
 
+                                <featureArtifactDef>
+                                    org.wso2.carbon.analytics-common:org.wso2.carbon.analytics.gadget.template.feature:${carbon.analytics-common.version}
+                                </featureArtifactDef>
+
                                 <!-- ML features -->
                                 <!--<featureArtifactDef>-->
                                     <!--org.wso2.carbon.ml:org.wso2.carbon.ml.commons.feature:${carbon.ml.version}-->
@@ -406,7 +413,10 @@
                                     <id>org.jaggeryjs.modules.ws.feature.group</id>
                                     <version>${jaggery.modules.version}</version>
                                 </feature>
-
+                                <feature>
+                                    <id>org.jaggeryjs.modules.sso.feature.group</id>
+                                    <version>${sso.feature.version}</version>
+                                </feature>
                                 <feature>
                                     <id>org.wso2.carbon.webapp.mgt.server.feature.group</id>
                                     <version>${carbon.deployment.version}</version>
@@ -913,6 +923,11 @@
                                 <feature>
                                     <id>org.wso2.carbon.dashboards.portal.feature.group</id>
                                     <version>${carbon.dashboards.version}</version>
+                                </feature>
+
+                                <feature>
+                                    <id>org.wso2.carbon.analytics.gadget.template.feature.group</id>
+                                    <version>${carbon.analytics-common.version}</version>
                                 </feature>
 
                                 <!-- cep ui features -->
