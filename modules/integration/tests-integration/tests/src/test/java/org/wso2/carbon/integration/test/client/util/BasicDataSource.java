@@ -38,7 +38,7 @@ public class BasicDataSource implements DataSource {
 
         //String prefix = FrameworkPathUtil.getCarbonHome();
        // H2_CONNECTION_URL = "jdbc:h2:"+prefix+"/repository/database/WSO2CARBON_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000";
-        //H2_CONNECTION_URL = "jdbc:h2:/home/mohan/SVN_Files/git-repo/product-cep/modules/distribution/target/wso2cep-4.1.0-SNAPSHOT/repository/database/WSO2CARBON_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000;AUTO_SERVER=TRUE";
+        //H2_CONNECTION_URL = "jdbc:h2:/home/mohan/SVN_Files/git-repo/product-cep/modules/distribution/target/wso2cep-4.2.0-SNAPSHOT/repository/database/WSO2CARBON_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000;AUTO_SERVER=TRUE";
 
         try {
             Class.forName(H2_DRIVER_CLASS);
