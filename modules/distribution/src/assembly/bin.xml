@@ -344,17 +344,9 @@
             <directory>
                 ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/deployment/server/jaggeryapps/portal
             </directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/portal
-            </outputDirectory>
-            <includes>
-                <include>**/*</include>
-            </includes>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/portal</outputDirectory>
             <excludes>
-                <exclude>**/configs/designer.json</exclude>
-                <exclude>**/controllers/includes/common-scripts.jag</exclude>
-                <exclude>**/extensions/components/gadget/index.js</exclude>
-                <exclude>**/js/VizGrammar.min.js</exclude>
-                <exclude>**/templates/gadgets/igviz/js/VizGrammar.min.js</exclude>
+                <exclude>**/extensions/chart-templates/line-chart/config.json</exclude>
             </excludes>
         </fileSet>
 
@@ -685,14 +677,6 @@
             <fileMode>644</fileMode>
         </file>
 
-        <!--Copying jaggery config file -->
-        <file>
-            <source>repository/resources/jaggery/config/designer.json</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/portal/configs
-            </outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
 
         <!--Copying jaggery file for hostname fix -->
         <file>
@@ -737,6 +721,16 @@
             <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
+
+        <file>
+            <source>
+                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/components/features/org.wso2.carbon.analytics.gadget.template_${carbon.analytics.common.gadget.version}/charts/line-chart/config.json
+            </source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/portal/extensions/chart-templates/line-chart</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+
 
         <!--ML files -->
         <!--<file>-->
