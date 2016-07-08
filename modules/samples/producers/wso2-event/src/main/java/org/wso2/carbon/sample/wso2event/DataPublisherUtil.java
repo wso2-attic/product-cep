@@ -55,11 +55,11 @@ public class DataPublisherUtil {
     }
 
     public static String getEventFilePath(String sampleNumber, String streamId, String filePath) throws Exception {
-        if (sampleNumber != null && sampleNumber.length() == 0) {
+        if (sampleNumber != null && sampleNumber.isEmpty() || sampleNumber.equals("\"\"")) {
             sampleNumber = null;
         }
 
-        if (filePath != null && filePath.length() == 0) {
+        if (filePath != null && filePath.isEmpty() || filePath.equals("\"\"")) {
             filePath = null;
         }
 
