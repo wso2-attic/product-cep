@@ -312,6 +312,14 @@
                                     org.wso2.carbon.analytics-common:org.wso2.carbon.analytics.gadget.template.feature:${carbon.analytics-common.version}
                                 </featureArtifactDef>
 
+                                <featureArtifactDef>
+                                    org.wso2.carbon.analytics-common:org.wso2.carbon.gadget.template.deployer.server.feature:${carbon.analytics-common.version}
+                                </featureArtifactDef>
+
+                                <featureArtifactDef>
+                                    org.wso2.carbon.analytics-common:org.wso2.carbon.dashboard.template.deployer.server.feature:${carbon.analytics-common.version}
+                                </featureArtifactDef>
+
                                 <!-- ML features -->
                                 <!--<featureArtifactDef>-->
                                     <!--org.wso2.carbon.ml:org.wso2.carbon.ml.commons.feature:${carbon.ml.version}-->
@@ -662,6 +670,16 @@
                                 <feature>
                                     <id>org.wso2.carbon.metrics.feature.group</id>
                                     <version>${carbon.metrics.version}</version>
+                                </feature>
+
+                                <feature>
+                                    <id>org.wso2.carbon.gadget.template.deployer.server.feature.group</id>
+                                    <version>${carbon.analytics-common.version}</version>
+                                </feature>
+
+                                <feature>
+                                    <id>org.wso2.carbon.dashboard.template.deployer.server.feature.group</id>
+                                    <version>${carbon.analytics-common.version}</version>
                                 </feature>
 
                                 <!-- ML features -->
