@@ -337,6 +337,10 @@
                                     <!--org.wso2.carbon.ml:org.wso2.carbon.ml.siddhi.extension.feature:${carbon.ml.version}-->
                                 <!--</featureArtifactDef>-->
 
+                                <!-- Geo Dashboard feature -->
+                                <featureArtifactDef>
+                                    org.wso2.carbon.event-processing:org.wso2.carbon.geo.dashboard.feature:${carbon.event-processing.version}
+                                </featureArtifactDef>
 
                             </featureArtifacts>
                         </configuration>
@@ -703,6 +707,12 @@
                                     <!--<id>org.wso2.carbon.ml.siddhi.extension.feature.group</id>-->
                                     <!--<version>${carbon.ml.version}</version>-->
                                 <!--</feature>-->
+
+                                <!-- Geo Dashboard Feature -->
+                                <feature>
+                                    <id>org.wso2.carbon.geo.dashboard.feature.group</id>
+                                    <version>${carbon.event-processing.version}</version>
+                                </feature>
                             </features>
                         </configuration>
                     </execution>

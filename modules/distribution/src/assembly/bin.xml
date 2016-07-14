@@ -589,7 +589,7 @@
             <fileMode>644</fileMode>
         </file>-->
         <file>
-            <source>target/wso2carbon-core-${carbon.kernel.version}/repository/conf/carbon.xml</source>
+            <source>src/repository/conf/carbon.xml</source>
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/</outputDirectory>
             <filtered>true</filtered>
         </file>
@@ -761,6 +761,15 @@
             <!--<outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/datasources</outputDirectory>-->
             <!--<fileMode>644</fileMode>-->
         <!--</file>-->
+
+        <!-- Adding Geo Dashboard  configuration files and Capp -->
+        <file>
+            <source>
+                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/deployment/server/carbonapps/org_wso2_carbon_geo_dashboard-1.0.0.car
+            </source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/carbonapps/</outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
 
     </files>
 
