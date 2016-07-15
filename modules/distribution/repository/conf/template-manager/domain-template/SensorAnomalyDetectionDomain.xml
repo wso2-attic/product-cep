@@ -19,12 +19,12 @@
 <domain name="SensorAnomalyDetection">
     <description>Detecting anomalies in sensor reading</description>
     <scenarios>
+
         <scenario type="LinearRegressionWithLengthWindow">
             <description>Anomalies in sensor reading will be detected using linear regression over a defined number of
                 events and those anomalies will be sent to the predefined alert stream
             </description>
             <templates>
-                <!--Note: These will be deployed in the order they appear here-->
                 <template type="eventstream">
                     {
                     "name": "org.wso2.analytics.stream.$sensorTypeAnomalyDetection",
@@ -75,11 +75,6 @@
         insert into OutputStream;
                     ]]>
                 </template>
-
-                <!-- gadgets -->
-
-                <!-- Dashboard -->
-
             </templates>
             <streamMappings>
                 <streamMapping to="org.wso2.analytics.stream.$sensorTypeAnomalyDetection:1.0.0"/>
@@ -111,14 +106,13 @@
                     <defaultValue>2</defaultValue>
                 </parameter>
             </parameters>
-
         </scenario>
+
         <scenario type="LinearRegressionWithTimeAndLengthWindow">
             <description>Anomalies in sensor reading will be detected using linear regression over a defined number of
                 events or a time period and those anomalies will be sent to the predefined alert stream
             </description>
             <templates>
-                <!--Note: These will be deployed in the order they appear here-->
                 <template type="eventstream">
                     {
                     "name": "org.wso2.analytics.stream.$sensorTypeAnomalyDetection",
@@ -169,11 +163,6 @@
         insert into OutputStream;
                     ]]>
                 </template>
-
-                <!-- gadgets -->
-
-                <!-- Dashboard -->
-
             </templates>
             <streamMappings>
                 <streamMapping to="org.wso2.analytics.stream.$sensorTypeAnomalyDetection:1.0.0"/>
@@ -210,14 +199,13 @@
                     <defaultValue>2</defaultValue>
                 </parameter>
             </parameters>
-
         </scenario>
+
         <scenario type="PercentileValuesWithLengthWindow">
             <description>Anomalies in sensor reading will be detected using percentiles over a defined number of events
                 and those anomalies will be sent to the predefined alert stream
             </description>
             <templates>
-                <!--Note: These will be deployed in the order they appear here-->
                 <template type="eventstream">
                     {
                     "name": "org.wso2.analytics.stream.$sensorTypeAnomalyDetection",
@@ -268,11 +256,6 @@
         insert into OutputStream;
                     ]]>
                 </template>
-
-                <!-- gadgets -->
-
-                <!-- Dashboard -->
-
             </templates>
             <streamMappings>
                 <streamMapping to="org.wso2.analytics.stream.$sensorTypeAnomalyDetection:1.0.0"/>
@@ -299,14 +282,13 @@
                     <defaultValue>2.0</defaultValue>
                 </parameter>
             </parameters>
-
         </scenario>
+
         <scenario type="PercentileValuesWithTimeWindow">
             <description>Anomalies in sensor reading will be detected using percentiles over a defined time period and
                 those anomalies will be sent to the predefined alert stream
             </description>
             <templates>
-                <!--Note: These will be deployed in the order they appear here-->
                 <template type="eventstream">
                     {
                     "name": "org.wso2.analytics.stream.$sensorTypeAnomalyDetection",
@@ -357,11 +339,6 @@
         insert into OutputStream;
                     ]]>
                 </template>
-
-                <!-- gadgets -->
-
-                <!-- Dashboard -->
-
             </templates>
             <streamMappings>
                 <streamMapping to="org.wso2.analytics.stream.$sensorTypeAnomalyDetection:1.0.0"/>
@@ -388,8 +365,8 @@
                     <defaultValue>2.0</defaultValue>
                 </parameter>
             </parameters>
-
         </scenario>
+        
     </scenarios>
     <commonArtifacts>
         <artifact type="eventstream">
