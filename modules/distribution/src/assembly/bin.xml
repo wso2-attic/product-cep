@@ -227,6 +227,17 @@
             </excludes>
         </fileSet>
 
+        <!--creating an empty event simulator files directory-->
+        <fileSet>
+            <directory>.</directory>
+            <outputDirectory>
+                ${pom.artifactId}-${pom.version}/repository/deployment/server/eventsimulatorfiles
+            </outputDirectory>
+            <excludes>
+                <exclude>**/*</exclude>
+            </excludes>
+        </fileSet>
+
         <!-- Multitenancy related files -->
         <fileSet>
             <directory>
@@ -758,6 +769,16 @@
                 ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/deployment/server/carbonapps/org_wso2_carbon_geo_dashboard-1.0.0.car
             </source>
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/carbonapps/</outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
+
+        <!-- Adding Template Manger simulator files -->
+        <file>
+            <source>
+                repository/deployment/server/eventsimulatorfiles/events.csv
+            </source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/eventsimulatorfiles/</outputDirectory>
+            <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
 

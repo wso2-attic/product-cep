@@ -221,6 +221,111 @@
                         </artifacts>
                     </config>
                 </template>
+                <!-- Gadget -DistinctCount -->
+                <template type="gadget">
+                    <config>
+                        <properties>
+                            <property name="directoryName">$sensorType-distinctcount-chart</property>
+                            <property name="templateDirectory">numberchart</property>
+                        </properties>
+                        <artifacts>
+                            <artifact file="gadget.json">
+                                <![CDATA[
+                                                          {
+                                "id": "$sensorType-distinctcount-chart",
+                                "title": "$sensorType-distinctcount-chart",
+                                "type": "gadget",
+                                "thumbnail": "gadget/$sensorType-distinctcount-chart/thumbnail.png",
+                                "data": {
+                                    "url": "gadget/$sensorType-distinctcount-chart/gadget.xml"
+                                }
+                            }                         ]]>
+                            </artifact>
+                            <artifact file="conf.json">
+                                <![CDATA[
+                                                            {"provider-conf" : {"streamName" : "org.wso2.event.$sensorType.statistics.stream:1.0.0", "provider-name" : "realtime"}, "chart-conf" : {"x" : "sensor_id_distinct_count", "title" : "Distinct Count $sensorType", "gadget-name" : "$sensorType-distinctcount-chart", "chart-name" : "number-chart"}}
+                                                          ]]>
+                            </artifact>
+                            <artifact file="js/core/gadget-util.js">
+                                <![CDATA[
+                        var getGadgetLocation = function(){
+                            return '/portal/store/carbon.super/fs/gadget/$sensorType-distinctcount-chart';
+                        }
+                                                       ]]>
+                            </artifact>
+                        </artifacts>
+                    </config>
+                </template>
+                <!-- Gadget -Max -->
+                <template type="gadget">
+                    <config>
+                        <properties>
+                            <property name="directoryName">$sensorType-max-chart</property>
+                            <property name="templateDirectory">numberchart</property>
+                        </properties>
+                        <artifacts>
+                            <artifact file="gadget.json">
+                                <![CDATA[
+                                                          {
+                                "id": "$sensorType-max-chart",
+                                "title": "$sensorType-max-chart",
+                                "type": "gadget",
+                                "thumbnail": "gadget/$sensorType-max-chart/thumbnail.png",
+                                "data": {
+                                    "url": "gadget/$sensorType-max-chart/gadget.xml"
+                                }
+                            }                         ]]>
+                            </artifact>
+                            <artifact file="conf.json">
+                                <![CDATA[
+                                                            {"provider-conf" : {"streamName" : "org.wso2.event.$sensorType.statistics.stream:1.0.0", "provider-name" : "realtime"}, "chart-conf" : {"x" : "max", "title" : "Maximum $sensorType", "gadget-name" : "$sensorType-max-chart", "chart-name" : "number-chart"}}
+                                                          ]]>
+                            </artifact>
+                            <artifact file="js/core/gadget-util.js">
+                                <![CDATA[
+                        var getGadgetLocation = function(){
+                            return '/portal/store/carbon.super/fs/gadget/$sensorType-max-chart';
+                        }
+                                                       ]]>
+                            </artifact>
+                        </artifacts>
+                    </config>
+                </template>
+                <!-- Gadget -Min -->
+                <template type="gadget">
+                    <config>
+                        <properties>
+                            <property name="directoryName">$sensorType-min-chart</property>
+                            <property name="templateDirectory">numberchart</property>
+                        </properties>
+                        <artifacts>
+                            <artifact file="gadget.json">
+                                <![CDATA[
+                                                          {
+                                "id": "$sensorType-min-chart",
+                                "title": "$sensorType-min-chart",
+                                "type": "gadget",
+                                "thumbnail": "gadget/$sensorType-min-chart/thumbnail.png",
+                                "data": {
+                                    "url": "gadget/$sensorType-min-chart/gadget.xml"
+                                }
+                            }                         ]]>
+                            </artifact>
+                            <artifact file="conf.json">
+                                <![CDATA[
+                                                            {"provider-conf" : {"streamName" : "org.wso2.event.$sensorType.statistics.stream:1.0.0", "provider-name" : "realtime"}, "chart-conf" : {"x" : "min", "title" : "Minimum $sensorType", "gadget-name" : "$sensorType-min-chart", "chart-name" : "number-chart"}}
+                                                          ]]>
+                            </artifact>
+                            <artifact file="js/core/gadget-util.js">
+                                <![CDATA[
+                        var getGadgetLocation = function(){
+                            return '/portal/store/carbon.super/fs/gadget/$sensorType-min-chart';
+                        }
+                                                       ]]>
+                            </artifact>
+                        </artifacts>
+                    </config>
+                </template>
                 <!-- Dashboard -->
                 <template type="dashboard">
                     <config>
@@ -272,6 +377,30 @@
                                             "id": "c",
                                             "x": 8,
                                             "y": 0,
+                                            "width": 4,
+                                            "height": 4,
+                                            "banner": false
+                                         },
+                                         {
+                                            "id": "d",
+                                            "x": 0,
+                                            "y": 4,
+                                            "width": 4,
+                                            "height": 4,
+                                            "banner": false
+                                         },
+                                         {
+                                            "id": "e",
+                                            "x": 4,
+                                            "y": 4,
+                                            "width": 4,
+                                            "height": 4,
+                                            "banner": false
+                                         },
+                                         {
+                                            "id": "f",
+                                            "x": 8,
+                                            "y": 4,
                                             "width": 4,
                                             "height": 4,
                                             "banner": false
@@ -367,6 +496,90 @@
                                             "locale_titles": {}
                                          }
                                       }
+                                   ],
+                                   "d": [
+                                      {
+                                         "id": "$sensorType-distinctcount-chart-0",
+                                         "content": {
+                                            "id": "$sensorType-distinctcount-chart",
+                                            "title": "$sensorType-distinctcount-chart",
+                                            "type": "gadget",
+                                            "thumbnail": "fs://gadget/$sensorType-distinctcount-chart/thumbnail.png",
+                                            "data": {
+                                               "url": "fs://gadget/$sensorType-distinctcount-chart/gadget.xml"
+                                            },
+                                            "styles": {
+                                              "title": "$sensorType-distinctcount-chart",
+                                               "borders": true
+                                            },
+                                            "options": {
+                                               "windowSize": {
+                                                  "type": "STRING",
+                                                  "title": "Window Size",
+                                                  "value": "10",
+                                                  "options": [],
+                                                  "required": false
+                                               }
+                                            },
+                                            "locale_titles": {}
+                                         }
+                                      }
+                                   ],
+                                   "e": [
+                                      {
+                                         "id": "$sensorType-max-chart-0",
+                                         "content": {
+                                            "id": "$sensorType-max-chart",
+                                            "title": "$sensorType-max-chart",
+                                            "type": "gadget",
+                                            "thumbnail": "fs://gadget/$sensorType-max-chart/thumbnail.png",
+                                            "data": {
+                                               "url": "fs://gadget/$sensorType-max-chart/gadget.xml"
+                                            },
+                                            "styles": {
+                                              "title": "$sensorType-max-chart",
+                                               "borders": true
+                                            },
+                                            "options": {
+                                               "windowSize": {
+                                                  "type": "STRING",
+                                                  "title": "Window Size",
+                                                  "value": "10",
+                                                  "options": [],
+                                                  "required": false
+                                               }
+                                            },
+                                            "locale_titles": {}
+                                         }
+                                      }
+                                   ],
+                                   "f": [
+                                      {
+                                         "id": "$sensorType-min-chart-0",
+                                         "content": {
+                                            "id": "$sensorType-min-chart",
+                                            "title": "$sensorType-min-chart",
+                                            "type": "gadget",
+                                            "thumbnail": "fs://gadget/$sensorType-min-chart/thumbnail.png",
+                                            "data": {
+                                               "url": "fs://gadget/$sensorType-min-chart/gadget.xml"
+                                            },
+                                            "styles": {
+                                              "title": "$sensorType-min-chart",
+                                               "borders": true
+                                            },
+                                            "options": {
+                                               "windowSize": {
+                                                  "type": "STRING",
+                                                  "title": "Window Size",
+                                                  "value": "10",
+                                                  "options": [],
+                                                  "required": false
+                                               }
+                                            },
+                                            "locale_titles": {}
+                                         }
+                                      }
                                    ]
                                 },
                                 "anon": {}
@@ -404,9 +617,6 @@
                     </config>
                 </template>
             </templates>
-            <streamMappings>
-                <streamMapping to="org.wso2.event.$sensorType.stream:1.0.0"/>
-            </streamMappings>
             <parameters>
                 <parameter name="timeInMins" type="int">
                     <displayName>Time(Mins)</displayName>
