@@ -404,6 +404,9 @@
                     </config>
                 </template>
             </templates>
+            <streamMappings>
+                <streamMapping to="org.wso2.event.$sensorType.stream:1.0.0"/>
+            </streamMappings>
             <parameters>
                 <parameter name="timeInMins" type="int">
                     <displayName>Time(Mins)</displayName>
