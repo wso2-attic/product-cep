@@ -162,7 +162,7 @@ public class TemplateManagerTestCase extends CEPIntegrationTest {
 
             log.info("=======================Edit a configuration====================");
             configuration.setDescription("Description edited");
-            templateManagerAdminServiceClient.saveConfiguration(configuration);
+            templateManagerAdminServiceClient.editConfiguration(configuration);
             Thread.sleep(6000);
             //When existing configuration is been updated, the execution plan will be un-deployed and redeployed
             Assert.assertEquals(eventProcessorAdminServiceClient.getExecutionPlanConfigurationCount(),
