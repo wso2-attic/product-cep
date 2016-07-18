@@ -1,0 +1,17 @@
+{
+       "name": "Vehicle",
+	"numOfWheels": 5,
+	"specificAttributesObj": {
+		"temperature": "red",
+		"carColur": "#f00"
+	}
+    }
+*****
+ {
+       "name": "Car",
+	"numOfWheels": 4,
+	"specificAttributesObj": {
+		"temperature": "red",
+		"carColur": "#f00"
+	}
+    }

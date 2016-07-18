@@ -183,18 +183,6 @@
         <!--</excludes>-->
         <!--</fileSet>-->
 
-
-        <!--creating an empty domain template directory-->
-        <fileSet>
-            <directory>.</directory>
-            <outputDirectory>
-                ${pom.artifactId}-${pom.version}/repository/conf/template-manager/domain-template
-            </outputDirectory>
-            <excludes>
-                <exclude>**/*</exclude>
-            </excludes>
-        </fileSet>
-
         <!--creating an empty streams directory-->
         <fileSet>
             <directory>.</directory>
@@ -233,6 +221,17 @@
             <directory>.</directory>
             <outputDirectory>
                 ${pom.artifactId}-${pom.version}/repository/deployment/server/executionplans
+            </outputDirectory>
+            <excludes>
+                <exclude>**/*</exclude>
+            </excludes>
+        </fileSet>
+
+        <!--creating an empty event simulator files directory-->
+        <fileSet>
+            <directory>.</directory>
+            <outputDirectory>
+                ${pom.artifactId}-${pom.version}/repository/deployment/server/eventsimulatorfiles
             </outputDirectory>
             <excludes>
                 <exclude>**/*</exclude>
@@ -348,6 +347,17 @@
             <excludes>
                 <exclude>**/extensions/chart-templates/line-chart/config.json</exclude>
             </excludes>
+        </fileSet>
+
+        <!--Copying template-manager directory-->
+        <fileSet>
+            <directory>repository/conf/template-manager</directory>
+            <outputDirectory>
+                ${pom.artifactId}-${pom.version}/repository/conf/template-manager
+            </outputDirectory>
+            <includes>
+                <include>**/*</include>
+            </includes>
         </fileSet>
 
         <!--ml features -->
@@ -659,15 +669,6 @@
             <fileMode>644</fileMode>
         </file>
 
-        <!--Copying sample domain template file -->
-        <file>
-            <source>
-                repository/conf/domain-template/temperature-analysis.xml
-            </source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/template-manager/domain-template</outputDirectory>
-            <filtered>true</filtered>
-        </file>
-
         <!--Copying master-datasources.xml file -->
         <file>
             <source>repository/conf/datasources/master-datasources.xml</source>
@@ -768,6 +769,16 @@
                 ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/deployment/server/carbonapps/org_wso2_carbon_geo_dashboard-1.0.0.car
             </source>
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/carbonapps/</outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
+
+        <!-- Adding Template Manger simulator files -->
+        <file>
+            <source>
+                repository/deployment/server/eventsimulatorfiles/events.csv
+            </source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/eventsimulatorfiles/</outputDirectory>
+            <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
 
