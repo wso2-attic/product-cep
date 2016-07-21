@@ -1,0 +1,14 @@
+<temperature:SensorStream xmlns:temperature="http://samples.wso2.org">
+    <temperature:sensor id="502" timestamp="19900813115534" powerSaved="true" name="temperature" long="4.504343" lat="1.23434" humidity="6.6" temp="20.44345">
+    </temperature:sensor>
+</temperature:SensorStream>
+*****
+<temperature:SensorStream xmlns:temperature="http://samples.wso2.org">
+    <temperature:sensor id="501" timestamp="19900813115534" powerSaved="true" name="temperature" long="4.504343" lat="1.23434" humidity="6.6" temp="20.44345">
+    </temperature:sensor>
+</temperature:SensorStream>
+*****
+<temperature:SensorStream xmlns:temperature="http://samples.wso2.org">
+    <temperature:sensor id="503" timestamp="19900813115534" powerSaved="true" name="temperature" long="4.504343" lat="1.23434" humidity="6.6" temp="20.44345">
+    </temperature:sensor>
+</temperature:SensorStream>

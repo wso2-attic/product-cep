@@ -599,6 +599,84 @@ public class HttpTestCase extends CEPIntegrationTest {
         }
     }
 
+    @Test(groups = {"wso2.cep"}, description = "Testing http receiver with secure http request with xml custom attribute mapping")
+    public void httpsTestScenarioWithXMLAttributeMapping() throws Exception {
+        final int messageCount = 3;
+        String samplePath = "inputflows" + File.separator + "sample0023";
+        int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
+        int startERCount = eventReceiverAdminServiceClient.getActiveEventReceiverCount();
+        int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
+
+        //Add StreamDefinition
+        String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath, "org.wso2.event.sensor.stream_1.0.0.json");
+        eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
+        Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
+
+        //Add Http JSON EventReceiver without mapping
+        String eventReceiverConfig = getXMLArtifactConfiguration(samplePath, "httpReceiver.xml");
+        eventReceiverAdminServiceClient.addEventReceiverConfiguration(eventReceiverConfig);
+        Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startERCount + 1);
+
+        //Add Wso2event EventPublisher
+        String eventPublisherConfig = getXMLArtifactConfiguration(samplePath, "wso2EventPublisher.xml");
+        eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig);
+        Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
+
+        // The data-bridge receiver
+        Wso2EventServer agentServer = new Wso2EventServer(samplePath, CEPIntegrationTestConstants.TCP_PORT, true);
+        Thread agentServerThread = new Thread(agentServer);
+        agentServerThread.start();
+        // Let the server start
+        Thread.sleep(10000);
+
+        HttpEventPublisherClient.publish("https://localhost:" + CEPIntegrationTestConstants.HTTPS_PORT +
+                "/endpoints/httpReceiver", "admin", "admin", samplePath, "httpReceiver.txt");
+
+        //wait while all stats are published
+        Thread.sleep(30000);
+
+        eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
+        eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("httpReceiver.xml");
+        eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("wso2EventPublisher.xml");
+
+        Thread.sleep(2000);
+
+        List<Event> eventList = new ArrayList<>();
+        Event event = new Event();
+        event.setStreamId("org.wso2.event.sensor.stream:1.0.0");
+        event.setMetaData(new Object[]{19900813115534l, true, 502, "temperature"});
+        event.setCorrelationData(new Object[]{4.504343, 1.23434});
+        event.setPayloadData(new Object[]{6.6f, 20.44345});
+        eventList.add(event);
+        Event event2 = new Event();
+        event2.setStreamId("org.wso2.event.sensor.stream:1.0.0");
+        event2.setMetaData(new Object[]{19900813115534l, true, 501, "temperature"});
+        event2.setCorrelationData(new Object[]{4.504343, 1.23434});
+        event2.setPayloadData(new Object[]{6.6f, 20.44345});
+        eventList.add(event2);
+        Event event3 = new Event();
+        event3.setStreamId("org.wso2.event.sensor.stream:1.0.0");
+        event3.setMetaData(new Object[]{19900813115534l, true, 503, "temperature"});
+        event3.setCorrelationData(new Object[]{4.504343, 1.23434});
+        event3.setPayloadData(new Object[]{6.6f, 20.44345});
+        eventList.add(event3);
+
+        try {
+            Assert.assertEquals(agentServer.getMsgCount(), messageCount, "Incorrect number of messages consumed!");
+            List<Event> preservedEventList = agentServer.getPreservedEventList();
+            for (Event aEvent : preservedEventList) {
+                aEvent.setTimeStamp(0);
+            }
+            Assert.assertEquals(preservedEventList, eventList, "Mapping is incorrect!");
+        } catch (Throwable e) {
+            log.error("Exception thrown: " + e.getMessage(), e);
+            Assert.fail("Exception: " + e.getMessage());
+        } finally {
+            agentServer.stop();
+
+        }
+    }
+
     @AfterClass(alwaysRun = true)
     public void destroy() throws Exception {
         super.cleanup();

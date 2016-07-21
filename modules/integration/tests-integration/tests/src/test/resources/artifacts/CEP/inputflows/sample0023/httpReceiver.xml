@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventReceiver name="httpReceiver" statistics="disable" trace="disable" xmlns="http://wso2.org/carbon/eventreceiver">
+    <from eventAdapterType="http">
+        <property name="transports">all</property>
+    </from>
+    <mapping customMapping="enable" type="xml">
+        <property>
+            <from xpath="/temperature:SensorStream/temperature:sensor/@timestamp"/>
+            <to name="meta_timestamp" type="long"/>
+        </property>
+        <property>
+            <from xpath="/temperature:SensorStream/temperature:sensor/@powerSaved"/>
+            <to name="meta_isPowerSaverEnabled" type="bool"/>
+        </property>
+        <property>
+            <from xpath="/temperature:SensorStream/temperature:sensor/@id"/>
+            <to name="meta_sensorId" type="int"/>
+        </property>
+        <property>
+            <from xpath="/temperature:SensorStream/temperature:sensor/@name"/>
+            <to name="meta_sensorName" type="string"/>
+        </property>
+        <property>
+            <from xpath="/temperature:SensorStream/temperature:sensor/@long"/>
+            <to name="correlation_longitude" type="double"/>
+        </property>
+        <property>
+            <from xpath="/temperature:SensorStream/temperature:sensor/@lat"/>
+            <to name="correlation_latitude" type="double"/>
+        </property>
+        <property>
+            <from xpath="/temperature:SensorStream/temperature:sensor/@humidity"/>
+            <to name="humidity" type="float"/>
+        </property>
+        <property>
+            <from xpath="/temperature:SensorStream/temperature:sensor/@temp"/>
+            <to name="sensorValue" type="double"/>
+        </property>
+    </mapping>
+    <to streamName="org.wso2.event.sensor.stream" version="1.0.0"/>
+</eventReceiver>
