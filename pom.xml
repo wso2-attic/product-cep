@@ -735,7 +735,7 @@
         <carbon.deployment.version>4.7.0</carbon.deployment.version>
         <carbon.commons.version>4.5.4</carbon.commons.version>
         <carbon.analytics-common.version>5.1.1-SNAPSHOT</carbon.analytics-common.version>
-        <carbon.dashboards.version>2.0.0</carbon.dashboards.version>
+        <carbon.dashboards.version>2.0.1-SNAPSHOT</carbon.dashboards.version>
         <carbon.identity.version>5.2.0</carbon.identity.version>
         <carbon.identity.auth.saml2.version>5.1.1</carbon.identity.auth.saml2.version>
         <carbon.registry.version>4.5.5</carbon.registry.version>
@@ -746,7 +746,6 @@
         <carbon.event-processing.version>2.1.1-SNAPSHOT</carbon.event-processing.version>
         <siddhi.version>3.1.1-SNAPSHOT</siddhi.version>
         <cep.version>4.2.0-SNAPSHOT</cep.version>
-        <carbon.analytics.common.gadget.version>5.1.1.SNAPSHOT</carbon.analytics.common.gadget.version>
         <test.framework.version>4.4.2</test.framework.version>
         <test.framework.util.version>4.4.1</test.framework.util.version>
 
@@ -774,7 +773,7 @@
         <apache.kafka.version>0.8.1</apache.kafka.version>
         <javax.servlet.api.version>2.5</javax.servlet.api.version>
         <javax.javax.servlet.api.version>3.1.0</javax.javax.servlet.api.version>
-        <shindig.version>2.5.2</shindig.version>
+        <shindig.version>2.0.1-SNAPSHOT</shindig.version>
         <h2.version>1.2.147</h2.version>
         <jetty.version>9.2.7.v20150116</jetty.version>
         <javax.websocket.api.version>1.0</javax.websocket.api.version>
