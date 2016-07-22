@@ -1,0 +1,24 @@
+{
+  "name": "SensorStream",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "payloadData": [
+    {
+      "name": "sensorType",
+      "type": "STRING"
+    },
+    {
+      "name": "value",
+      "type": "FLOAT"
+    },
+    {
+      "name": "roomNo",
+      "type": "INT"
+    },
+    {
+      "name": "deviceID",
+      "type": "STRING"
+    }
+  ]
+}
