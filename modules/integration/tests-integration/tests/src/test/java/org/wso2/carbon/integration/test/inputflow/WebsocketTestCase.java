@@ -125,6 +125,11 @@ public class WebsocketTestCase extends CEPIntegrationTest {
         int startERCount = eventReceiverAdminServiceClient.getActiveEventReceiverCount();
         int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
 
+        //Start Websocket Server
+        WebSocketServer socketServer = new WebSocketServer();
+        socketServer.start(9899);
+        Thread.sleep(5000);
+
         //Add StreamDefinition
         String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath, "org.wso2.event.sensor.stream_1.0.0.json");
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
@@ -147,8 +152,6 @@ public class WebsocketTestCase extends CEPIntegrationTest {
         // Let the server start
         Thread.sleep(1000);
 
-        WebSocketServer socketServer = new WebSocketServer();
-        socketServer.start(9099);
         socketServer.send("<events>\n" +
                 "    <event>\n" +
                 "        <metaData>\n" +
