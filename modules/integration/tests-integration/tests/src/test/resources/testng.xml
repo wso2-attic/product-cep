@@ -34,6 +34,7 @@
             <!--<class name="org.wso2.carbon.integration.test.processflow.EventFlowTestCase"/>-->
             <!--<class name="org.wso2.carbon.integration.test.processflow.JMSTextMessageTestCase"/>-->
             <!--<class name="org.wso2.carbon.integration.test.patches.CEP883TestCase"/>-->
+            <class name="org.wso2.carbon.integration.test.inputflow.WebsocketTestCase"/>
             <class name="org.wso2.carbon.integration.test.processflow.HTTPXMLMessageTestCase"/>
             <class name="org.wso2.carbon.integration.test.processflow.DeployArtifactsBasicTestCase"/>
             <class name="org.wso2.carbon.integration.test.processflow.DeployArtifactsViaAPITestCase"/>
@@ -41,7 +42,6 @@
             <class name="org.wso2.carbon.integration.test.processflow.Wso2EventTestCase"/>
             <class name="org.wso2.carbon.integration.test.processflow.AttributeEncryptTestCase"/>
             <class name="org.wso2.carbon.integration.test.inputflow.HttpTestCase"/>
-            <!--<class name="org.wso2.carbon.integration.test.inputflow.WebsocketTestCase"/>-->
             <class name="org.wso2.carbon.integration.test.inputflow.SOAPTestCase"/>
             <class name="org.wso2.carbon.integration.test.inputflow.FileTestCase"/>
             <class name="org.wso2.carbon.integration.test.inputflow.Wso2EventTestCase"/>
