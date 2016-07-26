@@ -727,7 +727,7 @@
         <!--CEP versions-->
         <jaggery.version>0.12.6</jaggery.version>
         <jaggery.modules.version>1.5.4-SNAPSHOT</jaggery.modules.version>
-        <sso.feature.version>1.5.1</sso.feature.version>
+        <sso.feature.version>1.5.4-SNAPSHOT</sso.feature.version>
         <!-- Carbon kernel version-->
         <carbon.kernel.version>4.4.7</carbon.kernel.version>
         <!--<carbon.kernel.imp.pkg.version>[4.3.0, 4.4.0)</carbon.kernel.imp.pkg.version>-->
