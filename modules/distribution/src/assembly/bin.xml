@@ -675,25 +675,6 @@
             <fileMode>644</fileMode>
         </file>
 
-
-        <!--Copying jaggery file for hostname fix -->
-        <file>
-            <source>repository/resources/jaggery/config/common-scripts.jag</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/portal/controllers/includes
-            </outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
-
-        <!--Copying jaggery file for hostname fix -->
-        <file>
-            <source>repository/resources/jaggery/config/index.js</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/portal/extensions/components/gadget
-            </outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
-
         <!-- Copying the identity file -->
         <file>
             <source>
@@ -703,22 +684,6 @@
             <fileMode>644</fileMode>
         </file>
 
-        <!--Copying vizgrammer library file -->
-        <file>
-            <source>repository/resources/dashboard/vizgrammer/VizGrammar.min.js</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/portal/js
-            </outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
-
-        <file>
-            <source>repository/resources/dashboard/vizgrammer/VizGrammar.min.js</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/portal/templates/gadgets/igviz/js
-            </outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
 
 
         <!--ML files -->
