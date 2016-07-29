@@ -24,10 +24,9 @@
 </head>
 
 <body>
-<h1>WSO2 Complex Event Processor(WSO2 CEP) 4.2.0
-    Release Notes</h1>
+<h1>WSO2 Complex Event Processor(WSO2 CEP) 4.2.0 Release Notes</h1>
 
-<h3>13 Feb 2016</h3>
+<h3>29 July 2016</h3>
 
 <p>WSO2 CEP is a lightweight and easy-to-use Open Source Complex Event Processing
     Server (CEP) is available under the Apache Software License v2.0.WSO2 Complex
@@ -60,8 +59,8 @@
 
 <p>
     The WIKI based documentation is available at
-    <a href="https://docs.wso2.com/display/CEP410/WSO2+Complex+Event+Processor+Documentation">
-        https://docs.wso2.com/display/CEP410/WSO2+Complex+Event+Processor+Documentation
+    <a href="https://docs.wso2.com/display/CEP420/WSO2+Complex+Event+Processor+Documentation">
+        https://docs.wso2.com/display/CEP420/WSO2+Complex+Event+Processor+Documentation
     </a>
 </p>
 
@@ -88,7 +87,7 @@
     <li>Event Flow Support - WSO2 CEP supports visualizing the event flow within the system.</li>
     <li>Event Simulator - WSO2 CEP supports an easy gui to send sample events to test the event flow.</li>
     <li>Siddhi Try It Tool - A tool for experimenting with Siddhi Query Language.</li>
-    <li>Execution Manager - A user friendly dashboard to customize preconfigured domain-specific execution parameters.
+    <li>Template Manager - A user friendly dashboard to customize preconfigured domain-specific execution parameters.
     </li>
     <li>Analytics Dashboard - An inbuilt dashboard, capable of visualizing event streams in real-time</li>
     <li>Easily Integrates with Enterprise System - by RESTful HTTP protocol with JSON, JMS MAP/XML/Text messages, SOAP
@@ -109,27 +108,43 @@
 
 <h2>New Features In This Release</h2>
 <ul>
-    <li>[<a href='https://wso2.org/jira/browse/CEP-927'>CEP-927</a>] -         Fix UI compatibility issues in IE browsers
+    <li>[<a href='https://wso2.org/jira/browse/CEP-322'>CEP-322</a>] -         Unique time window support for Siddhi
     </li>
-    <li>[<a href='https://wso2.org/jira/browse/CEP-1178'>CEP-1178</a>] -         Deactivate Event Receiver
+    <li>[<a href='https://wso2.org/jira/browse/CEP-1507'>CEP-1507</a>] -         Siddhi Extension for calculate percentile values
     </li>
-    <li>[<a href='https://wso2.org/jira/browse/CEP-1406'>CEP-1406</a>] -         Need to have tool tips for icons in the Dashboard
+    <li>[<a href='https://wso2.org/jira/browse/CEP-1510'>CEP-1510</a>] -         External Time Batch Window Implementation
     </li>
-    <li>[<a href='https://wso2.org/jira/browse/CEP-1419'>CEP-1419</a>] -         Provide &quot;insert or update&quot; functionality to event tables
+    <li>[<a href='https://wso2.org/jira/browse/CEP-1512'>CEP-1512</a>] -         MaxForever and MinForever Attribute Aggregators for Siddhi
     </li>
-    <li>[<a href='https://wso2.org/jira/browse/CEP-1426'>CEP-1426</a>] -         When passing parameters to function allow the syntax func(*) if all the attributes of the inputstream have to be passed
+    <li>[<a href='https://wso2.org/jira/browse/CEP-1516'>CEP-1516</a>] -         Distinct Attribute Aggretaor for Siddhi
     </li>
-    <li>[<a href='https://wso2.org/jira/browse/CEP-1445'>CEP-1445</a>] -         Improve user-friendliness by sorting drop-down lists
-    </li>
-    <li>[<a href='https://wso2.org/jira/browse/CEP-1447'>CEP-1447</a>] -         Instrumentation &amp; Monitoring support for CEP and Siddhi
-    </li>
-    <li>[<a href='https://wso2.org/jira/browse/CEP-1450'>CEP-1450</a>] -         Adding Arbitrary Map support for Receiver Components
-    </li>
-    <li>[<a href='https://wso2.org/jira/browse/CEP-1453'>CEP-1453</a>] -         Pause, Resume and Stop support for Event Simulator
-    </li>
-    <li>[<a href='https://wso2.org/jira/browse/CEP-1458'>CEP-1458</a>] -         Support for more then 2 nodes in HA deployment
+    <li>[<a href='https://wso2.org/jira/browse/CEP-1517'>CEP-1517</a>] -         Split Function for String Siddhi Extension
     </li>
 </ul>
+
+<h2>        Improvement
+</h2>
+<ul>
+    <li>[<a href='https://wso2.org/jira/browse/CEP-1476'>CEP-1476</a>] -         Siddhi Map Extension : map:CreateFromXML() only support XML with root element
+    </li>
+    <li>[<a href='https://wso2.org/jira/browse/CEP-1497'>CEP-1497</a>] -         Custom XML input mapping should be able to populate stream attributes from XML attributes
+    </li>
+    <li>[<a href='https://wso2.org/jira/browse/CEP-1511'>CEP-1511</a>] -         Template Manager support for other deployable artifacts
+    </li>
+    <li>[<a href='https://wso2.org/jira/browse/CEP-1514'>CEP-1514</a>] -         Make Distruptor as configurable in Siddhi
+    </li>
+    <li>[<a href='https://wso2.org/jira/browse/CEP-1515'>CEP-1515</a>] -         RDBMS event table does not work with new RDBMS database types
+    </li>
+    <li>[<a href='https://wso2.org/jira/browse/CEP-1520'>CEP-1520</a>] -         Necessary improvement to ExternalTimeBatch window
+    </li>
+    <li>[<a href='https://wso2.org/jira/browse/CEP-1526'>CEP-1526</a>] -         Improve event receiver/publisher JMS configuration to support Tibco EMS
+    </li>
+    <li>[<a href='https://wso2.org/jira/browse/CEP-1528'>CEP-1528</a>] -         Provide support for string values to be used in line charts x axis in real time gadets
+    </li>
+    <li>[<a href='https://wso2.org/jira/browse/CEP-1532'>CEP-1532</a>] -         Add basicAuth enable property for http event receiver
+    </li>
+</ul>
+
 
 <h2>Reporting Problems</h2>
 Issues can be reported using the public JIRA available at

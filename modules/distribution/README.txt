@@ -16,17 +16,14 @@ have been developed as pluggable Carbon components.
 New Features In This Release
 ==================================
 
-[CEP-101] - Indexing for Hazelcast table
-[CEP-105] - Time length window implementation for Siddhi
-[CEP-644] - add insertOrUpdate to event table
-[CEP-1365] - Add a function to extract 'DAY OF WEEK' from time/timestamp
-[CEP-1423] - Support outer/left joins in Siddhi
-[CEP-1439] - Map extension support
-[CEP-1440] - Geo Closest function
-[CEP-1441] - External Batch window for siddhi
-[CEP-1448] - Hazelcast Event Table for Siddhi
-[CEP-1457] - Minima and Maxima detection on Siddhi
-[CEP-1459] - Instrumentation & Monitoring support for CEP and Siddhi
+[CEP-322] - Unique time window support for Siddhi
+[CEP-1507] - Siddhi Extension for calculate percentile values
+[CEP-1510] - External Time Batch Window Implementation
+[CEP-1512] - MaxForever and MinForever Attribute Aggregators for Siddhi
+[CEP-1516] - Distinct Attribute Aggretaor for Siddhi
+[CEP-1517] - Split Function for String Siddhi Extension
+[CEP-1511] - Template Manager support for other deployable artifacts
+[CEP-1514] - Make Distruptor as configurable in Siddhi
 
 Key Features of WSO2 CEP
 ==================================
@@ -43,7 +40,7 @@ Key Features of WSO2 CEP
 * Event Flow Support - WSO2 CEP supports visualizing the event flow within the system.
 * Event Simulator - WSO2 CEP supports an easy gui to send sample events to test the event flow.
 * Siddhi Try It Tool - A tool for experimenting with Siddhi Query Language.
-* Execution Manager - A user friendly dashboard to customize preconfigured domain-specific execution parameters.
+* Template Manager - A user friendly dashboard to customize preconfigured domain-specific execution parameters.
 * Analytics Dashboard - An inbuilt dashboard, capable of visualizing event streams in real-time
 * Easily Integrates with Enterprise System - by RESTful HTTP protocol with JSON, JMS MAP/XML/Text messages, SOAP and Email
 * Support for Long Duration Queries - Supports periodic snapshots to a scalable persistence store.
