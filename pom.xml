@@ -526,16 +526,16 @@
             </releases>
         </repository>
 
-        <repository>
-            <id>wso2.staging</id>
-            <name>wso2 staging</name>
-            <url>https://maven.wso2.org/nexus/content/repositories/orgwso2carbonevent-processing-1010/</url>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>daily</updatePolicy>
-                <checksumPolicy>ignore</checksumPolicy>
-            </releases>
-        </repository>
+        <!--<repository>-->
+            <!--<id>wso2.staging</id>-->
+            <!--<name>wso2 staging</name>-->
+            <!--<url>https://maven.wso2.org/nexus/content/repositories/orgwso2carbonevent-processing-1010/</url>-->
+            <!--<releases>-->
+                <!--<enabled>true</enabled>-->
+                <!--<updatePolicy>daily</updatePolicy>-->
+                <!--<checksumPolicy>ignore</checksumPolicy>-->
+            <!--</releases>-->
+        <!--</repository>-->
 
     </repositories>
 
