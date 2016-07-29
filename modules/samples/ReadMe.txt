@@ -27,7 +27,7 @@ Consumer clients are in samples/consumers/ and Producer clients are in samples/p
 
 Each client can be run through the provided ant script and additional options it supports will be printed to the console when running ant.
 
-For more infomaiton of running samples please refer https://docs.wso2.com/display/CEP410/Samples+Guide
+For more infomaiton of running samples please refer https://docs.wso2.com/display/CEP420/Samples+Guide
 
 
 

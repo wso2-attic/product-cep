@@ -66,7 +66,7 @@ System Requirements
 4. To compile and run the sample clients, an Ant version is required. Ant 1.7.0 version is recommended
 5. To build WSO2 CEP from the Source distribution, it is necessary that you have JDK 1.7 version or later and Maven 3.0.4 or later
 
-For more details see http://docs.wso2.com/display/CEP410/Installation+Prerequisites
+For more details see http://docs.wso2.com/display/CEP420/Installation+Prerequisites
 
 Installation & Running
 ----------------------
@@ -78,7 +78,7 @@ Installation & Running
     username : admin
     password : admin
 
-For more details see https://docs.wso2.com/display/CEP410/Installing+the+Product
+For more details see https://docs.wso2.com/display/CEP420/Installing+the+Product
 
 Running Samples
 ---------------
@@ -86,7 +86,7 @@ WSO2 CEP server can be started with the sample mode
 To start with sample mode run ./wso2cep-samples.sh -sn <sampleNo> or wso2cep-samples.bat -sn <sampleNo> in the bin directory
 Example, to run sample 0001: ./wso2cep-samples.sh -sn 0001
 
-For more details see https://docs.wso2.com/display/CEP410/Samples+Guide .
+For more details see https://docs.wso2.com/display/CEP420/Samples+Guide .
 
 **For further details, see the WSO2 Complex Event Processor documentation at http://docs.wso2.com/complex-event-processor**
 

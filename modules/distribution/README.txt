@@ -272,7 +272,7 @@ Crypto Notice
 
 
 For further details, see theWSO2 Complex Event Processor documentation at
-https://docs.wso2.com/display/CEP410/WSO2+Complex+Event+Processor+Documentation
+https://docs.wso2.com/display/CEP420/WSO2+Complex+Event+Processor+Documentation
 
 ---------------------------------------------------------------------------
 (c) Copyright 2016 WSO2 Inc.
