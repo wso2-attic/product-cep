@@ -40,7 +40,7 @@ public class TflStream {
 	public static ConcurrentHashMap<String, Bus> busses = new ConcurrentHashMap<String, Bus>();
 	public static long timeOffset;
 	public static long lastTime = 0;
-	public static final String endPointBus =  "http://localhost:9763/endpoints/GpsDataOverHttpSpatialObjectStream";
+	public static final String endPointBus =  "http://localhost:9763/endpoints/Geo-Receiver-HTTP-LocationStream";
 	public static final String endPointTraffic =  "http://localhost:9763/endpoints/GpsDataOverHttpTrafficStream";
 
 	public static void main(String[] args) throws XMLStreamException {
@@ -52,8 +52,8 @@ public class TflStream {
 		try {
 			Update update = new Update(System.currentTimeMillis(), 1000, endPointBus);
 			GetData busData = new GetData(true, playback);
-			GetData trafficData = new GetData(false, playback);
-			trafficData.start();
+//			GetData trafficData = new GetData(false, playback);
+//			trafficData.start();
 			busData.start();
 			System.out.println("Started getting data");
 			Thread.sleep(30000);
