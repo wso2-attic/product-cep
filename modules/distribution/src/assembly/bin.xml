@@ -726,6 +726,14 @@
             <fileMode>644</fileMode>
         </file>
 
+        <file>
+            <source>
+                repository/resources/portal/providers/realtime/client.js
+            </source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/portal/extensions/providers/realtime/</outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
+
     </files>
 
     <!-- Adding rampart mar -->

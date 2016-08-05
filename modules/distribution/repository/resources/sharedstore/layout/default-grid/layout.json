@@ -2,7 +2,7 @@
     "id": "default-grid",
     "title": "Default Grid",
     "description": "Default grid layout",
-    "thumbnail": "store://layout/default-grid/index.png",
-    "url": "store://layout/default-grid/index.json"
+    "thumbnail": "layout/default-grid/index.png",
+    "url": "layout/default-grid/index.json"
 }
 
