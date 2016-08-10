@@ -734,6 +734,15 @@
             <fileMode>644</fileMode>
         </file>
 
+        <!-- Adding Geo Dashboard Capp -->
+        <file>
+            <source>
+                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/deployment/server/carbonapps/org_wso2_carbon_geo_dashboard-1.0.0.car
+            </source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/resources/geo-dashboard/carbonapps/</outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
+
     </files>
 
     <!-- Adding rampart mar -->
