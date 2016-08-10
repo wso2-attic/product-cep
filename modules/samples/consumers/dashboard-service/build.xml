@@ -16,7 +16,7 @@
 
 <project default="build-service">
 
-    <property name="cep.home" value="../../.."/>
+    <property name="cep.home" value="../../../.."/>
     <property name="src.dir" value="src/main/java"/>
     <property name="resources.dir" value="src/main/resources"/>
     <property name="temp.dir" value="temp"/>
@@ -78,7 +78,7 @@
 
     <target name="-assign.sample" if="sample.folder">
         <echo>Sample No : ${sn}</echo>
-        <property name="services.dir" value="${cep.home}/samples/artifacts/${sn}/axis2services"/>
+        <property name="services.dir" value="${cep.home}/samples/cep/artifacts/${sn}/axis2services"/>
         <echo>Services Dir : ${services.dir}</echo>
     </target>
 

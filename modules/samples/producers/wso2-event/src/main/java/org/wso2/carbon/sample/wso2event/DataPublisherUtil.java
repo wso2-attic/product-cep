@@ -32,11 +32,11 @@ public class DataPublisherUtil {
 
     private static Log log = LogFactory.getLog(DataPublisherUtil.class);
 
-    static File securityFile = new File(".." + File.separator + ".." + File.separator + ".." + File.separator + "repository" + File.separator + "resources" + File.separator + "security");
-    static String configDirectoryPath = ".." + File.separator + ".." + File.separator + ".." + File.separator + "repository" + File.separator + "deployment" + File.separator + "server" + File.separator + "eventstreams";
-    static String sampleDirectoryPath = ".." + File.separator + ".." + File.separator + ".." + File.separator + "samples" + File.separator + "artifacts" + File.separator + "sampleNumber" + File.separator;
-    static String sampleStreamDefinitionsDirectoryPath = ".." + File.separator + ".." + File.separator + ".." + File.separator + "samples" + File.separator + "artifacts" + File.separator + "sampleNumber" + File.separator + "eventstreams"  + File.separator;
-    static String dataAgentConfigPath = ".." + File.separator + ".." + File.separator + ".." + File.separator + "repository" + File.separator + "conf" + File.separator + "data-bridge" + File.separator + "data-agent-config.xml";
+    static File securityFile = new File(".." + File.separator + ".." + File.separator + ".." + File.separator + ".." + File.separator + "repository" + File.separator + "resources" + File.separator + "security");
+    static String configDirectoryPath = ".." + File.separator + ".." + File.separator + ".." + File.separator + ".." + File.separator + "repository" + File.separator + "deployment" + File.separator + "server" + File.separator + "eventstreams";
+    static String sampleDirectoryPath = ".." + File.separator + ".." + File.separator + ".." + File.separator + ".." + File.separator + "samples" + File.separator + "cep" + File.separator + "artifacts" + File.separator + "sampleNumber" + File.separator;
+    static String sampleStreamDefinitionsDirectoryPath = ".." + File.separator + ".." + File.separator + ".." + File.separator + ".." + File.separator + "samples" + File.separator + "cep" + File.separator + "artifacts" + File.separator + "sampleNumber" + File.separator + "eventstreams"  + File.separator;
+    static String dataAgentConfigPath = ".." + File.separator + ".." + File.separator + ".." + File.separator + ".." + File.separator + "repository" + File.separator + "conf" + File.separator + "data-bridge" + File.separator + "data-agent-config.xml";
 
     public static void setTrustStoreParams() {
         String trustStore = securityFile.getAbsolutePath();

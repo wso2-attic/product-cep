@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
 public class JMSClientUtil {
     private static Log log = LogFactory.getLog(JMSClientUtil.class);
     static String sampleDirectoryPath = ".." + File.separator + ".." + File.separator + ".." + File.separator +
-                                        "samples" + File.separator + "artifacts" + File.separator + "sampleNumber" + File.separator;
+                                        "samples" + File.separator + "cep" + File.separator + "artifacts" + File.separator + "sampleNumber" + File.separator;
 
     /**
      * This method will construct the directory path of the data file

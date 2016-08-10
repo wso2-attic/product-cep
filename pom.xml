@@ -47,6 +47,7 @@
         <module>modules/org.wso2.stratos.cep.dashboard.ui</module>
         <module>modules/org.wso2.cep.storm.dependencies</module>
         <module>modules/distribution</module>
+        <module>modules/distribution/samples</module>
         <module>modules/integration</module>
     </modules>
 
