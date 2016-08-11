@@ -28,8 +28,8 @@
 
 
     <property name="broker" value=""/>
-    <property name="topicName" value=""/>
-    <property name="queue" value=""/>
+    <property name="topicName" value="&quot;&quot;"/>
+    <property name="queue" value="&quot;&quot;"/>
 
     <path id="javac.classpath">
         <pathelement path="${class.dir}"/>
