@@ -15,7 +15,7 @@
 <project default="copy">
 
     <property name="sample.axis2.repo.webapps" value="../../artifacts/${sn}/webapps"/>
-    <property name="default.axis2.repo.webapps" value="../../../repository/deployment/server/webapps"/>
+    <property name="default.axis2.repo.webapps" value="../../../../repository/deployment/server/webapps"/>
 
     <target name="copy">
         <echo> Configure sample number by -Dsn=xxxx </echo>

@@ -59,7 +59,7 @@
                         </property>
                         <property>
                             <name>samples.dir</name>
-                            <value>${basedir}/../../../samples/product</value>
+                            <value>${basedir}/../../../samples/cep/product</value>
                         </property>
                         <property>
                             <name>framework.resource.location</name>

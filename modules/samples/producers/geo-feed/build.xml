@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="dataagent" default="run">
 
-    <property name="cep.home" value="../../.."/>
+    <property name="cep.home" value="../../../.."/>
     <property name="src.dir" value="src"/>
     <property name="temp.dir" value="temp"/>
     <property name="lib.dir" value="../../lib"/>

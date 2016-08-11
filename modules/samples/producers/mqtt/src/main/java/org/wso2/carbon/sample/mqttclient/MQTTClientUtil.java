@@ -24,8 +24,8 @@ import java.io.FileNotFoundException;
 public class MQTTClientUtil {
 
     private static String sampleFilPath =
-            ".." + File.separator + ".." + File.separator + ".." + File.separator + "samples" +
-                    File.separator + "artifacts" + File.separator + "sampleNumber" + File.separator;
+            ".." + File.separator + ".." + File.separator + ".." + File.separator + ".." + File.separator + "samples" +
+                    File.separator + "cep" + File.separator + "artifacts" + File.separator + "sampleNumber" + File.separator;
 
 
     /**

@@ -53,6 +53,14 @@ public class JMSClient {
                 log.error("Entered broker is invalid! ");
             }
             if (validBroker) {
+                if (topic != null && topic.isEmpty() || topic.equals("\"\"")) {
+                    topic = null;
+                }
+
+                if (queue != null && queue.isEmpty() || queue.equals("\"\"")) {
+                    queue = null;
+                }
+
                 if (topic == null && queue == null) {
                     log.error("Enter topic value or queue value! ");
                 } else if (topic != null) {

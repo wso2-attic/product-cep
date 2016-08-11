@@ -95,7 +95,7 @@
         <!--copying samples-->
         <fileSet>
             <directory>../../modules/samples</directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/samples</outputDirectory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/samples/cep</outputDirectory>
             <includes>
                 <include>artifacts/**</include>
                 <include>consumers/**</include>
@@ -113,28 +113,28 @@
         </fileSet>
         <fileSet>
             <directory>../../modules/samples/target/lib</directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/samples/lib</outputDirectory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/samples/cep/lib</outputDirectory>
             <includes>
                 <include>*.jar</include>
             </includes>
         </fileSet>
         <fileSet>
             <directory>../../modules/samples/target/output-ui-test</directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/samples/artifacts/0071/webapps</outputDirectory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/samples/cep/artifacts/0071/webapps</outputDirectory>
             <includes>
                 <include>*.war</include>
             </includes>
         </fileSet>
         <fileSet>
             <directory>../../modules/samples/extensions/geo-event-notifier/target</directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/samples/utils/geo-dashboard-extensions</outputDirectory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/samples/cep/utils/geo-dashboard-extensions</outputDirectory>
             <includes>
                 <include>*.jar</include>
             </includes>
         </fileSet>
         <fileSet>
             <directory>../../modules/samples/extensions/geo-event-fuser/target</directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/samples/utils/geo-dashboard-extensions</outputDirectory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/samples/cep/utils/geo-dashboard-extensions</outputDirectory>
             <includes>
                 <include>*.jar</include>
             </includes>

@@ -29,7 +29,7 @@ import java.io.*;
 public class WSO2EventServerUtil {
     private static Log log = LogFactory.getLog(TestWso2EventServer.class);
 
-    static File securityFile = new File(".." + File.separator + ".." + File.separator + ".." + File.separator
+    static File securityFile = new File(".." + File.separator + ".." + File.separator + ".." + File.separator + ".." + File.separator
             + "repository" + File.separator + "resources" + File.separator + "security");
 
     public static void setKeyStoreParams() {
