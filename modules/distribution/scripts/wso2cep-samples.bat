@@ -54,7 +54,7 @@ shift
 goto initial
 
 :run
-wso2server.bat %CMD% -Daxis2.repo=../samples/artifacts/%cn%
+wso2server.bat %CMD% -Daxis2.repo=../samples/cep/artifacts/%cn%
 goto done
 
 :copyfile
