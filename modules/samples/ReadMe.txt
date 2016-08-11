@@ -14,7 +14,7 @@ From Windows :
     eg:- wso2cep-samples.bat -sn 0001
 
 This command will startup the server with the sample configuration files.
-The samples can be found in the <CEP_HOME>/cep/samples/artifacts
+The samples can be found in the <CEP_HOME>/samples/cep/artifacts
 
 
 Basic samples are numbered from 0001 to 0099. These samples explain how to configure different types of event receivers & publishers and their mappings.
