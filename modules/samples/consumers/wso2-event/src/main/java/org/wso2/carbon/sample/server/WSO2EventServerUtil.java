@@ -31,9 +31,9 @@ import java.util.List;
 public class WSO2EventServerUtil {
     private static Log log = LogFactory.getLog(TestWso2EventServer.class);
 
-    static File securityFile = new File(".." + File.separator + ".." + File.separator + ".." + File.separator + "repository" + File.separator + "resources" + File.separator + "security");
-    static String configDirectoryPath = ".." + File.separator + ".." + File.separator + ".." + File.separator + "repository" + File.separator + "deployment" + File.separator + "server" + File.separator + "eventstreams";
-    static String sampleDirectoryPath = ".." + File.separator + ".." + File.separator + ".." + File.separator + "samples" + File.separator + "artifacts" + File.separator + "sampleNumber" + File.separator + "eventstreams";
+    static File securityFile = new File(".." + File.separator + ".." + File.separator + ".." + File.separator + ".." + File.separator + "repository" + File.separator + "resources" + File.separator + "security");
+    static String configDirectoryPath = ".." + File.separator + ".." + File.separator + ".." + File.separator + ".." + File.separator + "repository" + File.separator + "deployment" + File.separator + "server" + File.separator + "eventstreams";
+    static String sampleDirectoryPath = ".." + File.separator + ".." + File.separator + ".." + File.separator + ".." + File.separator + "samples" + File.separator + "cep" + File.separator + "artifacts" + File.separator + "sampleNumber" + File.separator + "eventstreams";
 
     public static void setTrustStoreParams() {
         String trustStore = securityFile.getAbsolutePath();

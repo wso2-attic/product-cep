@@ -1,0 +1,20 @@
+{
+  "name": "MaxSensorReadingPerRoomStream",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "payloadData": [
+    {
+      "name": "sensorType",
+      "type": "STRING"
+    },
+    {
+      "name": "maxValue",
+      "type": "FLOAT"
+    },
+    {
+      "name": "roomNo",
+      "type": "INT"
+    }
+  ]
+}

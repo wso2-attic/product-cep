@@ -22,8 +22,9 @@ import java.io.*;
 
 public class DataPublisherUtil {
 
-    static File securityFile = new File(".." + File.separator + ".." + File.separator + ".." + File.separator
-            + "repository" + File.separator + "resources" + File.separator + "security");
+    static File securityFile = new File(
+            ".." + File.separator + ".." + File.separator + ".." + File.separator + ".." + File.separator + "repository" +
+                    File.separator + "resources" + File.separator + "security");
     static String dataAgentConfigPath = "src" + File.separator + "main" + File.separator + "resources"
             + File.separator
             + "data-agent-config.xml";

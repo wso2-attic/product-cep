@@ -30,8 +30,8 @@ public class KafkaUtil {
 
 	private static Log log = LogFactory.getLog(KafkaUtil.class);
 
-	static String sampleDirectoryPath = ".." + File.separator + ".." + File.separator + ".." + File.separator +
-			"samples" + File.separator + "artifacts" + File.separator + "sampleNumber" + File.separator;
+	static String sampleDirectoryPath = ".." + File.separator + ".." + File.separator + ".." + File.separator + ".." + File.separator +
+			"samples" + File.separator + "cep" + File.separator + "artifacts" + File.separator + "sampleNumber" + File.separator;
 
 	/**
 	 * This method will construct the directory path of the data file

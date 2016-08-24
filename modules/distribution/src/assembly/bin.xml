@@ -95,7 +95,7 @@
         <!--copying samples-->
         <fileSet>
             <directory>../../modules/samples</directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/samples</outputDirectory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/samples/cep</outputDirectory>
             <includes>
                 <include>artifacts/**</include>
                 <include>consumers/**</include>
@@ -113,28 +113,28 @@
         </fileSet>
         <fileSet>
             <directory>../../modules/samples/target/lib</directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/samples/lib</outputDirectory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/samples/cep/lib</outputDirectory>
             <includes>
                 <include>*.jar</include>
             </includes>
         </fileSet>
         <fileSet>
             <directory>../../modules/samples/target/output-ui-test</directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/samples/artifacts/0071/webapps</outputDirectory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/samples/cep/artifacts/0071/webapps</outputDirectory>
             <includes>
                 <include>*.war</include>
             </includes>
         </fileSet>
         <fileSet>
             <directory>../../modules/samples/extensions/geo-event-notifier/target</directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/samples/utils/geo-dashboard-extensions</outputDirectory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/samples/cep/utils/geo-dashboard-extensions</outputDirectory>
             <includes>
                 <include>*.jar</include>
             </includes>
         </fileSet>
         <fileSet>
             <directory>../../modules/samples/extensions/geo-event-fuser/target</directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/samples/utils/geo-dashboard-extensions</outputDirectory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/samples/cep/utils/geo-dashboard-extensions</outputDirectory>
             <includes>
                 <include>*.jar</include>
             </includes>
@@ -344,9 +344,6 @@
                 ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/deployment/server/jaggeryapps/portal
             </directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/portal</outputDirectory>
-            <excludes>
-                <exclude>**/extensions/chart-templates/line-chart/config.json</exclude>
-            </excludes>
         </fileSet>
 
         <!--Copying template-manager directory-->
@@ -678,25 +675,6 @@
             <fileMode>644</fileMode>
         </file>
 
-
-        <!--Copying jaggery file for hostname fix -->
-        <file>
-            <source>repository/resources/jaggery/config/common-scripts.jag</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/portal/controllers/includes
-            </outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
-
-        <!--Copying jaggery file for hostname fix -->
-        <file>
-            <source>repository/resources/jaggery/config/index.js</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/portal/extensions/components/gadget
-            </outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
-
         <!-- Copying the identity file -->
         <file>
             <source>
@@ -706,31 +684,6 @@
             <fileMode>644</fileMode>
         </file>
 
-        <!--Copying vizgrammer library file -->
-        <file>
-            <source>repository/resources/dashboard/vizgrammer/VizGrammar.min.js</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/portal/js
-            </outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
-
-        <file>
-            <source>repository/resources/dashboard/vizgrammer/VizGrammar.min.js</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/portal/templates/gadgets/igviz/js
-            </outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
-
-        <file>
-            <source>
-                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/components/features/org.wso2.carbon.analytics.gadget.template_${carbon.analytics.common.gadget.version}/charts/line-chart/config.json
-            </source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/portal/extensions/chart-templates/line-chart</outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
 
 
         <!--ML files -->
@@ -763,15 +716,6 @@
             <!--<fileMode>644</fileMode>-->
         <!--</file>-->
 
-        <!-- Adding Geo Dashboard  configuration files and Capp -->
-        <file>
-            <source>
-                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/deployment/server/carbonapps/org_wso2_carbon_geo_dashboard-1.0.0.car
-            </source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/samples/capp/</outputDirectory>
-            <fileMode>644</fileMode>
-        </file>
-
         <!-- Adding Template Manger simulator files -->
         <file>
             <source>
@@ -779,6 +723,23 @@
             </source>
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/eventsimulatorfiles/</outputDirectory>
             <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+
+        <file>
+            <source>
+                repository/resources/portal/providers/realtime/client.js
+            </source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/portal/extensions/providers/realtime/</outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
+
+        <!-- Adding Geo Dashboard Capp -->
+        <file>
+            <source>
+                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/deployment/server/carbonapps/org_wso2_carbon_geo_dashboard-1.0.0.car
+            </source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/resources/geo-dashboard/carbonapps/</outputDirectory>
             <fileMode>644</fileMode>
         </file>
 

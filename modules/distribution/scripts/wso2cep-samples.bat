@@ -54,29 +54,27 @@ shift
 goto initial
 
 :run
-wso2server.bat %CMD% -Daxis2.repo=../samples/artifacts/%cn%
+wso2server.bat %CMD% -Daxis2.repo=../samples/cep/artifacts/%cn%
 goto done
 
 :copyfile
-if not exist ..\samples\artifacts\%cn%\webapps ( mkdir ..\samples\artifacts\%cn%\webapps > nul
-if exist ..\repository\deployment\server\webapps\inputwebsocket.war ( copy ..\repository\deployment\server\webapps\inputwebsocket.war ..\samples\artifacts\%cn%\webapps\ > nul )
-if exist ..\repository\deployment\server\webapps\outputwebsocket.war ( copy ..\repository\deployment\server\webapps\outputwebsocket.war ..\samples\artifacts\%cn%\webapps\ > nul )
-if exist ..\repository\deployment\server\webapps\outputui.war ( copy ..\repository\deployment\server\webapps\outputui.war ..\samples\artifacts\%cn%\webapps\ > nul )
-if exist ..\repository\deployment\server\webapps\shindig.war ( copy ..\repository\deployment\server\webapps\shindig.war ..\samples\artifacts\%cn%\webapps\ > nul )
-if exist ..\repository\deployment\server\webapps\STRATOS_ROOT ( xcopy ..\repository\deployment\server\webapps\STRATOS_ROOT ..\samples\artifacts\%cn%\webapps\STRATOS_ROOT /s /q /i > nul )
-) else ( if not exist ..\samples\artifacts\%cn%\webapps\inputwebsocket.war ( copy ..\repository\deployment\server\webapps\inputwebsocket.war ..\samples\artifacts\%cn%\webapps\ > nul )
-if not exist ..\samples\artifacts\%cn%\webapps\outputwebsocket.war ( copy ..\repository\deployment\server\webapps\outputwebsocket.war ..\samples\artifacts\%cn%\webapps\ > nul )
-if not exist ..\samples\artifacts\%cn%\webapps\outputui.war ( copy ..\repository\deployment\server\webapps\outputui.war ..\samples\artifacts\%cn%\webapps\ > nul )
-if not exist ..\samples\artifacts\%cn%\webapps\shindig.war ( copy ..\repository\deployment\server\webapps\shindig.war ..\samples\artifacts\%cn%\webapps\ > nul )
-if not exist ..\samples\artifacts\%cn%\webapps\STRATOS_ROOT ( xcopy ..\repository\deployment\server\webapps\STRATOS_ROOT ..\samples\artifacts\%cn%\webapps\STRATOS_ROOT /s /q /i > nul ) )
+if not exist ..\samples\cep\artifacts\%cn%\webapps ( mkdir ..\samples\cep\artifacts\%cn%\webapps > nul
+if exist ..\repository\deployment\server\webapps\inputwebsocket.war ( copy ..\repository\deployment\server\webapps\inputwebsocket.war ..\samples\cep\artifacts\%cn%\webapps\ > nul )
+if exist ..\repository\deployment\server\webapps\outputwebsocket.war ( copy ..\repository\deployment\server\webapps\outputwebsocket.war ..\samples\cep\artifacts\%cn%\webapps\ > nul )
+if exist ..\repository\deployment\server\webapps\outputui.war ( copy ..\repository\deployment\server\webapps\outputui.war ..\samples\cep\artifacts\%cn%\webapps\ > nul )
+if exist ..\repository\deployment\server\webapps\shindig.war ( copy ..\repository\deployment\server\webapps\shindig.war ..\samples\cep\artifacts\%cn%\webapps\ > nul )
+) else ( if not exist ..\samples\cep\artifacts\%cn%\webapps\inputwebsocket.war ( copy ..\repository\deployment\server\webapps\inputwebsocket.war ..\samples\cep\artifacts\%cn%\webapps\ > nul )
+if not exist ..\samples\cep\artifacts\%cn%\webapps\outputwebsocket.war ( copy ..\repository\deployment\server\webapps\outputwebsocket.war ..\samples\cep\artifacts\%cn%\webapps\ > nul )
+if not exist ..\samples\cep\artifacts\%cn%\webapps\outputui.war ( copy ..\repository\deployment\server\webapps\outputui.war ..\samples\cep\artifacts\%cn%\webapps\ > nul )
+if not exist ..\samples\cep\artifacts\%cn%\webapps\shindig.war ( copy ..\repository\deployment\server\webapps\shindig.war ..\samples\cep\artifacts\%cn%\webapps\ > nul ))
 
-if not exist ..\samples\artifacts\%cn%\jaggeryapps ( mkdir ..\samples\artifacts\%cn%\jaggeryapps\portal > nul
-xcopy ..\repository\deployment\server\jaggeryapps\portal ..\samples\artifacts\%cn%\jaggeryapps\portal\ /s /q > nul
-rmdir ..\samples\artifacts\%cn%\jaggeryapps\portal\store /s /q > nul
-mkdir ..\samples\artifacts\%cn%\jaggeryapps\portal\store\carbon.super > nul
-xcopy ..\repository\deployment\server\jaggeryapps\portal\store\carbon.super ..\samples\artifacts\%cn%\jaggeryapps\portal\store\carbon.super /s /q > nul
-rmdir ..\samples\artifacts\%cn%\jaggeryapps\portal\store\carbon.super\gadget /s /q > nul
-mkdir ..\samples\artifacts\%cn%\jaggeryapps\portal\store\carbon.super\gadget > nul)
+if not exist ..\samples\cep\artifacts\%cn%\jaggeryapps ( mkdir ..\samples\cep\artifacts\%cn%\jaggeryapps\portal > nul
+xcopy ..\repository\deployment\server\jaggeryapps\portal ..\samples\cep\artifacts\%cn%\jaggeryapps\portal\ /s /q > nul
+rmdir ..\samples\cep\artifacts\%cn%\jaggeryapps\portal\store /s /q > nul
+mkdir ..\samples\cep\artifacts\%cn%\jaggeryapps\portal\store\carbon.super > nul
+xcopy ..\repository\deployment\server\jaggeryapps\portal\store\carbon.super ..\samples\cep\artifacts\%cn%\jaggeryapps\portal\store\carbon.super /s /q > nul
+rmdir ..\samples\cep\artifacts\%cn%\jaggeryapps\portal\store\carbon.super\fs\gadget /s /q > nul
+mkdir ..\samples\cep\artifacts\%cn%\jaggeryapps\portal\store\carbon.super\fs\gadget > nul)
 goto run
 
 :invalid_number

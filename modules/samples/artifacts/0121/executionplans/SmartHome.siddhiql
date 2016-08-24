@@ -1,0 +1,42 @@
+/* ExecutionPlan name */
+@Plan:name('SmartHome')
+
+/* Input stream definition */
+@Import('SensorStream:1.0.0')
+define stream SensorStream (sensorType string, value float, roomNo int, deviceID string);
+
+/* Output streams definition */
+@Export('MaxSensorReadingPerRoomStream:1.0.0')
+define stream MaxSensorReadingPerRoomStream (sensorType string, maxValue float, roomNo int);
+
+@Export('OverallMaxSensorReadingStream:1.0.0')
+define stream OverallMaxSensorReadingStream (sensorType string, maxValue float);
+
+@Export('OverallAverageSensorReadingStream:1.0.0')
+define stream OverallAverageSensorReadingStream (sensorType string, avgValue double);
+
+/* Event Window definition */
+define window SensorWindow (sensorType string, value float, roomNo int, deviceID string) timeBatch(5 seconds);
+
+/* Queries */
+@info(name = 'query0')
+from SensorStream
+insert into SensorWindow;
+
+@info(name = 'query1')
+from SensorWindow
+select sensorType, max(value) as maxValue, roomNo
+group by sensorType, roomNo
+insert into MaxSensorReadingPerRoomStream;
+
+@info(name = 'query2')
+from SensorWindow
+select sensorType, max(value) as maxValue
+group by sensorType
+insert into OverallMaxSensorReadingStream;
+
+@info(name = 'query3')
+from SensorWindow
+select sensorType, avg(value) as avgValue
+group by sensorType
+insert into OverallAverageSensorReadingStream;

@@ -1,0 +1,16 @@
+{
+  "name": "OverallMaxSensorReadingStream",
+  "version": "1.0.0",
+  "nickName": "",
+  "description": "",
+  "payloadData": [
+    {
+      "name": "sensorType",
+      "type": "STRING"
+    },
+    {
+      "name": "maxValue",
+      "type": "FLOAT"
+    }
+  ]
+}

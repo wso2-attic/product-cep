@@ -16,7 +16,7 @@
 
 <project default="run">
 
-    <property name="carbon.home" value="../../.."/>
+    <property name="carbon.home" value="../../../.."/>
     <property name="src.dir" value="src/main/java"/>
     <property name="resources.dir" value="src/main/resources"/>
     <property name="temp.dir" value="temp"/>

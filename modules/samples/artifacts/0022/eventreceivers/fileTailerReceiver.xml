@@ -20,7 +20,7 @@
 <eventReceiver name="fileTailerReceiver" statistics="disable"
     trace="disable" xmlns="http://wso2.org/carbon/eventreceiver">
     <from eventAdapterType="file-tail">
-        <property name="filepath">samples/artifacts/0022/fileReceiver.csv</property>
+        <property name="filepath">samples/cep/artifacts/0022/fileReceiver.csv</property>
         <property name="startFromEnd">false</property>
         <property name="delayInMillis">1000</property>
     </from>

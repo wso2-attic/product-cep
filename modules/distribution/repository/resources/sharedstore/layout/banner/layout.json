@@ -2,7 +2,7 @@
     "id": "banner",
     "title": "Default Grid with Banner",
     "description": "Default grid layout with banner",
-    "thumbnail": "store://layout/banner/index.png",
-    "url": "store://layout/banner/index.json"
+    "thumbnail": "layout/banner/index.png",
+    "url": "layout/banner/index.json"
 }
 

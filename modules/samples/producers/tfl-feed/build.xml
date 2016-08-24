@@ -17,7 +17,7 @@
   ~ under the License.
   -->
 <project name="dataagent" default="run">
-    <property name="carbon.home" value="../../.."/>
+    <property name="carbon.home" value="../../../.."/>
     <property name="src.dir" value="src"/>
     <property name="temp.dir" value="temp"/>
     <property name="lib.dir" value="../../lib"/>

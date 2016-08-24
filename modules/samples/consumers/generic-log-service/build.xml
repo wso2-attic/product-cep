@@ -16,7 +16,7 @@
 
 <project default="build-service">
 
-    <property name="cep.home" value="../../.."/>
+    <property name="cep.home" value="../../../.."/>
     <property name="src.dir" value="src/main/java"/>
     <property name="webapp.dir" value="src/main/webapp"/>
     <property name="temp.dir" value="temp"/>
@@ -58,7 +58,7 @@
 
     <target name="-assign.sample" if="sample.folder">
         <echo>Sample No : ${sn}</echo>
-        <property name="services.dir" value="${cep.home}/samples/artifacts/${sn}/webapps"/>
+        <property name="services.dir" value="${cep.home}/samples/cep/artifacts/${sn}/webapps"/>
         <echo>Services Dir : ${services.dir}</echo>
     </target>
 
