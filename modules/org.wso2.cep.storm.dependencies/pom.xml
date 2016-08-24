@@ -251,6 +251,13 @@
             <version>${scala.version}</version>
         </dependency>
 
+        <!-- Siddhi Markov models extension -->
+        <dependency>
+            <groupId>org.wso2.siddhi</groupId>
+            <artifactId>siddhi-extension-markov-models</artifactId>
+            <version>${siddhi.version}</version>
+        </dependency>
+
         <!-- Uncomment the following depedency section if you want to include Siddhi ML extension as part of
             Storm dependencies -->
         <!--<dependency>-->
@@ -314,6 +321,7 @@
                                     <include>org.wso2.siddhi:siddhi-extension-kalman-filter</include>
                                     <include>org.wso2.siddhi:siddhi-extension-map</include>
                                     <include>org.wso2.siddhi:siddhi-extension-reorder</include>
+                                    <include>org.wso2.siddhi:siddhi-extension-markov-models</include>
                                     <include>org.apache.ws.commons.axiom.wso2:axiom</include>
                                     <include>org.json.wso2:json</include>
                                     <include>org.apache.servicemix.bundles:org.apache.servicemix.bundles.geocoder-java
