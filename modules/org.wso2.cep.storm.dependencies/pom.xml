@@ -92,6 +92,12 @@
             <artifactId>joda-time</artifactId>
             <version>${joda.time.version}</version>
         </dependency>
+        <dependency>
+            <groupId>commons-lang.wso2</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>${orbit.version.commons.lang}</version>
+        </dependency>
+
 
         <!--siddhi extension with dependencies-->
 
@@ -303,6 +309,7 @@
 
                                     <include>libthrift.wso2:libthrift</include>
                                     <include>org.wso2.orbit.com.lmax:disruptor</include>
+                                    <include>commons-lang.wso2:commons-lang</include>
 
                                     <include>org.wso2.siddhi:siddhi-extension-math</include>
                                     <include>org.wso2.siddhi:siddhi-extension-regex</include>
