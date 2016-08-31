@@ -1,27 +1,27 @@
 <%
-/*
- * Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
- *
- * WSO2 Inc. licenses this file to you under the Apache License,
- * Version 2.0 (the "License"); you may not use this file except
- * in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied. See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
+    /*
+    * Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+    *
+    * WSO2 Inc. licenses this file to you under the Apache License,
+    * Version 2.0 (the "License"); you may not use this file except
+    * in compliance with the License.
+    * You may obtain a copy of the License at
+    *
+    *     http://www.apache.org/licenses/LICENSE-2.0
+    *
+    * Unless required by applicable law or agreed to in writing,
+    * software distributed under the License is distributed on an
+    * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    * KIND, either express or implied. See the License for the
+    * specific language governing permissions and limitations
+    * under the License.
+    */
 
-var user = session.get('user');
- 
-if (user == null) {
-	response.sendRedirect('/portal');
-}
+    var user = session.get('user');
+
+    if (user == null) {
+        response.sendRedirect('/portal');
+    }
 
 %>
 
@@ -79,34 +79,45 @@ if (user == null) {
                 <div class="panel panel-default">
                     <div class="panel-heading"> Configuration </div>
                     <div class="panel-body">
-                        <table style="width:100%;">
-                            <tr>
-                                <td>Stream Name :</td>
-                                <td><input type="text" id="idStreamName" value="org.wso2.event.sensor.stream"></td>
-                                <td>Version :</td>
-                                <td><input type="text" id="idVersion" value="1.0.0"></td>
 
-                            </tr>
-                            <tr>
-                                <td>CEP Host Name :</td>
-                                <td><input type="text" placeholder="localhost" id="idHost" value="localhost"></td>
-                                <td>CEP Port :</td>
-                                <td><input type="text" placeholder="9443" id="idPort" value="9443"></td>
-                            </tr>
-                            <tr>
-                                <td>Mode :</td>
-                                <td><select id="idMode">
+                        <div class="row">
+                            <div class="col-xs-6 form-group">
+                                <label>Stream Name :</label>
+                                <input class="form-control" type="text" id="idStreamName" value="org.wso2.event.sensor.stream"/>
+                            </div>
+                            <div class="col-xs-6 form-group">
+                                <label>Version :</label>
+                                <input class="form-control" type="text" id="idVersion" value="1.0.0"/>
+                            </div>
+
+                            <div class="col-xs-6 form-group">
+                                <label>CEP Host Name :</label>
+                                <input class="form-control" type="text" placeholder="localhost" id="idHost" value="localhost"/>
+                            </div>
+                            <div class="col-xs-6 form-group">
+                                <label>CEP Port :</label>
+                                <input class="form-control" type="text" placeholder="9443" id="idPort" value="9443"/>
+                            </div>
+
+                            <div class="col-xs-6 form-group">
+                                <label>Mode :</label>
+                                <select class="form-control" id="idMode">
                                     <option value="websocket">WEBSOCKET</option>
                                     <option value="http">HTTP</option>
-                                    </select>
-                                </td>
-                                <td>Polling Interval :</td>
-                                <td><input type="text" placeholder="30" id="idPollingInterval" value="30"></td>
-                            </tr>
-                        </table>
-                        <div id="divBtnConnect">
-                            <input type="button" id="idConnect" onclick="connectToSource()" value="Connect">
+                                </select>
+                            </div>
+                            <div class="col-xs-6 form-group">
+                                <label>Polling Interval :</label>
+                                <input class="form-control" type="text" placeholder="30" id="idPollingInterval" value="30"/>
+                            </div>
+
+                            <div class="col-xs-6 form-group">
+                                <div class="col-sm-10">
+                                    <button  type="button" id="idConnect" onclick="connectToSource()" class="btn btn-default">Connect</button>
+                                </div>
+                            </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -114,10 +125,10 @@ if (user == null) {
             </div>
             <div class="col-lg-6">
                 <div class="panel panel-default">
-                    <div class="panel-heading"> Recieved Events </div>
+                    <div class="panel-heading"> Received Events </div>
                     <div class="panel-body">
                         <div id="divTextArea"><textarea id="idRecievedEvents"></textarea></div>
-                        <div id="divBtnClear"><input type="button" value="Clear" onclick="clearTextArea()"> </div>
+                        <div id="divBtnClear" ><input type="button" value="Clear" onclick="clearTextArea()"> </div>
 
                     </div>
                 </div>
