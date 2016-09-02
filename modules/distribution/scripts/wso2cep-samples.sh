@@ -78,13 +78,13 @@ do
         `[ ! -f "$CARBON_HOME"/samples/cep/artifacts/$c/webapps/outputui.war ] && cp "$CARBON_HOME"/repository/deployment/server/webapps/outputui.war "$CARBON_HOME"/samples/cep/artifacts/$c/webapps/`
         `[ ! -f "$CARBON_HOME"/samples/cep/artifacts/$c/webapps/shindig.war ] && cp "$CARBON_HOME"/repository/deployment/server/webapps/shindig.war "$CARBON_HOME"/samples/cep/artifacts/$c/webapps/`
       fi
-      if [ ! -d "$CARBON_HOME"/samples/cep/artifacts/$c/jaggeryapps ]; then
-        `mkdir -p "$CARBON_HOME"/samples/cep/artifacts/$c/jaggeryapps`
-        `cp -r "$CARBON_HOME"/repository/deployment/server/jaggeryapps/portal "$CARBON_HOME"/samples/cep/artifacts/$c/jaggeryapps/`
+      if [ ! -d "$CARBON_HOME"/samples/cep/artifacts/$c/jaggeryapps/portal ]; then
+        `mkdir -p "$CARBON_HOME"/samples/cep/artifacts/$c/jaggeryapps/portal`
+      fi
+        `cp -r "$CARBON_HOME"/repository/deployment/server/jaggeryapps/portal/* "$CARBON_HOME"/samples/cep/artifacts/$c/jaggeryapps/portal`
         `rm -r "$CARBON_HOME"/samples/cep/artifacts/$c/jaggeryapps/portal/store/*`
         `cp -r "$CARBON_HOME"/repository/deployment/server/jaggeryapps/portal/store/carbon.super "$CARBON_HOME"/samples/cep/artifacts/$c/jaggeryapps/portal/store/`
         `rm -r "$CARBON_HOME"/samples/cep/artifacts/$c/jaggeryapps/portal/store/carbon.super/fs/gadget/*`
-      fi
    else
       echo "*** Specified sample number is not a number *** Please specify a valid sample number with the -sn option"
       echo "Example, to run sample 1: wso2cep-samples.sh -sn 1"

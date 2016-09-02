@@ -1,0 +1,150 @@
+<%
+    /*
+    * Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+    *
+    * WSO2 Inc. licenses this file to you under the Apache License,
+    * Version 2.0 (the "License"); you may not use this file except
+    * in compliance with the License.
+    * You may obtain a copy of the License at
+    *
+    *     http://www.apache.org/licenses/LICENSE-2.0
+    *
+    * Unless required by applicable law or agreed to in writing,
+    * software distributed under the License is distributed on an
+    * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    * KIND, either express or implied. See the License for the
+    * specific language governing permissions and limitations
+    * under the License.
+    */
+
+    var user = session.get('user');
+
+    if (user == null) {
+        response.sendRedirect('/portal');
+    }
+
+%>
+
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="js/jquery-2.1.1.min.js"></script>
+    <script src="js/eventsRequester.js"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/bootstrap.min.js"></script>
+    <style>
+        #idRecievedEvents {
+            overflow-y: scroll;
+            height: 300px;
+            width: 100%;
+            resize: none; /* Remove this if you want the user to resize the textarea */
+        }
+        #idConsole {
+            height: 300px;
+            width: 100%;
+            resize: none;
+        }
+        #divBtnClear {
+            float: right;
+        }
+        #divBtnConnect{
+            float: right;
+        }
+        td, th {
+            padding: 1px;
+        }
+    </style>
+</head>
+<body>
+<div id="wrapper">
+    <nav class="navbar navbar-default navbar-static-top" style="margin-bottom: 0" role="navigation">
+        <div class="navbar-default sidebar" role="navigation">
+        </div>
+    </nav>
+    <div id="page-wrapper" style="min-height: 623px;">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">WSO2 CEP - Output Adapter UI Test Application</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-2">
+
+            </div>
+            <div class="col-lg-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading"> Configuration </div>
+                    <div class="panel-body">
+
+                        <div class="row">
+                            <div class="col-xs-6 form-group">
+                                <label>Stream Name :</label>
+                                <input class="form-control" type="text" id="idStreamName" value="org.wso2.event.sensor.stream"/>
+                            </div>
+                            <div class="col-xs-6 form-group">
+                                <label>Version :</label>
+                                <input class="form-control" type="text" id="idVersion" value="1.0.0"/>
+                            </div>
+
+                            <div class="col-xs-6 form-group">
+                                <label>CEP Host Name :</label>
+                                <input class="form-control" type="text" placeholder="localhost" id="idHost" value="localhost"/>
+                            </div>
+                            <div class="col-xs-6 form-group">
+                                <label>CEP Port :</label>
+                                <input class="form-control" type="text" placeholder="9443" id="idPort" value="9443"/>
+                            </div>
+
+                            <div class="col-xs-6 form-group">
+                                <label>Mode :</label>
+                                <select class="form-control" id="idMode">
+                                    <option value="websocket">WEBSOCKET</option>
+                                    <option value="http">HTTP</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-6 form-group">
+                                <label>Polling Interval :</label>
+                                <input class="form-control" type="text" placeholder="30" id="idPollingInterval" value="30"/>
+                            </div>
+
+                            <div class="col-xs-6 form-group">
+                                <div class="col-sm-10">
+                                    <button  type="button" id="idConnect" onclick="connectToSource()" class="btn btn-default">Connect</button>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 form-group">
+                                <div class="col-sm-10">
+                                    <button  type="button" id="idClearAll" onclick="clearAll()" class="btn btn-default">Clear All</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2">
+            </div>
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading"> Received Events </div>
+                    <div class="panel-body">
+                        <div id="divTextArea"><textarea id="idRecievedEvents"></textarea></div>
+                        <div id="divBtnClear" ><input type="button" value="Clear" onclick="clearTextArea()"> </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading"> Console </div>
+                    <div class="panel-body">
+                        <textarea id="idConsole"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
