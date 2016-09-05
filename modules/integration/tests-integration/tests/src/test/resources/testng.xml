@@ -50,7 +50,7 @@
             <class name="org.wso2.carbon.integration.test.outputflow.WebsocketTestCase"/>
             <class name="org.wso2.carbon.integration.test.outputflow.SOAPTestCase"/>
             <class name="org.wso2.carbon.integration.test.outputflow.HTTPTestCase"/>
-            <class name="org.wso2.carbon.integration.test.outputflow.UIAdapterTestCase"/>
+            <!--<class name="org.wso2.carbon.integration.test.outputflow.UIAdapterTestCase"/>-->
             <class name="org.wso2.carbon.integration.test.outputflow.Wso2EventTestCase"/>
             <!--<class name="org.wso2.carbon.integration.test.processflow.PassThroughWithWso2Event"/>-->
             <!--<class name="org.wso2.carbon.integration.test.processflow.MQTTXMLMessageTestCase"/>-->
