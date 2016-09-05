@@ -74,8 +74,8 @@ public class UIAdapterTestCase extends CEPIntegrationTest {
         Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
 
         WebSocketClient webSocketClient = new WebSocketClient();
-        webSocketClient.receive("ws://localhost:" + CEPIntegrationTestConstants.HTTP_PORT +
-                                "/outputui/org.wso2.event.sensor.stream/1.0.0", 30);
+        webSocketClient.receive("wss://localhost:" + CEPIntegrationTestConstants.HTTP_PORT +
+                                "/uipublisher/websocketSubscriptionEndpoint.jag", "org.wso2.event.sensor.stream:1.0.0", 30);
 
         Thread.sleep(1000);
 
