@@ -20,12 +20,12 @@
     <parent>
         <groupId>org.wso2.cep</groupId>
         <artifactId>cep-samples-parent</artifactId>
-        <version>4.2.0-SNAPSHOT</version>
+        <version>4.2.0</version>
     </parent>
 
     <artifactId>cep-samples-producers</artifactId>
     <name>WSO2 CEP - Samples Producers</name>
-    <version>4.2.0-SNAPSHOT</version>
+    <version>4.2.0</version>
     <packaging>pom</packaging>
 
 
