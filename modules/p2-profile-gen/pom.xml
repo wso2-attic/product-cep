@@ -98,6 +98,11 @@
                             <publishArtifactRepository>true</publishArtifactRepository>
                             <featureArtifacts>
 
+                                <!--Dashboard migration-->
+                                <feaureArtifactDef>
+                                    org.wso2.carbon.dashboards:org.wso2.carbon.dashboards.migration.tool.feature:${carbon.dashboards.version}
+                                </feaureArtifactDef>
+
                                 <!--1 Carbon-Kernel-->
                                 <featureArtifactDef>
                                     org.wso2.carbon:org.wso2.carbon.core.runtime.feature:${carbon.kernel.version}
@@ -405,6 +410,11 @@
                             </destination>
                             <deleteOldProfileFiles>true</deleteOldProfileFiles>
                             <features>
+                                <!--Dashboard migration-->
+                                <feature>
+                                    <id>org.wso2.carbon.dashboards.migration.tool.feature.group</id>
+                                    <version>${carbon.dashboards.version}</version>
+                                </feature>
                                 <!-- 1 Carbon-Kernel -->
                                 <feature>
                                     <id>org.wso2.carbon.core.ui.feature.group</id>
