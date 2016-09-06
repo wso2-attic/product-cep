@@ -1,6 +1,0 @@
-<%
-var styles = utils.dashboardStyles();
-%>
-<% if(styles) { %>
-<link rel="stylesheet" href="<%=urlPrefix%><%=styles%>">
-<% } %>

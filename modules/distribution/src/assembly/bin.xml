@@ -626,6 +626,16 @@
             <fileMode>755</fileMode>
         </file>
 
+        <!--Gadget Migration Resources-->
+        <file>
+            <source>migration/dashboards/migration-1.0.x-2.0.x/resources/main.js</source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/migration/dashboards/migration-1.0.x-2.0.x/resources/</outputDirectory>
+        </file>
+        <file>
+            <source>migration/dashboards/migration-1.0.x-2.0.x/resources/outputAdapterUiLibrary.js</source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/migration/dashboards/migration-1.0.x-2.0.x/resources/</outputDirectory>
+        </file>
+
         <!-- Including rdbms configuration file for event simulator -->
         <file>
             <source>
