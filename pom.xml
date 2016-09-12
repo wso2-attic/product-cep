@@ -26,7 +26,7 @@
     <groupId>org.wso2.cep</groupId>
     <artifactId>wso2cep-parent</artifactId>
     <packaging>pom</packaging>
-    <version>4.2.0</version>
+    <version>4.2.1-SNAPSHOT</version>
     <name>WSO2 CEP - Parent</name>
     <url>http://wso2.com/products/complex-event-processor/</url>
     <description>WSO2 Complex Event Processor</description>
@@ -579,7 +579,7 @@
         <url>https://github.com/wso2/product-cep.git</url>
         <developerConnection>scm:git:https://github.com/wso2/product-cep.git</developerConnection>
         <connection>scm:git:https://github.com/wso2/product-cep.git</connection>
-        <tag>v4.2.0-rc2</tag>
+        <tag>HEAD</tag>
     </scm>
     <!--build>
         <plugins>
@@ -746,7 +746,7 @@
         <carbon.p2.plugin.version>1.5.4</carbon.p2.plugin.version>
         <carbon.event-processing.version>2.1.4</carbon.event-processing.version>
         <siddhi.version>3.1.2</siddhi.version>
-        <cep.version>4.2.0</cep.version>
+        <cep.version>4.2.1-SNAPSHOT</cep.version>
         <test.framework.version>4.4.2</test.framework.version>
         <test.framework.util.version>4.4.1</test.framework.util.version>
 
