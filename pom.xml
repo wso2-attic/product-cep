@@ -746,7 +746,7 @@
         <carbon.p2.plugin.version>1.5.4</carbon.p2.plugin.version>
         <carbon.event-processing.version>2.1.4</carbon.event-processing.version>
         <siddhi.version>3.1.2</siddhi.version>
-        <cep.version>4.2.0-SNAPSHOT</cep.version>
+        <cep.version>4.2.0</cep.version>
         <test.framework.version>4.4.2</test.framework.version>
         <test.framework.util.version>4.4.1</test.framework.util.version>
 
