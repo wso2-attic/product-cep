@@ -50,6 +50,8 @@
             <include name="org.wso2.carbon.databridge.receiver.binary_*.jar"/>
             <include name="org.wso2.carbon.base_*.jar"/>
             <include name="org.wso2.carbon.identity.authentication_*.jar"/>
+            <include name="axiom_*.jar"/>
+            <include name="org.wso2.securevault_*.jar"/>
         </fileset>
     </path>
 
