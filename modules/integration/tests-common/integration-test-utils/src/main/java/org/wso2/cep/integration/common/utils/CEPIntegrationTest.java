@@ -21,12 +21,7 @@ import org.apache.axiom.om.impl.builder.StAXOMBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.simple.parser.JSONParser;
-import org.wso2.appserver.integration.common.clients.EventProcessorAdminServiceClient;
-import org.wso2.appserver.integration.common.clients.EventPublisherAdminServiceClient;
-import org.wso2.appserver.integration.common.clients.EventReceiverAdminServiceClient;
-import org.wso2.appserver.integration.common.clients.EventSimulatorAdminServiceClient;
-import org.wso2.appserver.integration.common.clients.EventStreamManagerAdminServiceClient;
-import org.wso2.appserver.integration.common.clients.TemplateManagerAdminServiceClient;
+import org.wso2.appserver.integration.common.clients.*;
 import org.wso2.carbon.automation.engine.context.AutomationContext;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
@@ -58,6 +53,7 @@ public abstract class CEPIntegrationTest {
 
     protected TemplateManagerAdminServiceClient templateManagerAdminServiceClient;
     protected EventSimulatorAdminServiceClient eventSimulatorAdminServiceClient;
+    protected ResourceServiceClient resourceServiceClient;
 
     private final String artifactDeploymentDir = FrameworkPathUtil.getCarbonHome() + File.separator + "repository" +
                                                  File.separator + "deployment" + File.separator + "server" + File.separator;

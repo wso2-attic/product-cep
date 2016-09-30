@@ -46,6 +46,7 @@
             <class name="org.wso2.carbon.integration.test.inputflow.FileTestCase"/>
             <class name="org.wso2.carbon.integration.test.inputflow.Wso2EventTestCase"/>
             <!--<class name="org.wso2.carbon.integration.test.outputflow.LoggerTestCase"/>-->
+            <class name="org.wso2.carbon.integration.test.outputflow.CustomMappingTestCase"/>
             <class name="org.wso2.carbon.integration.test.outputflow.RDBMSTestCase"/>
             <class name="org.wso2.carbon.integration.test.outputflow.WebsocketTestCase"/>
             <class name="org.wso2.carbon.integration.test.outputflow.SOAPTestCase"/>
