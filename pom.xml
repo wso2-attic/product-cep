@@ -735,7 +735,7 @@
         <!--<carbon.kernel.registry.imp.pkg.version>[1.0.1, 2.0.0)</carbon.kernel.registry.imp.pkg.version>-->
         <carbon.deployment.version>4.7.0</carbon.deployment.version>
         <carbon.commons.version>4.5.4</carbon.commons.version>
-        <carbon.analytics-common.version>5.1.4-SNAPSHOT</carbon.analytics-common.version>
+        <carbon.analytics-common.version>5.1.5-SNAPSHOT</carbon.analytics-common.version>
         <carbon.dashboards.version>2.0.2</carbon.dashboards.version>
         <carbon.identity.version>5.2.0</carbon.identity.version>
         <carbon.identity.auth.saml2.version>5.1.3</carbon.identity.auth.saml2.version>
