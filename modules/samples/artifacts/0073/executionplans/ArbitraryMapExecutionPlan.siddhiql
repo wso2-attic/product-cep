@@ -1,0 +1,13 @@
+@Plan:name('ExecutionPlan')
+
+@Plan:description('Add arbitrary data map to the output stream')
+
+@Import('org.wso2.event.sensor.stream:1.0.0')
+define stream inputSream (meta_timestamp long, meta_isPowerSaverEnabled bool, meta_sensorId int, meta_sensorName string, correlation_longitude double, correlation_latitude double, humidity float, sensorValue double);
+
+@Export('org.wso2.event.statistics.stream:1.0.0', arbitrary.data='true')
+define stream outputStream (meta_timestamp long, meta_isPowerSaverEnabled bool, meta_sensorId int, meta_sensorName string, correlation_longitude double, correlation_latitude double, humidity float, sensorValue double, arbitraryDataMap Object);
+
+from inputSream
+select meta_timestamp, meta_isPowerSaverEnabled, meta_sensorId, meta_sensorName, correlation_longitude, correlation_latitude, humidity, sensorValue, map:create("turnOnAlarm", sensorValue > 25.0) as arbitraryDataMap
+insert into outputStream;

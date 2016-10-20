@@ -36,6 +36,7 @@ public class ConfigurationUtil {
     private EventPublisherAdminServiceClient eventPublisherAdminServiceClient;
     private TemplateManagerAdminServiceClient templateManagerAdminServiceClient;
     private EventSimulatorAdminServiceClient eventSimulatorAdminServiceClient;
+    private ResourceServiceClient resourceServiceClient;
 
     private ConfigurationUtil() {
     }
@@ -94,6 +95,13 @@ public class ConfigurationUtil {
         return eventSimulatorAdminServiceClient;
     }
 
+    public ResourceServiceClient getResourceServiceClient(
+            String backendURL,
+            String loggedInSessionCookie) throws AxisFault {
+        initResourceServiceClient(backendURL, loggedInSessionCookie);
+        return resourceServiceClient;
+    }
+
     private void initEventProcessorAdminServiceClient(String backendURL,
                                                       String loggedInSessionCookie)
             throws AxisFault {
@@ -138,7 +146,7 @@ public class ConfigurationUtil {
     }
 
     private void initTemplateManagerAdminServiceClient(String backendURL,
-                                                        String loggedInSessionCookie)
+                                                       String loggedInSessionCookie)
             throws AxisFault {
         templateManagerAdminServiceClient = new TemplateManagerAdminServiceClient(backendURL, loggedInSessionCookie);
         ServiceClient client = templateManagerAdminServiceClient._getServiceClient();
@@ -157,6 +165,14 @@ public class ConfigurationUtil {
         options.setManageSession(true);
         options.setProperty(org.apache.axis2.transport.http.HTTPConstants.COOKIE_STRING, loggedInSessionCookie);
     }
+
+    private void initResourceServiceClient(
+            String backendURL,
+            String loggedInSessionCookie)
+            throws AxisFault {
+        resourceServiceClient = new ResourceServiceClient(backendURL, loggedInSessionCookie);
+    }
+
     public static EventStreamAttributeDto createEventStreamAttributeDto(String fieldName, String dataType) {
         EventStreamAttributeDto eventStreamAttribute = new EventStreamAttributeDto();
         eventStreamAttribute.setAttributeName(fieldName);
