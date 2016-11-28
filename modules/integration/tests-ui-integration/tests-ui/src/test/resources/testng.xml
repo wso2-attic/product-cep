@@ -35,6 +35,9 @@
         <classes>
             <class name="org.wso2.cep.ui.integration.test.login.AddEventStreamTestCase"/>
             <class name="org.wso2.cep.ui.integration.test.login.CEPLoginTestCase"/>
+	    <class name="org.wso2.cep.ui.integration.test.login.EventTracerTestCase"/>
+            <class name="org.wso2.cep.ui.integration.test.login.EventSimulatorTestCase"/>
+	    <class name="org.wso2.cep.ui.integration.test.login.TemplateManagerTestCase"/>
         </classes>
     </test>
 
