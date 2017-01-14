@@ -14,6 +14,7 @@
   ~  KIND, either express or implied. See the License for the
   ~  specific language governing permissions and limitations
   ~  under the License.
+
   -->
 
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
@@ -89,6 +90,9 @@
 
             <!-- Adding HA test case-->
             <class name="org.wso2.carbon.integration.test.ha.HATestCase"/>
+
+            <!-- Adding Kafka input receiver test case-->
+            <class name="org.wso2.carbon.integration.test.inputflow.KafkaTestCase"/>
         </classes>
 
     </test>
