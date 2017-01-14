@@ -1,0 +1,11 @@
+{
+    "event": {
+        "metaData": {
+            "timestamp": 4354643,
+            "isPowerSaverEnabled": false,
+        "payloadData": {
+            "humidity": 2.3,
+            "sensorValue": 4.504343
+        }
+    }
+}

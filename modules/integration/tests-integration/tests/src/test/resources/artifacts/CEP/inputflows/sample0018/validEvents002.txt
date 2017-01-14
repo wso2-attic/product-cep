@@ -1,0 +1,56 @@
+{
+    "event": {
+        "metaData": {
+            "timestamp": 4354643,
+            "isPowerSaverEnabled": false,
+            "sensorId": 704,
+            "sensorName": temperature
+        },
+        "correlationData": {
+            "longitude": 4.504343,
+            "latitude": 20.44345
+        },
+        "payloadData": {
+            "humidity": 2.3,
+            "sensorValue": 4.504343
+        }
+    }
+}
+*****
+{
+    "event": {
+        "metaData": {
+            "timestamp": 4354643,
+            "isPowerSaverEnabled": false,
+            "sensorId": 705,
+            "sensorName": temperature
+        },
+        "correlationData": {
+            "longitude": 4.504343,
+            "latitude": 20.44345
+        },
+        "payloadData": {
+            "humidity": 2.3,
+            "sensorValue": 4.504343
+        }
+    }
+}
+*****
+{
+    "event": {
+        "metaData": {
+            "timestamp": 4354643,
+            "isPowerSaverEnabled": false,
+            "sensorId": 706,
+            "sensorName": temperature
+        },
+        "correlationData": {
+            "longitude": 4.504343,
+            "latitude": 20.44345
+        },
+        "payloadData": {
+            "humidity": 2.3,
+            "sensorValue": 4.504343
+        }
+    }
+}
