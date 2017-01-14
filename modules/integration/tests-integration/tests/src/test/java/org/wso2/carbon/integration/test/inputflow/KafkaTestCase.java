@@ -99,7 +99,7 @@ public class KafkaTestCase extends CEPIntegrationTest {
         eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinition);
         Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), ++startESCount);
 
-        // Add MQTT JSON EventReceiver without mapping.
+        // Add Kafka JSON EventReceiver without mapping.
         String eventReceiver = getXMLArtifactConfiguration(samplePath, "kafkaReceiver.xml");
         eventReceiverAdminServiceClient.addEventReceiverConfiguration(eventReceiver);
         Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), ++startERCount);
@@ -128,37 +128,37 @@ public class KafkaTestCase extends CEPIntegrationTest {
             List<Event> eventList = new ArrayList<>();
             Event event = new Event();
             event.setStreamId("org.wso2.event.sensor.stream:1.0.0");
-            event.setMetaData(new Object[]{4354643l, false, 701, "temperature"});
+            event.setMetaData(new Object[]{4354643L, false, 701, "temperature"});
             event.setCorrelationData(new Object[]{4.504343, 20.44345});
             event.setPayloadData(new Object[]{2.3f, 4.504343});
             eventList.add(event);
             Event event2 = new Event();
             event2.setStreamId("org.wso2.event.sensor.stream:1.0.0");
-            event2.setMetaData(new Object[]{4354643l, false, 702, "temperature"});
+            event2.setMetaData(new Object[]{4354643L, false, 702, "temperature"});
             event2.setCorrelationData(new Object[]{4.504343, 20.44345});
             event2.setPayloadData(new Object[]{2.3f, 4.504343});
             eventList.add(event2);
             Event event3 = new Event();
             event3.setStreamId("org.wso2.event.sensor.stream:1.0.0");
-            event3.setMetaData(new Object[]{4354643l, false, 703, "temperature"});
+            event3.setMetaData(new Object[]{4354643L, false, 703, "temperature"});
             event3.setCorrelationData(new Object[]{4.504343, 20.44345});
             event3.setPayloadData(new Object[]{2.3f, 4.504343});
             eventList.add(event3);
             Event event4 = new Event();
             event4.setStreamId("org.wso2.event.sensor.stream:1.0.0");
-            event4.setMetaData(new Object[]{4354643l, false, 704, "temperature"});
+            event4.setMetaData(new Object[]{4354643L, false, 704, "temperature"});
             event4.setCorrelationData(new Object[]{4.504343, 20.44345});
             event4.setPayloadData(new Object[]{2.3f, 4.504343});
             eventList.add(event4);
             Event event5 = new Event();
             event5.setStreamId("org.wso2.event.sensor.stream:1.0.0");
-            event5.setMetaData(new Object[]{4354643l, false, 705, "temperature"});
+            event5.setMetaData(new Object[]{4354643L, false, 705, "temperature"});
             event5.setCorrelationData(new Object[]{4.504343, 20.44345});
             event5.setPayloadData(new Object[]{2.3f, 4.504343});
             eventList.add(event5);
             Event event6 = new Event();
             event6.setStreamId("org.wso2.event.sensor.stream:1.0.0");
-            event6.setMetaData(new Object[]{4354643l, false, 706, "temperature"});
+            event6.setMetaData(new Object[]{4354643L, false, 706, "temperature"});
             event6.setCorrelationData(new Object[]{4.504343, 20.44345});
             event6.setPayloadData(new Object[]{2.3f, 4.504343});
             eventList.add(event6);
@@ -170,7 +170,7 @@ public class KafkaTestCase extends CEPIntegrationTest {
             }
             Assert.assertEquals(preservedEventList, eventList, "Mapping is incorrect!");
             eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
-            eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("mqttEventReceiver.xml");
+            eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("kafkaReceiver.xml");
             eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("wso2EventPublisher.xml");
         } catch (Throwable e) {
             log.error("Exception thrown: " + e.getMessage(), e);
