@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.wso2.carbon.automation.extensions.selenium.BrowserManager;
 import org.wso2.cep.integration.common.utils.CEPIntegrationUITest;
@@ -24,7 +25,7 @@ import java.util.List;
 public class EventSimulatorTestCase extends CEPIntegrationUITest {
     private WebDriver driver;
 
-    @BeforeClass(alwaysRun = true)
+    @BeforeMethod(alwaysRun = true)
     public void setUp() throws Exception {
         super.init();
         driver = BrowserManager.getWebDriver();
@@ -87,6 +88,47 @@ public class EventSimulatorTestCase extends CEPIntegrationUITest {
         Assert.assertFalse(isVulnerable);
         driver.close();
 
+    }
+
+    @Test(groups = "wso2.cep", description = "Test CSRF issue in event simulator")
+    public void testCSRF() throws Exception {
+        boolean testPassed = false;
+        // Login
+        driver.get(getLoginURL());
+        driver.findElement(By.id("txtUserName")).clear();
+        driver.findElement(By.id("txtUserName")).sendKeys(cepServer.getContextTenant().getContextUser().getUserName());
+        driver.findElement(By.id("txtPassword")).clear();
+        driver.findElement(By.id("txtPassword")).sendKeys(cepServer.getContextTenant().getContextUser().getPassword());
+        driver.findElement(By.cssSelector("input.button")).click();
+        driver.findElement(By.id("menu-panel-button4")).click();
+
+        // Goto Event Simulator page
+        String pageUrl = backendURL.substring(0, 22) + "/carbon/eventsimulator/index.jsp?";
+        List<NameValuePair> pageParams = new ArrayList<>();
+        pageParams.add(new BasicNameValuePair("region", "5"));
+        pageParams.add(new BasicNameValuePair("item", "event_simulator_menu"));
+        pageUrl += URLEncodedUtils.format(pageParams, "UTF-8");
+
+        driver.get(pageUrl);
+
+        // Fill the event field values and click send
+        Select dropdown = new Select(driver.findElement(By.id("EventStreamID")));
+        dropdown.selectByVisibleText("TempStream:1.0.0");
+        driver.findElement(By.id("0")).clear();
+        driver.findElement(By.id("0")).sendKeys("11");
+        driver.findElement(By.id("1")).clear();
+        driver.findElement(By.id("1")).sendKeys("22");
+        driver.findElement(By.id("2")).clear();
+        driver.findElement(By.id("2")).sendKeys("33");
+        driver.findElement(By.xpath("(//input[@value='Send'])[1]")).click();
+
+        if("Events is successfully sent".equals(
+                driver.findElement(By.id("messagebox-info")).findElement(By.tagName("p")).getText())) {
+            testPassed = true;
+        }
+
+        Assert.assertTrue(testPassed);
+        driver.close();
     }
 
     @AfterClass(alwaysRun = true)
