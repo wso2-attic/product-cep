@@ -30,6 +30,7 @@ import org.wso2.carbon.databridge.commons.StreamDefinition;
 import org.wso2.carbon.databridge.commons.utils.EventDefinitionConverterUtils;
 import org.wso2.carbon.event.receiver.stub.types.EventReceiverConfigurationDto;
 import org.wso2.carbon.event.receiver.stub.types.EventReceiverConfigurationInfoDto;
+import org.wso2.carbon.integration.common.utils.mgt.ServerConfigurationManager;
 import org.wso2.carbon.integration.test.client.Wso2EventClient;
 import org.wso2.carbon.integration.test.client.Wso2EventServer;
 import org.wso2.cep.integration.common.utils.CEPIntegrationTest;
@@ -37,9 +38,12 @@ import org.wso2.cep.integration.common.utils.CEPIntegrationTestConstants;
 
 import javax.xml.namespace.QName;
 import java.io.File;
+import java.net.MalformedURLException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
 
 /**
  * Sending different formatted events to the Wso2Event Receiver according to the receivers custom mapping type
@@ -47,12 +51,19 @@ import java.util.List;
 public class Wso2EventTestCase extends CEPIntegrationTest {
 
     private static final Log log = LogFactory.getLog(Wso2EventTestCase.class);
+    private ServerConfigurationManager serverManager = null;
+
 
     @BeforeClass(alwaysRun = true)
     public void init()
             throws Exception {
-
         super.init(TestUserMode.SUPER_TENANT_ADMIN);
+        try {
+            serverManager = new ServerConfigurationManager(cepServer);
+        } catch (MalformedURLException e) {
+            throw new RemoteException("Malformed URL exception thrown when initializing ActiveMQ broker", e);
+        }
+
         String loggedInSessionCookie = getSessionCookie();
 
         eventReceiverAdminServiceClient = configurationUtil.getEventReceiverAdminServiceClient(backendURL,
@@ -143,6 +154,7 @@ public class Wso2EventTestCase extends CEPIntegrationTest {
                                 samplePath, streamDefinition, 3, 1000);
 
         eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
+        eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.mapped.sensor.data", "1.0.0");
         eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("wso2eventReceiver.xml");
         eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("wso2eventPublisher.xml");
 
@@ -178,6 +190,149 @@ public class Wso2EventTestCase extends CEPIntegrationTest {
                 Assert.assertEquals(currentEvent.toString(), eventList.get(counter).toString(), "Mapping is incorrect!");
                 counter++;
             }
+        } catch (Throwable e) {
+            log.error("Exception thrown: " + e.getMessage(), e);
+            Assert.fail("Exception: " + e.getMessage());
+        } finally {
+            agentServer.stop();
+        }
+    }
+
+    /**
+     * Test to verify the waiting time of thrift receiver. This test has large waiting time for thrift receiver
+     * so that it should not receive any events.
+     * @throws Exception
+     */
+    @Test(groups = {"wso2.cep"}, description = "Testing wso2event receiver with custom mapping formatting"
+            , dependsOnMethods = {"wso2EventMapReceiverTestWithCustomMappingScenario"})
+    public void wso2EventMapReceiverTestWithWaitingTime() throws Exception {
+        String samplePath = "inputflows" + File.separator + "sample0008";
+        String eventReceiverName = "wso2eventReceiver";
+
+        String configFilePath = getTestArtifactLocation() + CEPIntegrationTestConstants
+                .RELATIVE_PATH_TO_TEST_ARTIFACTS + samplePath + File.separator + "data-bridge" + File.separator +
+                "data-bridge-config.xml";
+        configFilePath = configFilePath.replaceAll("[\\\\/]", Matcher.quoteReplacement(File.separator));
+        File configFile = new File(configFilePath);
+        String target  = serverManager.getCarbonHome() + File.separator + "repository" + File
+                .separator + "conf" + File.separator + "data-bridge" + File.separator + "data-bridge-config.xml" ;
+
+        File targetConfigFile = new File(target);
+        serverManager.applyConfiguration(configFile, targetConfigFile, false, true);
+
+        String loggedInSessionCookie = getSessionCookie();
+        eventReceiverAdminServiceClient = configurationUtil.getEventReceiverAdminServiceClient(
+                backendURL, loggedInSessionCookie);
+        eventStreamManagerAdminServiceClient = configurationUtil.getEventStreamManagerAdminServiceClient(
+                backendURL, loggedInSessionCookie);
+        eventPublisherAdminServiceClient = configurationUtil.getEventPublisherAdminServiceClient(
+                backendURL, loggedInSessionCookie);
+        Thread.sleep(45000);
+
+        int startESCount = eventStreamManagerAdminServiceClient.getEventStreamCount();
+        int startActiveERCount = eventReceiverAdminServiceClient.getActiveEventReceiverCount();
+        int startAllERCount = eventReceiverAdminServiceClient.getEventReceiverCount();
+        int startEPCount = eventPublisherAdminServiceClient.getActiveEventPublisherCount();
+
+        EventReceiverConfigurationInfoDto[] startEventReceiverConfigurationInfoDtos = eventReceiverAdminServiceClient
+                .getAllStreamSpecificActiveEventReceiverConfigurations("org.wso2.event.sensor.stream:1.0.0");
+        int startStreamSpecificActiveERCount = startEventReceiverConfigurationInfoDtos == null ? 0
+                : startEventReceiverConfigurationInfoDtos.length;
+
+        //Add StreamDefinition
+        String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
+                "org.wso2.event.sensor.stream_1.0.0.json");
+        eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionAsString);
+        Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 1);
+
+        String streamDefinitionMapAsString = getJSONArtifactConfiguration(samplePath,
+                "org.wso2.mapped.sensor.data_1.0.0.json");
+        eventStreamManagerAdminServiceClient.addEventStreamAsString(streamDefinitionMapAsString);
+        Assert.assertEquals(eventStreamManagerAdminServiceClient.getEventStreamCount(), startESCount + 2);
+
+        //Add wso2 EventReceiver without mapping
+        String eventReceiverConfig = getXMLArtifactConfiguration(samplePath, "wso2eventReceiver.xml");
+        eventReceiverAdminServiceClient.addEventReceiverConfiguration(eventReceiverConfig);
+        Thread.sleep(2000);
+        Assert.assertEquals(eventReceiverAdminServiceClient.getActiveEventReceiverCount(), startActiveERCount + 1);
+        Assert.assertEquals(eventReceiverAdminServiceClient.getEventReceiverCount(), startAllERCount + 1);
+        EventReceiverConfigurationDto eventReceiverConfigurationDto = eventReceiverAdminServiceClient.
+                getActiveEventReceiverConfiguration(eventReceiverName);
+        Assert.assertTrue(eventReceiverConfigurationDto.getCustomMappingEnabled());
+        String deployedEventReceiverConfig = eventReceiverAdminServiceClient
+                .getEventReceiverConfigurationContent(eventReceiverName);
+        Assert.assertNotNull(deployedEventReceiverConfig);
+        OMElement omElement = AXIOMUtil.stringToOM(deployedEventReceiverConfig);
+        String deployedERName = omElement.getAttributeValue(new QName("name"));
+        Assert.assertEquals(deployedERName, eventReceiverName);
+
+        eventReceiverAdminServiceClient.setTracingEnabled(eventReceiverName, false);
+        eventReceiverAdminServiceClient.setStatisticsEnabled(eventReceiverName, true);
+        EventReceiverConfigurationInfoDto[] eventReceiverConfigurationInfoDtos = eventReceiverAdminServiceClient
+                .getAllStreamSpecificActiveEventReceiverConfigurations("org.wso2.mapped.sensor.data:1.0.0");
+        Assert.assertEquals(eventReceiverConfigurationInfoDtos.length, startStreamSpecificActiveERCount + 1);
+        EventReceiverConfigurationInfoDto deployedERInfoDto = null;
+        for (EventReceiverConfigurationInfoDto eventReceiverConfigurationInfoDto : eventReceiverConfigurationInfoDtos) {
+            if (eventReceiverConfigurationDto.getEventReceiverName().equals(eventReceiverName)) {
+                deployedERInfoDto = eventReceiverConfigurationInfoDto;
+                break;
+            }
+        }
+        Assert.assertNotNull(deployedERInfoDto);
+        Assert.assertFalse(deployedERInfoDto.getEnableTracing());
+        Assert.assertTrue(deployedERInfoDto.getEnableStats());
+
+        String[] supportedAdapterTypes = eventReceiverAdminServiceClient.getAllInputAdapterTypes();
+        Assert.assertTrue(Arrays.asList(supportedAdapterTypes).contains(deployedERInfoDto.getInputAdapterType()));
+
+        //Add Wso2event EventPublisher
+        String eventPublisherConfig2 = getXMLArtifactConfiguration(samplePath, "wso2eventPublisher2.xml");
+        eventPublisherAdminServiceClient.addEventPublisherConfiguration(eventPublisherConfig2);
+        Assert.assertEquals(eventPublisherAdminServiceClient.getActiveEventPublisherCount(), startEPCount + 1);
+
+        // The data-bridge receiver
+        Wso2EventServer agentServer = new Wso2EventServer(samplePath, CEPIntegrationTestConstants.TCP_PORT, true);
+        Thread agentServerThread = new Thread(agentServer);
+        agentServerThread.start();
+        // Let the server start
+        Thread.sleep(2000);
+
+        StreamDefinition streamDefinition = EventDefinitionConverterUtils
+                .convertFromJson(streamDefinitionAsString);
+
+        Wso2EventClient.publish("thrift", "localhost", String.valueOf(8411),
+                "admin", "admin", "org.wso2.event.sensor.stream:1.0.0", "wso2eventReceiver.csv",
+                samplePath, streamDefinition, 3, 1000);
+
+        eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.event.sensor.stream", "1.0.0");
+        eventStreamManagerAdminServiceClient.removeEventStream("org.wso2.mapped.sensor.data", "1.0.0");
+        eventReceiverAdminServiceClient.removeInactiveEventReceiverConfiguration("wso2eventReceiver.xml");
+        eventPublisherAdminServiceClient.removeInactiveEventPublisherConfiguration("wso2eventPublisher2.xml");
+
+        Thread.sleep(1000);
+
+        List<Event> eventList = new ArrayList<>();
+        Event event = new Event();
+        event.setStreamId("org.wso2.mapped.sensor.data:1.0.0");
+        event.setMetaData(new Object[]{4354643, 501, false});
+        event.setCorrelationData(new Object[]{90.34344, 20.44345});
+        event.setPayloadData(new Object[]{2.3f, 20.44345});
+        eventList.add(event);
+        Event event2 = new Event();
+        event2.setStreamId("org.wso2.mapped.sensor.data:1.0.0");
+        event2.setMetaData(new Object[]{4354653, 502, false});
+        event2.setCorrelationData(new Object[]{90.34344, 20.44345});
+        event2.setPayloadData(new Object[]{2.3f, 20.44345});
+        eventList.add(event2);
+        Event event3 = new Event();
+        event3.setStreamId("org.wso2.mapped.sensor.data:1.0.0");
+        event3.setMetaData(new Object[]{4354343, 503, false});
+        event3.setCorrelationData(new Object[]{90.34344, 20.44345});
+        event3.setPayloadData(new Object[]{2.3f, 20.44345});
+        eventList.add(event3);
+
+        try {
+            Assert.assertEquals(agentServer.getMsgCount(), 0, "Incorrect number of messages consumed!");
         } catch (Throwable e) {
             log.error("Exception thrown: " + e.getMessage(), e);
             Assert.fail("Exception: " + e.getMessage());
