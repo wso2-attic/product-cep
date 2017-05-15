@@ -127,7 +127,7 @@ public class TestWso2EventServer {
             }
         } else {
             thriftDataReceiver = new ThriftDataReceiver(receiverPort, databridge);
-            thriftDataReceiver.start(host);
+            thriftDataReceiver.start(host, 0);
         }
         log.info("Test Server Started");
     }
