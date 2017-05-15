@@ -236,7 +236,8 @@ public class Wso2EventTestCase extends CEPIntegrationTest {
 
         EventReceiverConfigurationInfoDto[] startEventReceiverConfigurationInfoDtos = eventReceiverAdminServiceClient
                 .getAllStreamSpecificActiveEventReceiverConfigurations("org.wso2.event.sensor.stream:1.0.0");
-        int startStreamSpecificActiveERCount = startEventReceiverConfigurationInfoDtos == null ? 0 : startEventReceiverConfigurationInfoDtos.length;
+        int startStreamSpecificActiveERCount = startEventReceiverConfigurationInfoDtos == null ? 0
+                : startEventReceiverConfigurationInfoDtos.length;
 
         //Add StreamDefinition
         String streamDefinitionAsString = getJSONArtifactConfiguration(samplePath,
@@ -258,7 +259,8 @@ public class Wso2EventTestCase extends CEPIntegrationTest {
         EventReceiverConfigurationDto eventReceiverConfigurationDto = eventReceiverAdminServiceClient.
                 getActiveEventReceiverConfiguration(eventReceiverName);
         Assert.assertTrue(eventReceiverConfigurationDto.getCustomMappingEnabled());
-        String deployedEventReceiverConfig = eventReceiverAdminServiceClient.getEventReceiverConfigurationContent(eventReceiverName);
+        String deployedEventReceiverConfig = eventReceiverAdminServiceClient
+                .getEventReceiverConfigurationContent(eventReceiverName);
         Assert.assertNotNull(deployedEventReceiverConfig);
         OMElement omElement = AXIOMUtil.stringToOM(deployedEventReceiverConfig);
         String deployedERName = omElement.getAttributeValue(new QName("name"));
