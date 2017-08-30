@@ -19,6 +19,9 @@
 WSO2 Complex Event Processor (CEP)
 ==================================
 
+
+WSO2 Complex Event Processor (WSO2 CEP) was created as a mechanism to offer a standalone real-time analytics solution and we now have this capability within [WSO2 Data Analytics Server (WSO2 DAS)](https://github.com/wso2/product-das). Try it now!
+
 ---
 
 | Branch | Build Status |

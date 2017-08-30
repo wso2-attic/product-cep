@@ -134,7 +134,7 @@ public class Wso2EventServer implements Runnable {
                 }
             }
         });
-        thriftDataReceiver.start("0.0.0.0");
+        thriftDataReceiver.start("0.0.0.0", 0);
         log.info("Test Server Started.");
     }
 
