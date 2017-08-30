@@ -37,8 +37,9 @@
         -->
         <frameworkDashboard>false</frameworkDashboard>
         <!--
-         Browser type with used by framework to execute UI test, supported types - chrome|firefox|opera|ie|htmlUnit
+         Change this to edit wait time until portal dashboard loaded
         -->
+        <maximumWaitingTime>30</maximumWaitingTime>
     </configurations>
     <tools>
         <selenium>
