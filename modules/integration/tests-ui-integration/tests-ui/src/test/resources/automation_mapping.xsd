@@ -58,6 +58,12 @@
                                     </xs:documentation>
                                 </xs:annotation>
                             </xs:element>
+                            <xs:element type="xs:string" name="maximumWaitingTime">
+                                <xs:annotation>
+                                    <xs:documentation>Change this to edit wait time to load portal dashboard
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>

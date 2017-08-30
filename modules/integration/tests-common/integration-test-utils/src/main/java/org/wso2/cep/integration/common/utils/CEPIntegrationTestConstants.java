@@ -28,4 +28,6 @@ public class CEPIntegrationTestConstants {
     public static final int WEB_SOCKET_SERVER_PORT = 9899;
     public static final int STORM_WSO2EVENT_SERVER_PORT = 8621;
     public static final int THRIFT_RECEIVER_PORT = 8411;
+    public static final String DASHBOARD_REGISTRY_BASE_PATH = "/_system/config/ues/dashboards/";
+    public static final String DS_SUFFIX = "/portal/login-controller?destination=%2Fportal%2F";
 }

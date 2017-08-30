@@ -1,3 +1,6 @@
+import org.wso2.appserver.integration.common.clients.EventStreamManagerAdminServiceClient;
+import org.wso2.appserver.integration.common.clients.TemplateManagerAdminServiceClient;
+import org.wso2.carbon.automation.engine.configurations.UrlGenerationUtil;
 /*
  * Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
@@ -24,6 +27,8 @@ import org.json.simple.parser.JSONParser;
 import org.wso2.appserver.integration.common.clients.*;
 import org.wso2.carbon.automation.engine.context.AutomationContext;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
+import org.wso2.carbon.automation.engine.context.beans.Tenant;
+import org.wso2.carbon.automation.engine.context.beans.User;
 import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
 import org.wso2.carbon.integration.common.utils.LoginLogoutClient;
 import org.wso2.carbon.integration.common.utils.mgt.ServerConfigurationManager;
@@ -58,8 +63,16 @@ public abstract class CEPIntegrationTest {
     private final String artifactDeploymentDir = FrameworkPathUtil.getCarbonHome() + File.separator + "repository" +
                                                  File.separator + "deployment" + File.separator + "server" + File.separator;
 
+    protected User userInfo;
+    private String baseUrl = null;
+    private AutomationContext dsContext = null;
+    protected TestUserMode userMode;
+    protected String resourcePath;
+    private Tenant tenantInfo = null;
+
     protected void init() throws Exception {
         init(TestUserMode.SUPER_TENANT_ADMIN);
+        userMode = TestUserMode.SUPER_TENANT_ADMIN;
     }
 
     protected void init(TestUserMode testUserMode) throws Exception {
@@ -229,5 +242,79 @@ public abstract class CEPIntegrationTest {
                 }
             }
         }
+    }
+
+    protected String getLoginURL() throws XPathExpressionException {
+        return UrlGenerationUtil.getLoginURL(cepServer.getInstance());
+    }
+
+    /**
+     * This method returns the baseUrl of webApp
+     *
+     * @return baseUrl - the baseUrl of webApp
+     */
+    public String getBaseUrl() throws Exception {
+        if (baseUrl == null) {
+            baseUrl = UrlGenerationUtil.getWebAppURL(getDsContext().getContextTenant(), getDsContext().getInstance());
+        }
+        return baseUrl;
+    }
+
+    /**
+     * This method will return automation context
+     *
+     * @return AutomationContext instance
+     * @throws XPathExpressionException
+     */
+    public AutomationContext getDsContext() throws XPathExpressionException {
+        if (dsContext == null) {
+            dsContext = new AutomationContext("CEP", this.userMode);
+        }
+        return dsContext;
+    }
+    /**
+     * This mehtod will return current tenant details from automation context
+     *
+     * @return tenantInfo - information about current loggedIn tenant
+     * @throws XPathExpressionException
+     */
+    public Tenant getCurrentTenantInfo() throws XPathExpressionException {
+        if (tenantInfo == null) {
+            tenantInfo = getDsContext().getContextTenant();
+        }
+        return tenantInfo;
+    }
+
+    /**
+     * This method will return current user loggedIn
+     *
+     * @return user -  the tenant user
+     * @throws XPathExpressionException
+     */
+    public User getCurrentUserInfo() throws XPathExpressionException {
+        if (userInfo == null) {
+            userInfo = getCurrentTenantInfo().getContextUser();
+        }
+        return userInfo;
+    }
+
+    /**
+     * This method will return the username of user currently loggedIn
+     *
+     * @return username - username of user currently loggedIn
+     * @throws XPathExpressionException
+     */
+    public String getCurrentUsername() throws XPathExpressionException {
+        return getCurrentUserInfo().getUserName();
+    }
+
+    /**
+     * This method will return the password of user currently loggedIn
+     *
+     * @return password - password of user
+     * @throws XPathExpressionException
+     */
+    public String getCurrentPassword() throws XPathExpressionException {
+        return getCurrentUserInfo().getPassword();
     }
 }
