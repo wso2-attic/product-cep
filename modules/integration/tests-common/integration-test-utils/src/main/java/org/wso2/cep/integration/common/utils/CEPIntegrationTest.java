@@ -1,6 +1,3 @@
-import org.wso2.appserver.integration.common.clients.EventStreamManagerAdminServiceClient;
-import org.wso2.appserver.integration.common.clients.TemplateManagerAdminServiceClient;
-import org.wso2.carbon.automation.engine.configurations.UrlGenerationUtil;
 /*
  * Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
@@ -25,6 +22,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.simple.parser.JSONParser;
 import org.wso2.appserver.integration.common.clients.*;
+import org.wso2.carbon.automation.engine.configurations.UrlGenerationUtil;
 import org.wso2.carbon.automation.engine.context.AutomationContext;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.automation.engine.context.beans.Tenant;
@@ -45,6 +43,9 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.regex.Matcher;
 
+import org.wso2.appserver.integration.common.clients.EventStreamManagerAdminServiceClient;
+import org.wso2.appserver.integration.common.clients.TemplateManagerAdminServiceClient;
+
 public abstract class CEPIntegrationTest {
     private static final Log log = LogFactory.getLog(CEPIntegrationTest.class);
     protected AutomationContext cepServer;
@@ -61,7 +62,7 @@ public abstract class CEPIntegrationTest {
     protected ResourceServiceClient resourceServiceClient;
 
     private final String artifactDeploymentDir = FrameworkPathUtil.getCarbonHome() + File.separator + "repository" +
-                                                 File.separator + "deployment" + File.separator + "server" + File.separator;
+            File.separator + "deployment" + File.separator + "server" + File.separator;
 
     protected User userInfo;
     private String baseUrl = null;
@@ -117,22 +118,27 @@ public abstract class CEPIntegrationTest {
      */
     protected String getXMLArtifactConfiguration(String testCaseFolderName, String configFileName)
             throws Exception {
-        String relativeFilePath = getTestArtifactLocation() + CEPIntegrationTestConstants.RELATIVE_PATH_TO_TEST_ARTIFACTS + testCaseFolderName + "/"
-                                  + configFileName;
+        String relativeFilePath =
+                getTestArtifactLocation() + CEPIntegrationTestConstants.RELATIVE_PATH_TO_TEST_ARTIFACTS
+                        + testCaseFolderName + "/"
+                        + configFileName;
         relativeFilePath = relativeFilePath.replaceAll("[\\\\/]", Matcher.quoteReplacement(File.separator));
         OMElement configElement = loadClasspathResourceXML(relativeFilePath);
         return configElement.toString();
     }
 
     /**
-     * @param testCaseFolderName testCaseFolderName Name of the folder created under /artifacts/CEP for the particular test case.
+     * @param testCaseFolderName testCaseFolderName Name of the folder created under /artifacts/CEP for the
+     *                           particular test case.
      * @param configFileName     Name of the JSON config-file created under above folder.
      * @return The above JSON-configuration, as a string
      * @throws Exception
      */
     protected String getJSONArtifactConfiguration(String testCaseFolderName, String configFileName)
             throws Exception {
-        String relativeFilePath = getTestArtifactLocation() + CEPIntegrationTestConstants.RELATIVE_PATH_TO_TEST_ARTIFACTS + testCaseFolderName + "/" + configFileName;
+        String relativeFilePath =
+                getTestArtifactLocation() + CEPIntegrationTestConstants.RELATIVE_PATH_TO_TEST_ARTIFACTS
+                        + testCaseFolderName + "/" + configFileName;
         relativeFilePath = relativeFilePath.replaceAll("[\\\\/]", Matcher.quoteReplacement(File.separator));
         JSONParser jsonParser = new JSONParser();
         return jsonParser.parse(new FileReader(relativeFilePath)).toString();
@@ -141,14 +147,17 @@ public abstract class CEPIntegrationTest {
     /**
      * Returns the execution plan, read from the given file path.
      *
-     * @param testCaseFolderName    testCaseFolderName Name of the folder created under /artifacts/CEP for the particular test case.
+     * @param testCaseFolderName    testCaseFolderName Name of the folder created under /artifacts/CEP for the
+     *                              particular test case.
      * @param executionPlanFileName Execution plan file name, relative to the test artifacts folder.
      * @return execution plan as a string.
      * @throws Exception
      */
     protected String getExecutionPlanFromFile(String testCaseFolderName, String executionPlanFileName)
             throws Exception {
-        String relativeFilePath = getTestArtifactLocation() + CEPIntegrationTestConstants.RELATIVE_PATH_TO_TEST_ARTIFACTS + testCaseFolderName + "/" + executionPlanFileName;
+        String relativeFilePath =
+                getTestArtifactLocation() + CEPIntegrationTestConstants.RELATIVE_PATH_TO_TEST_ARTIFACTS
+                        + testCaseFolderName + "/" + executionPlanFileName;
         relativeFilePath = relativeFilePath.replaceAll("[\\\\/]", Matcher.quoteReplacement(File.separator));
         return ConfigurationUtil.readFile(relativeFilePath);
     }
@@ -200,7 +209,8 @@ public abstract class CEPIntegrationTest {
             for (File file : fileList) {
                 String[] eventStreamDetails = file.getName().split("_");
                 try {
-                    eventStreamManagerAdminServiceClient.removeEventStream(eventStreamDetails[0], eventStreamDetails[1].replace(".json",""));
+                    eventStreamManagerAdminServiceClient
+                            .removeEventStream(eventStreamDetails[0], eventStreamDetails[1].replace(".json", ""));
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
@@ -272,6 +282,7 @@ public abstract class CEPIntegrationTest {
         }
         return dsContext;
     }
+
     /**
      * This mehtod will return current tenant details from automation context
      *
