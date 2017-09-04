@@ -51,8 +51,10 @@ public class DashboardTestCase extends CEPIntegrationUITest {
         login(getCurrentUsername(), getCurrentPassword());
     }
 
-    @Test(groups = "wso2.cep", description = "Verifying XSS Venerability in portal dashboard settings")
+    @Test(groups = "wso2.cep", description = "Verifying XSS Venerability in portal dashboard settings and create pages")
     public void testXSSVenerability() throws Exception {
+
+        // testing for XSS Venerability in portal dashboard create page
         String DASHBOARD_DESCRIPTION = "></script><script>alert('hi')</script>";
         String afterDashboardDes = "scriptscriptalerthiscript";
         String afterDashboardTitle = "sampledashboard";
@@ -65,13 +67,23 @@ public class DashboardTestCase extends CEPIntegrationUITest {
         driver.findElement(By.id("ues-dashboard-create")).click();
         driver.findElement(By.cssSelector("div[data-id='single-column']")).click();
         redirectToLocation("portal", "dashboards");
-
         getWebDriverWait().until(ExpectedConditions.visibilityOfElementLocated(By.id("ues-dashboard-title")));
         webElement = driver.findElement(By.id("ues-dashboard-title"));
         assertEquals(afterDashboardTitle, webElement.findElement(By.id("ues-dashboard-title")).getText());
         webElement = driver.findElement(By.id("ues-dashboard-description"));
         assertEquals(afterDashboardDes, webElement.findElement(By.id("ues-dashboard-description")).getText());
 
+        // testing for XSS Venerability in portal dashboard settings page
+        driver.findElement(By.id("ues-settings")).click();
+        driver.findElement(By.id("ues-dashboard-description")).clear();
+        driver.findElement(By.id("ues-dashboard-description")).sendKeys(DASHBOARD_DESCRIPTION);
+        driver.findElement(By.id("ues-dashboard-saveBtn")).click();
+        redirectToLocation("portal", "dashboards");
+        getWebDriverWait().until(ExpectedConditions.visibilityOfElementLocated(By.id("ues-dashboard-title")));
+        webElement = driver.findElement(By.id("ues-dashboard-title"));
+        assertEquals(afterDashboardTitle, webElement.findElement(By.id("ues-dashboard-title")).getText());
+        webElement = driver.findElement(By.id("ues-dashboard-description"));
+        assertEquals(afterDashboardDes, webElement.findElement(By.id("ues-dashboard-description")).getText());
     }
 
     @AfterClass(alwaysRun = true)
