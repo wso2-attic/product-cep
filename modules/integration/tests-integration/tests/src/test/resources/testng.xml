@@ -93,6 +93,9 @@
 
             <!-- Adding Kafka input receiver test case-->
             <class name="org.wso2.carbon.integration.test.inputflow.KafkaTestCase"/>
+
+            <!-- Adding patchDAS561 test case -->
+            <class name="org.wso2.carbon.integration.test.patches.DAS561TestCase"/>
         </classes>
 
     </test>
